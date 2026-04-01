@@ -1,2 +1,0 @@
-# vid_tokenizer
-
