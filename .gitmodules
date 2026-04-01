@@ -1,0 +1,3 @@
+[submodule "third_party/NVRC"]
+	path = third_party/NVRC
+	url = https://github.com/hmkx/NVRC.git
