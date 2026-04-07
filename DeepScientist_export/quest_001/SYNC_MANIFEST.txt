@@ -1,0 +1,4 @@
+Export refreshed at: 2026-04-07T23:54:45Z
+Quest root: /Users/wf24018/DeepScientist/quests/001
+Workspace root: /Users/wf24018/DeepScientist/quests/001/.ds/worktrees/idea-idea-3f64faf1
+Export root: /Users/wf24018/home/vid_tokenizer/DeepScientist_export/quest_001

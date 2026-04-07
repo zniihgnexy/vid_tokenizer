@@ -1,0 +1,48 @@
+quest_id: '001'
+title: video tokenizer coding for machine
+quest_root: /Users/wf24018/DeepScientist/quests/001
+status: running
+active_anchor: experiment
+baseline_gate: confirmed
+confirmed_baseline_ref:
+  baseline_id: nvrc-local-source
+  variant_id: null
+  baseline_path: /Users/wf24018/DeepScientist/quests/001/baselines/imported/nvrc-local-source
+  baseline_root_rel_path: baselines/imported/nvrc-local-source
+  metric_contract_json_path: /Users/wf24018/DeepScientist/quests/001/baselines/imported/nvrc-local-source/json/metric_contract.json
+  metric_contract_json_rel_path: baselines/imported/nvrc-local-source/json/metric_contract.json
+  source_mode: imported
+  confirmed_at: '2026-04-03T16:17:53+00:00'
+  comment: Confirm caveated attached baseline from local NVRC source and paper anchor
+requested_baseline_ref: null
+startup_contract:
+  schema_version: 3
+  user_language: zh
+  need_research_paper: true
+  research_intensity: balanced
+  decision_policy: autonomous
+  launch_mode: standard
+  standard_profile: canonical_research_graph
+  custom_profile: freeform
+  review_followup_policy: audit_only
+  baseline_execution_policy: auto
+  manuscript_edit_mode: none
+  scope: baseline_plus_direction
+  baseline_mode: restore_from_url
+  resource_policy: balanced
+  time_budget_hours: 24
+  git_strategy: semantic_head_plus_controlled_integration
+  runtime_constraints: ''
+  objectives: []
+  baseline_urls:
+  - /Users/wf24018/home/vid_tokenizer/
+  paper_urls:
+  - chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://arxiv.org/pdf/2409.07414
+  entry_state_summary: ''
+  review_summary: ''
+  review_materials: []
+  custom_brief: ''
+default_runner: codex
+created_at: '2026-04-03T15:54:31+00:00'
+updated_at: '2026-04-07T23:50:59+00:00'
+active_run_id: run-c127f69f

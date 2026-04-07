@@ -18,7 +18,9 @@ Recommended to keep in the main `vid_tokenizer` repo:
 - `CLAUDE.md`
 - `CLAUDE_readme.md`
 - `CONDA_SETUP.md`
+- `DeepScientist_export/`
 - `tools/download_uvg_sources.sh`
+- `tools/export_deepscientist_snapshot.sh`
 - `tools/prepare_uvg_dataset.sh`
 - `tools/smoke_teacher_loss.py`
 - `.gitignore`
@@ -62,12 +64,13 @@ If step 3 is skipped, a fresh clone on the GPU machine will pull the old upstrea
 ## 4. Main recommended sequence before moving machines
 
 1. Review the current main-repo changes and decide the GitHub-ready parent-repo commit.
-2. Preserve the NVRC local changes in a user-controlled remote and update the submodule pointer.
-3. Push only after explicit user approval.
-4. Clone the main repo recursively on the GPU machine.
-5. Rebuild the environment there.
-6. Restore or download the dataset there.
-7. Sync the DeepScientist quest history if exact experiment history must continue from the same state.
+2. Refresh the tracked DeepScientist export with `bash tools/export_deepscientist_snapshot.sh`.
+3. Preserve the NVRC local changes in a user-controlled remote and update the submodule pointer.
+4. Push only after explicit user approval.
+5. Clone the main repo recursively on the GPU machine.
+6. Rebuild the environment there.
+7. Restore or download the dataset there.
+8. Read the exported quest state under `DeepScientist_export/` before continuing the research line on the GPU machine.
 
 ## 5. Clone and bootstrap on the GPU machine
 

@@ -1,0 +1,141 @@
+[2026-04-07 22:07:08,270] INFO - Torch version: 2.6.0
+[2026-04-07 22:07:08,270] INFO - World size: 1
+[2026-04-07 22:07:08,271] INFO - Rank: 0    Local rank: 0    Device: mps
+[2026-04-07 22:07:08,271] INFO - Output dir: /Users/wf24018/DeepScientist/quests/001/experiments/main/beauty_teacher_tiny_smoke_retry3_mpsfb
+[2026-04-07 22:07:08,271] INFO - Set seed: 0
+[2026-04-07 22:07:08,333] INFO - Input video: /Users/wf24018/home/vid_tokenizer/Datasets/UVG/1920x1080/Beauty
+[2026-04-07 22:07:08,412] INFO - Train video settings:
+[2026-04-07 22:07:08,413] INFO -      Video size: (600, 1080, 1920)    Patch size: [1, 120, 120]
+[2026-04-07 22:07:08,413] INFO -      Padding: [[0, 0], [0, 0], [0, 0]]
+[2026-04-07 22:07:08,413] INFO - Input video: /Users/wf24018/home/vid_tokenizer/Datasets/UVG/1920x1080/Beauty
+[2026-04-07 22:07:08,472] INFO - Eval video settings:
+[2026-04-07 22:07:08,472] INFO -      Video size: (600, 1080, 1920)    Patch size: [1, 120, 120]
+[2026-04-07 22:07:08,472] INFO -      Padding: [[0, 0], [0, 0], [0, 0]]
+[2026-04-07 22:07:08,472] INFO - PNGVideoDataset:
+[2026-04-07 22:07:08,472] INFO -      Path: /Users/wf24018/home/vid_tokenizer/Datasets/UVG/1920x1080/Beauty
+[2026-04-07 22:07:08,472] INFO -      Video size: (600, 1080, 1920)    Patch size: [1, 120, 120]    Padding: ((0, 0), (0, 0), (0, 0))
+[2026-04-07 22:07:08,472] INFO -      Channels: 3    Bit depth: 8
+[2026-04-07 22:07:08,487] INFO -      Scale: tensor([0.0039, 0.0039, 0.0039])    Shift: tensor([0., 0., 0.])
+[2026-04-07 22:07:08,487] INFO - PNGVideoDataset:
+[2026-04-07 22:07:08,487] INFO -      Path: /Users/wf24018/home/vid_tokenizer/Datasets/UVG/1920x1080/Beauty
+[2026-04-07 22:07:08,487] INFO -      Video size: (600, 1080, 1920)    Patch size: [1, 120, 120]    Padding: ((0, 0), (0, 0), (0, 0))
+[2026-04-07 22:07:08,487] INFO -      Channels: 3    Bit depth: 8
+[2026-04-07 22:07:08,487] INFO -      Scale: tensor([0.0039, 0.0039, 0.0039])    Shift: tensor([0., 0., 0.])
+[2026-04-07 22:07:08,502] INFO - OverfitTask:
+[2026-04-07 22:07:08,502] INFO -      Root: /Users/wf24018/DeepScientist/quests/001/experiments/main/beauty_teacher_tiny_smoke_retry3_mpsfb/tmp/train/Beauty
+[2026-04-07 22:07:08,502] INFO -      Training: True
+[2026-04-07 22:07:08,502] INFO -      Losses: [1.0, 'l1']    Metrics: ['psnr', 'teacher-mse']
+[2026-04-07 22:07:08,503] INFO -      Lamb: [1.0]
+[2026-04-07 22:07:08,503] INFO -      Enable log: False
+[2026-04-07 22:07:08,503] INFO -      Teacher: enabled=True type=mean_pool weight=0.2000 detach_target=True
+[2026-04-07 22:07:08,504] INFO - OverfitTask:
+[2026-04-07 22:07:08,504] INFO -      Root: /Users/wf24018/DeepScientist/quests/001/experiments/main/beauty_teacher_tiny_smoke_retry3_mpsfb/tmp/eval/Beauty
+[2026-04-07 22:07:08,504] INFO -      Training: False
+[2026-04-07 22:07:08,504] INFO -      Losses: [1.0, 'l1']    Metrics: ['psnr', 'teacher-mse']
+[2026-04-07 22:07:08,504] INFO -      Lamb: [1.0]
+[2026-04-07 22:07:08,504] INFO -      Enable log: False
+[2026-04-07 22:07:08,504] INFO -      Teacher: enabled=True type=mean_pool weight=0.2000 detach_target=True
+[2026-04-07 22:07:08,504] INFO - Encoding settings:
+[2026-04-07 22:07:08,504] INFO -      Start frame - 0    Num of frames - 4
+[2026-04-07 22:07:08,504] INFO -      Intra period - 4
+[2026-04-07 22:07:08,504] INFO - 
+Start encoding:
+[2026-04-07 22:07:08,504] INFO -      Group index - 0    Group start frame - 0   Group num of frames - 4
+[2026-04-07 22:07:08,980] INFO - Create model: HiNeRV
+[2026-04-07 22:07:08,992] INFO - Decoder:
+[2026-04-07 22:07:08,992] INFO -      Stage 1:
+[2026-04-07 22:07:08,992] INFO -                T1 - 4  H1 - 270  W1 - 480  C1 - 16
+[2026-04-07 22:07:08,992] INFO -                T2 - 4  H2 - 540  W2 - 960  C2 - 16
+[2026-04-07 22:07:08,992] INFO -                Depth - 1  Exp - 2.0  Kernels - 3
+[2026-04-07 22:07:08,992] INFO -                Scale - (1, 2, 2)  Padding - (0, 2, 2)
+[2026-04-07 22:07:08,992] INFO -      Stage 2:
+[2026-04-07 22:07:08,992] INFO -                T1 - 4  H1 - 540  W1 - 960  C1 - 16
+[2026-04-07 22:07:08,993] INFO -                T2 - 4  H2 - 1080  W2 - 1920  C2 - 8
+[2026-04-07 22:07:08,993] INFO -                Depth - 1  Exp - 2.0  Kernels - 3
+[2026-04-07 22:07:08,993] INFO -                Scale - (1, 2, 2)  Padding - (0, 1, 1)
+[2026-04-07 22:07:08,993] INFO - Create compression model: NVRC
+[2026-04-07 22:07:08,993] INFO - NVRC:
+[2026-04-07 22:07:08,993] INFO -      Optimize rate - True  Init bit width - -1
+[2026-04-07 22:07:08,993] INFO -      Soft-rounding temp - [0.3, 0.1]  Kumaraswamy - [2.0, 1.0]
+[2026-04-07 22:07:08,993] INFO -      QuantNoise - [0.0, 0.9]
+[2026-04-07 22:07:08,993] INFO -      Cache enabled - True
+[2026-04-07 22:07:09,004] INFO -      Grid EM:
+[2026-04-07 22:07:09,004] INFO -           EM - ar  EM-dist - gaussian  Rate quant - soft-round-noise  Dist quant - soft-round-noise
+[2026-04-07 22:07:09,004] INFO -           Use quant mean - True  Learned quant - t  Learned em - True
+[2026-04-07 22:07:09,004] INFO -           Blk size - [20, 5, 5]  Per blk - True
+[2026-04-07 22:07:09,004] INFO -           Channels - 4  Depth - 3
+[2026-04-07 22:07:09,004] INFO -           Kernel size - 3  Norm - layernorm  Bias - True  Act - gelu
+[2026-04-07 22:07:09,004] INFO -           Depthwise - False
+[2026-04-07 22:07:09,124] INFO -      Weight EM:
+[2026-04-07 22:07:09,125] INFO -           EM - em  Dist - gaussian  Rate quant - soft-round-noise
+[2026-04-07 22:07:09,125] INFO -           Blk size - [16, 32]  Per blk - True  Per axis - True
+[2026-04-07 22:07:09,166] INFO -      Grid meta - em
+[2026-04-07 22:07:09,166] INFO -           EM - em  EM-dist - gaussian  Rate quant - soft-round-noise  Dist quant - soft-round-noise
+[2026-04-07 22:07:09,166] INFO -           Use quant mean - False  Learned quant - True  Learned em - True
+[2026-04-07 22:07:09,205] INFO -      Weight meta - em
+[2026-04-07 22:07:09,205] INFO -           EM - em  EM-dist - gaussian  Rate quant - soft-round-noise  Dist quant - soft-round-noise
+[2026-04-07 22:07:09,205] INFO -           Use quant mean - False  Learned quant - True  Learned em - True
+[2026-04-07 22:07:09,247] INFO - Create optimizer: adam
+[2026-04-07 22:07:09,247] INFO - Create scheduler: cosine
+[2026-04-07 22:07:09,248] INFO - Parameter groups:
+[2026-04-07 22:07:09,248] INFO -      Key - default  Lr scale - 1.0  Weight decay - 1e-06  Num of params - 17
+[2026-04-07 22:07:09,248] INFO -      Key - default (No weight decay)  Lr scale - 1.0  Weight decay - 0.0  Num of params - 247
+[2026-04-07 22:07:09,350] INFO - Parameters (model): 3.11M
+[2026-04-07 22:07:09,350] INFO - Parameters (w/ codec): 3.15M
+[2026-04-07 22:07:09,350] INFO - Parameters (detailed):
+[2026-04-07 22:07:09,350] INFO -     grid: 3.11M
+[2026-04-07 22:07:09,350] INFO -     weight: 0.00M
+[2026-04-07 22:07:09,351] INFO -     grid_em_params: 0.03M
+[2026-04-07 22:07:09,351] INFO -     weight_em_params: 0.00M
+[2026-04-07 22:07:09,351] INFO -     grid_meta_em_params: 0.00M
+[2026-04-07 22:07:09,351] INFO -     weight_meta_em_params: 0.00M
+[2026-04-07 22:07:09,351] INFO -     others: 0.00M
+[2026-04-07 22:07:09,351] INFO - MAC profiling skipped because DeepSpeed profiling is unavailable in this environment.
+[2026-04-07 22:07:09,353] INFO - Start training from scratch.
+[2026-04-07 22:07:09,353] INFO - Start training for 1 epochs.
+[2026-04-07 22:30:11,460] INFO - Train - Epoch 0 [144/576]    lr: 8.68e-04    img/s: 0.00    loss: 3.0484    r_loss: 2.8439    d_loss: 0.2046    bpp: 2.8439    psnr: 14.0002    teacher-mse: 0.0462
+[2026-04-07 22:52:53,115] INFO - Train - Epoch 0 [288/576]    lr: 5.50e-04    img/s: 0.00    loss: 2.8066    r_loss: 2.6150    d_loss: 0.1916    bpp: 2.6150    psnr: 14.3887    teacher-mse: 0.0406
+[2026-04-07 23:15:05,137] INFO - Train - Epoch 0 [432/576]    lr: 2.32e-04    img/s: 0.00    loss: 2.6728    r_loss: 2.4857    d_loss: 0.1871    bpp: 2.4857    psnr: 14.4931    teacher-mse: 0.0386
+[2026-04-07 23:37:05,114] INFO - Train - Epoch 0 [576/576]    lr: 1.00e-04    img/s: 0.00    loss: 2.5809    r_loss: 2.3976    d_loss: 0.1832    bpp: 2.3976    psnr: 14.6588    teacher-mse: 0.0374
+[2026-04-07 23:37:12,521] INFO - Eval - [144/576]    img/s: 0.14    loss: 2.2364    r_loss: 2.0594    d_loss: 0.1770    bpp: 2.0594    psnr: 14.9400    teacher-mse: 0.0358
+[2026-04-07 23:37:16,100] INFO - Eval - [288/576]    img/s: 0.18    loss: 2.2381    r_loss: 2.0594    d_loss: 0.1787    bpp: 2.0594    psnr: 14.9100    teacher-mse: 0.0367
+[2026-04-07 23:37:19,257] INFO - Eval - [432/576]    img/s: 0.21    loss: 2.2366    r_loss: 2.0594    d_loss: 0.1772    bpp: 2.0594    psnr: 14.9559    teacher-mse: 0.0360
+[2026-04-07 23:37:21,985] INFO - Eval - [576/576]    img/s: 0.24    loss: 2.2357    r_loss: 2.0594    d_loss: 0.1762    bpp: 2.0594    psnr: 14.9859    teacher-mse: 0.0356
+[2026-04-07 23:37:22,213] INFO - Training completed in: 5412.86s
+[2026-04-07 23:37:22,213] INFO - Encoding model weights to bitstream.
+[2026-04-07 23:52:30,798] INFO - Encoding time: 908.58s
+[2026-04-07 23:52:30,800] INFO - Current total bitstream size: 17343904
+[2026-04-07 23:52:30,800] INFO - Group bitstream size: 17343872.
+[2026-04-07 23:52:30,802] INFO - Decoding model weights from bitstream.
+[2026-04-08 00:07:56,747] INFO - Decoding time: 925.94s
+[2026-04-08 00:07:56,935] INFO - Start evaluating the decoded model.
+[2026-04-08 00:08:03,885] INFO - Eval - [144/576]    img/s: 0.14    loss: 2.2418    r_loss: 2.0594    d_loss: 0.1824    bpp: 2.0594    psnr: 14.7980    teacher-mse: 0.0384
+[2026-04-08 00:08:08,089] INFO - Eval - [288/576]    img/s: 0.18    loss: 2.2365    r_loss: 2.0594    d_loss: 0.1770    bpp: 2.0594    psnr: 14.9658    teacher-mse: 0.0360
+[2026-04-08 00:08:12,536] INFO - Eval - [432/576]    img/s: 0.19    loss: 2.2367    r_loss: 2.0594    d_loss: 0.1773    bpp: 2.0594    psnr: 14.9619    teacher-mse: 0.0362
+[2026-04-08 00:08:16,822] INFO - Eval - [576/576]    img/s: 0.20    loss: 2.2370    r_loss: 2.0594    d_loss: 0.1775    bpp: 2.0594    psnr: 14.9552    teacher-mse: 0.0363
+[2026-04-08 00:08:16,822] INFO - Evaluation completed in: 19.89s
+[2026-04-08 00:08:19,721] INFO - Detailed rate statistics:
+[2026-04-08 00:08:19,722] INFO - grid - Number of params: 3110400.0000    Rate: 16311999.0000    Bits per param: 5.2443
+[2026-04-08 00:08:19,722] INFO - weight - Number of params: 2680.0000    Rate: 26524.8984    Bits per param: 9.8974
+[2026-04-08 00:08:19,722] INFO - grid_em_params - Number of params: 32596.0000    Rate: 734698.7500    Bits per param: 22.5395
+[2026-04-08 00:08:19,722] INFO - weight_em_params - Number of params: 39.0000    Rate: 565.3244    Bits per param: 14.4955
+[2026-04-08 00:08:19,722] INFO - grid_meta_em_params - Number of params: 66.0000    Rate: 2112.0000    Bits per param: 32.0000
+[2026-04-08 00:08:19,722] INFO - weight_meta_em_params - Number of params: 117.0000    Rate: 3744.0000    Bits per param: 32.0000
+[2026-04-08 00:08:19,722] INFO - others - Number of params: 67.0000    Rate: 2144.0000    Bits per param: 32.0000
+[2026-04-08 00:08:19,723] INFO - Completed group encoding.
+
+[2026-04-08 00:08:19,992] INFO - Total bitstream size: 17343904
+[2026-04-08 00:08:19,992] INFO - Average params_avg: 3113147.0000
+[2026-04-08 00:08:19,992] INFO - Average params_codec_avg: 3145965.0000
+[2026-04-08 00:08:19,992] INFO - Average macs_avg: nan
+[2026-04-08 00:08:19,992] INFO - Average macs_rate_avg: nan
+[2026-04-08 00:08:19,992] INFO - Average train_time_avg: 5412.8595
+[2026-04-08 00:08:19,992] INFO - Average eval_time_avg: 19.8869
+[2026-04-08 00:08:19,992] INFO - Average ent_enc_time_avg: 908.5843
+[2026-04-08 00:08:19,992] INFO - Average ent_dec_time_avg: 925.9444
+[2026-04-08 00:08:19,993] INFO - Average bpp_avg: 2.0910
+[2026-04-08 00:08:19,993] INFO - Average bpp_est_avg: 2.0594
+[2026-04-08 00:08:19,993] INFO - Average psnr_avg: 14.9552
+[2026-04-08 00:08:19,993] INFO - Average teacher-mse_avg: 0.0363
+[2026-04-08 00:08:19,993] INFO - Encoding completed in: 7271.84s
+[2026-04-08 00:08:19,993] INFO - Output are located in: /Users/wf24018/DeepScientist/quests/001/experiments/main/beauty_teacher_tiny_smoke_retry3_mpsfb

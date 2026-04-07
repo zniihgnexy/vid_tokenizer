@@ -1,0 +1,177 @@
+epochs: 1
+warmup_epochs: 0
+eval_epochs: 1
+eval_only: false
+rate_steps: 1
+grad_accum: 1
+train_batch_size: 1
+eval_batch_size: 1
+opt: adam
+sched: cosine
+lr: 0.001
+warmup_lr: 1.0e-05
+min_lr: 0.0001
+auto_lr_scaling: false
+max_norm: 1.0
+norm_type: 2.0
+weight_decay: 1.0e-06
+weight_decay_scaling: false
+opt_eps: 1.0e-08
+opt_betas:
+- 0.9
+- 0.999
+momentum: 0.9
+decay_milestones:
+- 0.5
+- 0.75
+decay_rate: 0.5
+lr_scale: []
+start_frame: 0
+num_frames: 4
+intra_period: -1
+output: /Users/wf24018/DeepScientist/quests/001/experiments/main
+exp_name: beauty_teacher_tiny_smoke_retry3_mpsfb
+log_epochs: 1
+log_iters: -2
+train_enable_log: false
+eval_enable_log: false
+resume: null
+resume_model_only: false
+resume_model_pat: null
+seed: 0
+workers: 0
+prefetch_factor: 4
+pin_mem: true
+train_data:
+    dataset_dir: /Users/wf24018/home/vid_tokenizer/Datasets/UVG/1920x1080
+    dataset: Beauty
+    video_size:
+    - -1
+    - -1
+    - -1
+    patch_size:
+    - 1
+    - 120
+    - 120
+    fmt: png
+eval_data:
+    dataset_dir: /Users/wf24018/home/vid_tokenizer/Datasets/UVG/1920x1080
+    dataset: Beauty
+    video_size:
+    - -1
+    - -1
+    - -1
+    patch_size:
+    - 1
+    - 120
+    - 120
+    fmt: png
+train_task:
+    loss:
+    - 1.0
+    - l1
+    metric:
+    - psnr
+    - teacher-mse
+    color_space: RGB
+    lamb: 1.0
+    enable_log: false
+    teacher_enable: true
+    teacher_type: mean_pool
+    teacher_loss_weight: 0.2
+    teacher_detach_target: true
+eval_task:
+    loss:
+    - 1.0
+    - l1
+    metric:
+    - psnr
+    - teacher-mse
+    color_space: RGB
+    lamb: 1.0
+    enable_log: false
+    teacher_enable: true
+    teacher_type: mean_pool
+    teacher_loss_weight: 0.2
+    teacher_detach_target: true
+compress_model:
+    type: NVRC
+    config:
+        grid_em:
+            em: ar
+            em_dist: gaussian
+            rate_quant: soft-round-noise
+            dist_quant: soft-round-noise
+            quant_mean: true
+            learned_quant: t
+model:
+    type: HiNeRV
+    config:
+        base_encoding:
+            base_grid_type: v2
+            base_grid_size:
+            - -1
+            - -1
+            - -1
+            - 2
+            base_grid_level: 2
+            base_grid_level_scale:
+            - 1.0
+            - 1.0
+            - 1.0
+            - 0.5
+            base_kernel:
+            - 1
+            - 3
+            - 3
+        decoder:
+            channels:
+            - 16
+            - 8
+            depths:
+            - 1
+            - 1
+            exps:
+            - 2.0
+            - 2.0
+            kernels:
+            - 3
+            - 3
+            scales_t:
+            - 1
+            - 1
+            scales_hw:
+            - 2
+            - 2
+            paddings:
+            - -1
+            - -1
+            - -1
+            block_type:
+            - convnext
+            - convnext
+            block_norm:
+            - layernorm-no-affine
+            - layernorm-no-affine
+            block_act:
+            - gelu
+            - gelu
+            upsample_type:
+            - trilinear
+            - trilinear
+            upsample_config:
+            - matmul-th-w
+            - matmul-th-w
+            upsample_norm:
+            - layernorm-no-affine
+            - layernorm-no-affine
+            upsample_act:
+            - none
+            - none
+            use_hi_encoding:
+            - true
+            - true
+            local_grid_size:
+            - -1
+            - 2
+            local_grid_level: 1
