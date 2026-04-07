@@ -8,6 +8,13 @@ This project studies **machine-oriented egocentric video compression** using INR
 
 **One-sentence summary:** Learn compact compressed representations for egocentric video that preserve tokenizer-level machine-understanding signals, not primarily human visual quality.
 
+## Local Working Constraints
+
+- Use an Anaconda or conda-managed environment as the recommended default setup for this project.
+- Save code and content changes locally under `/Users/wf24018/home/vid_tokenizer`.
+- Do not push changes to GitHub unless the user explicitly reviews the changes and approves the push first.
+- See `CONDA_SETUP.md` for the current local bootstrap note for the NVRC environment.
+
 ## Core Architecture
 
 The project implements the following pipeline:
@@ -67,12 +74,14 @@ vid_tokenizer/
 
 ### Setup & Dependencies
 ```bash
+# Recommended: create and activate a conda environment first
+# conda create -n vid_tokenizer python=3.10
+# conda activate vid_tokenizer
+
 # Install dependencies
 pip install -r requirements.txt
 
-# (If using conda)
-# conda create -n vid_tokenizer python=3.10
-# conda activate vid_tokenizer
+# Alternative if the environment already exists
 # pip install -r requirements.txt
 ```
 

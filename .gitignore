@@ -1,0 +1,11 @@
+.clawy/
+Datasets/
+DeepScientist/
+Outputs/
+
+# Common local noise
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+
