@@ -1,0 +1,194 @@
+model = "gpt-5.4"
+model_reasoning_effort = "xhigh"
+personality = "pragmatic"
+
+[mcp_servers.notion]
+url = "https://mcp.notion.com/mcp"
+
+[projects."/home/xinyizheng"]
+trust_level = "trusted"
+
+[projects."/home/xinyizheng/research_agent_pipeline"]
+trust_level = "trusted"
+
+[projects."/home/xinyizheng/VideoCoding_3d"]
+trust_level = "trusted"
+
+[projects."/home/xinyizheng/vid_tokenizer"]
+trust_level = "trusted"
+
+[notice.model_migrations]
+"gpt-5.3-codex" = "gpt-5.4"
+
+[plugins."github@openai-curated"]
+enabled = true
+
+# BEGIN DEEPSCIENTIST BUILTINS
+[mcp_servers.memory]
+transport = "stdio"
+command = "/home/xinyizheng/vid_tokenizer/DeepScientist/runtime/python-env/bin/python"
+args = ["-m", "deepscientist.mcp.server", "--namespace", "memory"]
+tool_timeout_sec = 180000
+
+[mcp_servers.memory.env]
+DEEPSCIENTIST_HOME = "/home/xinyizheng/vid_tokenizer/DeepScientist"
+DS_HOME = "/home/xinyizheng/vid_tokenizer/DeepScientist"
+DS_QUEST_ID = "002"
+DS_QUEST_ROOT = "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002"
+DS_WORKTREE_ROOT = "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71"
+DS_RUN_ID = "run-0ab9cb60"
+DS_WORKER_ID = "run-0ab9cb60"
+DS_ACTIVE_ANCHOR = "idea"
+DS_CONVERSATION_ID = "quest:002"
+DS_AGENT_ROLE = "pi"
+DS_TEAM_MODE = "single"
+PYTHONPATH = ":{/home/xinyizheng/}/PythonAPI/carla/dist/carla-0.9.13-py3.8-linux-x86_64.egg:{/home/xinyizheng/}/PythonAPI/carla/agents:{/home/xinyizheng/}/PythonAPI/carla:{/home/xinyizheng/}/PythonAPI:{/home/xinyizheng/}/PythonAPI/carla/dist/carla-0.9.13-py3.8-linux-x86_64.egg:{/home/xinyizheng/}/PythonAPI/carla/agents:{/home/xinyizheng/}/PythonAPI/carla:{/home/xinyizheng/}/PythonAPI"
+
+[mcp_servers.memory.tools.write]
+approval_mode = "approve"
+
+[mcp_servers.memory.tools.read]
+approval_mode = "approve"
+
+[mcp_servers.memory.tools.search]
+approval_mode = "approve"
+
+[mcp_servers.memory.tools.list_recent]
+approval_mode = "approve"
+
+[mcp_servers.memory.tools.promote_to_global]
+approval_mode = "approve"
+
+[mcp_servers.artifact]
+transport = "stdio"
+command = "/home/xinyizheng/vid_tokenizer/DeepScientist/runtime/python-env/bin/python"
+args = ["-m", "deepscientist.mcp.server", "--namespace", "artifact"]
+tool_timeout_sec = 180000
+
+[mcp_servers.artifact.env]
+DEEPSCIENTIST_HOME = "/home/xinyizheng/vid_tokenizer/DeepScientist"
+DS_HOME = "/home/xinyizheng/vid_tokenizer/DeepScientist"
+DS_QUEST_ID = "002"
+DS_QUEST_ROOT = "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002"
+DS_WORKTREE_ROOT = "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71"
+DS_RUN_ID = "run-0ab9cb60"
+DS_WORKER_ID = "run-0ab9cb60"
+DS_ACTIVE_ANCHOR = "idea"
+DS_CONVERSATION_ID = "quest:002"
+DS_AGENT_ROLE = "pi"
+DS_TEAM_MODE = "single"
+PYTHONPATH = ":{/home/xinyizheng/}/PythonAPI/carla/dist/carla-0.9.13-py3.8-linux-x86_64.egg:{/home/xinyizheng/}/PythonAPI/carla/agents:{/home/xinyizheng/}/PythonAPI/carla:{/home/xinyizheng/}/PythonAPI:{/home/xinyizheng/}/PythonAPI/carla/dist/carla-0.9.13-py3.8-linux-x86_64.egg:{/home/xinyizheng/}/PythonAPI/carla/agents:{/home/xinyizheng/}/PythonAPI/carla:{/home/xinyizheng/}/PythonAPI"
+
+[mcp_servers.artifact.tools.record]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.checkpoint]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.prepare_branch]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.activate_branch]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.submit_idea]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.list_research_branches]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.resolve_runtime_refs]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.get_paper_contract_health]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.get_quest_state]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.get_global_status]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.get_method_scoreboard]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.get_optimization_frontier]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.read_quest_documents]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.get_conversation_context]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.get_analysis_campaign]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.record_main_experiment]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.create_analysis_campaign]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.submit_paper_outline]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.list_paper_outlines]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.submit_paper_bundle]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.record_analysis_slice]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.publish_baseline]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.attach_baseline]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.confirm_baseline]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.waive_baseline]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.arxiv]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.refresh_summary]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.render_git_graph]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.interact]
+approval_mode = "approve"
+
+[mcp_servers.artifact.tools.complete_quest]
+approval_mode = "approve"
+
+[mcp_servers.bash_exec]
+transport = "stdio"
+command = "/home/xinyizheng/vid_tokenizer/DeepScientist/runtime/python-env/bin/python"
+args = ["-m", "deepscientist.mcp.server", "--namespace", "bash_exec"]
+tool_timeout_sec = 180000
+
+[mcp_servers.bash_exec.env]
+DEEPSCIENTIST_HOME = "/home/xinyizheng/vid_tokenizer/DeepScientist"
+DS_HOME = "/home/xinyizheng/vid_tokenizer/DeepScientist"
+DS_QUEST_ID = "002"
+DS_QUEST_ROOT = "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002"
+DS_WORKTREE_ROOT = "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71"
+DS_RUN_ID = "run-0ab9cb60"
+DS_WORKER_ID = "run-0ab9cb60"
+DS_ACTIVE_ANCHOR = "idea"
+DS_CONVERSATION_ID = "quest:002"
+DS_AGENT_ROLE = "pi"
+DS_TEAM_MODE = "single"
+PYTHONPATH = ":{/home/xinyizheng/}/PythonAPI/carla/dist/carla-0.9.13-py3.8-linux-x86_64.egg:{/home/xinyizheng/}/PythonAPI/carla/agents:{/home/xinyizheng/}/PythonAPI/carla:{/home/xinyizheng/}/PythonAPI:{/home/xinyizheng/}/PythonAPI/carla/dist/carla-0.9.13-py3.8-linux-x86_64.egg:{/home/xinyizheng/}/PythonAPI/carla/agents:{/home/xinyizheng/}/PythonAPI/carla:{/home/xinyizheng/}/PythonAPI"
+
+[mcp_servers.bash_exec.tools.bash_exec]
+approval_mode = "approve"
+# END DEEPSCIENTIST BUILTINS
