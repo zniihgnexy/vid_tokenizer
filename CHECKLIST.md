@@ -19,34 +19,39 @@ Update this while planning, modifying code, running pilots, monitoring the full 
 
 ## Implementation
 
-- [ ] intended files modified
-- [ ] unrelated changes avoided or justified
-- [ ] risky logic guarded or sanity-checked
-- [ ] plan updated if the implementation route changed
+- [x] intended files modified
+- [x] unrelated changes avoided or justified
+- [x] risky logic guarded or sanity-checked
+- [x] plan updated if the implementation route changed
 
 ## Pilot / Smoke
 
-- [ ] smoke command executed
-- [ ] outputs look valid
-- [ ] metrics / logs are interpretable
-- [ ] comparability still holds
+- [x] smoke command executed
+- [x] outputs look valid
+- [x] metrics / logs are interpretable
+- [x] comparability still holds
 
 ## Main Run
 
-- [ ] real run launched
+- [ ] real downstream consumer run launched
 - [ ] monitoring cadence started
 - [ ] health signals confirmed
 - [ ] major runtime deviations reflected in `PLAN.md`
 
 ## Validation
 
-- [ ] outputs exist
-- [ ] metrics are complete
-- [ ] baseline delta is comparable
-- [ ] main claim is classified as supported / refuted / inconclusive
+- [x] upstream interface outputs exist
+- [x] upstream interface metrics are complete
+- [x] frozen-upstream comparability holds
+- [ ] downstream main claim is classified as supported / refuted / inconclusive
 - [ ] result recorded durably
 
 ## Closeout
 
 - [ ] main experiment summarized in `1-2` sentences
 - [ ] next action is explicit
+
+## Notes
+
+- validated interface bundle: `experiments/main/interface_bundles/shared_gating_interface_export_smoke_r1/`
+- next unchecked item: implement and smoke `experiments/main/scripts/run_frozen_consumer_eval.py`
