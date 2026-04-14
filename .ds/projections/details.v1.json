@@ -2,7 +2,7 @@
   "schema_version": 1,
   "projection_id": "details.v1",
   "generated_at": "2026-04-14T14:26:52+00:00",
-  "source_signature": "7558551ff624e920cab5cd8d3b09cfb4c5b7c2c9f823a40591040cffd7dcf2ed",
+  "source_signature": "23e81105e43a18fb6410bba9daa56a926a40232ee5dcf2d1e86680de2849cc27",
   "payload": {
     "quest_id": "002",
     "quest_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002",
@@ -20,6 +20,21 @@
           "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source",
           "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/001/baselines/imported/nvrc-local-source",
           "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/reports/report-90b587c9.json"
+        ]
+      },
+      {
+        "id": "artifact:baseline-7f208df2",
+        "kind": "artifact",
+        "title": "baseline-7f208df2",
+        "summary": "Baseline `nvrc-local-source` confirmed during quest creation.",
+        "status": "confirmed",
+        "reason": "Baseline gate confirmed.",
+        "created_at": "2026-04-14T14:26:52+00:00",
+        "paths": [
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source",
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source/attachment.yaml",
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source/json/metric_contract.json",
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/baselines/baseline-7f208df2.json"
         ]
       },
       {
@@ -88,6 +103,18 @@
         "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/001/baselines/imported/nvrc-local-source",
         "source": "artifact_path",
         "document_id": null,
+        "writable": null
+      },
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/baselines/baseline-7f208df2.json",
+        "source": "artifact",
+        "document_id": "path::artifacts/baselines/baseline-7f208df2.json",
+        "writable": null
+      },
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source/json/metric_contract.json",
+        "source": "artifact_path",
+        "document_id": "path::baselines/imported/nvrc-local-source/json/metric_contract.json",
         "writable": null
       }
     ]
