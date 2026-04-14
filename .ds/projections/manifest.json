@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-04-14T14:26:52+00:00",
+  "projections": {
+    "details": {
+      "projection_id": "details.v1",
+      "state": "ready",
+      "progress_current": 3,
+      "progress_total": 3,
+      "current_step": null,
+      "source_signature": "7558551ff624e920cab5cd8d3b09cfb4c5b7c2c9f823a40591040cffd7dcf2ed",
+      "generated_at": "2026-04-14T14:26:52+00:00",
+      "last_success_at": "2026-04-14T14:26:52+00:00",
+      "error": null
+    },
+    "canvas": {
+      "projection_id": "canvas.v1",
+      "state": "building",
+      "progress_current": 2,
+      "progress_total": 3,
+      "current_step": "Computing branch canvas",
+      "source_signature": "2268c7435fd1a80d76c7f95697547cf7edb33abae6113117d0800c8f01e5e8a5",
+      "generated_at": null,
+      "last_success_at": null,
+      "error": null
+    },
+    "git_canvas": {
+      "projection_id": "git_canvas.v1",
+      "state": "building",
+      "progress_current": 2,
+      "progress_total": 3,
+      "current_step": "Computing commit canvas",
+      "source_signature": "2e04d5069fd952ba5c09c2279fd8de74ca560443a66fb8380f6444fd0c257416",
+      "generated_at": null,
+      "last_success_at": null,
+      "error": null
+    }
+  }
+}

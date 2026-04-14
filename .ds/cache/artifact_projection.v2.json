@@ -1,0 +1,92 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-04-14T14:26:52+00:00",
+  "state_kind": "index",
+  "state": [
+    [
+      ".",
+      [
+        13945910,
+        1776176812312170744,
+        297
+      ]
+    ]
+  ],
+  "artifacts": [
+    {
+      "kind": "graphs",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/graphs/git-graph.json",
+      "payload": {
+        "branch": "main",
+        "head": "393f472db826e72f91f02f77f519b1e78057c1be",
+        "lines": [
+          "* 393f472 (HEAD -> main) quest: initialize 002"
+        ]
+      },
+      "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002"
+    },
+    {
+      "kind": "reports",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/reports/report-90b587c9.json",
+      "payload": {
+        "kind": "report",
+        "schema_version": 1,
+        "artifact_id": "report-90b587c9",
+        "id": "report-90b587c9",
+        "quest_id": "002",
+        "created_at": "2026-04-14T14:26:52+00:00",
+        "updated_at": "2026-04-14T14:26:52+00:00",
+        "source": {
+          "kind": "system",
+          "role": "artifact"
+        },
+        "status": "completed",
+        "branch": "main",
+        "head_commit": "393f472db826e72f91f02f77f519b1e78057c1be",
+        "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002",
+        "workspace_rel_path": ".",
+        "report_type": "baseline_attachment",
+        "report_id": "report-853912e9",
+        "summary": "Attached baseline `nvrc-local-source`.",
+        "reason": "Baseline reuse avoids repeating an already stable reproduction.",
+        "baseline_id": "nvrc-local-source",
+        "baseline_variant_id": "tiny-local-teacher-pilot-r3",
+        "paths": {
+          "attachment_yaml": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source/attachment.yaml",
+          "baseline_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source",
+          "source_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/001/baselines/imported/nvrc-local-source"
+        },
+        "semantic_key": "report:baseline:baseline_attachment:none:913caebc19b4abbabc478e07e001a567bd5faa096a3af99dd54c872aa83be3fd",
+        "guidance_vm": {
+          "current_anchor": "baseline",
+          "recommended_skill": "decision",
+          "recommended_action": "continue",
+          "summary": "Report saved. Turn it into the next explicit route instead of leaving it as passive context.",
+          "why_now": "A report is most useful when it directly drives the next durable decision.",
+          "complete_when": [
+            "The report informs a route choice or stage transition.",
+            "The next active anchor is clear and durable."
+          ],
+          "alternative_routes": [],
+          "suggested_artifact_calls": [
+            {
+              "name": "artifact.record(kind='decision', ...)",
+              "purpose": "Convert the report into a route decision."
+            }
+          ],
+          "requires_user_decision": false,
+          "pending_interaction_id": null,
+          "source_artifact_kind": "report",
+          "source_artifact_id": "report-90b587c9",
+          "related_paths": [
+            "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source/attachment.yaml",
+            "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source",
+            "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/001/baselines/imported/nvrc-local-source"
+          ],
+          "stage_status": "ready"
+        }
+      },
+      "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002"
+    }
+  ]
+}
