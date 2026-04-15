@@ -4,53 +4,53 @@ Update this while planning, modifying code, running pilots, monitoring the full 
 
 ## Identity
 
-- run id: `delta_dominant_teacher_packet_followup_r1`
-- idea id: `idea-44a0e404`
+- run id: `delta_packet_bridge_smoke_r1`
+- idea id: `idea-e0d17d22`
 - stage: `experiment_prep`
 
 ## Planning
 
 - [x] selected idea summarized in `1-2` sentences
 - [x] parent-line evidence and baseline contract confirmed
-- [x] code touchpoints listed
-- [x] smoke plan written
-- [x] fallback options written
+- [x] bridge-specific risks listed
+- [ ] widened bounded sample surface chosen
+- [ ] exact bridge implementation path chosen
+- [ ] smoke command written
 
 ## Implementation
 
-- [x] packet export hook identified
-- [x] packet manifest schema written
-- [x] intended files modified for delta-first follow-up
-- [x] risky logic guarded or sanity-checked for delta-first weighting or gating
+- [x] packet exporter scaffold identified
+- [x] packet evaluator scaffold identified
+- [ ] minimal bridge script or extension implemented
+- [ ] widened-surface manifest or sample list written
+- [ ] risky logic sanity-checked for packet/sample alignment
 
 ## Pilot / Smoke
 
-- [x] delta-first follow-up command executed
-- [x] delta-first outputs look valid
-- [x] delta-first metadata aligns with sample ids
-- [x] delta-first comparison is interpretable
+- [ ] widened bridge smoke command executed
+- [ ] outputs look valid
+- [ ] bridge embeddings or scores align with sample ids
+- [ ] comparison against reconstructed-video control is interpretable
 
 ## Validation
 
-- [x] delta-first metrics are complete
-- [x] delta-first comparison against reconstructed-video and plain-feature controls is comparable
-- [x] delta-first claim is classified as supported / refuted / inconclusive
-- [x] next action after the follow-up is explicit
+- [ ] bridge metrics are complete
+- [ ] comparison against reconstructed-video control is comparable
+- [ ] `delta-only` vs `delta-dominant concat` bridge result is classified as supported / refuted / mixed
+- [ ] next action after the smoke is explicit
 
 ## Notes
 
 - parent-line downstream control:
   - `reconstructed_to_original_top1_accuracy=0.25`
   - `reconstructed_to_original_mean_match_rank=2.5`
-- first smoke result:
-  - `pred_feat_to_target_feat_top1_accuracy=0.25`
-  - `pred_delta_to_target_delta_top1_accuracy=0.75`
-  - heavy delta concat (`weight=8.0`) also reaches `top1_accuracy=0.75`
-- branch meaning:
-  - plain feature packet is downgraded to a rejected sibling control
-  - delta-dominant packet is the active continuation line
-- formal follow-up result:
+- current packet evidence:
   - `pred_delta_to_target_delta_top1_accuracy=0.75`
   - `pred_feat_plus_8p0x_delta_concat_to_target_feat_plus_8p0x_delta_concat_top1_accuracy=0.75`
   - `pred_feat_plus_8p0x_delta_sum_to_target_feat_plus_8p0x_delta_sum_top1_accuracy=0.5`
-- next unchecked item: prepare the smallest wider bounded validation package beyond the current 4-frame surface
+- branch meaning:
+  - plain static packet is downgraded as a default winner
+  - temporal-change packet is the active continuation signal
+  - the new experiment must test a consumer-facing bridge, not just another packet-similarity loop
+- next unchecked item:
+  - choose the widened bounded surface and lock the bridge script path

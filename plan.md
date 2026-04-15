@@ -1,14 +1,11 @@
 # Plan
 
 - [x] Reuse the confirmed `nvrc-local-source` baseline contract instead of rebuilding the old upstream line.
-- [x] Complete idea-stage literature and route selection for the downstream pipeline question.
-- [x] Freeze the inherited shared-gating upstream module and package the first reconstructed-video interface bundle on the bounded 4-frame tiny-local surface.
-- [x] Run the first downstream control comparison on original vs reconstructed inputs with a frozen `torchvision` consumer.
-- [x] Record the route decision from that control result: keep the pipeline skeleton, but stop treating reconstructed video as the preferred machine-facing handoff.
-- [x] Submit the child idea line `Teacher-Feature Packet Interface After Reconstructed-Video Bottleneck`.
-- [ ] Inspect the frozen upstream snapshot for the cleanest teacher/tokenizer hook points that can be exported without changing training logic.
-- [ ] Define a packet manifest schema that stays aligned with the parent bundle's sample ids, metadata, and comparison surface.
-- [ ] Implement the first packet export path and write the bounded smoke command.
-- [ ] Export one teacher/tokenizer packet bundle on the same 4-frame tiny-local surface.
-- [ ] Reuse or minimally extend the frozen downstream comparison path to evaluate packet-side retrieval preservation against the reconstructed-video control.
-- [ ] Record the first packet-side main experiment and the next route decision.
+- [x] Update the literature survey and select the new child line `Delta-Packet Bridge to Frozen Consumer Space`.
+- [x] Sync the active branch onto the bridge narrative instead of the older plain-feature or delta-follow-up-only story.
+- [ ] Choose the smallest widened bounded comparison surface beyond the current 4 samples while preserving the same comparison contract.
+- [ ] Reuse the packet exporter/evaluator scaffold and identify the minimal code touchpoints needed for a consumer-side bridge.
+- [ ] Implement one lightweight delta-packet adapter path that outputs frozen-consumer embeddings.
+- [ ] Run one bounded smoke for the widened bridge pipeline.
+- [ ] Run the first bounded bridge comparison against reconstructed-video control plus delta-only and delta-dominant concat variants.
+- [ ] Record the first bridge-side experiment result and the next route decision.

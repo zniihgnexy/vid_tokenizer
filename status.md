@@ -2,33 +2,30 @@
 
 Baseline reuse is already resolved: `nvrc-local-source` is the accepted upstream asset.
 
-Current stage: `decision`
+Current stage: `experiment_prep`
 
 Current judgment:
 - The next line should not reopen old compression-variant ranking.
-- The imported baseline package behaves like a verified upstream asset bundle, not a full downstream-ready system.
 - The parent downstream line already proved the pipeline skeleton: frozen upstream export plus frozen downstream consumer is runnable end to end.
 - The reconstructed-video handoff is now a bounded control result, not the preferred interface winner.
 - The key parent-line comparison is `original_to_original_top1_accuracy=1.0`, `reconstructed_to_original_top1_accuracy=0.25`, and `reconstructed_to_original_mean_match_rank=2.5`.
-- The active child line is `Teacher-Feature Packet Interface After Reconstructed-Video Bottleneck`.
-- The parent smoke is complete on the same 4-frame surface and is now the foundation for this new child line.
-- Plain feature packet did not beat the reconstructed-video control: `pred_feat_to_target_feat_top1_accuracy=0.25`, matching the reconstructed-video control's `0.25`.
-- Temporal delta packet is materially stronger: `pred_delta_to_target_delta_top1_accuracy=0.75` with `mean_match_rank=1.25`.
-- A heavy delta-dominant concat sweep (`weight=8.0`) also reaches `top1_accuracy=0.75`, which confirms that the promising signal is delta-led rather than static-feature-led.
-- The first formal delta-first follow-up now exists and confirms that the delta-dominant advantage survives parameterization.
-- Delta-only and heavy delta-dominant concat both hold `top1_accuracy=0.75` with `mean_match_rank=1.25`.
-- Delta-weighted sum degrades to `top1_accuracy=0.5`, so the current evidence favors delta-only or concat-style composition, not simple additive mixing.
-- The next stage should not reopen codec ranking or jump straight to a larger VLM/LLM interface before delta-first packet evidence is sharpened.
+- The delta-first packet follow-up stabilized on the same frozen 4-frame surface: `delta-only_top1_accuracy=0.75`, `8x_delta_concat_top1_accuracy=0.75`, and `8x_delta_sum_top1_accuracy=0.5`.
+- The active child line is `Delta-Packet Bridge to Frozen Consumer Space`.
+- The scientific bottleneck is no longer "does any packet help?" but "can the validated temporal-change packet be turned into a true downstream consumer-facing interface?"
+- The repo currently has reusable local assets around `torch` and `torchvision` plus the frozen `resnet18_imagenet` teacher/consumer path; there is no maintained large-model dependency path ready to reuse directly.
+- The correct next move is therefore a lightweight local bridge plus a slightly wider bounded validation surface, not a direct VLM/LLM demo.
 
 Current frontier:
-1. Recommended: delta-only or heavy-delta concat packet interface with the same frozen comparison shape.
-2. Fallback: heavy-delta feature+delta concat if a pure delta packet becomes too brittle.
-3. Deferred: larger multimodal or VLM/LLM integration after delta-first packet evidence is measured.
-4. Rejected for now: plain static feature packet as the default machine-facing winner.
-5. Rejected for now: delta-weighted sum as the default composition rule.
-6. Rejected for now: further scaling of reconstructed-video as the primary machine-facing interface.
+1. Recommended: delta-packet bridge with `delta-only` and `delta-dominant concat` variants on a widened bounded surface.
+2. Required robustness: keep a widened bounded validation of the current delta signal inside the first bridge experiment package.
+3. Deferred: static-context sidecar or other fusion-heavy packet variants.
+4. Deferred: larger multimodal or VLM/LLM integration after the bridge line proves itself on local assets.
+5. Rejected for now: plain static feature packet as the default machine-facing winner.
+6. Rejected for now: simple weighted-sum fusion as the default composition rule.
+7. Rejected for now: further scaling of reconstructed video as the primary handoff layer.
 
 Next durable action:
-- keep the new exporter/evaluator as reusable scaffolding
-- prepare the smallest wider bounded validation package beyond the current 4-frame surface
-- use this child line only for delta-dominant validation rather than mixing it with the rejected plain-feature route
+- lock the bridge experiment contract in `PLAN.md` and `CHECKLIST.md`
+- pick the widened bounded sample surface
+- implement the smallest adapter that maps delta packets into a frozen consumer space
+- run one bounded smoke before the first bridge comparison
