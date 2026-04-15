@@ -59,19 +59,18 @@
 ## 4. Execution Design
 
 - minimal experiment:
-  - select the smallest widened bounded surface beyond the current 4 samples
+  - use the only currently available 4-frame packet surface as a bounded smoke
   - load the existing delta packets from the frozen exporter
-  - map them through one lightweight adapter into a frozen consumer embedding space
-  - compare reconstructed-video control, `delta-only`, and `delta-dominant concat`
+  - compare direct delta alignment and lightweight bridge variants in the frozen consumer space
+  - treat any learned adapter result on this surface as smoke only, not as a robustness claim
 - smoke / pilot plan:
   - verify packet/sample alignment on the widened surface
   - run the bridge only on the bounded widened subset
   - confirm that metrics are interpretable and directly comparable to the parent control
 - expected outputs:
-  - widened-surface manifest or sample list
   - bridge evaluation script and configuration
-  - one smoke summary for reconstructed-video control vs bridge variants
-  - one judgment on whether the bridge signal is strong enough to justify a larger run
+  - one 4-frame smoke summary for direct and learned bridge variants
+  - one judgment on whether the bridge signal is strong enough to justify seeking a wider surface
 - stop condition:
   - the widened bridge smoke runs end to end and produces an interpretable comparison
 - abandonment condition:
@@ -82,10 +81,9 @@
 ## 5. Runtime Strategy
 
 - immediate next actions:
-  - inspect which additional sample ids are available on the current bounded asset surface
-  - choose the widened bounded set
-  - determine whether to implement the bridge as a minimal readout head or a tiny temporal adapter
-  - run one smoke command before any larger execution
+  - keep the completed 4-frame smoke as the bounded first bridge result
+  - search for or regenerate a wider bounded packet surface
+  - treat direct delta alignment as incumbent and learned bridge variants as currently unsupported on this smoke surface
 - artifact locations:
   - parent control root:
     `../idea-idea-3ed587d5/experiments/main/shared_gating_downstream_interface_bootstrap_r1/downstream_eval/`
@@ -101,9 +99,9 @@
 ## 6. Fallbacks And Recovery
 
 - if a true consumer-space bridge is too large:
-  - fall back to the smallest readout-style bridge that still consumes the packet in a consumer-facing format
+  - fall back to direct delta alignment as the current bridge layer
 - if the widened bounded surface is unavailable:
-  - record that limitation explicitly and stay on the current 4-sample surface only as a temporary pilot
+  - record that limitation explicitly and keep the current 4-frame result as smoke only
 - if `delta-dominant concat` collapses while `delta-only` stays strong:
   - continue with `delta-only` as the active bridge payload and downgrade concat to control
 - if both bridge variants collapse:
@@ -112,4 +110,4 @@
 ## 7. Checklist Link
 
 - checklist path: `CHECKLIST.md`
-- next unchecked item: choose the widened bounded surface and define the exact bridge implementation path
+- next unchecked item: find or regenerate a wider bounded packet surface under the same upstream contract

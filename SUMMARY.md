@@ -8,5 +8,5 @@ Completed milestones:
 - Selected the new child line `Delta-Packet Bridge to Frozen Consumer Space`.
 
 Current active work:
-- Sync the bridge experiment contract and define the first widened bounded bridge smoke.
-- Reuse the current packet scaffold to build the smallest consumer-facing delta bridge.
+- The first 4-frame bridge smoke is now complete: direct delta alignment lifts top-1 from `0.25` to `0.5`, while learned ridge bridges collapse to `0.0`.
+- The next move is to keep direct delta alignment as the live bridge signal and search for or regenerate a wider bounded packet surface before claiming a learned bridge.
