@@ -1,0 +1,51 @@
+{
+  "kind": "report",
+  "schema_version": 1,
+  "artifact_id": "report-2f50a1da",
+  "id": "report-2f50a1da",
+  "quest_id": "002",
+  "created_at": "2026-04-15T08:09:46+00:00",
+  "updated_at": "2026-04-15T08:09:46+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi",
+    "run_id": "run-31b07cc3"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-44a0e404",
+  "head_commit": "588d8a1313b9250d90ec47e821bf2c5d9f131c78",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-44a0e404",
+  "report_type": "route_frame",
+  "stage": "idea",
+  "title": "Delta-first idea pass framing",
+  "summary": "Objective: choose the next durable child line after the delta-first packet follow-up stabilized. Evidence anchor: latest delta-first follow-up summary on the same 4-frame frozen surface shows delta-only and delta-dominant concat at top-1 0.75 vs weighted sum 0.5 and static target-feature self-match 1.0. Constraints: keep the upstream module frozen, preserve the same bounded comparison contract, avoid reopening codec ranking, and prefer a runnable machine-facing pipeline over a confounded direct VLM demo. Candidate routes under review: wider bounded delta validation, delta-to-frozen-foundation consumer bridge, or a static-context sidecar variant. Success criterion: submit one new durable idea branch whose mechanism, risk, and next experiment package are clearer than the current line. Downgrade criterion: if local consumer feasibility or literature support is too weak, stay with bounded validation rather than forcing a higher-level bridge.",
+  "comment": "Record explicit stage contract before selecting the next idea line",
+  "run_id": "run-31b07cc3",
+  "anchor": "idea",
+  "semantic_key": "report:idea:route_frame:none:2ab05ff6dd89932828a6ec41dcabf285beabce71829230abcd654dd5009df23f",
+  "guidance_vm": {
+    "current_anchor": "idea",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Report saved. Turn it into the next explicit route instead of leaving it as passive context.",
+    "why_now": "A report is most useful when it directly drives the next durable decision.",
+    "complete_when": [
+      "The report informs a route choice or stage transition.",
+      "The next active anchor is clear and durable."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(kind='decision', ...)",
+        "purpose": "Convert the report into a route decision."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "report",
+    "source_artifact_id": "report-2f50a1da",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}
