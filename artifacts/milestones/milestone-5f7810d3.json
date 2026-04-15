@@ -1,0 +1,56 @@
+{
+  "kind": "milestone",
+  "schema_version": 1,
+  "artifact_id": "milestone-5f7810d3",
+  "id": "milestone-5f7810d3",
+  "quest_id": "002",
+  "created_at": "2026-04-15T07:49:49+00:00",
+  "updated_at": "2026-04-15T07:49:49+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-301dcd71",
+  "head_commit": "b2c2a2798c6fe8721bfa55d7252e598038f66ede",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-301dcd71",
+  "message": "有结果了：第一轮 teacher packet 导出和检索评估已经跑通，但结论是“部分成立”而不是直接大胜。静态 feature packet 目前的 top-1 还是 0.25，和 reconstructed-video 对照差不多；真正抬起来的是 temporal delta packet，top-1 到了 0.75、mean rank 到 1.25。这说明下一步更值得追的不是“整包 feature 直接下游化”，而是把时间变化信号当成主接口，再看要不要做 delta-first 或 gating 版本。",
+  "summary": "有结果了：第一轮 teacher packet 导出和检索评估已经跑通，但结论是“部分成立”而不是直接大胜。静态 feature packet 目前的 top-1 还是 0.25，和 reconstructed-video 对照差不多；真正抬起来的是 temporal delta packet，top-1 到了 0.75、mean rank 到 1.25。这说明下一步更值得追的不是“整包 feature 直接下游化”，而是把时间变化信…",
+  "summary_preview": "有结果了：第一轮 teacher packet 导出和检索评估已经跑通，但结论是“部分成立”而不是直接大胜。静态 feature packet 目前的 top-1 还是 0.25，和 reconstructed-video 对照差不多；真正抬起来的是 temporal delta packet，top-1 到了 0.75、mean rank 到 1.25。这说明下一步更值得追的不是“整包 feature 直接下游化”，而是把时间变化信…",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "milestone-5f7810d3",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": "progress-1d88c0d7",
+  "guidance_vm": {
+    "current_anchor": "milestone",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Milestone recorded. Continue from the current anchor and keep the next checkpoint durable.",
+    "why_now": "Milestones should mark meaningful progress, not end the route prematurely.",
+    "complete_when": [
+      "The next substantive output is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.interact(kind='progress', ...)",
+        "purpose": "Send the next checkpoint update across active surfaces."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "milestone",
+    "source_artifact_id": "milestone-5f7810d3",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}
