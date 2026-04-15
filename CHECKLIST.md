@@ -18,28 +18,32 @@ Update this while planning, modifying code, running pilots, monitoring the full 
 
 ## Implementation
 
-- [ ] packet export hook identified
-- [ ] packet manifest schema written
-- [ ] intended files modified
-- [ ] risky logic guarded or sanity-checked
+- [x] packet export hook identified
+- [x] packet manifest schema written
+- [x] intended files modified
+- [x] risky logic guarded or sanity-checked
 
 ## Pilot / Smoke
 
-- [ ] packet smoke command executed
-- [ ] packet outputs look valid
-- [ ] packet metadata aligns with sample ids
-- [ ] downstream comparison is interpretable
+- [x] packet smoke command executed
+- [x] packet outputs look valid
+- [x] packet metadata aligns with sample ids
+- [x] downstream comparison is interpretable
 
 ## Validation
 
-- [ ] packet-side metrics are complete
-- [ ] packet-side comparison against reconstructed-video control is comparable
-- [ ] main claim is classified as supported / refuted / inconclusive
-- [ ] next action is explicit
+- [x] packet-side metrics are complete
+- [x] packet-side comparison against reconstructed-video control is comparable
+- [x] main claim is classified as supported / refuted / inconclusive
+- [x] next action is explicit
 
 ## Notes
 
 - parent-line downstream control:
   - `reconstructed_to_original_top1_accuracy=0.25`
   - `reconstructed_to_original_mean_match_rank=2.5`
-- next unchecked item: inspect the frozen upstream code for the first clean teacher/tokenizer packet export hook
+- first smoke result:
+  - `pred_feat_to_target_feat_top1_accuracy=0.25`
+  - `pred_delta_to_target_delta_top1_accuracy=0.75`
+  - heavy delta concat (`weight=8.0`) also reaches `top1_accuracy=0.75`
+- next unchecked item: record the delta-dominant packet decision and prepare the first delta-first follow-up package

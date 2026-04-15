@@ -1,0 +1,70 @@
+{
+  "concat": {
+    "0.0": {
+      "mean_match_rank": 2.5,
+      "top1_accuracy": 0.25
+    },
+    "0.125": {
+      "mean_match_rank": 2.5,
+      "top1_accuracy": 0.25
+    },
+    "0.25": {
+      "mean_match_rank": 2.25,
+      "top1_accuracy": 0.25
+    },
+    "0.5": {
+      "mean_match_rank": 2.25,
+      "top1_accuracy": 0.25
+    },
+    "1.0": {
+      "mean_match_rank": 2.0,
+      "top1_accuracy": 0.25
+    },
+    "2.0": {
+      "mean_match_rank": 2.0,
+      "top1_accuracy": 0.5
+    },
+    "4.0": {
+      "mean_match_rank": 2.0,
+      "top1_accuracy": 0.5
+    },
+    "8.0": {
+      "mean_match_rank": 1.25,
+      "top1_accuracy": 0.75
+    }
+  },
+  "sum": {
+    "0.0": {
+      "mean_match_rank": 2.5,
+      "top1_accuracy": 0.25
+    },
+    "0.125": {
+      "mean_match_rank": 2.25,
+      "top1_accuracy": 0.25
+    },
+    "0.25": {
+      "mean_match_rank": 2.25,
+      "top1_accuracy": 0.25
+    },
+    "0.5": {
+      "mean_match_rank": 1.75,
+      "top1_accuracy": 0.25
+    },
+    "1.0": {
+      "mean_match_rank": 2.0,
+      "top1_accuracy": 0.25
+    },
+    "2.0": {
+      "mean_match_rank": 1.75,
+      "top1_accuracy": 0.5
+    },
+    "4.0": {
+      "mean_match_rank": 1.75,
+      "top1_accuracy": 0.5
+    },
+    "8.0": {
+      "mean_match_rank": 1.5,
+      "top1_accuracy": 0.5
+    }
+  }
+}
