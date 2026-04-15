@@ -20,22 +20,22 @@ Update this while planning, modifying code, running pilots, monitoring the full 
 
 - [x] packet export hook identified
 - [x] packet manifest schema written
-- [ ] intended files modified for delta-first follow-up
-- [ ] risky logic guarded or sanity-checked for delta-first weighting or gating
+- [x] intended files modified for delta-first follow-up
+- [x] risky logic guarded or sanity-checked for delta-first weighting or gating
 
 ## Pilot / Smoke
 
-- [ ] delta-first follow-up command executed
-- [ ] delta-first outputs look valid
-- [ ] delta-first metadata aligns with sample ids
-- [ ] delta-first comparison is interpretable
+- [x] delta-first follow-up command executed
+- [x] delta-first outputs look valid
+- [x] delta-first metadata aligns with sample ids
+- [x] delta-first comparison is interpretable
 
 ## Validation
 
-- [ ] delta-first metrics are complete
-- [ ] delta-first comparison against reconstructed-video and plain-feature controls is comparable
-- [ ] delta-first claim is classified as supported / refuted / inconclusive
-- [ ] next action after the follow-up is explicit
+- [x] delta-first metrics are complete
+- [x] delta-first comparison against reconstructed-video and plain-feature controls is comparable
+- [x] delta-first claim is classified as supported / refuted / inconclusive
+- [x] next action after the follow-up is explicit
 
 ## Notes
 
@@ -49,4 +49,8 @@ Update this while planning, modifying code, running pilots, monitoring the full 
 - branch meaning:
   - plain feature packet is downgraded to a rejected sibling control
   - delta-dominant packet is the active continuation line
-- next unchecked item: prepare and run the first delta-first follow-up package
+- formal follow-up result:
+  - `pred_delta_to_target_delta_top1_accuracy=0.75`
+  - `pred_feat_plus_8p0x_delta_concat_to_target_feat_plus_8p0x_delta_concat_top1_accuracy=0.75`
+  - `pred_feat_plus_8p0x_delta_sum_to_target_feat_plus_8p0x_delta_sum_top1_accuracy=0.5`
+- next unchecked item: prepare the smallest wider bounded validation package beyond the current 4-frame surface

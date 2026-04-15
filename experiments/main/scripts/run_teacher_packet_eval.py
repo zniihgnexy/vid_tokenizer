@@ -11,18 +11,6 @@ import torch
 import torch.nn.functional as F
 
 
-COMPARISON_SPECS = [
-    ("target_feat_to_target_feat", ["target_feat"], ["target_feat"]),
-    ("pred_feat_to_target_feat", ["pred_feat"], ["target_feat"]),
-    ("pred_delta_to_target_delta", ["pred_delta"], ["target_delta"]),
-    (
-        "pred_feat_plus_delta_to_target_feat_plus_delta",
-        ["pred_feat", "pred_delta"],
-        ["target_feat", "target_delta"],
-    ),
-]
-
-
 @dataclass(frozen=True)
 class PacketFrame:
     sample_id: str
@@ -40,6 +28,18 @@ def parse_args() -> argparse.Namespace:
         choices=["smoke", "full"],
         default="smoke",
         help="Recorded execution mode. The bounded bundle size stays fixed in this round.",
+    )
+    parser.add_argument(
+        "--comparison-preset",
+        choices=["all", "delta_first"],
+        default="all",
+        help="Select the comparison package to compute from the packet bundle.",
+    )
+    parser.add_argument(
+        "--delta-weight",
+        type=float,
+        default=1.0,
+        help="Weight applied to delta vectors in weighted sum/concat comparisons.",
     )
     return parser.parse_args()
 
@@ -69,11 +69,69 @@ def load_payloads(frames: list[PacketFrame]) -> list[dict[str, object]]:
     return [torch.load(frame.packet_path, map_location="cpu") for frame in frames]
 
 
-def build_embeddings(payloads: list[dict[str, object]], fields: list[str]) -> torch.Tensor:
+def format_weight(weight: float) -> str:
+    return str(weight).replace(".", "p")
+
+
+def build_comparison_specs(preset: str, delta_weight: float) -> list[dict[str, object]]:
+    weight_label = format_weight(delta_weight)
+    specs: list[dict[str, object]] = [
+        {
+            "name": "target_feat_to_target_feat",
+            "query_components": [("target_feat", 1.0)],
+            "gallery_components": [("target_feat", 1.0)],
+            "mode": "concat",
+        },
+        {
+            "name": "pred_delta_to_target_delta",
+            "query_components": [("pred_delta", 1.0)],
+            "gallery_components": [("target_delta", 1.0)],
+            "mode": "concat",
+        },
+        {
+            "name": f"pred_feat_plus_{weight_label}x_delta_concat_to_target_feat_plus_{weight_label}x_delta_concat",
+            "query_components": [("pred_feat", 1.0), ("pred_delta", delta_weight)],
+            "gallery_components": [("target_feat", 1.0), ("target_delta", delta_weight)],
+            "mode": "concat",
+        },
+        {
+            "name": f"pred_feat_plus_{weight_label}x_delta_sum_to_target_feat_plus_{weight_label}x_delta_sum",
+            "query_components": [("pred_feat", 1.0), ("pred_delta", delta_weight)],
+            "gallery_components": [("target_feat", 1.0), ("target_delta", delta_weight)],
+            "mode": "sum",
+        },
+    ]
+    if preset == "all":
+        specs.insert(
+            1,
+            {
+                "name": "pred_feat_to_target_feat",
+                "query_components": [("pred_feat", 1.0)],
+                "gallery_components": [("target_feat", 1.0)],
+                "mode": "concat",
+            },
+        )
+    return specs
+
+
+def build_embeddings(
+    payloads: list[dict[str, object]],
+    components: list[tuple[str, float]],
+    mode: str,
+) -> torch.Tensor:
     rows: list[torch.Tensor] = []
     for payload in payloads:
-        chunks = [torch.as_tensor(payload[field], dtype=torch.float32).flatten() for field in fields]
-        rows.append(torch.cat(chunks, dim=0))
+        chunks = [
+            float(weight) * torch.as_tensor(payload[field], dtype=torch.float32).flatten()
+            for field, weight in components
+        ]
+        if mode == "concat":
+            row = torch.cat(chunks, dim=0)
+        elif mode == "sum":
+            row = torch.stack(chunks, dim=0).sum(dim=0)
+        else:
+            raise ValueError(f"Unsupported embedding mode: {mode}")
+        rows.append(row)
     return F.normalize(torch.stack(rows, dim=0), dim=1)
 
 
@@ -148,12 +206,16 @@ def write_similarity_matrix(path: Path, row_ids: list[str], col_ids: list[str], 
 def build_markdown_report(
     summary_by_name: dict[str, dict[str, float]],
     teacher_packet_summary: dict[str, object],
+    comparison_preset: str,
+    delta_weight: float,
 ) -> str:
     lines = [
         "# Teacher Packet Evaluation",
         "",
         f"- teacher_type: `{teacher_packet_summary['teacher_type']}`",
         f"- feature_dim: `{teacher_packet_summary['feature_dim']}`",
+        f"- comparison_preset: `{comparison_preset}`",
+        f"- delta_weight: `{delta_weight}`",
         "",
         "| Comparison | Top-1 Accuracy | Mean Match Rank | Mean Matching Similarity | Mean Margin vs Best Nonmatch |",
         "|---|---:|---:|---:|---:|",
@@ -180,11 +242,21 @@ def main() -> None:
     manifest, frames = read_packet_frames(bundle_dir)
     payloads = load_payloads(frames)
     sample_ids = [frame.sample_id for frame in frames]
+    comparison_specs = build_comparison_specs(args.comparison_preset, args.delta_weight)
 
     summary_by_name: dict[str, dict[str, float]] = {}
-    for comparison_name, query_fields, gallery_fields in COMPARISON_SPECS:
-        query_embeddings = build_embeddings(payloads, query_fields)
-        gallery_embeddings = build_embeddings(payloads, gallery_fields)
+    for spec in comparison_specs:
+        comparison_name = str(spec["name"])
+        query_embeddings = build_embeddings(
+            payloads,
+            list(spec["query_components"]),
+            str(spec["mode"]),
+        )
+        gallery_embeddings = build_embeddings(
+            payloads,
+            list(spec["gallery_components"]),
+            str(spec["mode"]),
+        )
         similarity = cosine_similarity_matrix(query_embeddings, gallery_embeddings)
         rows = retrieval_rows(sample_ids, sample_ids, similarity)
         summary_by_name[comparison_name] = summarize_rows(rows)
@@ -196,13 +268,20 @@ def main() -> None:
             similarity,
         )
 
-    report_text = build_markdown_report(summary_by_name, manifest["teacher_packet_summary"])
+    report_text = build_markdown_report(
+        summary_by_name,
+        manifest["teacher_packet_summary"],
+        args.comparison_preset,
+        args.delta_weight,
+    )
     (output_dir / "report.md").write_text(report_text, encoding="utf-8")
 
     summary = {
         "mode": args.mode,
         "bundle_dir": str(bundle_dir),
         "output_dir": str(output_dir),
+        "comparison_preset": args.comparison_preset,
+        "delta_weight": args.delta_weight,
         "frame_count": len(frames),
         "sample_ids": sample_ids,
         "upstream_aggregate_metrics": manifest["aggregate_metrics"],

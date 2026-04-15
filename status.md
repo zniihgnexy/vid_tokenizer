@@ -15,17 +15,20 @@ Current judgment:
 - Plain feature packet did not beat the reconstructed-video control: `pred_feat_to_target_feat_top1_accuracy=0.25`, matching the reconstructed-video control's `0.25`.
 - Temporal delta packet is materially stronger: `pred_delta_to_target_delta_top1_accuracy=0.75` with `mean_match_rank=1.25`.
 - A heavy delta-dominant concat sweep (`weight=8.0`) also reaches `top1_accuracy=0.75`, which confirms that the promising signal is delta-led rather than static-feature-led.
-- The active child line now exists to test whether that delta-dominant advantage remains stable in the next bounded follow-up.
+- The first formal delta-first follow-up now exists and confirms that the delta-dominant advantage survives parameterization.
+- Delta-only and heavy delta-dominant concat both hold `top1_accuracy=0.75` with `mean_match_rank=1.25`.
+- Delta-weighted sum degrades to `top1_accuracy=0.5`, so the current evidence favors delta-only or concat-style composition, not simple additive mixing.
 - The next stage should not reopen codec ranking or jump straight to a larger VLM/LLM interface before delta-first packet evidence is sharpened.
 
 Current frontier:
-1. Recommended: delta-dominant packet interface with the same frozen comparison shape.
-2. Fallback: heavy-delta feature+delta mix if a pure delta packet becomes too brittle.
+1. Recommended: delta-only or heavy-delta concat packet interface with the same frozen comparison shape.
+2. Fallback: heavy-delta feature+delta concat if a pure delta packet becomes too brittle.
 3. Deferred: larger multimodal or VLM/LLM integration after delta-first packet evidence is measured.
 4. Rejected for now: plain static feature packet as the default machine-facing winner.
-5. Rejected for now: further scaling of reconstructed-video as the primary machine-facing interface.
+5. Rejected for now: delta-weighted sum as the default composition rule.
+6. Rejected for now: further scaling of reconstructed-video as the primary machine-facing interface.
 
 Next durable action:
 - keep the new exporter/evaluator as reusable scaffolding
-- prepare the smallest delta-first follow-up comparison on the same bounded surface
-- use this child line only for the next delta-first validation rather than mixing it with the rejected plain-feature route
+- prepare the smallest wider bounded validation package beyond the current 4-frame surface
+- use this child line only for delta-dominant validation rather than mixing it with the rejected plain-feature route
