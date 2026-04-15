@@ -1,0 +1,119 @@
+{
+  "kind": "idea",
+  "schema_version": 1,
+  "artifact_id": "idea-476dc3b9",
+  "id": "idea-476dc3b9",
+  "quest_id": "002",
+  "created_at": "2026-04-15T07:55:04+00:00",
+  "updated_at": "2026-04-15T07:55:04+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-44a0e404",
+  "head_commit": "4ba1a028cbe82daf08ffb3a1d0d3dddf598d1deb",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-44a0e404",
+  "summary": "Idea `idea-44a0e404` created and promoted to the active research head.",
+  "reason": "Measured evidence from the current line supports a route shift: delta-only packet retrieval reaches top-1 0.75 with mean rank 1.25, while plain feature packet stays at top-1 0.25 and heavy delta-dominant concat reaches the same 0.75 top-1 only when delta clearly dominates.",
+  "idea_id": "idea-44a0e404",
+  "lineage_intent": "continue_line",
+  "parent_branch": "idea/002-idea-301dcd71",
+  "foundation_ref": {
+    "kind": "idea",
+    "ref": "idea-301dcd71",
+    "branch": "idea/002-idea-301dcd71",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71",
+    "idea_id": "idea-301dcd71",
+    "label": "Idea `idea-301dcd71` on `idea/002-idea-301dcd71`"
+  },
+  "foundation_reason": null,
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404",
+  "worktree_rel_path": ".ds/worktrees/idea-idea-44a0e404",
+  "flow_type": "idea_submission",
+  "protocol_step": "create",
+  "paths": {
+    "idea_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404/memory/ideas/idea-44a0e404/idea.md",
+    "idea_draft_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404/memory/ideas/idea-44a0e404/draft.md",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404"
+  },
+  "details": {
+    "title": "Delta-Dominant Teacher Packet Interface After Static Feature Packet Bottleneck",
+    "problem": "The first teacher-packet smoke on the frozen 4-frame surface shows that plain static feature packet does not outperform the reconstructed-video control: pred_feat_to_target_feat top-1 remains 0.25 with mean match rank 2.5. The route needs a new child line that keeps the same frozen upstream contract but changes the packet emphasis.",
+    "hypothesis": "The machine-facing value of the packet interface is concentrated in temporal change structure, so a delta-dominant packet should preserve retrieval structure more reliably than both reconstructed video and plain static feature packet under the same frozen upstream contract.",
+    "mechanism": "Make temporal delta the primary packet signal and treat static teacher features as optional secondary context rather than the default interface payload. Keep the existing exporter and evaluator scaffold, but center future packet views and comparisons on delta-first or heavy-delta-gated representations.",
+    "method_brief": "Reuse the current teacher packet exporter/evaluator scaffold and the same 4-frame frozen comparison surface. The next bounded step is a delta-first packet follow-up that tests pure delta and heavy-delta-gated variants before any scaling or larger-model integration.",
+    "selection_scores": null,
+    "mechanism_family": "delta_dominant_teacher_packet",
+    "change_layer": null,
+    "source_lens": null,
+    "expected_gain": "Turn a mixed first smoke into a cleaner next route: keep the observed 0.75 top-1 delta signal while dropping plain-feature complexity that does not beat the 0.25 reconstructed-video control.",
+    "next_target": "prepare and run the smallest delta-first packet follow-up package on the same frozen 4-frame surface, then decide whether the line deserves wider validation or a broader downstream consumer.",
+    "branch_no": "004",
+    "lineage_intent": "continue_line",
+    "parent_branch": "idea/002-idea-301dcd71",
+    "foundation_ref": {
+      "kind": "idea",
+      "ref": "idea-301dcd71",
+      "branch": "idea/002-idea-301dcd71",
+      "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71",
+      "idea_id": "idea-301dcd71",
+      "label": "Idea `idea-301dcd71` on `idea/002-idea-301dcd71`"
+    },
+    "foundation_reason": null,
+    "idea_draft_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404/memory/ideas/idea-44a0e404/draft.md",
+    "evidence_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/experiments/main/evals/shared_gating_teacher_packet_smoke_r1/summary.json",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/experiments/main/evals/shared_gating_teacher_packet_smoke_r1/weight_sweep.json",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/artifacts/decisions/decision-41ab5396.json"
+    ],
+    "risks": [
+      "The current evidence comes from a tiny 4-frame smoke surface, so delta gains may be brittle.",
+      "A pure delta packet may lose useful static context if weighting is pushed too far.",
+      "Packet/sample alignment must remain exact so the follow-up comparison stays trustworthy."
+    ],
+    "submission_mode": "line",
+    "source_candidate_id": null
+  },
+  "guidance_vm": {
+    "current_anchor": "idea",
+    "recommended_skill": "experiment",
+    "recommended_action": "launch_experiment",
+    "summary": "Idea branch is ready. Continue with the next active optimization stage on this durable research node.",
+    "why_now": "The accepted idea already has its durable branch/worktree, so the next leverage point is the configured next stage rather than another route-selection loop.",
+    "complete_when": [
+      "The next configured stage starts from this branch.",
+      "The resulting evidence or decision is written durably."
+    ],
+    "alternative_routes": [
+      {
+        "action": "continue",
+        "label": "Inspect the branch once",
+        "when": "A quick branch sanity check is still needed before running.",
+        "tradeoff": "Adds caution, but should stay short."
+      },
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Analyze first",
+        "when": "The idea package still has unresolved setup ambiguity that needs clarification.",
+        "tradeoff": "Can reduce wasted runs, but is unusual before a first main result."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record_main_experiment(...)",
+        "purpose": "Record the first real main result on this branch when the next stage is experiment-oriented."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "idea",
+    "source_artifact_id": "idea-476dc3b9",
+    "related_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404/memory/ideas/idea-44a0e404/idea.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404/memory/ideas/idea-44a0e404/draft.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404"
+    ],
+    "stage_status": "ready"
+  }
+}

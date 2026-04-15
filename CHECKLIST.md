@@ -4,8 +4,8 @@ Update this while planning, modifying code, running pilots, monitoring the full 
 
 ## Identity
 
-- run id: `teacher_feature_packet_interface_bootstrap_r1`
-- idea id: `idea-301dcd71`
+- run id: `delta_dominant_teacher_packet_followup_r1`
+- idea id: `idea-44a0e404`
 - stage: `experiment_prep`
 
 ## Planning
@@ -20,22 +20,22 @@ Update this while planning, modifying code, running pilots, monitoring the full 
 
 - [x] packet export hook identified
 - [x] packet manifest schema written
-- [x] intended files modified
-- [x] risky logic guarded or sanity-checked
+- [ ] intended files modified for delta-first follow-up
+- [ ] risky logic guarded or sanity-checked for delta-first weighting or gating
 
 ## Pilot / Smoke
 
-- [x] packet smoke command executed
-- [x] packet outputs look valid
-- [x] packet metadata aligns with sample ids
-- [x] downstream comparison is interpretable
+- [ ] delta-first follow-up command executed
+- [ ] delta-first outputs look valid
+- [ ] delta-first metadata aligns with sample ids
+- [ ] delta-first comparison is interpretable
 
 ## Validation
 
-- [x] packet-side metrics are complete
-- [x] packet-side comparison against reconstructed-video control is comparable
-- [x] main claim is classified as supported / refuted / inconclusive
-- [x] next action is explicit
+- [ ] delta-first metrics are complete
+- [ ] delta-first comparison against reconstructed-video and plain-feature controls is comparable
+- [ ] delta-first claim is classified as supported / refuted / inconclusive
+- [ ] next action after the follow-up is explicit
 
 ## Notes
 
@@ -46,4 +46,7 @@ Update this while planning, modifying code, running pilots, monitoring the full 
   - `pred_feat_to_target_feat_top1_accuracy=0.25`
   - `pred_delta_to_target_delta_top1_accuracy=0.75`
   - heavy delta concat (`weight=8.0`) also reaches `top1_accuracy=0.75`
-- next unchecked item: record the delta-dominant packet decision and prepare the first delta-first follow-up package
+- branch meaning:
+  - plain feature packet is downgraded to a rejected sibling control
+  - delta-dominant packet is the active continuation line
+- next unchecked item: prepare and run the first delta-first follow-up package

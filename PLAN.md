@@ -2,8 +2,8 @@
 
 ## 1. Objective
 
-- run id: `teacher_feature_packet_interface_bootstrap_r1`
-- selected idea in `1-2` sentences: Keep the frozen shared-gating upstream module and the validated paired bundle from the parent line, but replace reconstructed-video consumption with a teacher/tokenizer feature-packet interface. The goal of this child line is to preserve more machine-usable structure than decoded frames while keeping the pipeline rerunnable and machine-facing.
+- run id: `delta_dominant_teacher_packet_followup_r1`
+- selected idea in `1-2` sentences: Keep the same frozen shared-gating upstream module and the validated paired bundle from the parent line, but make temporal delta the primary packet signal. This child line exists because the first packet smoke showed that static feature packet did not beat the reconstructed-video control, while delta-heavy views did.
 - user's core requirements:
   - keep the pipeline runnable from upstream compression to downstream machine use
   - produce an inspectable first result batch that shows whether the direction is worth doing
@@ -14,10 +14,10 @@
   - keep the accepted `nvrc-local-source` baseline contract visible
   - treat the reconstructed-video result as evidence, not as the final interface winner
   - keep the first follow-up route minimal and comparable
-- current pass objective: finish the first teacher-packet smoke, classify whether the signal is really in static features or temporal deltas, and convert that result into the next bounded route
-- research question: On the same frozen upstream bundle and frozen downstream comparison surface, does the teacher packet help because of static semantic features, because of temporal deltas, or because of a delta-dominant mix of both?
-- null hypothesis: Feature export adds complexity without improving downstream structure preservation over the reconstructed-video control.
-- alternative hypothesis: Feature packets preserve the machine-facing signal better than decoded frames and therefore become the correct handoff layer for later larger-model integration.
+- current pass objective: prepare the first delta-first follow-up package on the same frozen 4-frame surface and keep the comparison clean against both reconstructed-video and the rejected plain-feature packet route
+- research question: Can a delta-dominant packet preserve retrieval structure better than both reconstructed video and plain feature packet on the same frozen upstream surface?
+- null hypothesis: Even when delta is treated as the primary signal, packet export still fails to improve meaningfully over the reconstructed-video control.
+- alternative hypothesis: A delta-dominant packet captures the useful machine-facing structure more reliably than decoded frames or plain feature packet and therefore becomes the correct next handoff layer.
 
 ## 2. Baseline And Comparability
 
@@ -47,27 +47,26 @@
 |---|---|---|---|---|
 | `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/` | frozen upstream source snapshot | inspect the cleanest hook points for teacher/tokenizer packet export without changing upstream learning logic | the child line depends on exporting machine-usable structure more directly than decoded frames | medium |
 | `experiments/main/scripts/export_reconstructed_interface.py` | parent-line bundle exporter | keep as the reference schema for ids, metadata, and aggregate metrics | the packet bundle should stay structurally compatible with the validated parent route where possible | low |
-| `experiments/main/scripts/export_teacher_feature_interface.py` | new | export teacher/tokenizer feature packets with stable sample ids and metadata | this is the core new interface layer under test | medium |
+| `experiments/main/scripts/export_teacher_feature_interface.py` | reusable packet exporter | keep exporting stable sample ids plus feature/delta packet payloads, with any delta-first metadata additions kept minimal | this is the scaffold the new delta-dominant line will build on | medium |
 | `experiments/main/scripts/run_frozen_consumer_eval.py` | parent-line consumer evaluator | keep as the reconstructed-video control evaluator and metric template | preserves clean comparability between the old handoff layer and the new packet-side route | low |
-| `experiments/main/scripts/run_teacher_packet_eval.py` | new | evaluate packet-side retrieval directly from exported tensors | lets the child line classify whether packet signal is really stronger than reconstructed-video | low |
+| `experiments/main/scripts/run_teacher_packet_eval.py` | reusable packet evaluator | extend or parameterize packet-side retrieval so delta-first comparisons are first-class instead of only post-hoc | lets the child line validate the new route without rewriting the evaluation surface | low |
 | `experiments/main/interface_bundles/shared_gating_teacher_packet_smoke_r1/` | new output root | store packet tensors, metadata manifest, and packet-side control summaries | keeps the child line self-contained and inspectable | low |
 
 ## 4. Execution Design
 
 - minimal experiment:
-  - export one bounded teacher/tokenizer packet bundle on the same 4-frame surface
-  - evaluate packet-side retrieval for feature-only, delta-only, and mixed packet views
-  - compare those packet-side results against the reconstructed-video control
+  - reuse the existing bounded teacher/tokenizer packet bundle on the same 4-frame surface
+  - elevate delta-only and heavy-delta-gated packet views into the primary comparison objects
+  - compare those delta-dominant results against both the reconstructed-video control and the rejected plain-feature packet result
 - smoke / pilot plan:
-  - inspect hook points for teacher/tokenizer-side activations or packet tensors
-  - export one minimal packet bundle with exact sample-id alignment
-  - verify bundle structure, tensor shapes, and metadata integrity
-  - run the frozen consumer or the smallest justified packet adapter on the packet bundle
+  - keep the current exporter/evaluator scaffold and sample-id alignment fixed
+  - encode delta-first comparison settings explicitly
+  - run one bounded delta-first follow-up comparison
+  - verify that the improvement is still present when delta is promoted deliberately rather than discovered only by post-hoc slicing
 - expected outputs:
-  - packet export script
-  - packet bundle manifest and tensor payloads
-  - first packet-side comparison table
-  - one concise route recommendation versus the reconstructed-video control
+  - delta-first comparison configuration or minimal evaluator extension
+  - bounded follow-up comparison table
+  - one concise judgment on whether delta-first is stable enough to justify broader validation
 - stop condition: the child line produces one bounded packet bundle plus one interpretable downstream comparison against the parent-line reconstructed-video control
 - abandonment condition:
   - no clean teacher/tokenizer hook can be exported without destabilizing the frozen upstream contract
@@ -77,8 +76,8 @@
 ## 5. Runtime Strategy
 
 - immediate next actions:
-  - record the first smoke result durably as a route decision
-  - pivot from plain feature packet to delta-dominant packet as the recommended interface
+  - keep delta as the primary packet signal in the next bounded comparison
+  - preserve plain feature packet as a rejected sibling control, not the default interface
   - prepare the smallest follow-up package that tests delta-first or heavy-delta-gated packet matching against the same control
 - artifact locations:
   - parent-line evidence:
@@ -107,4 +106,4 @@
 ## 7. Checklist Link
 
 - checklist path: `CHECKLIST.md`
-- next unchecked item: record the delta-dominant decision and prepare the smallest follow-up test that keeps delta as the primary packet signal
+- next unchecked item: define the exact delta-first follow-up comparison package and run the next bounded validation
