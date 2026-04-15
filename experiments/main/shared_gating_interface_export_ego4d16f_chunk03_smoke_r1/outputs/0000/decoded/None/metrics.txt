@@ -1,0 +1,4 @@
+(0 0 0),psnr: 8.0907,teacher-mse: 0.4410
+(1 0 0),psnr: 8.1070,teacher-mse: 0.4622
+(2 0 0),psnr: 8.1325,teacher-mse: 0.4758
+(3 0 0),psnr: 8.1204,teacher-mse: 0.4963

@@ -1,0 +1,138 @@
+[2026-04-15 17:13:09,872] INFO - Torch version: 2.6.0+cu124
+[2026-04-15 17:13:09,872] INFO - World size: 1
+[2026-04-15 17:13:09,872] INFO - Rank: 0    Local rank: 0    Device: cuda
+[2026-04-15 17:13:09,937] INFO - Device name: NVIDIA RTX A6000
+[2026-04-15 17:13:09,938] INFO - Output dir: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/experiments/main/shared_gating_interface_export_ego4d16f_chunk03_smoke_r1
+[2026-04-15 17:13:09,938] INFO - Set seed: 0
+[2026-04-15 17:13:09,940] INFO - Input video: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/tmp/ego4d_bounded_bridge_r1/chunks/ego4d_small_bridge_16f_chunk03
+[2026-04-15 17:13:09,950] INFO - Train video settings:
+[2026-04-15 17:13:09,950] INFO -      Video size: (4, 32, 32)    Patch size: [1, 32, 32]
+[2026-04-15 17:13:09,951] INFO -      Padding: [[0, 0], [0, 0], [0, 0]]
+[2026-04-15 17:13:09,951] INFO - Input video: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/tmp/ego4d_bounded_bridge_r1/chunks/ego4d_small_bridge_16f_chunk03
+[2026-04-15 17:13:09,951] INFO - Eval video settings:
+[2026-04-15 17:13:09,951] INFO -      Video size: (4, 32, 32)    Patch size: [1, 32, 32]
+[2026-04-15 17:13:09,951] INFO -      Padding: [[0, 0], [0, 0], [0, 0]]
+[2026-04-15 17:13:09,952] INFO - PNGVideoDataset:
+[2026-04-15 17:13:09,952] INFO -      Path: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/tmp/ego4d_bounded_bridge_r1/chunks/ego4d_small_bridge_16f_chunk03
+[2026-04-15 17:13:09,952] INFO -      Video size: (4, 32, 32)    Patch size: [1, 32, 32]    Padding: ((0, 0), (0, 0), (0, 0))
+[2026-04-15 17:13:09,952] INFO -      Channels: 3    Bit depth: 8
+[2026-04-15 17:13:09,955] INFO -      Scale: tensor([0.0039, 0.0039, 0.0039])    Shift: tensor([0., 0., 0.])
+[2026-04-15 17:13:09,955] INFO - PNGVideoDataset:
+[2026-04-15 17:13:09,955] INFO -      Path: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/tmp/ego4d_bounded_bridge_r1/chunks/ego4d_small_bridge_16f_chunk03
+[2026-04-15 17:13:09,955] INFO -      Video size: (4, 32, 32)    Patch size: [1, 32, 32]    Padding: ((0, 0), (0, 0), (0, 0))
+[2026-04-15 17:13:09,955] INFO -      Channels: 3    Bit depth: 8
+[2026-04-15 17:13:09,955] INFO -      Scale: tensor([0.0039, 0.0039, 0.0039])    Shift: tensor([0., 0., 0.])
+[2026-04-15 17:13:10,356] INFO - OverfitTask:
+[2026-04-15 17:13:10,357] INFO -      Root: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/experiments/main/shared_gating_interface_export_ego4d16f_chunk03_smoke_r1/tmp/train/ego4d_small_bridge_16f_chunk03
+[2026-04-15 17:13:10,357] INFO -      Training: True
+[2026-04-15 17:13:10,357] INFO -      Losses: [1.0, 'l1']    Metrics: ['psnr', 'teacher-mse']
+[2026-04-15 17:13:10,357] INFO -      Lamb: [1.0]
+[2026-04-15 17:13:10,357] INFO -      Enable log: False
+[2026-04-15 17:13:10,357] INFO -      Teacher: enabled=True type=resnet18_imagenet weight=0.2000 detach_target=True semantic_blueprint=False semantic_blueprint_rank=16 relation_consistency=False relation_mode=cosine relation_weight=1.0000 temporal_delta_consistency=True temporal_delta_weight=1.0000 temporal_delta_semantic_gating=True semantic_change_weighting=True semantic_change_floor=0.2500 semantic_change_gamma=1.0000 function_readout_consistency=False function_readout_weight=1.0000 function_readout_bank_size=4 function_readout_hidden_dim=64 function_readout_out_dim=16 function_readout_seed=0 function_readout_seeds=[]
+[2026-04-15 17:13:10,588] INFO - OverfitTask:
+[2026-04-15 17:13:10,588] INFO -      Root: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/experiments/main/shared_gating_interface_export_ego4d16f_chunk03_smoke_r1/tmp/eval/ego4d_small_bridge_16f_chunk03
+[2026-04-15 17:13:10,588] INFO -      Training: False
+[2026-04-15 17:13:10,588] INFO -      Losses: [1.0, 'l1']    Metrics: ['psnr', 'teacher-mse']
+[2026-04-15 17:13:10,588] INFO -      Lamb: [1.0]
+[2026-04-15 17:13:10,588] INFO -      Enable log: True
+[2026-04-15 17:13:10,588] INFO -      Teacher: enabled=True type=resnet18_imagenet weight=0.2000 detach_target=True semantic_blueprint=False semantic_blueprint_rank=16 relation_consistency=False relation_mode=cosine relation_weight=1.0000 temporal_delta_consistency=True temporal_delta_weight=1.0000 temporal_delta_semantic_gating=True semantic_change_weighting=True semantic_change_floor=0.2500 semantic_change_gamma=1.0000 function_readout_consistency=False function_readout_weight=1.0000 function_readout_bank_size=4 function_readout_hidden_dim=64 function_readout_out_dim=16 function_readout_seed=0 function_readout_seeds=[]
+[2026-04-15 17:13:10,588] INFO - Encoding settings:
+[2026-04-15 17:13:10,588] INFO -      Start frame - 0    Num of frames - 4
+[2026-04-15 17:13:10,588] INFO -      Intra period - 4
+[2026-04-15 17:13:10,588] INFO - 
+Start encoding:
+[2026-04-15 17:13:10,588] INFO -      Group index - 0    Group start frame - 0   Group num of frames - 4
+[2026-04-15 17:13:10,590] INFO - Create model: HiNeRV
+[2026-04-15 17:13:10,594] INFO - Decoder:
+[2026-04-15 17:13:10,595] INFO -      Stage 1:
+[2026-04-15 17:13:10,595] INFO -                T1 - 4  H1 - 8  W1 - 8  C1 - 16
+[2026-04-15 17:13:10,595] INFO -                T2 - 4  H2 - 16  W2 - 16  C2 - 16
+[2026-04-15 17:13:10,595] INFO -                Depth - 1  Exp - 2.0  Kernels - 3
+[2026-04-15 17:13:10,595] INFO -                Scale - (1, 2, 2)  Padding - (0, 2, 2)
+[2026-04-15 17:13:10,595] INFO -      Stage 2:
+[2026-04-15 17:13:10,595] INFO -                T1 - 4  H1 - 16  W1 - 16  C1 - 16
+[2026-04-15 17:13:10,595] INFO -                T2 - 4  H2 - 32  W2 - 32  C2 - 8
+[2026-04-15 17:13:10,595] INFO -                Depth - 1  Exp - 2.0  Kernels - 3
+[2026-04-15 17:13:10,595] INFO -                Scale - (1, 2, 2)  Padding - (0, 1, 1)
+[2026-04-15 17:13:10,596] INFO - Create compression model: NVRC
+[2026-04-15 17:13:10,596] INFO - NVRC:
+[2026-04-15 17:13:10,597] INFO -      Optimize rate - True  Init bit width - -1
+[2026-04-15 17:13:10,597] INFO -      Soft-rounding temp - [0.5, 0.3]  Kumaraswamy - [2.0, 1.0]
+[2026-04-15 17:13:10,597] INFO -      QuantNoise - [0.0, 0.9]
+[2026-04-15 17:13:10,597] INFO -      Cache enabled - True
+[2026-04-15 17:13:10,598] INFO -      Grid EM:
+[2026-04-15 17:13:10,598] INFO -           EM - ar  EM-dist - gaussian  Rate quant - soft-round-noise  Dist quant - soft-round-noise
+[2026-04-15 17:13:10,598] INFO -           Use quant mean - True  Learned quant - True  Learned em - True
+[2026-04-15 17:13:10,598] INFO -           Blk size - [16, 8, 8]  Per blk - True
+[2026-04-15 17:13:10,598] INFO -           Channels - 8  Depth - 3
+[2026-04-15 17:13:10,598] INFO -           Kernel size - 5  Norm - layernorm  Bias - True  Act - gelu
+[2026-04-15 17:13:10,598] INFO -           Depthwise - True
+[2026-04-15 17:13:10,633] INFO -      Weight EM:
+[2026-04-15 17:13:10,633] INFO -           EM - d-axis  Dist - gaussian  Rate quant - soft-round-noise
+[2026-04-15 17:13:10,633] INFO -           Blk size - [16, 32]  Per blk - True  Per axis - True
+[2026-04-15 17:13:10,666] INFO -      Grid meta - em
+[2026-04-15 17:13:10,667] INFO -           EM - em  EM-dist - gaussian  Rate quant - soft-round-noise  Dist quant - soft-round-noise
+[2026-04-15 17:13:10,667] INFO -           Use quant mean - True  Learned quant - True  Learned em - True
+[2026-04-15 17:13:10,702] INFO -      Weight meta - em
+[2026-04-15 17:13:10,702] INFO -           EM - em  EM-dist - gaussian  Rate quant - soft-round-noise  Dist quant - soft-round-noise
+[2026-04-15 17:13:10,702] INFO -           Use quant mean - True  Learned quant - True  Learned em - True
+[2026-04-15 17:13:10,738] INFO - Create optimizer: adam
+[2026-04-15 17:13:10,739] INFO - Create scheduler: cosine
+[2026-04-15 17:13:10,740] INFO - Parameter groups:
+[2026-04-15 17:13:10,740] INFO -      Key - default  Lr scale - 1.0  Weight decay - 1e-06  Num of params - 17
+[2026-04-15 17:13:10,740] INFO -      Key - default (No weight decay)  Lr scale - 1.0  Weight decay - 0.0  Num of params - 247
+[2026-04-15 17:13:10,883] INFO - Parameters (model): 0.00M
+[2026-04-15 17:13:10,884] INFO - Parameters (w/ codec): 0.04M
+[2026-04-15 17:13:10,884] INFO - Parameters (detailed):
+[2026-04-15 17:13:10,884] INFO -     grid: 0.00M
+[2026-04-15 17:13:10,884] INFO -     weight: 0.00M
+[2026-04-15 17:13:10,884] INFO -     grid_em_params: 0.03M
+[2026-04-15 17:13:10,884] INFO -     weight_em_params: 0.00M
+[2026-04-15 17:13:10,884] INFO -     grid_meta_em_params: 0.00M
+[2026-04-15 17:13:10,884] INFO -     weight_meta_em_params: 0.00M
+[2026-04-15 17:13:10,884] INFO -     others: 0.00M
+[2026-04-15 17:13:10,885] INFO - MAC profiling skipped because optional dependency 'deepspeed' is not installed.
+[2026-04-15 17:13:10,947] INFO - Restore from model: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/001/.ds/worktrees/shared-semantic-gated-dual-path-tiny-local-r1/experiments/main/shared_semantic_gated_dual_path_tiny_local_r1/checkpoints/0000/pytorch_model.bin
+[2026-04-15 17:13:10,953] INFO - Skip training. Evaluation only.
+[2026-04-15 17:13:11,785] INFO - Eval - [1/4]    img/s: 1.20    loss: 94.2032    r_loss: 93.7417    d_loss: 0.4615    bpp: 93.7417    psnr: 8.0907    teacher-mse: 0.4410
+[2026-04-15 17:13:11,807] INFO - Eval - [2/4]    img/s: 2.34    loss: 94.2048    r_loss: 93.7417    d_loss: 0.4631    bpp: 93.7417    psnr: 8.0989    teacher-mse: 0.4516
+[2026-04-15 17:13:11,829] INFO - Eval - [3/4]    img/s: 3.43    loss: 94.2059    r_loss: 93.7417    d_loss: 0.4642    bpp: 93.7417    psnr: 8.1101    teacher-mse: 0.4597
+[2026-04-15 17:13:11,852] INFO - Eval - [4/4]    img/s: 4.45    loss: 94.2077    r_loss: 93.7417    d_loss: 0.4660    bpp: 93.7417    psnr: 8.1127    teacher-mse: 0.4688
+[2026-04-15 17:13:11,885] INFO - Training completed in: 0.93s
+[2026-04-15 17:13:11,885] INFO - Encoding model weights to bitstream.
+[2026-04-15 17:13:20,036] INFO - Encoding time: 8.15s
+[2026-04-15 17:13:20,037] INFO - Current total bitstream size: 361376
+[2026-04-15 17:13:20,037] INFO - Group bitstream size: 361344.
+[2026-04-15 17:13:20,039] INFO - Decoding model weights from bitstream.
+[2026-04-15 17:13:33,287] INFO - Decoding time: 13.25s
+[2026-04-15 17:13:33,314] INFO - Start evaluating the decoded model.
+[2026-04-15 17:13:33,355] INFO - Eval - [1/4]    img/s: 24.46    loss: 94.2032    r_loss: 93.7417    d_loss: 0.4615    bpp: 93.7417    psnr: 8.0907    teacher-mse: 0.4410
+[2026-04-15 17:13:33,375] INFO - Eval - [2/4]    img/s: 32.75    loss: 94.2048    r_loss: 93.7417    d_loss: 0.4631    bpp: 93.7417    psnr: 8.0989    teacher-mse: 0.4516
+[2026-04-15 17:13:33,395] INFO - Eval - [3/4]    img/s: 36.99    loss: 94.2059    r_loss: 93.7417    d_loss: 0.4642    bpp: 93.7417    psnr: 8.1101    teacher-mse: 0.4597
+[2026-04-15 17:13:33,415] INFO - Eval - [4/4]    img/s: 39.70    loss: 94.2077    r_loss: 93.7417    d_loss: 0.4660    bpp: 93.7417    psnr: 8.1127    teacher-mse: 0.4688
+[2026-04-15 17:13:33,419] INFO - Evaluation completed in: 0.10s
+[2026-04-15 17:13:33,435] INFO - Detailed rate statistics:
+[2026-04-15 17:13:33,436] INFO - grid - Number of params: 1536.0000    Rate: 13976.2627    Bits per param: 9.0991
+[2026-04-15 17:13:33,436] INFO - weight - Number of params: 2680.0000    Rate: 26770.9590    Bits per param: 9.9892
+[2026-04-15 17:13:33,436] INFO - grid_em_params - Number of params: 33522.0000    Rate: 334570.7500    Bits per param: 9.9806
+[2026-04-15 17:13:33,436] INFO - weight_em_params - Number of params: 39.0000    Rate: 647.9962    Bits per param: 16.6153
+[2026-04-15 17:13:33,436] INFO - grid_meta_em_params - Number of params: 66.0000    Rate: 2112.0000    Bits per param: 32.0000
+[2026-04-15 17:13:33,436] INFO - weight_meta_em_params - Number of params: 117.0000    Rate: 3744.0000    Bits per param: 32.0000
+[2026-04-15 17:13:33,436] INFO - others - Number of params: 67.0000    Rate: 2144.0000    Bits per param: 32.0000
+[2026-04-15 17:13:33,436] INFO - Completed group encoding.
+
+[2026-04-15 17:13:33,605] INFO - Total bitstream size: 361376
+[2026-04-15 17:13:33,605] INFO - Average params_avg: 4283.0000
+[2026-04-15 17:13:33,605] INFO - Average params_codec_avg: 38027.0000
+[2026-04-15 17:13:33,605] INFO - Average macs_avg: nan
+[2026-04-15 17:13:33,606] INFO - Average macs_rate_avg: nan
+[2026-04-15 17:13:33,606] INFO - Average train_time_avg: 0.9322
+[2026-04-15 17:13:33,606] INFO - Average eval_time_avg: 0.1047
+[2026-04-15 17:13:33,606] INFO - Average ent_enc_time_avg: 8.1508
+[2026-04-15 17:13:33,606] INFO - Average ent_dec_time_avg: 13.2473
+[2026-04-15 17:13:33,606] INFO - Average bpp_avg: 88.2266
+[2026-04-15 17:13:33,606] INFO - Average bpp_est_avg: 93.7417
+[2026-04-15 17:13:33,606] INFO - Average psnr_avg: 8.1127
+[2026-04-15 17:13:33,606] INFO - Average teacher-mse_avg: 0.4688
+[2026-04-15 17:13:33,606] INFO - Encoding completed in: 23.86s
+[2026-04-15 17:13:33,606] INFO - Output are located in: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/experiments/main/shared_gating_interface_export_ego4d16f_chunk03_smoke_r1

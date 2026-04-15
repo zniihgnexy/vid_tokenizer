@@ -2,8 +2,8 @@
 
 ## 1. Objective
 
-- run id: `delta_packet_bridge_smoke_r1`
-- selected idea in `1-2` sentences: Keep the same frozen shared-gating upstream module and the validated packet exporter, but promote temporal delta from a packet-similarity winner into a true downstream bridge. This child line exists because reconstructed video and plain static packet both stall at `top1=0.25`, while delta-led packet views rise to `0.75` on the same frozen surface.
+- run id: `shared_gating_interface_export_ego4d16f_smoke_r1`
+- selected idea in `1-2` sentences: Keep the same frozen shared-gating upstream module and the validated packet/consumer route, but widen the bounded surface before claiming anything stronger about the delta bridge. This child line exists because the 4-frame surface kept the signal alive but was too small to defend a stronger consumer-facing claim.
 - user's core requirements:
   - keep the pipeline runnable from upstream compression to downstream machine use
   - produce an inspectable result batch that shows whether this direction is worth doing
@@ -14,16 +14,16 @@
   - keep the accepted `nvrc-local-source` baseline contract visible
   - treat reconstructed video as a bounded control, not as the default winner
   - avoid a confounded direct VLM/LLM demo before the local bridge is proven
-- current pass objective: build the smallest consumer-facing bridge for delta packets and test it on a widened bounded surface
-- research question: Can a lightweight delta-packet adapter preserve retrieval or probing structure more faithfully than reconstructed video under the same frozen upstream contract?
-- null hypothesis: even with a delta-dominant packet, a consumer-facing bridge still fails to improve meaningfully over the reconstructed-video control
-- alternative hypothesis: temporal-change packets carry the useful machine-facing structure, and a lightweight adapter can expose that structure more faithfully than decoded frames or static-heavy packet fusion
+- current pass objective: rerun the frozen shared-gating export on the new 16-frame bounded Ego4D surface and produce a widened interface bundle for the next bridge comparison
+- research question: Does the same frozen shared-gating export contract remain runnable and interpretable on a wider 16-frame bounded surface?
+- null hypothesis: the widened export fails to run cleanly or yields an incompatible bundle, so the bridge line cannot yet progress beyond the old 4-frame surface
+- alternative hypothesis: the same frozen contract exports a valid widened bundle with interpretable metrics, enabling a fair next bridge evaluation
 
 ## 2. Baseline And Comparability
 
 - baseline id: `nvrc-local-source`
 - baseline variant: `tiny-local-teacher-pilot-r3`
-- inherited upstream metrics:
+- inherited 4-frame export metrics:
   - `bpp_avg=88.2266`
   - `psnr_avg=10.9012`
   - `teacher-mse_avg=0.5126`
@@ -31,83 +31,87 @@
   - `original_to_original_top1_accuracy=1.0`
   - `reconstructed_to_original_top1_accuracy=0.25`
   - `reconstructed_to_original_mean_match_rank=2.5`
-- current packet evidence:
-  - `pred_delta_to_target_delta_top1_accuracy=0.75`
-  - `pred_feat_plus_8p0x_delta_concat_to_target_feat_plus_8p0x_delta_concat_top1_accuracy=0.75`
-  - `pred_feat_plus_8p0x_delta_sum_to_target_feat_plus_8p0x_delta_sum_top1_accuracy=0.5`
+- current bridge evidence on the old 4-frame surface:
+  - `pred_delta_to_target_feat_direct_top1_accuracy=0.5`
+  - `delta_ridge_to_target_feat_loo_top1_accuracy=0.0`
+- widened bounded surface:
+  - dataset root: `tmp/ego4d_bounded_bridge_r1/data/ego4d_small_bridge_16f`
+  - sample shape: `16 x 32 x 32`
+  - manifest: `tmp/ego4d_bounded_bridge_r1/data/ego4d_small_bridge_16f/extraction_manifest.json`
 - comparison rule:
-  - keep the same frozen upstream checkpoint and teacher type
-  - widen only the bounded sample surface, not the upstream contract
-  - compare reconstructed-video control, `delta-only`, and `delta-dominant concat` bridge variants in the same consumer space
-  - record any new adapter explicitly instead of hiding it inside the packet exporter
+  - keep the same frozen upstream checkpoint, task config, model config, and NVRC config
+  - change only the bounded PNG surface and frame-count override
+  - require the widened run to emit the same output structure and metric keys as the old 4-frame export
+  - do not reopen codec or teacher-path selection inside this pass
 - comparability risks:
-  - widening the surface may accidentally change sample composition too much if not kept bounded and documented
-  - adapter gains could be confused with packet gains if the comparison does not keep the packet variants parallel
-  - static-context fusion can reintroduce noise and hide whether temporal change is actually the signal source
+  - the widened dataset root could violate the old PNG loader expectations if the directory layout drifted
+  - config drift could silently change the old contract if the rerun does not use the recovered tiny config family
+  - downstream exporters will stay blocked if the widened run does not reproduce the old output tree shape
 
 ## 3. Code Translation Plan
 
 | Path | Current role | Planned change | Why this is needed | Risk |
 |---|---|---|---|---|
-| `experiments/main/scripts/export_teacher_feature_interface.py` | reusable packet exporter | keep as the packet source of truth and expose whatever minimal metadata the bridge needs | preserves compatibility with the validated packet scaffold | low |
-| `experiments/main/scripts/run_teacher_packet_eval.py` | packet similarity evaluator | reuse or refactor only the common packet-loading logic | the bridge should inherit the same packet contract, not invent a parallel loader | low |
-| `experiments/main/scripts/run_frozen_consumer_eval.py` | parent-line reconstructed-video evaluator | reuse metric/report structure where possible | keeps the bridge comparison legible against the parent control | low |
-| `experiments/main/scripts/` | experiment script root | add or extend one lightweight bridge evaluation script | this is the new minimal bridge layer | medium |
-| `experiments/main/interface_bundles/` | packet bundle roots | reuse the existing bundle format and add widened-surface outputs under a new bounded root | keeps evidence auditable and parallel to the current packet work | low |
-| `experiments/main/evals/` | evaluation roots | store widened bridge summaries, reports, and bridge embeddings under a new run folder | makes the next decision depend on durable outputs rather than chat memory | low |
+| `experiments/main/scripts/extract_bounded_video_frames.py` | bounded PNG regeneration helper | keep as the source-of-truth extractor for the widened local sample surface | preserves the frozen-upstream contract while widening only the sample surface | low |
+| `experiments/main/scripts/run_shared_gating_export_ego4d16f_smoke.sh` | widened upstream launch script | add one explicit rerun entrypoint with absolute config paths and bounded-surface overrides | leaves behind a rerunnable local command instead of a chat-only command recipe | low |
+| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/scripts/configs/*` | recovered frozen config family | reuse directly without editing | keeps the widened run tied to the same tiny contract as the old 4-frame export | low |
+| `experiments/main/shared_gating_interface_export_ego4d16f_smoke_r1/` | widened upstream smoke output root | create a new export run directory under the active worktree | makes the next bridge step depend on durable widened outputs | low |
+| `experiments/main/scripts/export_reconstructed_interface.py` | reconstructed-video exporter | reuse only after the widened upstream smoke succeeds | keeps the widened bundle comparable to the parent downstream control | low |
+| `experiments/main/scripts/export_teacher_feature_interface.py` | teacher-packet exporter | reuse only after the widened upstream smoke succeeds | keeps the bridge step parallel to the validated packet route | low |
 
 ## 4. Execution Design
 
 - minimal experiment:
-  - use the only currently available 4-frame packet surface as a bounded smoke
-  - load the existing delta packets from the frozen exporter
-  - compare direct delta alignment and lightweight bridge variants in the frozen consumer space
-  - treat any learned adapter result on this surface as smoke only, not as a robustness claim
+  - run one `eval_only + resume_model_only` frozen export smoke on the widened 16-frame bounded PNG surface
+  - keep the same tiny config family, checkpoint, and teacher supervision settings
+  - validate that the widened run emits the expected bitstream, decoded outputs, and results summaries
 - smoke / pilot plan:
-  - verify packet/sample alignment on the widened surface
-  - run the bridge only on the bounded widened subset
-  - confirm that metrics are interpretable and directly comparable to the parent control
+  - verify the widened launch script resolves the recovered config family correctly
+  - run the frozen upstream smoke on the 16-frame surface
+  - confirm that `args.yaml`, `bitstreams/`, `outputs/0000/{decoded,eval}`, and `results/all.txt` all exist
+  - confirm that the metric keys stay legible against the old 4-frame export control
 - expected outputs:
-  - bridge evaluation script and configuration
-  - one 4-frame smoke summary for direct and learned bridge variants
-  - one judgment on whether the bridge signal is strong enough to justify seeking a wider surface
+  - one rerunnable widened-export launch script
+  - one 16-frame widened export smoke directory with args, logs, decoded outputs, and metric summaries
+  - one explicit judgment on whether the widened bundle is ready for reconstructed/teacher bridge export
 - stop condition:
-  - the widened bridge smoke runs end to end and produces an interpretable comparison
+  - the widened export smoke runs end to end and produces a bundle compatible with the downstream exporters
 - abandonment condition:
-  - no widened bounded surface is available without breaking the current contract
-  - the adapter path becomes larger than a minimal local extension
-  - packet/sample alignment on the widened surface cannot be trusted
+  - the widened dataset root cannot satisfy the old PNG loader assumptions
+  - the recovered tiny config family cannot reproduce the old contract without ad hoc edits
+  - the widened output tree is incompatible with the downstream exporter expectations
 
 ## 5. Runtime Strategy
 
 - immediate next actions:
-  - keep the completed 4-frame smoke as the bounded first bridge result
-  - search for or regenerate a wider bounded packet surface
-  - treat direct delta alignment as incumbent and learned bridge variants as currently unsupported on this smoke surface
+  - write the widened export launch script inside the active worktree
+  - sync the control docs to the widened rerun route
+  - run the 16-frame frozen export smoke and inspect the output tree before any new bridge comparison
 - artifact locations:
-  - parent control root:
-    `../idea-idea-3ed587d5/experiments/main/shared_gating_downstream_interface_bootstrap_r1/downstream_eval/`
-  - current packet follow-up root:
-    `../idea-idea-44a0e404/experiments/main/evals/delta_dominant_teacher_packet_followup_r1/`
-  - new bridge eval root:
-    `experiments/main/evals/delta_packet_bridge_smoke_r1/`
+  - old 4-frame export root:
+    `../idea-idea-301dcd71/experiments/main/shared_gating_interface_export_smoke_r1/`
+  - widened bounded surface:
+    `tmp/ego4d_bounded_bridge_r1/data/ego4d_small_bridge_16f/`
+  - new widened export root:
+    `experiments/main/shared_gating_interface_export_ego4d16f_smoke_r1/`
 - safe efficiency levers:
-  - keep the upstream frozen
-  - keep the bridge lightweight and local
-  - prefer widened bounded smoke before any heavier run
+  - keep the run `eval_only`
+  - keep `resume_model_only=true`
+  - keep `workers=0` and the tiny config family
+  - widen only the bounded local sample surface, not the codec contract
 
 ## 6. Fallbacks And Recovery
 
-- if a true consumer-space bridge is too large:
-  - fall back to direct delta alignment as the current bridge layer
-- if the widened bounded surface is unavailable:
-  - record that limitation explicitly and keep the current 4-frame result as smoke only
-- if `delta-dominant concat` collapses while `delta-only` stays strong:
-  - continue with `delta-only` as the active bridge payload and downgrade concat to control
-- if both bridge variants collapse:
-  - classify the line as not yet consumer-ready and route back through decision before scaling
+- if the direct config launch still drifts:
+  - fall back to a very thin parameter-replay wrapper seeded from the old resolved `args.yaml`
+- if the widened dataset root still fails loader assumptions:
+  - regenerate the bounded surface again under the exact old tiny dataset layout
+- if the widened export succeeds but metrics degrade sharply:
+  - still accept the widened bundle for bridge comparison, but record the export-quality downgrade explicitly
+- if the widened export does not produce downstream-compatible outputs:
+  - stop before a new bridge run and classify the blocker as an upstream interface issue, not a bridge result
 
 ## 7. Checklist Link
 
 - checklist path: `CHECKLIST.md`
-- next unchecked item: find or regenerate a wider bounded packet surface under the same upstream contract
+- next unchecked item: write and run the widened frozen export smoke entrypoint

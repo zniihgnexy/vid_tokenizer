@@ -1,0 +1,2 @@
+size,params_avg,params_codec_avg,macs_avg,macs_rate_avg,train_time_avg,eval_time_avg,ent_enc_time_avg,ent_dec_time_avg,bpp_avg,bpp_est_avg,psnr_avg,teacher-mse_avg
+361376,4283.0000,38027.0000,nan,nan,0.9322,0.1047,8.1508,13.2473,88.2266,93.7417,8.1127,0.4688
