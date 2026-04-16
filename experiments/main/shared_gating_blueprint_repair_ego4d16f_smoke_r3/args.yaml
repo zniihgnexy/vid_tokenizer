@@ -1,0 +1,254 @@
+epochs: 1
+warmup_epochs: 0
+eval_epochs: 1
+eval_only: false
+rate_steps: 1
+grad_accum: 1
+train_batch_size: 1
+eval_batch_size: 1
+opt: adam
+sched: cosine
+lr: 0.001
+warmup_lr: 1.0e-05
+min_lr: 0.0001
+auto_lr_scaling: false
+max_norm: 1.0
+norm_type: 2.0
+weight_decay: 1.0e-06
+weight_decay_scaling: false
+opt_eps: 1.0e-08
+opt_betas:
+- 0.9
+- 0.999
+momentum: 0.9
+decay_milestones:
+- 0.5
+- 0.75
+decay_rate: 0.5
+lr_scale: []
+start_frame: 0
+num_frames: 16
+intra_period: -1
+output: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710/experiments/main
+exp_name: shared_gating_blueprint_repair_ego4d16f_smoke_r3
+log_epochs: 1
+log_iters: -2
+train_enable_log: false
+eval_enable_log: false
+resume: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710/experiments/main/shared_gating_interface_export_ego4d16f_chunk00_smoke_r1
+resume_model_only: true
+resume_model_pat: null
+seed: 0
+workers: 0
+prefetch_factor: 4
+pin_mem: true
+train_data:
+    dataset_dir: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/tmp/ego4d_bounded_bridge_r1/data
+    dataset: ego4d_small_bridge_16f
+    video_size:
+    - 16
+    - 32
+    - 32
+    patch_size:
+    - 1
+    - 32
+    - 32
+    fmt: png
+eval_data:
+    dataset_dir: /home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/tmp/ego4d_bounded_bridge_r1/data
+    dataset: ego4d_small_bridge_16f
+    video_size:
+    - 16
+    - 32
+    - 32
+    patch_size:
+    - 1
+    - 32
+    - 32
+    fmt: png
+train_task:
+    loss:
+    - 1.0
+    - l1
+    metric:
+    - psnr
+    - teacher-mse
+    color_space: RGB
+    lamb: 1.0
+    enable_log: false
+    teacher_enable: true
+    teacher_type: resnet18_imagenet
+    teacher_loss_weight: 0.2
+    teacher_detach_target: true
+    teacher_semantic_blueprint: true
+    teacher_semantic_blueprint_rank: 16
+    teacher_relation_consistency: false
+    teacher_relation_mode: cosine
+    teacher_relation_weight: 1.0
+    teacher_temporal_delta_consistency: true
+    teacher_temporal_delta_weight: 1.0
+    teacher_temporal_delta_semantic_gating: true
+    teacher_semantic_change_weighting: true
+    teacher_semantic_change_floor: 0.25
+    teacher_semantic_change_gamma: 1.0
+    teacher_function_readout_consistency: false
+    teacher_function_readout_weight: 1.0
+    teacher_function_readout_bank_size: 4
+    teacher_function_readout_hidden_dim: 64
+    teacher_function_readout_out_dim: 16
+    teacher_function_readout_seed: 0
+    teacher_function_readout_seeds: ''
+eval_task:
+    loss:
+    - 1.0
+    - l1
+    metric:
+    - psnr
+    - teacher-mse
+    color_space: RGB
+    lamb: 1.0
+    enable_log: true
+    teacher_enable: true
+    teacher_type: resnet18_imagenet
+    teacher_loss_weight: 0.2
+    teacher_detach_target: true
+    teacher_semantic_blueprint: true
+    teacher_semantic_blueprint_rank: 16
+    teacher_relation_consistency: false
+    teacher_relation_mode: cosine
+    teacher_relation_weight: 1.0
+    teacher_temporal_delta_consistency: true
+    teacher_temporal_delta_weight: 1.0
+    teacher_temporal_delta_semantic_gating: true
+    teacher_semantic_change_weighting: true
+    teacher_semantic_change_floor: 0.25
+    teacher_semantic_change_gamma: 1.0
+    teacher_function_readout_consistency: false
+    teacher_function_readout_weight: 1.0
+    teacher_function_readout_bank_size: 4
+    teacher_function_readout_hidden_dim: 64
+    teacher_function_readout_out_dim: 16
+    teacher_function_readout_seed: 0
+    teacher_function_readout_seeds: ''
+compress_model:
+    type: NVRC
+    config:
+        grid_em:
+            em: ar
+            em_dist: gaussian
+            rate_quant: soft-round-noise
+            dist_quant: soft-round-noise
+            quant_mean: true
+            learned_quant: true
+            learned_em: true
+            blk_size:
+            - 16
+            - 8
+            - 8
+            channels: 8
+            depth: 3
+            kernel_size: 5
+            depthwise: true
+        weight_em:
+            em: d-axis
+            em_dist: gaussian
+            rate_quant: soft-round-noise
+            dist_quant: soft-round-noise
+            quant_mean: true
+            learned_quant: true
+            learned_em: true
+        grid_meta_em:
+            em: em
+            em_dist: gaussian
+            rate_quant: soft-round-noise
+            dist_quant: soft-round-noise
+            quant_mean: true
+            learned_quant: true
+            learned_em: true
+        weight_meta_em:
+            em: em
+            em_dist: gaussian
+            rate_quant: soft-round-noise
+            dist_quant: soft-round-noise
+            quant_mean: true
+            learned_quant: true
+            learned_em: true
+        optimize:
+            optimize_rate: true
+            soft_round_temp:
+            - 0.5
+            - 0.3
+            kum_noise:
+            - 2.0
+            - 1.0
+model:
+    type: HiNeRV
+    config:
+        base_encoding:
+            base_grid_type: v2
+            base_grid_size:
+            - -1
+            - -1
+            - -1
+            - 2
+            base_grid_level: 2
+            base_grid_level_scale:
+            - 1.0
+            - 1.0
+            - 1.0
+            - 0.5
+            base_kernel:
+            - 1
+            - 3
+            - 3
+        decoder:
+            channels:
+            - 16
+            - 8
+            depths:
+            - 1
+            - 1
+            exps:
+            - 2.0
+            - 2.0
+            kernels:
+            - 3
+            - 3
+            scales_t:
+            - 1
+            - 1
+            scales_hw:
+            - 2
+            - 2
+            paddings:
+            - -1
+            - -1
+            - -1
+            block_type:
+            - convnext
+            - convnext
+            block_norm:
+            - layernorm-no-affine
+            - layernorm-no-affine
+            block_act:
+            - gelu
+            - gelu
+            upsample_type:
+            - trilinear
+            - trilinear
+            upsample_config:
+            - matmul-th-w
+            - matmul-th-w
+            upsample_norm:
+            - layernorm-no-affine
+            - layernorm-no-affine
+            upsample_act:
+            - none
+            - none
+            use_hi_encoding:
+            - true
+            - true
+            local_grid_size:
+            - -1
+            - 2
+            local_grid_level: 1

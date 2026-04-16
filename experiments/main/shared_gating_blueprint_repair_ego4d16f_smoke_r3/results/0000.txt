@@ -1,0 +1,2 @@
+size,params,params_codec,macs,macs_rate,train_time,eval_time,ent_enc_time,ent_dec_time,bpp,bpp_est,psnr,teacher-mse
+391552,9035.0000,42779.0000,nan,nan,5.7957,0.4070,8.0019,13.0295,23.8984,25.1982,10.6733,0.5481

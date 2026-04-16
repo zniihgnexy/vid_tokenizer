@@ -844,8 +844,33 @@ def create_ckpt_and_restore(output_dir, name, args, logger, accelerator, model, 
             state_dict = torch.load(path, map_location=accelerator.device)
             if os.path.exists(path):
                 logger.info(f'Restore from model: {path}')
-                # Include only the matched keys
-                unwrap_model(model).load_state_dict(state_dict)
+                # Allow partial warm starts when bounded repair runs change only
+                # the temporal extent or another shape-sensitive structural axis.
+                model_state = unwrap_model(model).state_dict()
+                matched_state_dict = {}
+                skipped_keys = []
+                for key, value in state_dict.items():
+                    if key not in model_state:
+                        skipped_keys.append((key, 'missing_in_model'))
+                        continue
+                    if model_state[key].shape != value.shape:
+                        skipped_keys.append((key, f'checkpoint={tuple(value.shape)} model={tuple(model_state[key].shape)}'))
+                        continue
+                    matched_state_dict[key] = value
+
+                load_result = unwrap_model(model).load_state_dict(matched_state_dict, strict=False)
+                logger.info(
+                    'Partial model restore: '
+                    f'loaded={len(matched_state_dict)} '
+                    f'skipped={len(skipped_keys)} '
+                    f'missing_after_load={len(load_result.missing_keys)} '
+                    f'unexpected_after_load={len(load_result.unexpected_keys)}'
+                )
+                if skipped_keys:
+                    preview = ', '.join([f'{key} ({reason})' for key, reason in skipped_keys[:8]])
+                    if len(skipped_keys) > 8:
+                        preview += ', ...'
+                    logger.info(f'Skipped checkpoint keys during partial restore: {preview}')
             else:
                 logger.info(f'Checkpoint does not exist: {path}')
     else:
