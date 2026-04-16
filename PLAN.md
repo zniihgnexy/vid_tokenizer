@@ -2,8 +2,8 @@
 
 ## 1. Objective
 
-- run id: `shared_gating_query_collapse_localization_smoke_r1`
-- selected idea in `1-2` sentences: Keep the same frozen widened chunk bundles and the failed chunk-aware evaluator, but stop treating aggregation as the main issue. This child line exists because the target route still separates chunks while the predicted packet routes collapse to constant vectors, so the next question is where discrimination disappears before any repair is attempted.
+- run id: `shared_gating_blueprint_semchange_delta_smoke_r1`
+- selected idea in `1-2` sentences: The localization smoke showed that the widened chunk line does not fail in the chunk aggregator. Target packets still separate all four chunks, while exported `pred_feat` and `pred_delta` are already collapsed to constant vectors. The chosen next move is exactly one minimal repair that keeps the same pipeline but replaces the main teacher feature target with a target-conditioned semantic blueprint while retaining semantic-change weighting and temporal-delta consistency.
 - user's core requirements:
   - keep the pipeline runnable from upstream compression to downstream machine use
   - produce an inspectable result batch that shows whether this direction is worth doing
@@ -14,97 +14,99 @@
   - keep the accepted `nvrc-local-source` baseline contract visible
   - treat reconstructed video as a bounded control, not as the default winner
   - avoid a confounded direct VLM/LLM demo before the local bridge is proven
-- current pass objective: localize where chunk discrimination disappears across target fields, exported predicted packets, and any query-side projection/head on the same frozen widened four-chunk surface
-- research question: Is the decisive bottleneck introduced before packet export, inside the query-side packet head, or only in a later bridge transform?
-- null hypothesis: no query-side surface retains chunk discrimination, so the packet-bridge story should be downgraded instead of repaired locally
-- alternative hypothesis: discrimination survives somewhere before the final query head, which justifies one minimal diversity-preserving control on the same frozen surface
+- current pass objective: validate and prepare one bounded blueprint-based repair on the same frozen widened surface before spending compute on a full repair run
+- research question: Can target-conditioned semantic-blueprint supervision restore chunk-level discrimination in the exported predicted packets without changing the upstream pipeline skeleton?
+- null hypothesis: even with blueprint supervision, exported predicted packets remain collapsed, self-surface variance stays at zero, and packet retrieval remains at the `0.25` chance level
+- alternative hypothesis: blueprint supervision restores non-zero predicted-packet variance and lifts at least one predicted-to-target packet comparison above `0.25` top-1 on the same frozen bounded surface
 
 ## 2. Baseline And Comparability
 
 - baseline id: `nvrc-local-source`
 - baseline variant: `tiny-local-teacher-pilot-r3`
-- inherited widened chunk-aware control:
-  - `chunk_target_feat_to_chunk_target_feat_seq_concat_top1_accuracy=1.0`
-  - `chunk_pred_feat_to_chunk_target_feat_seq_concat_top1_accuracy=0.25`
-  - `chunk_pred_delta_to_chunk_target_feat_seq_concat_top1_accuracy=0.25`
-- decisive collapse evidence:
+- decisive localization evidence from the completed smoke:
+  - `target_feat_to_target_feat_seq_concat_top1_accuracy=1.0`
+  - `target_delta_to_target_delta_seq_concat_top1_accuracy=1.0`
+  - `pred_feat_to_pred_feat_seq_concat_top1_accuracy=0.25`
+  - `pred_delta_to_pred_delta_seq_concat_top1_accuracy=0.25`
   - `pred_feat` cross-chunk cosine matrix is all `1.0`
   - `pred_delta` cross-chunk cosine matrix is all `1.0`
-  - `target_feat` cross-chunk cosine values remain in the `0.9359-0.9596` range
-  - `target_delta` cross-chunk cosine values vary from about `-0.1110` to `0.0541`
-- inherited bundle surface for this pass:
-  - `../idea-idea-e0d17d22/experiments/main/interface_bundles/shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk00_smoke_r1`
-  - `../idea-idea-e0d17d22/experiments/main/interface_bundles/shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk01_smoke_r1`
-  - `../idea-idea-e0d17d22/experiments/main/interface_bundles/shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk02_smoke_r1`
-  - `../idea-idea-e0d17d22/experiments/main/interface_bundles/shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk03_smoke_r1`
+  - `pred_feat` and `pred_delta` raw mean dimension variance are both `0.0`
+  - `query_projection` and `query_packet_head` are not exported in the frozen bundle, so the earliest accessible collapse surface is `exported_predicted_packets_or_earlier`
+- chosen repair family:
+  - `teacher_semantic_blueprint=true`
+  - keep `teacher_temporal_delta_consistency=true`
+  - keep `teacher_temporal_delta_semantic_gating=true`
+  - keep `teacher_semantic_change_weighting=true`
+- why blueprint wins over relation for the first repair:
+  - the observed failure is cross-chunk identity collapse, not merely weak intra-clip temporal structure
+  - `blueprint` aligns each clip to its own target-conditioned low-rank semantic subspace, which directly pressures clip-specific separation
+  - `relation` preserves within-clip pairwise structure but can still allow different clips to share the same absolute packet location
 - comparison rule:
-  - keep the same frozen chunk bundles, evaluator contract, and bounded four-chunk surface
-  - change only the diagnostic surface: inspect target fields, exported predicted packets, and query-side projections
-  - do not reopen upstream export, codec ranking, or downstream evaluator design in this pass
-  - add a repair control only after localization points to one clear failing layer
+  - keep the same frozen bounded dataset family, shared-gating initialization, and packet-evaluation surfaces
+  - add exactly one repair family before interpreting results
+  - do not reopen aggregator tuning, broader bridge redesign, or larger multimodal integration in this pass
 - comparability risks:
-  - some query-side projections may not be preserved in the exported packet files, which could force a narrower diagnostic than planned
-  - a tiny-surface anti-collapse control could overfit and create a misleading gain
-  - if the collapse is already upstream of packet export, this child line may terminate quickly
+  - blueprint supervision changes the main teacher feature target, so any gain must still be checked against the same packet export and retrieval surfaces
+  - current exports still do not expose deeper query-side head tensors
+  - a tiny bounded gain without restored packet variance would not count as a real repair
 
 ## 3. Code Translation Plan
 
 | Path | Current role | Planned change | Why this is needed | Risk |
 |---|---|---|---|---|
-| `experiments/main/scripts/run_chunk_aware_packet_eval.py` | current failed control evaluator | reuse as the locked comparison surface for the new line | keeps the child line tied to the exact failed control rather than a moving target | low |
-| `experiments/main/scripts/run_query_collapse_localization.py` | new localization script | add one diagnostic entrypoint that measures cosine, rank, and variance surfaces across target/pred/query tensors | turns the selected idea into a bounded, interpretable experiment | medium |
-| `experiments/main/evals/shared_gating_query_collapse_localization_smoke_r1/` | new localization output root | create a durable report, summary, and per-surface diagnostic package | keeps the next route choice grounded in files instead of chat | low |
-| `experiments/main/scripts/run_query_diversity_control.py` | optional minimal repair entrypoint | defer implementation until localization shows the query head is the failing layer | prevents mixing diagnosis and repair prematurely | medium |
+| `experiments/main/scripts/run_query_collapse_localization.py` | completed localization entrypoint | keep as the locked diagnostic for pre/post repair comparison | preserves the decisive failure boundary | low |
+| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint-semchange-delta.yaml` | new repair config | add one target-conditioned blueprint variant that retains delta and semantic-change weighting | creates a bounded first repair without inventing new model code | low |
+| `experiments/main/upstream_shared_gating_snapshot/tools/smoke_teacher_loss.py` | lightweight teacher-path validator | reuse to confirm the chosen blueprint repair path is executable before a real run | catches config or loss-path issues cheaply | low |
+| `experiments/main/scripts/run_shared_gating_export_ego4d16f_smoke.sh` | existing frozen export/eval entrypoint | reuse later as the export/eval scaffold after a repaired checkpoint exists | keeps packet comparison surfaces stable | medium |
 
 ## 4. Execution Design
 
 - minimal experiment:
-  - read the existing widened chunk bundles and current chunk-aware control outputs
-  - measure cross-chunk discrimination at target fields, exported predicted packets, and any query-side projection/head tensors that can be accessed without changing the upstream contract
-  - write one report with cosine matrices, per-surface rank summaries, and per-dimension variance summaries
+  - add the blueprint repair config
+  - validate the chosen teacher-loss path with the lightweight smoke utility
+  - then prepare one bounded repair run on the same frozen widened surface
+  - after a repaired checkpoint exists, export packet bundles and rerun the localization plus packet retrieval package
 - smoke / pilot plan:
-  - confirm the required tensors are accessible from the frozen widened bundles or the closest non-confounding export surface
-  - run one localization smoke on the four chunk objects
-  - confirm that the diagnostic package clearly identifies the earliest surface where discrimination collapses, or honestly reports that the available surfaces are insufficient
+  - confirm `teacher_semantic_blueprint + semantic_change + temporal_delta` is executable in the frozen NVRC task path
+  - do not launch a second repair family before the first blueprint path is validated
 - expected outputs:
-  - one rerunnable localization entrypoint
-  - one diagnostic output root with report, summary, cosine matrices, and per-surface statistics
-  - one explicit judgment on whether a minimal repair is justified and where it should attach
+  - one rerunnable blueprint repair config
+  - one smoke validation result for the chosen teacher-loss path
+  - one explicit go/no-go judgment on whether a bounded blueprint repair run should launch
 - stop condition:
-  - the localization package identifies the earliest surface where query-side discrimination disappears
+  - the blueprint repair path is validated and the next bounded repair run is specified cleanly
 - abandonment condition:
-  - no additional query-side surface can be accessed without changing the frozen contract
-  - every accessible query-side surface is already collapsed, leaving no clear local repair point
-  - the localization result shows the packet-bridge line should be downgraded instead of repaired
+  - the blueprint repair path is invalid or unsupported in the current code path
+  - a blueprint-path smoke reveals no meaningful way to evaluate the repair against the existing packet surfaces
+  - a later bounded blueprint run leaves predicted packets fully collapsed, in which case the packet-bridge line should be downgraded instead of widened
 
 ## 5. Runtime Strategy
 
 - immediate next actions:
-  - sync this child branch's control docs to the localization-first route
-  - write the localization entrypoint inside the child worktree
-  - run the first localization smoke before choosing any repair family
+  - sync the current branch docs to the completed localization result and the chosen blueprint route
+  - add the blueprint repair config
+  - run the lightweight teacher-loss smoke for the chosen config
+  - if that smoke passes, prepare one bounded repair run on the same frozen widened surface
 - artifact locations:
-  - failed chunk-aware control root:
-    `../idea-idea-955ff951/experiments/main/evals/shared_gating_ego4d16f_chunk_aware_packet_smoke_r1/`
-  - current child localization root:
+  - completed localization root:
     `experiments/main/evals/shared_gating_query_collapse_localization_smoke_r1/`
+  - chosen repair config:
+    `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint-semchange-delta.yaml`
 - safe efficiency levers:
-  - reuse the same frozen widened bundles instead of rerunning upstream export
-  - localize with lightweight tensor diagnostics before adding any repair control
-  - if repair is justified, test exactly one minimal family before widening scope
+  - reuse the frozen bounded dataset and shared-gating initialization
+  - validate the repair path with the cheap teacher-loss smoke before any real run
+  - keep the post-repair comparison on the same packet export and localization scripts
 
 ## 6. Fallbacks And Recovery
 
-- if the needed query-side projection is not preserved in the current packet files:
-  - fall back to the closest accessible exported surface and classify the missing surface as a frozen-contract limitation
-- if the collapse already exists before packet export:
-  - downgrade the packet-bridge story and stop before inventing a local repair
-- if the collapse localizes to the query-side head:
-  - choose the smallest clean repair family from asymmetry, variance, redundancy reduction, or temporal contrastive calibration
-- if the first repair family fails:
-  - treat that as evidence against easy local salvage rather than immediately stacking more controls
+- if the blueprint loss path fails to validate:
+  - fall back to the existing `relation` path as the only alternate minimal repair family
+- if the blueprint path validates but a later bounded repair run stays collapsed:
+  - downgrade the packet-bridge line instead of stacking more repair families
+- if deeper query-head tensors remain inaccessible:
+  - continue treating exported predicted packets as the primary evaluation surface
 
 ## 7. Checklist Link
 
 - checklist path: `CHECKLIST.md`
-- next unchecked item: write and run the first localization smoke package
+- next unchecked item: validate the chosen blueprint repair path with the lightweight teacher-loss smoke

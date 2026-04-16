@@ -1,46 +1,49 @@
 # Status
 
-Baseline reuse is already resolved: `nvrc-local-source` is the accepted upstream asset.
+Baseline reuse is already resolved: `nvrc-local-source` remains the accepted upstream asset.
 
 Current stage: `experiment_prep`
 
 Current judgment:
-- The next line should not reopen old compression-variant ranking.
-- The parent downstream line already proved the pipeline skeleton: frozen upstream export plus frozen downstream consumer is runnable end to end.
-- The reconstructed-video handoff is now a bounded control result, not the preferred interface winner.
-- The active child line is `Query-Distinct Packet Bridge After Collapse Evidence`.
-- The chunk-aware parent line is now preserved as a failed but informative control:
-  - `chunk_target_feat_to_chunk_target_feat_seq_concat_top1_accuracy=1.0`
-  - `chunk_pred_feat_to_chunk_target_feat_seq_concat_top1_accuracy=0.25`
-  - `chunk_pred_delta_to_chunk_target_feat_seq_concat_top1_accuracy=0.25`
-- The decisive bottleneck is no longer “can chunk-aware aggregation help?” That question is already answered.
-- The decisive new evidence is that the predicted packet side collapses while the target side does not:
+- The localization smoke is complete and decisive.
+- The failure is not in chunk aggregation.
+- The earliest accessible collapse surface is `exported_predicted_packets_or_earlier`.
+- Target packets still separate all four chunks:
+  - `target_feat_to_target_feat_seq_concat_top1_accuracy=1.0`
+  - `target_delta_to_target_delta_seq_concat_top1_accuracy=1.0`
+- Exported predicted packets are fully collapsed:
+  - `pred_feat_to_pred_feat_seq_concat_top1_accuracy=0.25`
+  - `pred_delta_to_pred_delta_seq_concat_top1_accuracy=0.25`
   - `pred_feat` cross-chunk cosine is `1.0` everywhere
   - `pred_delta` cross-chunk cosine is `1.0` everywhere
-  - `target_feat` and `target_delta` remain non-constant across chunks
-- The correct next move is to localize where chunk discrimination disappears on the same frozen widened surface before trying any repair.
-- The literature now supports four plausible repair families after localization:
-  - target/query asymmetry
-  - explicit variance floors
-  - redundancy reduction
-  - chunk-local temporal contrastive calibration
-- The next experiment should still stay narrow:
-  - no upstream rerun
-  - no new dataset
-  - no larger VLM/LLM integration
-  - no direct regularizer-first jump before localization
+  - `pred_feat` and `pred_delta` raw mean dimension variance are both `0.0`
+- The frozen bundle does not expose deeper `query_projection` or `query_packet_head` tensors, so exported predicted packets are the current comparison boundary.
+- The chosen first repair is `teacher_semantic_blueprint` on top of the existing semantic-change and temporal-delta path.
+- The lightweight blueprint smoke already validated that this repair path is executable in the current NVRC task stack:
+  - `semantic_blueprint=true`
+  - `temporal_delta_consistency=true`
+  - `semantic_change_weighting=true`
+  - `feature_shape=[2, 4, 512]`
+  - `semantic_blueprint_target_shape=[2, 4, 4]`
+  - `temporal_delta_shape=[2, 4, 512]`
+- Why blueprint wins:
+  - this failure is cross-chunk identity collapse, not only weak within-clip temporal structure
+  - blueprint aligns each clip to its own target-conditioned low-rank semantic subspace
+  - relation consistency is kept as a fallback because it is less directly targeted at cross-chunk separation
+- The route is now intentionally narrow:
+  - no second repair family yet
+  - no wider bridge redesign yet
+  - no larger VLM/LLM integration yet
+  - no reopened codec ranking
 
 Current frontier:
-1. Recommended: run a collapse-localization package on the same frozen widened four-chunk surface.
-2. Next if the collapse localizes to the query-side head: test exactly one minimal diversity-preserving control on the same surface.
-3. Fallback: if collapse already exists before packet export, downgrade the packet-bridge story instead of adding more bridge variants.
-4. Deferred: heavier fusion or broader bridge redesign before localization.
+1. Recommended: prepare one bounded blueprint repair run on the same frozen widened surface.
+2. Fallback: if blueprint is invalid or unsupported, fall back to the existing relation-consistency path as the only alternate minimal repair.
+3. Stop condition: if a bounded blueprint repair still leaves predicted packets collapsed, downgrade the packet-bridge line instead of stacking more controls.
+4. Deferred: heavier bridge redesign before the first repair result exists.
 5. Deferred: larger multimodal or VLM/LLM integration until a non-collapsed packet bridge exists.
-6. Rejected for now: more chunk-aware aggregator tuning as the primary route.
-7. Rejected for now: direct regularizer-first repair without localization.
-8. Rejected for now: another flat widened retrieval claim.
 
 Next durable action:
-- sync this child branch's control docs to the localization-first route
-- implement the first collapse-localization smoke package
-- if the failing layer is localized to the query-side head, choose one minimal repair family and test it on the same frozen widened surface
+- keep the localization result as the locked failure boundary
+- keep the validated blueprint repair config as the single active repair family
+- prepare the smallest bounded repair smoke before any broader change
