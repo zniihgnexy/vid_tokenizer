@@ -1,0 +1,56 @@
+{
+  "kind": "milestone",
+  "schema_version": 1,
+  "artifact_id": "milestone-d5976a92",
+  "id": "milestone-d5976a92",
+  "quest_id": "002",
+  "created_at": "2026-04-16T08:53:52+00:00",
+  "updated_at": "2026-04-16T08:53:52+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-c5e88710",
+  "head_commit": "b47c209ab54cfa14ef1ec5a606b33faaabb30258",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-c5e88710",
+  "message": "有结果了：这轮定位验证已经把问题边界钉住。target 侧 packet 还能稳定区分 4 个 chunk，但预测侧 `pred_feat` 和 `pred_delta` 自检都只有 `0.25` top-1，而且跨 chunk 相似度是 `1.0`，说明信息在导出的预测 packet 这一侧就已经塌掉了，不是后面的 chunk 聚合器在吞信号。下一步我会先把这条结论写回当前方案和实验记录，再把路线收成“最多试一个直接作用于 query head / predictor 的最小修复”，避免继续在错误层面打转。",
+  "summary": "有结果了：这轮定位验证已经把问题边界钉住。target 侧 packet 还能稳定区分 4 个 chunk，但预测侧 `pred_feat` 和 `pred_delta` 自检都只有 `0.25` top-1，而且跨 chunk 相似度是 `1.0`，说明信息在导出的预测 packet 这一侧就已经塌掉了，不是后面的 chunk 聚合器在吞信号。下一步我会先把这条结论写回当前方案和实验记录，再把路线收成“最多试一个直接作用于 quer…",
+  "summary_preview": "有结果了：这轮定位验证已经把问题边界钉住。target 侧 packet 还能稳定区分 4 个 chunk，但预测侧 `pred_feat` 和 `pred_delta` 自检都只有 `0.25` top-1，而且跨 chunk 相似度是 `1.0`，说明信息在导出的预测 packet 这一侧就已经塌掉了，不是后面的 chunk 聚合器在吞信号。下一步我会先把这条结论写回当前方案和实验记录，再把路线收成“最多试一个直接作用于 quer…",
+  "interaction_phase": "ack",
+  "importance": "medium",
+  "attachments": [],
+  "interaction_id": "milestone-d5976a92",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "milestone",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Milestone recorded. Continue from the current anchor and keep the next checkpoint durable.",
+    "why_now": "Milestones should mark meaningful progress, not end the route prematurely.",
+    "complete_when": [
+      "The next substantive output is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.interact(kind='progress', ...)",
+        "purpose": "Send the next checkpoint update across active surfaces."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "milestone",
+    "source_artifact_id": "milestone-d5976a92",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}
