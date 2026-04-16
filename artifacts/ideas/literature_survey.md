@@ -2,94 +2,114 @@
 
 ## Pass Goal
 
-Turn the confirmed upstream NVRC-derived compression asset into a literature-grounded next direction for a machine-facing downstream pipeline, without reopening the old question of which compression variant should win.
+Turn the failed `chunk-aware local-burst` smoke into a literature-grounded next direction. The new question is no longer whether a chunk-aware evaluator is cleaner; it is whether the predicted packet representation collapses across widened chunks before the downstream bridge can use it.
 
 ## Strongest Local Constraints
 
 - The accepted baseline contract is still centered on UVG coding gain plus bounded local teacher-path feasibility.
-- The imported baseline package contains verification and metric-contract records, but no maintained downstream-task code path.
-- Active user requirements explicitly demote the old `readout` continuation and the `DINOv2 richer-teacher` line as default successors.
-- The next line should inherit a frozen upstream module and answer whether compressed or reconstructed outputs remain useful for downstream machine understanding.
+- The upstream compression/module ranking should stay frozen; this pass is only about the downstream packet bridge.
+- The widened 16-frame flat bridge already failed at near chance.
+- The chunk-aware smoke also failed:
+  - every packet-side chunk-aware metric stayed at `0.25` top-1 with `mean_match_rank=2.5`
+  - the target-feature sanity route stayed at `1.0`
+- A direct chunk-level cosine probe shows the real new bottleneck:
+  - `pred_feat` cross-chunk cosine matrix is all `1.0`
+  - `pred_delta` cross-chunk cosine matrix is all `1.0`
+  - `target_feat` and `target_delta` still vary across chunks
+- Therefore the next route should explain or repair predicted-packet collapse before claiming another interface rescue.
 
 ## Reused Prior Coverage
 
 - User-supplied route judgment: the stable upstream story is a shared semantic-gated dual-path style machine-oriented tokenizer interface, and the next line should not reopen upstream variant ranking.
-- Local baseline evidence: current durable artifacts cover coding metrics, teacher-smoke feasibility, and bounded reconstruction results, but not a downstream machine-facing interface.
+- Local baseline evidence: durable artifacts already cover coding metrics, teacher-smoke feasibility, and a runnable downstream pipeline skeleton.
+- Existing VCM and downstream-interface survey coverage still matters for the broader quest framing:
+  - `2001.03569` Video Coding for Machines: collaborative human/machine coding framing
+  - `2110.09241` Video Coding for Machine: compact visual representation compression for multi-task analytics
+  - `2404.04848` Task-Aware Encoder Control for Deep Video Compression: freeze codec, adapt task-facing control/interface
+  - `2503.23772` TransVFC: transferable feature-compression route
+  - `2206.01670` Egocentric Video-Language Pretraining: practical egocentric retrieval/classification consumer
+  - `2212.04501` LaViLa: frozen video-language consumer route
+  - `2407.16658` EgoCVR: temporally demanding egocentric retrieval benchmark
 
 ## Newly Added Papers And Comparisons
 
-### 1. Video Coding for Machines: A Paradigm of Collaborative Compression and Intelligent Analytics
+### 1. SimCLR: A Simple Framework for Contrastive Learning of Visual Representations
 
-- Paper id: `2001.03569`
-- Why it matters: formalizes VCM as a bridge between human-facing reconstruction coding and machine-facing feature coding.
-- Takeaway for this quest: the next line should treat the interface layer itself as the main object, not just one more codec tweak.
+- Paper id: `2002.05709`
+- Why it matters: keeps instance discrimination explicit through a contrastive objective and projection head.
+- Takeaway for this pass: if the query packet branch has lost chunk discrimination entirely, a minimal contrastive calibration over chunks is a more defensible fix than more aggregation tricks.
 
-### 2. Video Coding for Machine: Compact Visual Representation Compression for Intelligent Collaborative Analytics
+### 2. SimSiam: Exploring Simple Siamese Representation Learning
 
-- Paper id: `2110.09241`
-- Why it matters: argues that low-bitrate visual representations should support multiple downstream analytic tasks, not a single fixed task.
-- Takeaway for this quest: feature-packet export is scientifically relevant, but it usually requires dedicated representation design and transfer machinery.
+- Paper id: `2011.10566`
+- Why it matters: shows that collapse can happen even in simple prediction-based Siamese setups, and that stop-gradient asymmetry is a key anti-collapse ingredient.
+- Takeaway for this pass: if the packet head behaves like a symmetric prediction branch, the next fix should first test whether a small asymmetry or stop-gradient style control is missing.
 
-### 3. Task-Aware Encoder Control for Deep Video Compression
+### 3. Barlow Twins: Self-Supervised Learning via Redundancy Reduction
 
-- Paper id: `2404.04848`
-- Why it matters: shows that one codec with task-aware encoder control can support multiple machine tasks without retraining a decoder per task.
-- Takeaway for this quest: freezing the upstream decoder and adapting only the interface/controller is a defensible first-stage design principle.
+- Paper id: `2103.03230`
+- Why it matters: avoids trivial constant solutions by making cross-correlation close to identity and reducing redundancy across dimensions.
+- Takeaway for this pass: if chunk queries have become identical vectors, redundancy-reduction style controls are a cleaner second-step fix than more heuristic packet fusion.
 
-### 4. TransVFC: A Transformable Video Feature Compression Framework for Machines
+### 4. VICReg: Variance-Invariance-Covariance Regularization for Self-Supervised Learning
 
-- Paper id: `2503.23772`
-- Why it matters: compresses video features once, then transfers them into new task spaces with lightweight modules.
-- Takeaway for this quest: feature-space transfer is a strong second-stage route, but it is not the cheapest first runnable pipeline because it assumes explicit feature export and transform hooks.
+- Paper id: `2105.04906`
+- Why it matters: makes anti-collapse explicit with a variance floor plus covariance regularization instead of relying on implicit architectural bias.
+- Takeaway for this pass: a variance-preserving packet head is a concrete, literature-backed fallback if the diagnostic package localizes collapse to the exported query representation.
 
-### 5. Egocentric Video-Language Pretraining
+### 5. Bootstrap Your Own Latent (BYOL)
 
-- Paper id: `2206.01670`
-- Why it matters: establishes egocentric retrieval and classification as stable downstream targets with open training and evaluation structure.
-- Takeaway for this quest: a minimal downstream task can reasonably be retrieval or clip-level classification instead of a generative agent pipeline.
+- Paper id: `2006.07733`
+- Why it matters: keeps an online predictor and a slowly updated target branch asymmetric without negative pairs.
+- Takeaway for this pass: if the target-side packet fields remain diverse while the predicted query packet collapses, a small target/query asymmetry is a cleaner first repair than changing the evaluator again.
 
-### 6. Learning Video Representations from Large Language Models
+### 6. TCLR: Temporal Contrastive Learning for Video Representation
 
-- Paper id: `2212.04501`
-- Why it matters: LaViLa shows strong first-person retrieval and classification transfer, while also giving a later bridge toward larger language-model-conditioned interfaces.
-- Takeaway for this quest: a frozen video-language model is a practical example downstream consumer for the first end-to-end pipeline.
+- Paper id: `2101.07974`
+- Why it matters: explicitly improves temporal diversity by discriminating non-overlapping clips and timesteps from the same video.
+- Takeaway for this pass: if localization finds that chunk information survives before the final query projection, a chunk-local temporal contrastive calibration is a defensible fallback that matches the current bottleneck more directly than another static packet fusion.
 
-### 7. EgoCVR: An Egocentric Benchmark for Fine-Grained Composed Video Retrieval
+### 7. Implicit Variance Regularization in Non-Contrastive SSL
 
-- Paper id: `2407.16658`
-- Why it matters: highlights that egocentric retrieval is meaningful but temporally demanding.
-- Takeaway for this quest: composed retrieval is valuable, but it is likely a second-step benchmark after a simpler original-vs-reconstructed retrieval or classification check.
+- Paper id: `2212.04858`
+- Why it matters: explains why predictor-style asymmetry can avoid collapse through implicit variance regularization even under cosine-style objectives.
+- Takeaway for this pass: because the current packet bridge already uses cosine-based comparisons, localizing per-dimension variance loss in the query head is more principled than guessing a heavier bridge objective first.
 
 ## Frontier
 
-### Candidate A: Reconstructed Video + Teacher-Aligned Metadata + Frozen Retrieval/Classification Consumer
+### Candidate A: Query-Side Packet Collapse Diagnosis on the Frozen Widened Surface
 
-- Mechanism: freeze the upstream compression line, export reconstructed clips plus aligned metadata, and compare original vs reconstructed inputs with a frozen egocentric downstream model.
+- Mechanism:
+  - keep the same frozen widened chunk bundles and the current chunk-aware evaluator
+  - instrument discrimination at three levels: target fields, exported predicted packets, and any query-side packet head or projection
+  - if collapse localizes to the query-side packet head, test the smallest diversity-preserving control on the same bounded surface
 - Why it is strong now:
-  - matches the local asset boundary because reconstruction outputs already exist conceptually in the current package
-  - avoids requiring a brand-new compressed-feature codec interface on day one
-  - keeps the first comparison interpretable and fair
-- Main risk: novelty is moderate because the first step is interface and pipeline value more than a new compression algorithm.
+  - directly matches the new evidence instead of guessing another evaluator variant
+  - preserves the accepted comparability contract because the data, upstream export, and evaluator are already fixed
+  - is the cheapest route that can tell whether the packet line is still salvageable
+- Main risk:
+  - the collapse may already exist before packet export, in which case a local query-head fix will not be enough
 
-### Candidate B: Tokenizer/Teacher Feature Packet + Lightweight Projection/Transfer Head
+### Candidate B: Direct Diversity-Preserving Packet Head Without First Localizing the Collapse
 
-- Mechanism: export machine-facing intermediate features and add a small task adapter inspired by VCM multi-task transfer papers.
+- Mechanism:
+  - move straight to a diversity-preserving packet head inspired by SimSiam or BYOL asymmetry, VICReg variance floors, Barlow Twins redundancy reduction, or TCLR-style temporal contrastive calibration
+  - keep the current widened chunk surface as the validation set
 - Why it is interesting:
-  - closer to the long-term machine-native story
-  - stronger conceptual novelty if it works
+  - most likely to produce an immediate measurable improvement if the collapse truly comes from the packet-side prediction head
 - Why it is not first:
-  - current imported baseline package has no maintained feature-export code path
-  - requires interface design, storage format, alignment rules, and adapter training all at once
-- Main risk: high implementation and comparability risk in the first round.
+  - without localizing the failure layer, this mixes diagnosis and repair and makes the next negative result harder to interpret
+- Main risk:
+  - fixes the wrong layer and turns the next pass into another confounded “maybe the regularizer was wrong” story
 
-### Candidate C: Direct VLM/LLM Demo over Compressed Semantic Packet
+### Candidate C: Abandon the Packet Bridge Line and Fall Back to Reconstructed or Target-Side Controls
 
-- Mechanism: connect a larger multimodal model directly to compressed-side packets and judge end-to-end outputs.
-- Why it is tempting: strong demo appeal.
+- Mechanism:
+  - treat the packet-side collapse as terminal and retreat to already-known reconstructed or target-side baselines
 - Why it loses now:
-  - too many confounds from prompting, API behavior, sampling, and interface design
-  - weak attribution if the first result is poor
-- Main risk: high ambiguity, low scientific interpretability for round one.
+  - the target fields remain discriminative, and older 4-frame local delta evidence was positive enough that one diagnostic pass is still justified
+- Main risk:
+  - abandons a still-explainable failure mode too early
 
 ## Winner
 
@@ -97,45 +117,45 @@ Turn the confirmed upstream NVRC-derived compression asset into a literature-gro
 
 ## Why Candidate A Wins
 
-- It inherits the current quest exactly as a frozen upstream asset rather than reopening codec-line ranking.
-- It is the cleanest way to answer the user's main question: can the validated compression module serve a downstream machine consumer at all?
-- It gives a minimally confounded first experiment surface:
-  - original video input
-  - reconstructed video input
-  - optional later compressed-side interface input
-- It stays compatible with a later move into feature packets or larger VLM/LLM interfaces once the basic pipeline is stable.
+- It is the only route whose mechanism is already supported by direct local evidence: the query packets are constant while the target packets are not.
+- It keeps the failure interpretable because it does not change the data surface, upstream export, or downstream evaluator before localizing the collapse.
+- It preserves the option to import one small anti-collapse control from SimSiam, Barlow Twins, VICReg, BYOL, or TCLR only after the failing layer is identified.
 
 ## Strongest Reason Not To Choose The Alternatives
 
-- `Candidate B`: better long-term machine purity, but too much new plumbing for the first measured round.
-- `Candidate C`: better demo value, but too many uncontrolled variables for the first scientific checkpoint.
+- `Candidate B`: the literature is relevant, but applying a regularizer before localizing the collapse would turn the next result into another confounded guess.
+- `Candidate C`: it would throw away a live, explainable failure mode even though the target-side representations still carry chunk-specific structure.
 
-## Recommended First-Stage Research Questions
+## Recommended Next-Stage Research Questions
 
-1. Can the frozen upstream compression module export a stable machine-facing interface consisting of reconstructed clips plus aligned metadata?
-2. How much downstream utility is lost when a frozen egocentric consumer uses reconstructed input instead of original input?
-3. Is the gap small enough to justify a second-stage move toward feature-packet or semantic-packet interfaces?
+1. At which surface does chunk discrimination disappear: before packet export, inside the predicted packet head, or only after a specific bridge transform?
+2. If the collapse localizes to the query-side packet head, is one minimal diversity-preserving control enough to lift chunk-aware bridge accuracy above four-way chance?
+3. If no query-side surface retains chunk discrimination, should the packet bridge line be downgraded in favor of a cleaner upstream-facing interface claim?
 
-## Recommended First-Stage Experimental Designs
+## Recommended Next Experimental Designs
 
-1. Interface packaging run:
-   freeze checkpoint/config/data subset and define the export schema
-2. Minimal downstream pipeline run:
-   original vs reconstructed comparison with one frozen downstream consumer
-3. Optional extension run:
-   add one compressed-side or feature-side input path only if the first pipeline is already stable
+1. Collapse-localization run:
+   measure cross-chunk discrimination at target fields, predicted packets, and any query-side projection/head
+2. Minimal anti-collapse control run:
+   only if localization points to the packet-side head, add one small stop-gradient, variance-floor, redundancy-reduction, or temporal-contrastive control and re-evaluate on the same four-chunk surface
+3. Decision follow-up:
+   continue the packet bridge only if chunk-aware bridge accuracy rises above chance with a non-collapsed query representation
 
 ## Unresolved Overlaps Or Missing Evidence
 
-- We still need one concrete downstream model/repo choice for the first implementation pass.
-- We have not yet identified a direct prior work that already combines a frozen VCM-style upstream module with an egocentric downstream retrieval/classification pipeline in the exact way proposed here.
-- The current quest has no durable downstream dataset or consumer contract yet; that must be fixed in the experiment stage.
+- We still need to localize whether the collapse is introduced before or after the exported packet files.
+- The survey now supports four plausible repair families, but we do not yet know which one maps cleanly onto the current packet head:
+  - target/query asymmetry
+  - explicit variance floors
+  - redundancy reduction
+  - chunk-local temporal contrastive calibration
+- If the discriminative signal is already gone upstream of packet export, the packet-bridge story may need a more serious downgrade than a local regularizer.
 
 ## Promotion Decision
 
 - Promote now: `Candidate A`
-- Defer: `Candidate B`
-- Reject for round one: `Candidate C`
+- Defer until localization is complete: `Candidate B`
+- Reject for now: `Candidate C`
 
 ## Recommended Next Stage
 

@@ -1,70 +1,60 @@
 # Main Experiment Checklist
 
-Update this while planning, modifying code, running pilots, monitoring the full run, and validating the result.
+Update this while planning, modifying code, running pilots, and validating the localization result.
 
 ## Identity
 
-- run id: `shared_gating_interface_export_ego4d16f_smoke_r1`
-- idea id: `idea-e0d17d22`
+- run id: `shared_gating_query_collapse_localization_smoke_r1`
+- idea id: `idea-c5e88710`
 - stage: `experiment_prep`
 
 ## Planning
 
 - [x] selected idea summarized in `1-2` sentences
 - [x] parent-line evidence and baseline contract confirmed
-- [x] bridge-specific risks listed
-- [x] widened bounded sample surface chosen
-- [x] widened-surface manifest or sample list written
-- [x] reusable tiny config family recovered
-- [x] exact widened rerun command shape chosen
+- [x] collapse-specific risks listed
+- [x] localization surfaces defined
+- [x] literature-backed repair families ranked after localization
+- [x] exact localization output package chosen
 
 ## Implementation
 
-- [x] bounded frame extraction helper implemented
-- [x] local 16-frame bounded dataset generated
-- [ ] widened export smoke launch script written
-- [ ] control docs synced to the widened rerun route
-- [x] risky logic sanity-checked for dataset/config alignment
+- [ ] localization entrypoint written
+- [ ] control docs synced to the localization-first route
+- [ ] target/pred/query tensor access sanity-checked against real widened bundle files
+- [ ] optional repair entrypoint left deferred until localization result exists
 
 ## Pilot / Smoke
 
-- [ ] widened upstream smoke command executed
-- [ ] new `args.yaml` written under the widened output root
-- [ ] output tree contains bitstream, decoded, eval, and results summaries
-- [ ] metric keys match the old 4-frame export contract
+- [ ] localization smoke command executed
+- [ ] diagnostic output root contains report, summary, cosine matrices, and per-surface statistics
+- [ ] earliest collapse surface is explicit
+- [ ] result is interpretable against the existing chunk-aware control
 
 ## Validation
 
-- [ ] widened bundle is ready for reconstructed and teacher interface exporters
-- [ ] comparison against the old 4-frame export is interpretable
-- [ ] next bridge-eval action after the widened smoke is explicit
+- [ ] next action is explicit: either choose one minimal repair family or downgrade the packet bridge line
+- [ ] no second repair family is added before the first localization result is interpreted
+- [ ] bridge-line continuation remains justified after the localization package
 
 ## Notes
 
-- old 4-frame export control:
-  - `bpp_avg=88.2266`
-  - `psnr_avg=10.9012`
-  - `teacher-mse_avg=0.5126`
-- parent-line downstream control:
-  - `reconstructed_to_original_top1_accuracy=0.25`
-  - `reconstructed_to_original_mean_match_rank=2.5`
-- current 4-frame bridge smoke:
-  - `pred_feat_to_target_feat_direct_top1_accuracy=0.25`
-  - `pred_delta_to_target_feat_direct_top1_accuracy=0.5`
-  - `delta_ridge_to_target_feat_loo_top1_accuracy=0.0`
-  - `feat_plus_8p0x_delta_ridge_to_target_feat_loo_top1_accuracy=0.0`
-- current widened surface:
-  - dataset: `tmp/ego4d_bounded_bridge_r1/data/ego4d_small_bridge_16f`
-  - shape: `16 x 32 x 32`
-- recovered config family:
-  - `tiny_local.yaml`
-  - `tiny-1e.yaml`
-  - `teacher_tiny_32.yaml`
-  - `nvrc_tiny_s1.yaml`
-  - `l1_teacher-resnet18-shared-semchange-delta.yaml`
+- chunk-aware control:
+  - `chunk_target_feat_to_chunk_target_feat_seq_concat_top1_accuracy=1.0`
+  - `chunk_pred_feat_to_chunk_target_feat_seq_concat_top1_accuracy=0.25`
+  - `chunk_pred_delta_to_chunk_target_feat_seq_concat_top1_accuracy=0.25`
+- collapse probe:
+  - `pred_feat` cross-chunk cosine matrix is all `1.0`
+  - `pred_delta` cross-chunk cosine matrix is all `1.0`
+  - `target_feat` and `target_delta` remain non-constant across chunks
+- repair families now justified by literature:
+  - target/query asymmetry
+  - explicit variance floors
+  - redundancy reduction
+  - chunk-local temporal contrastive calibration
 - branch meaning:
-  - the 4-frame bridge result stays as the bounded positive signal
-  - the immediate blocker is now widened upstream export, not another 4-frame bridge tweak
-  - the next bridge comparison depends on a successful widened export bundle
+  - the chunk-aware branch is preserved as a failed but informative control
+  - the immediate blocker is localization of query-side collapse, not another evaluator rewrite
+  - the next repair, if any, depends on a successful localization package
 - next unchecked item:
-  - write and execute the widened frozen export smoke entrypoint
+  - write and execute the localization smoke entrypoint
