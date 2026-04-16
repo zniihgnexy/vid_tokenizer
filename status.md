@@ -5,45 +5,28 @@ Baseline reuse is already resolved: `nvrc-local-source` remains the accepted ups
 Current stage: `experiment_prep`
 
 Current judgment:
-- The localization smoke is complete and decisive.
-- The failure is not in chunk aggregation.
-- The earliest accessible collapse surface is `exported_predicted_packets_or_earlier`.
-- Target packets still separate all four chunks:
-  - `target_feat_to_target_feat_seq_concat_top1_accuracy=1.0`
-  - `target_delta_to_target_delta_seq_concat_top1_accuracy=1.0`
-- Exported predicted packets are fully collapsed:
-  - `pred_feat_to_pred_feat_seq_concat_top1_accuracy=0.25`
-  - `pred_delta_to_pred_delta_seq_concat_top1_accuracy=0.25`
-  - `pred_feat` cross-chunk cosine is `1.0` everywhere
-  - `pred_delta` cross-chunk cosine is `1.0` everywhere
-  - `pred_feat` and `pred_delta` raw mean dimension variance are both `0.0`
-- The frozen bundle does not expose deeper `query_projection` or `query_packet_head` tensors, so exported predicted packets are the current comparison boundary.
-- The chosen first repair is `teacher_semantic_blueprint` on top of the existing semantic-change and temporal-delta path.
-- The lightweight blueprint smoke already validated that this repair path is executable in the current NVRC task stack:
-  - `semantic_blueprint=true`
-  - `temporal_delta_consistency=true`
-  - `semantic_change_weighting=true`
-  - `feature_shape=[2, 4, 512]`
-  - `semantic_blueprint_target_shape=[2, 4, 4]`
-  - `temporal_delta_shape=[2, 4, 512]`
-- Why blueprint wins:
-  - this failure is cross-chunk identity collapse, not only weak within-clip temporal structure
-  - blueprint aligns each clip to its own target-conditioned low-rank semantic subspace
-  - relation consistency is kept as a fallback because it is less directly targeted at cross-chunk separation
-- The route is now intentionally narrow:
-  - no second repair family yet
-  - no wider bridge redesign yet
-  - no larger VLM/LLM integration yet
-  - no reopened codec ranking
-
-Current frontier:
-1. Recommended: prepare one bounded blueprint repair run on the same frozen widened surface.
-2. Fallback: if blueprint is invalid or unsupported, fall back to the existing relation-consistency path as the only alternate minimal repair.
-3. Stop condition: if a bounded blueprint repair still leaves predicted packets collapsed, downgrade the packet-bridge line instead of stacking more controls.
-4. Deferred: heavier bridge redesign before the first repair result exists.
-5. Deferred: larger multimodal or VLM/LLM integration until a non-collapsed packet bridge exists.
+- The earlier localization smoke is still the locked failure boundary.
+- The bounded `blueprint + semantic-change + temporal-delta` repair successfully ran end-to-end, exported a packet bundle, and produced a bounded teacher-packet evaluation.
+- That first repair is now downgraded.
+- Why it is downgraded:
+  - `target_feat` remains fully discriminative on the repaired single bundle: `top1_accuracy=1.0`
+  - `pred_feat -> target_feat` is still only `0.0625` top-1 on a `16`-frame bundle, which is effectively chance-level alignment
+  - `pred_delta -> target_delta` rises to `0.1875` top-1, but its mean margin vs best non-match is still negative
+  - within-bundle self checks show the repair is not a pure constant-vector failure anymore:
+    - `pred_feat_self_top1=1.0`, `offdiag_mean=0.9947`
+    - `pred_delta_self_top1=0.9375`, `offdiag_mean=-0.0543`
+  - taken together, the evidence says blueprint recovers some self-discrimination but does not recover clean predicted-to-target packet alignment
+- This means the remaining bottleneck is target alignment, not simply restoring packet variance.
+- The current frontier is now intentionally narrow again:
+  1. Recommended: validate one bounded `teacher_relation_consistency` repair on the same frozen surface.
+  2. Fallback: if relation is invalid or unsupported, reopen route selection instead of stacking more built-in regularizers blindly.
+  3. Stop condition: if a later bounded relation run still leaves predicted-to-target alignment near chance, downgrade the packet-bridge line again instead of widening scope.
+- Deferred:
+  - broader bridge redesign before relation is tested
+  - deeper multimodal / VLM integration before a reliable packet interface exists
+  - reopening codec-line ranking
 
 Next durable action:
-- keep the localization result as the locked failure boundary
-- keep the validated blueprint repair config as the single active repair family
-- prepare the smallest bounded repair smoke before any broader change
+- keep the localization package as the locked pre-repair failure boundary
+- keep the blueprint result as a completed but insufficient first repair
+- add and validate the relation repair config with the lightweight teacher-loss smoke
