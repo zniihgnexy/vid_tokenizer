@@ -1,0 +1,51 @@
+{
+  "kind": "answer",
+  "schema_version": 1,
+  "artifact_id": "answer-2cfb5824",
+  "id": "answer-2cfb5824",
+  "quest_id": "002",
+  "created_at": "2026-04-16T11:41:21+00:00",
+  "updated_at": "2026-04-16T11:41:21+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-c5e88710",
+  "head_commit": "1f0e2ff1e234350c349b76a9d5aa1357edc8f14e",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-c5e88710",
+  "message": "我把这段时间在 chat 里已经试过的主线压成几条：\n\n- 先把已验证的视频压缩上游模块冻结下来，搭了第一版完整 downstream pipeline，用重建视频去做最小 retrieval/matching 验证。\n- 第一轮结果说明 pipeline 本身能跑通，但 `reconstructed video` 作为机器接口太弱：对照是满分，重建侧检索只到约 `0.25` top-1，所以这条接口被判定不适合作为默认承接层。\n- 然后我转去试 `teacher/tokenizer feature packet` 接口，把中间特征直接导出给下游 consumer，而不是只喂重建视频。\n- 在 packet 路线上，我比较了 plain feature、temporal delta、以及 delta-dominant 组合；其中 `delta-first` 明显更好，最好一版到过约 `0.75` top-1，所以 plain feature 这条假设被降级了。\n- 接着我把验证面稍微放宽，做了 `chunk-aware` 检查，结果发现之前看起来有效的 packet 优势没有稳住，指标又掉回接近随机水平。\n- 进一步诊断后，问题被收紧到 query 侧表征塌缩：也就是区分信息很可能在 packet repair 之前就已经丢了，不只是聚合器设计的问题。\n- 所以当前最新尝试已经转到 `query-side collapse localization`，目标是先定位信息到底在 export 前、query 头里、还是 chunk 组织阶段丢掉，再决定下一版 packet/interface 怎么改。\n\n一句话版：我已经依次试了 `重建视频接口 -> teacher feature packet -> delta-first packet -> chunk-aware 扩展验证 -> query collapse 定位`，现在最清楚的结论是“完整链条能跑，但真正的瓶颈在 query 侧表征保持，而不是单纯把重建视频接下游”。",
+  "summary": "我把这段时间在 chat 里已经试过的主线压成几条： - 先把已验证的视频压缩上游模块冻结下来，搭了第一版完整 downstream pipeline，用重建视频去做最小 retrieval/matching 验证。 - 第一轮结果说明 pipeline 本身能跑通，但 `reconstructed video` 作为机器接口太弱：对照是满分，重建侧检索只到约 `0.25` top-1，所以这条接口被判定不适合作为默认承接层。 - 然…",
+  "summary_preview": "我把这段时间在 chat 里已经试过的主线压成几条： - 先把已验证的视频压缩上游模块冻结下来，搭了第一版完整 downstream pipeline，用重建视频去做最小 retrieval/matching 验证。 - 第一轮结果说明 pipeline 本身能跑通，但 `reconstructed video` 作为机器接口太弱：对照是满分，重建侧检索只到约 `0.25` top-1，所以这条接口被判定不适合作为默认承接层。 - 然…",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "answer-2cfb5824",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "answer",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "answer",
+    "source_artifact_id": "answer-2cfb5824",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

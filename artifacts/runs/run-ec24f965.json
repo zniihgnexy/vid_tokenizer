@@ -1,0 +1,69 @@
+{
+  "kind": "run",
+  "schema_version": 1,
+  "artifact_id": "run-ec24f965",
+  "id": "run-ec24f965",
+  "quest_id": "002",
+  "created_at": "2026-04-16T11:41:33+00:00",
+  "updated_at": "2026-04-16T11:41:33+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-c5e88710",
+  "head_commit": "1f0e2ff1e234350c349b76a9d5aa1357edc8f14e",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-c5e88710",
+  "run_id": "run-b1e1505b",
+  "run_kind": "idea",
+  "model": "inherit",
+  "summary": "我先把这次 quest 里已经做过的尝试梳理成一个短摘要。先读一下最近的对话上下文和当前全局状态，避免把已经降级或已经确认的结论说错。\n我已经把主线压缩成几个最关键的尝试点了。接下来先把这个短摘要作为直接答复发给你，然后我再继续沿当前 idea 线推进。\n- 先把已经验证过的压缩上游模块冻结下来，搭了第一版完整 downstream pipeline，用重建视频做最小 retrieval/matching 验证。\n- 第一轮结果说明 pipeline 能跑通，但 `reconstructed video` 作为机器接口太弱，检索只有大约 `0.25` top-1，所以这条接口被降级。\n- 接着转去试 `teacher/tokenizer feature packet` 接口，不再只依赖重建视频，而是直接把中间特征导给下游。\n- 在 packet 路线上比较了 plain feature、temporal delta、delta-dominant 几种设计；其中 `delta-first` 最好，最好一版到过大约 `0.75` top-1。\n- 然后把验证面稍微放宽，做了 `chunk-aware` 检查，结果发现这个优势没有稳住，指标又掉回接近随机。\n- 进一步诊断后，问题被收紧到 `query-side collapse`：也就是区分信息很可能在 packet repair 之前就已经丢了，不只是聚合器的问题。\n- 现在最新的主线是在做 `query collapse localization`，先定位信息到底在哪一层丢掉，再决定下一版 packet/interface 怎么改。\n\n一句话版：我已经依次试了 `重建视频接口 -> teacher feature packet -> delta-first packet -> chunk-aware 扩展验证 -> query collapse 定位`，当前最清楚的结论是“链条能跑，但真正的瓶颈在 query 侧表征保持”。",
+  "history_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/codex_history/run-b1e1505b",
+  "run_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/runs/run-b1e1505b",
+  "exit_code": 0,
+  "guidance_vm": {
+    "current_anchor": "experiment",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Main run recorded. Interpret it against baseline before spending more compute.",
+    "why_now": "A run result only changes the quest once its metrics, caveats, and branch value are turned into a durable decision.",
+    "complete_when": [
+      "A report or decision explains the result versus baseline.",
+      "The next route is chosen: analysis, write, branch, or stop."
+    ],
+    "alternative_routes": [
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Launch analysis",
+        "when": "The result is promising but still under-explained.",
+        "tradeoff": "Strengthens understanding, but adds additional runs."
+      },
+      {
+        "action": "write",
+        "label": "Move to writing",
+        "when": "The result is already strong and well-explained enough.",
+        "tradeoff": "Faster paper progress, but less stress-testing."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(kind='report', ...)",
+        "purpose": "Summarize the main run and metric deltas."
+      },
+      {
+        "name": "artifact.record(kind='decision', ...)",
+        "purpose": "Choose the next route based on the result."
+      },
+      {
+        "name": "artifact.create_analysis_campaign(...)",
+        "purpose": "When extra experiments are needed, create them as one-slice or multi-slice child branches from the current result node."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "run",
+    "source_artifact_id": "run-ec24f965",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}
