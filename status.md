@@ -3,42 +3,34 @@
 Baseline reuse is already resolved: `nvrc-local-source` remains the accepted
 upstream asset.
 
-Current stage: `experiment`
+Current stage: `experiment_prep`
 
 Current judgment:
-- The relation repair remains the earlier negative result; the active evidence
-  line is now the corrected predicted-side variance-floor run on the dedicated
-  `run/*` branch.
-- The first bounded real run initially looked valid but was invalidated because
-  the new variance-floor fields were not forwarded through
-  `create_overfit_task(...)`, leaving the effective regularizer at `0.0`.
-- That passthrough bug is now fixed and the corrected bounded run has completed
-  with `pred_variance_weight=1.0` active in both training and evaluation logs.
-- `pred_feat` remains the primary intervention surface for this first pass
-  because it is directly accessible and maps cleanly to the observed collapse
-  evidence.
-- `pred_delta` remains an optional secondary extension and stays off in the
-  first config to avoid a second moving part.
-- The export and evaluation surface stayed fixed throughout this pass:
-  - same frozen widened dataset family
-  - same packet export tools
-  - same teacher-packet evaluator
-- The corrected bounded result is mixed rather than clearly positive:
-  - `teacher-mse_avg` improved from `0.4888` to `0.4821`
-  - `bpp_avg` worsened from `23.8555` to `23.9277`
-  - `psnr_avg` slipped from `10.4642` to `10.4509`
-- The immediate question is no longer implementation validity; it is route
-  judgment: whether this first effective repair deserves a larger follow-up or
-  whether the next effort should move upward to a packet/interface-level change.
+- The active child line is now `Teacher-Anchored Packet Adapter After Mixed Variance-Floor Repair`.
+- The corrected variance-floor run is useful only as route evidence; it does not justify another immediate low-level repair sweep.
+- The current teacher-feature packet exporter is already sufficient for the next bounded step:
+  - packet payloads include `pred_feat`, `target_feat`, `pred_delta`, and `target_delta`
+  - the manifest already stores packet paths, frame-level decoded/eval metrics,
+    aggregate metrics, and a teacher packet summary
+- The current packet-side bottleneck is no longer “we have no bridge at all”.
+  The stronger reading is:
+  - direct packet controls are weak but non-zero
+  - the naive ridge bridge is even worse
+  - the missing evidence is whether a teacher-anchored adapter can improve the handoff on the same bundle
+- The current comparison anchor stays fixed:
+  - same frozen upstream surface
+  - same tiny-local `4`-frame smoke surface for the next bounded package
+  - same retrieval-style packet evaluation contract
+- The best-supported next route is to reuse the existing bundle and add one
+  teacher-anchored adapter comparison before any bundle redesign or larger-model integration.
 
 Deferred:
-- another teacher-side auxiliary-loss repair
-- broader packet-interface redesign before one bounded predicted-side repair is measured
-- deeper multimodal / VLM integration before the packet bridge is trustworthy
+- another immediate low-level anti-collapse or variance-floor sweep
+- packet bundle schema redesign without concrete missing-field evidence
+- direct VLM/LLM integration
 - reopening codec-line ranking
 
 Next durable action:
-- record the corrected bounded main experiment durably on this run line
-- write the post-result decision with the current trade-off and caveat
-- choose whether to continue scaling the repair or shift to a higher-level
-  packet/interface route
+- finish the idea-stage convergence pass with the rewritten survey and control files
+- define one non-leaking teacher-anchored adapter comparison
+- hand off to `experiment` for a bounded packet-adapter smoke on the existing bundle surface

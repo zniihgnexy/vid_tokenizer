@@ -1,62 +1,62 @@
-# Main Experiment Checklist
+# Packet Adapter Checklist
 
-Update this while implementing, smoke-testing, and deciding whether to launch
-the bounded main run for the variance-floor repair.
+Update this while converging the new idea line into the first bounded
+teacher-anchored packet-adapter experiment package.
 
 ## Identity
 
-- idea id: `idea-2835dace`
-- stage: `experiment`
+- idea id: `idea-76fee64d`
+- stage: `experiment_prep`
 
 ## Preconditions
 
 - [x] confirm the accepted baseline contract is still `nvrc-local-source`
-- [x] confirm the active anti-collapse idea remains the selected route
-- [x] confirm this pass keeps the current frozen export/eval surface unchanged
-- [x] confirm `pred_feat` is the primary intervention surface for the first repair
+- [x] confirm the active route is the new teacher-anchored packet-adapter line
+- [x] confirm the first package stays on the same tiny-local `4`-frame surface
+- [x] confirm the current packet bundle schema already exposes packet paths, metrics, and teacher packet summary
 
 ## Control Files
 
-- [x] convert `PLAN.md` from idea framing to main-experiment framing
-- [x] convert `CHECKLIST.md` to experiment execution tracking
-- [x] update `status.md` once the corrected bounded main-run result exists
+- [x] rewrite `PLAN.md` around the packet-adapter route instead of the old variance-floor run
+- [x] rewrite `CHECKLIST.md` for packet-adapter experiment prep
+- [x] rewrite `status.md` so it reflects the new idea line rather than the completed variance-floor run
+- [x] refresh the idea-stage literature survey for retrieval / adapter / distillation papers
 
-## Implementation
+## Evidence Review
 
-- [x] add predicted-feature variance-floor loss plumbing in `tasks.py`
-- [x] expose variance-floor config fields in `main_utils.py`
-- [x] extend `smoke_teacher_loss.py` with variance-floor arguments and summary output
-- [x] add one reproducible task config for the variance-floor repair
-- [x] add one bounded launcher script for the variance-floor repair
+- [x] confirm the reconstructed-video control remains a bounded baseline, not the preferred handoff winner
+- [x] confirm prior packet-side direct controls are weak but non-trivial
+- [x] confirm the naive ridge packet bridge is already measured and is worse than the direct controls
+- [x] confirm the exporter manifest already preserves the existing comparison surface
 
-## Smoke Validation
+## Package Design
 
-- [x] run the teacher-loss smoke with variance-floor enabled
-- [x] confirm the smoke summary shows the new variance-floor settings explicitly
-- [x] confirm the smoke summary reports a non-null variance-floor penalty value
-- [x] confirm no unrelated export/eval code changes are required
+- [ ] specify one non-leaking teacher-anchored adapter formulation
+- [ ] decide whether to extend `run_teacher_packet_eval.py` or add one dedicated adapter-eval helper
+- [ ] define the exact smoke command and output directory contract
+- [ ] define the comparison table for the next smoke report
 
-## Main-Run Gate
+## Implementation Prep
 
-- [x] decide whether the smoke result is clean enough to justify a dedicated `run/*` branch
-- [x] if justified, prepare the bounded main-run package on a dedicated run branch/worktree
-- [x] archive the first invalid bounded run after the missing task-construction passthrough was exposed
-- [x] rerun the bounded main experiment after fixing the missing passthrough
-- [ ] record the corrected bounded run durably with the real metric trade-off
-- [ ] route the next step through an explicit post-result decision
+- [ ] add the new teacher-anchored adapter comparison entry
+- [ ] write summary/report fields for the new comparison
+- [ ] add one reproducible launcher or documented command for the bounded smoke
+
+## Smoke Gate
+
+- [ ] run the bounded packet-adapter smoke on the same bundle surface
+- [ ] verify the new comparison avoids target leakage
+- [ ] verify the new comparison beats the naive ridge bridge
+- [ ] decide whether the result is strong enough to justify a dedicated run branch
 
 ## Notes
 
-- locked failure boundary:
-  - target packets remain discriminative
-  - exported predicted packets remain collapsed
-  - earliest accessible collapse surface: `exported_predicted_packets_or_earlier`
-- first repair scope:
-  - on: predicted-feature variance floor
-  - off by default: predicted-delta variance floor
-  - unchanged: packet export and packet evaluation contract
-- corrected bounded main-run headline:
-  - active regularizer in logs: `pred_variance_weight=1.0`
-  - `teacher-mse_avg=0.4821` vs invalid first run `0.4888`
-  - `bpp_avg=23.9277` vs invalid first run `23.8555`
-  - `psnr_avg=10.4509` vs invalid first run `10.4642`
+- current bounded packet evidence:
+  - `pred_feat_to_target_feat_direct top1 = 0.25` on the delta packet smoke
+  - `pred_delta_to_target_feat_direct top1 = 0.5` on the delta packet smoke
+  - `delta_ridge_to_target_feat_loo top1 = 0.0`
+  - blueprint packet smoke remained near chance for direct packet retrieval on the widened surface
+- selected route:
+  - reuse the current bundle
+  - keep upstream frozen
+  - add exactly one better-scoped, teacher-anchored comparison before widening scope

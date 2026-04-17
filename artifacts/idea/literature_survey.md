@@ -1,196 +1,208 @@
-# Query-Side Anti-Collapse Literature Survey
+# Teacher-Anchored Packet Adapter Literature Survey
 
 ## Scope
 
-This survey supports the active idea `idea-2835dace` on the frozen widened packet
-bridge surface. The question for this pass is narrow: after two negative
-teacher-side repair attempts, which minimal anti-collapse mechanism is most
-defensible for the predicted-side packet bottleneck without reopening codec
-ranking or changing the packet evaluator?
+This survey supports the active idea `idea-76fee64d`. The question for this pass
+is no longer “which anti-collapse regularizer should be tried next?” but rather:
+given a frozen upstream packet bundle that is already exportable, which
+retrieval/adapter/distillation route is the most defensible next bounded step
+for turning that packet surface into a more usable machine-facing interface?
 
 ## Reused Durable Coverage
 
-- Reused local evidence from the earlier collapse-localization package:
-  exported predicted packets are already collapsed while target packets remain
-  discriminative, and the earliest accessible collapse surface is
-  `exported_predicted_packets_or_earlier`.
-- Reused the bounded blueprint downgrade and the bounded relation negative
-  result as the two measured failures that weaken further teacher-side repair.
-- Reused prior idea-line notes that already narrowed the candidate mechanism
-  families to localization-first anti-collapse controls rather than evaluator
-  redesign.
+- Reused the parent downstream control result:
+  - `original_to_original_top1_accuracy = 1.0`
+  - `reconstructed_to_original_top1_accuracy = 0.25`
+  - `reconstructed_to_original_mean_match_rank = 2.5`
+  This keeps reconstructed video as a bounded control rather than the preferred
+  machine-facing handoff.
+- Reused the existing teacher-feature packet exporter and its manifest contract.
+  The current bundle already contains frame-level packet paths, decoded/eval
+  metrics, aggregate metrics, and `teacher_packet_summary`.
+- Reused prior packet-side measurements showing that the current bottleneck is
+  not simply “no bridge exists”:
+  - direct packet comparisons are weak but non-zero
+  - the naive ridge bridge can be worse than the direct packet controls
+- Reused the corrected variance-floor run only as route evidence:
+  it is now a valid measured result, but its trade-off is mixed and therefore
+  does not dominate the interface-level route.
+- Reused the earlier anti-collapse literature sweep as background only. BYOL,
+  SimSiam, VICReg, Barlow Twins, DINO, and dimensional-collapse analyses still
+  explain why collapse mattered, but they are no longer the main decision-making
+  neighborhood for this interface-focused pass.
 
 ## Newly Added Papers This Pass
 
-### 1. BYOL
+### 1. CLIP4Clip
 
-- Paper: Grill et al., "Bootstrap your own latent" (arXiv:2006.07733)
-- Mechanism: online/target asymmetry with EMA teacher
+- Paper: Luo et al., “CLIP4Clip: An Empirical Study of CLIP for End to End Video Clip Retrieval” (arXiv:2104.08860)
+- Mechanism:
+  start from a frozen or lightly adapted image-language backbone and transfer it
+  into video retrieval with compact temporal aggregation.
 - Useful signal:
-  a non-contrastive learner can avoid collapse through asymmetric prediction
-  structure rather than negatives.
+  strong video retrieval performance can be achieved by reusing a pretrained
+  feature space rather than rebuilding the encoder stack from scratch.
 - Translation to this quest:
-  useful as a comparison point, but weaker as the first local repair here
-  because the current target path is already fixed through frozen teacher
-  features; adding more stop-gradient-like asymmetry alone is unlikely to change
-  the accessible failure surface.
+  supports the decision to keep the upstream packet surface frozen and focus the
+  next change on the downstream adapter/evaluator layer.
 
-### 2. SimSiam
+### 2. X-Pool
 
-- Paper: Chen and He, "Exploring Simple Siamese Representation Learning"
-  (arXiv:2011.10566)
-- Mechanism: stop-gradient as a key anti-collapse ingredient
+- Paper: Gorti et al., “X-Pool: Cross-Modal Language-Video Attention for Text-Video Retrieval” (arXiv:2203.15086)
+- Mechanism:
+  query-conditioned attention that emphasizes the most relevant video sub-regions
+  instead of using text-agnostic frame pooling.
 - Useful signal:
-  explicit asymmetry can be decisive when both branches would otherwise co-adapt
-  into collapse.
+  better retrieval can come from conditioning the aggregation path on a stable
+  guide rather than from changing the base feature extractor.
 - Translation to this quest:
-  important as disconfirming context. The current quest already uses a fixed
-  teacher target, so the main lesson is not "add stop-gradient again", but
-  "check whether the current collapse is really caused by missing asymmetry". The
-  answer here appears to be no.
+  supports a teacher-anchored adapter route where packet aggregation or mapping
+  is conditioned on a stable teacher-side anchor instead of using only flat
+  packet concatenation.
 
-### 3. VICReg
+### 3. X-CLIP
 
-- Paper: Bardes et al., "VICReg" (arXiv:2105.04906)
-- Mechanism: explicit variance floor plus covariance regularization
+- Paper: Ma et al., “X-CLIP: End-to-End Multi-grained Contrastive Learning for Video-Text Retrieval” (arXiv:2207.07285)
+- Mechanism:
+  multi-grained and cross-grained similarity aggregation, plus attention over the
+  similarity matrix, to focus on essential frames and words.
 - Useful signal:
-  collapse can be addressed directly with a per-dimension variance term instead
-  of relying on implicit architectural bias.
+  retrieval quality can hinge on how coarse and fine features are aggregated, not
+  just on whether a backbone is strong.
 - Translation to this quest:
-  this is the best first-match mechanism for the current bottleneck because the
-  measured failure is exactly low-diversity predicted-side packet structure on an
-  otherwise fixed comparison surface.
+  strengthens the case that the next missing comparison is an aggregation or
+  adapter change over the current packet surface, not another codec-side change.
 
-### 4. Barlow Twins
+### 4. TS2-Net
 
-- Paper: Zbontar et al., "Barlow Twins" (arXiv:2103.03230)
-- Mechanism: redundancy reduction via cross-correlation identity objective
+- Paper: Liu et al., “TS2-Net: Token Shift and Selection Transformer for Text-Video Retrieval” (arXiv:2207.07852)
+- Mechanism:
+  temporally shift token features and select informative tokens in spatial and
+  temporal dimensions.
 - Useful signal:
-  decorrelation can prevent trivial constant or low-information embeddings
-  without negative pairs or momentum updates.
+  token usefulness is not uniform; selection and structured aggregation can
+  matter as much as raw token presence.
 - Translation to this quest:
-  a plausible second-choice repair if a pure variance floor is too weak, but it
-  is a larger objective change than the variance-first route and is therefore
-  better kept as the immediate fallback rather than the first intervention.
+  supports the hypothesis that a teacher-anchored adapter should probably act as
+  a selective weighting or coefficient mechanism over packet components rather
+  than as another unstructured flat bridge.
 
-### 5. DINO
+### 5. TeachCLIP
 
-- Paper: Caron et al., "Emerging Properties in Self-Supervised Vision
-  Transformers" (arXiv:2104.14294)
-- Mechanism: self-distillation with teacher-student asymmetry
+- Paper: Tian et al., “TeachCLIP: Multi-Grained Teaching for Efficient Text-to-Video Retrieval” (arXiv:2308.01217)
+- Mechanism:
+  distill heavy, fine-grained teacher models into an efficient student retrieval
+  model with an attentional frame-feature aggregation block.
 - Useful signal:
-  teacher-side stabilization and distilled targets can preserve semantic
-  structure.
+  teacher-guided aggregation can improve efficiency and quality without making
+  retrieval-time cost explode.
 - Translation to this quest:
-  relevant mostly as a reminder that teacher-side stabilization can help when
-  the teacher branch itself is trainable. Here the teacher encoder is already
-  fixed, so DINO is weaker support for another teacher-side repair than for
-  keeping the teacher features as the stable target surface.
+  directly supports the current route: introduce a teacher-anchored adapter that
+  keeps the runtime surface compact instead of widening to a larger-model stack.
 
-### 6. Understanding Dimensional Collapse in Contrastive SSL
+### 6. VideoAdviser
 
-- Paper: Jing et al., "Understanding Dimensional Collapse in Contrastive
-  Self-supervised Learning" (arXiv:2110.09348)
-- Mechanism: collapse diagnosis and representation-space direct optimization
+- Paper: Wang et al., “VideoAdviser: Video Knowledge Distillation for Multimodal Transfer Learning” (arXiv:2309.15494)
+- Mechanism:
+  transfer multimodal video knowledge from a stronger teacher into a smaller
+  student space for efficient downstream inference.
 - Useful signal:
-  collapse is not only a trivial all-constant failure; a representation can
-  retain some task signal while still shrinking into a low-dimensional subspace.
+  a compact student representation can inherit useful multimodal structure from a
+  teacher without requiring the full teacher computation at inference.
 - Translation to this quest:
-  this strengthens the current interpretation of the blueprint result: improved
-  self-discrimination is not enough if predicted-side representations still do
-  not span a useful alignment space against targets.
-
-### 7. Understanding Collapse in Non-Contrastive Siamese Representation Learning
-
-- Paper: Li et al., "Understanding Collapse in Non-Contrastive Siamese
-  Representation Learning" (arXiv:2209.15007)
-- Mechanism: collapse metrics and size-sensitivity analysis
-- Useful signal:
-  partial dimensional collapse can forecast downstream weakness even when a
-  system does not look fully degenerate.
-- Translation to this quest:
-  matches the current observed pattern closely: the packet bridge no longer looks
-  like a pure constant-vector failure, but the measured alignment remains too
-  weak to support downstream use.
+  supports treating the next bridge as a teacher-guided mapping from packet space
+  into a more usable consumer space rather than a full end-to-end retraining
+  problem.
 
 ## Code-Path Feasibility Readout
 
-- Accessible today:
-  `pred_feat`, `target_feat`, `pred_delta`, `target_delta`, relation matrices,
-  and the current packet export/evaluator surfaces.
-- Not exposed today:
-  `query_projection` and `query_packet_head`; the localization package records
-  them as missing surfaces.
+- Already available today:
+  - `pred_feat`, `target_feat`, `pred_delta`, `target_delta`
+  - frame-level packet metrics
+  - aggregate run metrics
+  - packet paths and teacher packet summary in the manifest
+- Already measured today:
+  - direct packet controls
+  - a naive ridge bridge that performs worse than the direct packet control
+- Not yet available today:
+  - an explicit teacher-anchored adapter comparison in the packet-side evaluator
 - Consequence:
-  the first repair should favor mechanisms that can act on currently accessible
-  predicted-side tensors. This makes explicit variance control more feasible than
-  a new asymmetric twin-branch objective.
+  the next bounded step should reuse the current bundle contract and change the
+  evaluator/adapter layer only.
 
 ## Serious Candidate Frontier
 
-### Candidate A: localization-first plus explicit variance-floor repair
+### Candidate A: reuse the current bundle and add a teacher-anchored adapter comparison
 
 - What it changes:
-  add a bounded predicted-side anti-collapse control on the accessible
-  `pred_feat` / `pred_delta` surfaces, with an optional lightweight covariance
-  term only if needed.
-- Why it fits:
-  matches the measured failure mode directly, preserves the existing evaluation
-  contract, and is the smallest credible code change.
+  keep the exporter and manifest fixed, and add one adapter comparison that maps
+  predicted packets into the frozen target space through a teacher-anchored
+  basis, coefficient path, or similarly constrained guidance mechanism.
+- Why it is serious:
+  all required inputs are already present and this is the smallest route that
+  directly tests the missing claim.
 
-### Candidate B: redundancy-reduction or covariance-heavy repair
+### Candidate B: redesign the bundle schema first
 
 - What it changes:
-  move beyond a variance floor and explicitly decorrelate predicted packet
-  dimensions.
+  add new exported fields or a new manifest contract before testing another bridge.
 - Why it remains alive:
-  Barlow-style decorrelation is well motivated if variance alone improves
-  diagnostics but not target alignment.
+  schema redesign may become necessary if the current bundle proves too weak.
 - Why it is not first:
-  it is a broader objective change and would be harder to interpret if the next
-  result is still negative.
+  there is not yet concrete evidence that the current manifest is insufficient.
 
-### Candidate C: return to interface redesign
+### Candidate C: jump directly to a larger-model interface
 
 - What it changes:
-  give up on another local repair and go back to chunk-aware or packet-structure
-  redesign.
+  attach the packet surface or reconstructed output to a larger consumer model.
 - Why it remains alive:
-  if deeper query-side surfaces stay inaccessible or a bounded predicted-side
-  repair still fails, the correct move is to reopen interface-level redesign.
+  it is closer to the user's final pipeline ambition.
 - Why it is not first:
-  the direct predicted-side collapse evidence is too strong to skip one minimal
-  predicted-side repair.
+  it would introduce too many confounds before the local packet handoff is
+  trustworthy.
+
+### Candidate D: continue local anti-collapse loss tuning
+
+- What it changes:
+  spend the next round inside the same variance-floor or related regularizer family.
+- Why it remains alive:
+  the last run is now a valid measured result.
+- Why it is not first:
+  the mixed result already weakened the case for another immediate local repair
+  round, while the packet-side evidence now points to a higher-leverage adapter
+  bottleneck.
 
 ## Selection For This Pass
 
-- Winner: Candidate A, localization-first plus explicit variance-floor repair
+- Winner: Candidate A
 - Strongest support:
-  two measured teacher-side repairs already failed, the teacher target is
-  already asymmetric and fixed, and the accessible failure surface is low-diversity
-  predicted-side packet structure.
+  the exporter already works, the bundle schema is stable, direct packet
+  controls are weak but real, and the previously measured bridge is too weak.
+  That combination makes “one better-scoped teacher-anchored adapter comparison”
+  the most defensible next experiment package.
 - Strongest reason not to choose Candidate B now:
-  it adds more objective complexity before the smallest direct anti-collapse
-  control is tested.
+  it would add schema churn before the current surface is actually exhausted.
 - Strongest reason not to choose Candidate C now:
-  it would abandon the clearest local bottleneck before one bounded
-  predicted-side repair is measured.
+  it would blur the diagnosis before the local packet bridge itself is tested.
+- Strongest reason not to choose Candidate D now:
+  the latest valid run already answered the low-level implementation question but
+  did not produce a clear enough payoff to dominate the interface-level route.
 - Main residual risk:
-  the true failure may lie earlier than the currently accessible packet tensors,
-  in which case even a clean variance-floor repair will only produce a clearer
-  negative result rather than a rescue.
+  even a teacher-anchored adapter may fail if the predicted packet geometry is
+  too damaged, in which case the correct next move would be a deeper interface
+  redesign rather than more evaluator tuning.
 
 ## Still Missing Or Unresolved
 
-- No directly matching paper studies collapse in a compression-driven,
-  fixed-teacher, predicted-packet bridge with this exact packet evaluator.
-- A later pass may need one more video-specific temporal-discrimination paper if
-  the variance-first repair fails and temporal-local contrastive calibration
-  becomes the next serious fallback.
+- There is still no directly matching paper on compression-driven, fixed-teacher,
+  video packet adapters with this exact evaluation contract.
+- If the teacher-anchored adapter still fails, the next literature gap to close
+  will be richer compression-side interfaces rather than more generic retrieval
+  papers.
 
 ## Recommended Next Anchor
 
-Stay on `idea-2835dace`, revise the branch control files around this literature
-judgment, then hand off to `experiment` for one bounded predicted-side
-localization-plus-repair package whose first repair is an explicit variance-floor
-control on the accessible packet surfaces.
+Keep `idea-76fee64d` as the active line, finish rewriting the control files
+around this literature judgment, and then hand off to `experiment` for one
+bounded packet-adapter smoke that reuses the current bundle and adds exactly one
+teacher-anchored adapter comparison.

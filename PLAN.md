@@ -1,117 +1,185 @@
-# Main Experiment Plan
+# Packet Adapter Experiment Plan
 
 ## 1. Objective
 
-- idea id: `idea-2835dace`
+- idea id: `idea-76fee64d`
 - selected idea in `1-2` sentences:
-  the relation repair is now the second measured negative teacher-side result on
-  the same frozen widened packet bridge. The next evidence-producing step should
-  keep the export and evaluation surface fixed, but inject one minimal
-  predicted-side anti-collapse repair directly into the current teacher-loss
-  path, with `pred_feat` as the first intervention surface.
+  the next bounded step should stop tuning local loss terms and instead test
+  whether the already exported teacher-feature packet bundle can be mapped into
+  a more usable machine-facing space with one lightweight, teacher-anchored
+  adapter.
 - user's core requirements:
   - keep the full pipeline runnable from upstream compression to downstream machine use
   - produce an inspectable result batch that shows whether this direction is worth doing
-  - focus the novelty on pipeline/interface usefulness rather than reopening codec ranking
+  - focus novelty on pipeline/interface usefulness rather than reopening codec ranking
   - leave behind code and scripts that can be rerun locally
 - non-negotiable constraints:
   - keep the accepted `nvrc-local-source` baseline contract visible
   - do not reopen upstream codec-line ranking
-  - keep reconstructed video as a bounded control, not the main winner claim
-  - do not widen scope to a larger-model demo before the local packet bridge is trustworthy
+  - do not widen scope to a larger-model or VLM/LLM demo before the packet bridge is trustworthy
+  - keep the packet bundle schema aligned with the existing manifest surface unless a concrete breakage forces a change
 - current pass objective:
-  complete one corrected bounded predicted-side variance-floor main run on the
-  same frozen widened surface, verify that the variance-floor penalty is truly
-  active in the real training path, and use the resulting teacher-mse / rate /
-  reconstruction trade-off to decide whether this line deserves a larger follow-up.
+  finish the new idea-stage convergence pass by rewriting the route around one
+  minimal experiment package: reuse the existing teacher-feature packet bundle,
+  preserve the same tiny-local comparison surface, and add one teacher-anchored
+  adapter comparison that can be smoke-tested before any larger run.
 - research question:
-  can one explicit predicted-feature variance floor recover more predicted-to-target
-  packet alignment than the downgraded blueprint repair and the negative relation
-  repair without changing the current export/eval contract?
+  can a teacher-anchored adapter over the current packet bundle improve
+  predicted-to-target retrieval alignment beyond the direct packet controls and
+  the previously tried naive ridge bridge, without changing the bundle schema or
+  leaking per-query target information at inference time?
 
-## 2. Baseline And Comparability
+## 2. Strongest Existing Evidence
 
-- baseline id: `nvrc-local-source`
-- baseline variant: `tiny-local-teacher-pilot-r3`
-- locked failure boundary from localization:
-  - `target_feat_to_target_feat_seq_concat_top1_accuracy=1.0`
-  - `target_delta_to_target_delta_seq_concat_top1_accuracy=1.0`
-  - `pred_feat_to_pred_feat_seq_concat_top1_accuracy=0.25`
-  - `pred_delta_to_pred_delta_seq_concat_top1_accuracy=0.25`
-  - `pred_feat` and `pred_delta` cross-chunk cosine matrices are all `1.0`
-  - earliest accessible collapse surface: `exported_predicted_packets_or_earlier`
-- nearby failed repair evidence:
-  - blueprint repair improved self-discrimination but did not restore usable predicted-to-target alignment
-  - relation repair ended at primary-metric delta `0` vs baseline and did not rescue the packet bridge
-- fixed control surfaces for this pass:
-  - same frozen widened dataset family
-  - same shared-gating initialization / resume path
-  - same teacher packet export scripts
-  - same packet retrieval evaluator
-- explicit change boundary:
-  - change one repair family only
-  - keep `pred_feat` as the primary intervention surface
-  - keep `pred_delta` variance regularization optional and off by default in the first config
+- frozen downstream control from the parent line:
+  - `original_to_original_top1_accuracy = 1.0`
+  - `reconstructed_to_original_top1_accuracy = 0.25`
+  - `reconstructed_to_original_mean_match_rank = 2.5`
+- packet-side baseline from the blueprint teacher-packet smoke:
+  - `target_feat_to_target_feat top1 = 1.0`
+  - `pred_feat_to_target_feat top1 = 0.0625`
+  - `pred_delta_to_target_delta top1 = 0.1875`
+- packet-side bounded bridge evidence from the delta packet smoke:
+  - `pred_feat_to_target_feat_direct top1 = 0.25`
+  - `pred_delta_to_target_feat_direct top1 = 0.5`
+  - `delta_ridge_to_target_feat_loo top1 = 0.0`
+  - `feat_plus_8p0x_delta_ridge_to_target_feat_loo top1 = 0.0`
+- exporter feasibility evidence:
+  - the current packet bundle manifest already records `packet_relpath`,
+    decoded/eval metrics, aggregate metrics, and a `teacher_packet_summary`
+  - packet payloads already expose `pred_feat`, `target_feat`, `pred_delta`,
+    and `target_delta`
+- route judgment evidence from the last bounded main run:
+  the corrected predicted-side variance-floor repair is now a valid measured
+  result, but its mixed trade-off means the next highest-leverage move is
+  interface-level rather than another immediate low-level repair sweep
 
-## 3. Code Touchpoints
+## 3. Fixed Constraints And Comparability
+
+- same confirmed baseline: `nvrc-local-source` with variant `tiny-local-teacher-pilot-r3`
+- same frozen upstream family and parent result interpretation
+- same packet bundle schema unless the current manifest proves insufficient
+- same tiny-local `4`-frame bounded surface for the first adapter smoke
+- same downstream evaluation style: retrieval-style matching against frozen target-side teacher space
+- no new dataset
+- no new external model API
+- no broader end-to-end demo before this packet-side bridge becomes trustworthy
+
+## 4. Candidate Routes
+
+### Candidate A: reuse the current bundle and add one teacher-anchored adapter comparison
+
+- what changes:
+  extend the packet-side evaluator with a lightweight adapter that maps query
+  packets into the frozen target/consumer space through a teacher-anchored basis
+  or coefficient path
+- why it is serious:
+  all required inputs are already present in the current bundle and the missing
+  comparison is exactly at the evaluator/adapter layer rather than the bundle
+  layer
+
+### Candidate B: redesign the packet bundle schema first
+
+- what changes:
+  add new exported fields or a new manifest contract before touching the evaluator
+- why it is serious:
+  would allow richer metadata or more explicit teacher anchors
+- why it is not preferred now:
+  the current manifest already carries the packet path, metrics, aggregate
+  metrics, and teacher packet summary, so another schema round would add churn
+  before the current interface surface is actually exhausted
+
+### Candidate C: jump directly to a larger-model interface
+
+- what changes:
+  connect the current packet surface or reconstructed output to a larger VLM/LLM
+  consumer
+- why it is serious:
+  closer to the user's long-horizon goal
+- why it is not preferred now:
+  too many variables would change at once before the local packet bridge is
+  trustworthy
+
+### Candidate D: continue local anti-collapse loss tuning
+
+- what changes:
+  spend another round inside the variance-floor or related regularizer family
+- why it is serious:
+  the last corrected run was at least a valid measured step
+- why it is not preferred now:
+  the measured trade-off was mixed and existing packet-side evidence now points
+  to a higher-leverage interface bottleneck
+
+## 5. Selected Route
+
+- winner: Candidate A
+- why it wins:
+  it is the smallest credible move that tests the actual missing claim. The old
+  packet evidence already includes direct controls and a weak ridge bridge, so
+  the next discriminating experiment is not a new bundle or a larger model; it
+  is one better-scoped adapter comparison on the same bundle.
+- main residual risk:
+  a teacher-anchored adapter can still fail if the predicted packet geometry is
+  too damaged even after anchoring, which would strengthen the case for a deeper
+  interface redesign rather than a local evaluator patch
+
+## 6. Minimal Experiment Package
+
+- reuse the existing teacher-feature packet exporter and manifest schema
+- keep the current smoke surface at `4` bounded frames
+- preserve existing controls:
+  - `pred_feat -> target_feat` direct
+  - `pred_delta -> target_feat` direct when applicable
+  - previous naive ridge bridge as the weak adapter baseline
+- add one new comparison:
+  - a teacher-anchored adapter that projects predicted packets through a basis or
+    coefficient path derived from teacher-side target packets without using the
+    held-out query target packet itself at inference time
+- first implementation target:
+  extend the packet-side evaluation entry rather than changing the exporter,
+  unless an exact missing field is discovered during implementation
+
+## 7. Code Touchpoints
 
 | Path | Planned change | Why this is needed |
 |---|---|---|
-| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/tasks.py` | add a minimal variance-floor penalty on predicted teacher features, with optional delta-side extension | this is the narrowest loss-side intervention that matches the measured collapse evidence |
-| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/main_utils.py` | expose the new task-config fields and CLI plumbing | needed so the new repair can be driven by config like the existing teacher repairs |
-| `experiments/main/upstream_shared_gating_snapshot/tools/smoke_teacher_loss.py` | add CLI switches and summary output for variance-floor smoke validation | fastest bounded proof that the new path is wired correctly |
-| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/scripts/configs/tasks/overfit/*.yaml` | add one task config for the variance-floor repair | keeps the first bounded run reproducible and comparable |
-| `experiments/main/scripts/run_shared_gating_variance_repair_smoke.sh` | add one bounded launcher for the new repair | provides the same rerunnable entrypoint shape as the relation run |
+| `experiments/main/scripts/export_teacher_feature_interface.py` | likely no schema change in the first pass | the current manifest already carries packet paths, metrics, and teacher packet summary |
+| `experiments/main/scripts/run_teacher_packet_eval.py` | add one teacher-anchored adapter comparison or route to a new adapter-specific helper | this is the narrowest place to add the missing comparison while preserving the same bundle |
+| `experiments/main/scripts/run_delta_packet_bridge_eval.py` | reuse as a design reference only unless the new adapter can be cleanly merged there | it already shows that a naive bridge can be worse than the direct packet control |
+| `PLAN.md`, `CHECKLIST.md`, `status.md` | rewrite around the new packet-adapter route | the active control files were still describing the old variance-floor run |
+| `artifacts/idea/literature_survey.md` | refresh for retrieval / adapter / distillation papers | the old survey was still anti-collapse-centered rather than interface-centered |
 
-## 4. Execution Design
+## 8. Success And Abandonment Criteria
 
-- smoke path:
-  - wire the new predicted-side variance-floor penalty into `OverfitTask`
-  - expose config fields in `main_utils.py`
-  - extend `smoke_teacher_loss.py` so the summary proves the penalty is active
-  - run the smoke utility with a variance-floor-on configuration
-- if smoke passes:
-  - update `status.md` with the validated implementation state
-  - open a dedicated `run/*` branch and launch the bounded main run
-  - keep packet export/eval unchanged so the post-run comparison stays interpretable
-- if smoke fails:
-  - stop before main-run launch
-  - record the exact failure mode
-  - fix only the smallest blocking issue instead of widening scope
-- run-branch outcome in this worktree:
-  - the first bounded run exposed a missing `create_overfit_task(...)`
-    passthrough, so the configured variance-floor weight stayed at `0.0` in the
-    real training path and that first output was archived as invalid
-  - after fixing the missing passthrough, the corrected bounded run completed
-    with `pred_variance_weight=1.0` active in both train and eval logs
-  - the corrected run mildly improved `teacher-mse`, but slightly worsened
-    `bpp` and `psnr`, so the next step is route judgment rather than claiming a win
-
-## 5. Success And Abandonment Criteria
-
-- smoke success criteria:
-  - the new loss path runs without shape or config errors
-  - the smoke summary shows the variance-floor settings and penalty value explicitly
-  - no unrelated export/eval changes are required just to activate the repair
-- main-pass success criteria:
-  - the line is ready for one dedicated bounded run with the same external comparison surface
-  - the run can later be judged against both the blueprint and relation repair evidence
+- success criteria for the next smoke package:
+  - the new adapter comparison is defined without target leakage
+  - it runs on the same bundle without schema churn
+  - it beats the weakest current baselines, especially the naive ridge bridge
+  - ideally it also beats the direct `pred_feat -> target_feat` control on top-1
+    or mean match rank
 - abandonment criteria:
-  - the repair cannot be wired cleanly without wider architecture drift
-  - the smoke result exposes an earlier inaccessible bottleneck that makes this intervention no longer defensible
+  - the adapter definition requires the held-out query target packet at inference time
+  - the current manifest is discovered to be insufficient in a way that forces a
+    broad exporter redesign
+  - the new comparison remains no better than the direct packet controls and the
+    old naive bridge, in which case the line should downgrade toward a deeper
+    interface redesign instead of further local evaluator tuning
 
-## 6. Runtime Strategy
+## 9. Runtime Strategy
 
 - safe efficiency levers:
-  - reuse the frozen widened dataset family and current resume root
-  - validate the repair path with the lightweight smoke utility before any real run
-  - keep delta-side variance regularization off in the first config to reduce confounds
-- main-run branch rule:
-  - do not record a main experiment from this idea branch
-  - if smoke passes, create or confirm a dedicated `run/*` branch/worktree before the bounded main run
+  - reuse the existing packet bundle schema
+  - reuse the same tiny-local `4`-frame surface for the first smoke
+  - keep the upstream run frozen and untouched
+  - add exactly one new comparison before considering any wider package
+- branch rule:
+  - finish this idea-stage control-file and survey rewrite first
+  - then hand off into `experiment` for the bounded packet-adapter smoke rather
+    than implementing a larger package directly from the idea stage
 
-## 7. Checklist Link
+## 10. Checklist Link
 
 - checklist path: `CHECKLIST.md`
 - next unchecked item:
-  record the corrected bounded run durably and route the next step through decision
+  specify the exact non-leaking teacher-anchored adapter formulation and choose
+  whether it extends the current evaluator or lives in a small new helper
