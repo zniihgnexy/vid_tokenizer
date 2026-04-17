@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-dbf5a8d9",
+  "id": "progress-dbf5a8d9",
+  "quest_id": "002",
+  "created_at": "2026-04-17T15:21:29+00:00",
+  "updated_at": "2026-04-17T15:21:29+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "idea/002-idea-d3d22136",
+  "head_commit": "dac84ac650944136b28621451bd83b3726272a07",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-d3d22136",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-d3d22136",
+  "message": "shortlist 版本的 evaluator 已经补好，而且语法检查通过了。现在我直接跑同一组 16-frame bundle 的 smoke，把 full-bank 和 top-4 shortlist 放在一张结果表里比较，这样马上就能知道这条修复线到底是不是实打实的进展。",
+  "summary": "shortlist 版本的 evaluator 已经补好，而且语法检查通过了。现在我直接跑同一组 16-frame bundle 的 smoke，把 full-bank 和 top-4 shortlist 放在一张结果表里比较，这样马上就能知道这条修复线到底是不是实打实的进展。",
+  "summary_preview": "shortlist 版本的 evaluator 已经补好，而且语法检查通过了。现在我直接跑同一组 16-frame bundle 的 smoke，把 full-bank 和 top-4 shortlist 放在一张结果表里比较，这样马上就能知道这条修复线到底是不是实打实的进展。",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "progress-dbf5a8d9",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": "progress-16bdb417",
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-dbf5a8d9",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}
