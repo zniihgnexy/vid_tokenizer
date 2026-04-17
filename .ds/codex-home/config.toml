@@ -23,9 +23,6 @@ trust_level = "trusted"
 [plugins."github@openai-curated"]
 enabled = true
 
-[plugins."figma@openai-curated"]
-enabled = true
-
 # BEGIN DEEPSCIENTIST BUILTINS
 [mcp_servers.memory]
 transport = "stdio"
@@ -39,8 +36,8 @@ DS_HOME = "/home/xinyizheng/vid_tokenizer/DeepScientist"
 DS_QUEST_ID = "002"
 DS_QUEST_ROOT = "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002"
 DS_WORKTREE_ROOT = "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-d3d22136"
-DS_RUN_ID = "run-a6204367"
-DS_WORKER_ID = "run-a6204367"
+DS_RUN_ID = "run-be5c8789"
+DS_WORKER_ID = "run-be5c8789"
 DS_ACTIVE_ANCHOR = "idea"
 DS_CONVERSATION_ID = "quest:002"
 DS_AGENT_ROLE = "pi"
@@ -74,8 +71,8 @@ DS_HOME = "/home/xinyizheng/vid_tokenizer/DeepScientist"
 DS_QUEST_ID = "002"
 DS_QUEST_ROOT = "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002"
 DS_WORKTREE_ROOT = "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-d3d22136"
-DS_RUN_ID = "run-a6204367"
-DS_WORKER_ID = "run-a6204367"
+DS_RUN_ID = "run-be5c8789"
+DS_WORKER_ID = "run-be5c8789"
 DS_ACTIVE_ANCHOR = "idea"
 DS_CONVERSATION_ID = "quest:002"
 DS_AGENT_ROLE = "pi"
@@ -184,8 +181,8 @@ DS_HOME = "/home/xinyizheng/vid_tokenizer/DeepScientist"
 DS_QUEST_ID = "002"
 DS_QUEST_ROOT = "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002"
 DS_WORKTREE_ROOT = "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-d3d22136"
-DS_RUN_ID = "run-a6204367"
-DS_WORKER_ID = "run-a6204367"
+DS_RUN_ID = "run-be5c8789"
+DS_WORKER_ID = "run-be5c8789"
 DS_ACTIVE_ANCHOR = "idea"
 DS_CONVERSATION_ID = "quest:002"
 DS_AGENT_ROLE = "pi"
