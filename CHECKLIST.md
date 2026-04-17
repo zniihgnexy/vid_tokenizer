@@ -5,7 +5,7 @@ Update this while interpreting the blueprint result, downgrading it honestly, an
 ## Identity
 
 - run id: `shared_gating_relation_semchange_delta_smoke_r1`
-- idea id: `idea-c5e88710`
+- idea id: `idea-253b77bd`
 - stage: `experiment_prep`
 
 ## Planning
@@ -27,15 +27,15 @@ Update this while interpreting the blueprint result, downgrading it honestly, an
 - [x] bounded blueprint repair run executed
 - [x] repaired teacher-packet bundle exported
 - [x] repaired single-bundle teacher-packet evaluation generated
-- [ ] relation repair config added
-- [ ] relation teacher-loss smoke executed
+- [x] relation repair config added
+- [x] relation teacher-loss smoke executed
 
 ## Validation
 
 - [x] target packet discrimination remains explicit after the blueprint repair
 - [x] blueprint repair result shows target-alignment is still unresolved
 - [x] blueprint downgrade is explicit
-- [ ] relation repair path validates cleanly
+- [x] relation repair path validates cleanly
 - [ ] at least one relation-based predicted-to-target packet comparison beats the current blueprint result
 - [ ] downgrade the packet-bridge line again if relation still leaves target alignment near chance
 
@@ -64,5 +64,10 @@ Update this while interpreting the blueprint result, downgrading it honestly, an
   - blueprint recovered some self-discrimination but not usable predicted-to-target alignment
 - chosen next repair:
   - `teacher_relation_consistency`
+- relation teacher-loss smoke summary:
+  - `feature_shape=[2, 4, 512]`
+  - `relation_shape=[2, 4, 4]`
+  - `temporal_delta_shape=[2, 4, 512]`
+  - `semantic_weight_min=0.6056`, `semantic_weight_max=1.3631`, `semantic_weight_mean=1.0000`
 - next unchecked item:
-  - add the relation repair config and validate it with the lightweight smoke
+  - launch the bounded relation repair run on the frozen widened surface

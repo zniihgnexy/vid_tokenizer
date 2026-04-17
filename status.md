@@ -17,10 +17,15 @@ Current judgment:
     - `pred_delta_self_top1=0.9375`, `offdiag_mean=-0.0543`
   - taken together, the evidence says blueprint recovers some self-discrimination but does not recover clean predicted-to-target packet alignment
 - This means the remaining bottleneck is target alignment, not simply restoring packet variance.
+- The lightweight relation smoke now validates the next repair path cleanly:
+  - `feature_shape=[2, 4, 512]`
+  - `relation_shape=[2, 4, 4]`
+  - `temporal_delta_shape=[2, 4, 512]`
+  - semantic-change weights stay well-formed with mean `~1.0`
 - The current frontier is now intentionally narrow again:
-  1. Recommended: validate one bounded `teacher_relation_consistency` repair on the same frozen surface.
-  2. Fallback: if relation is invalid or unsupported, reopen route selection instead of stacking more built-in regularizers blindly.
-  3. Stop condition: if a later bounded relation run still leaves predicted-to-target alignment near chance, downgrade the packet-bridge line again instead of widening scope.
+  1. Recommended: launch one bounded `teacher_relation_consistency` repair on the same frozen surface.
+  2. Fallback: if the bounded run fails early or is invalid, reopen route selection instead of stacking more built-in regularizers blindly.
+  3. Stop condition: if the bounded relation run still leaves predicted-to-target alignment near chance, downgrade the packet-bridge line again instead of widening scope.
 - Deferred:
   - broader bridge redesign before relation is tested
   - deeper multimodal / VLM integration before a reliable packet interface exists
@@ -29,4 +34,5 @@ Current judgment:
 Next durable action:
 - keep the localization package as the locked pre-repair failure boundary
 - keep the blueprint result as a completed but insufficient first repair
-- add and validate the relation repair config with the lightweight teacher-loss smoke
+- keep the relation repair smoke summary as the entry validation
+- launch one bounded relation repair run via the dedicated wrapper

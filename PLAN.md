@@ -73,13 +73,15 @@
 | `experiments/main/scripts/run_query_collapse_localization.py` | locked failure-boundary diagnostic | keep as the reference localization package for the earlier collapse claim | preserves the decisive pre-repair boundary | low |
 | `experiments/main/scripts/export_teacher_feature_interface.py` | packet bundle export | keep as the same bundle export surface for repaired runs | preserves interface comparability | low |
 | `experiments/main/scripts/run_teacher_packet_eval.py` | single-bundle packet retrieval evaluator | keep as the bounded alignment check for repaired runs | directly measures whether predicted packets align to target packets | low |
-| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation-semchange-delta.yaml` | new relation repair config | add one relation-based repair variant on the frozen surface | enables the next nearby repair without architectural drift | low |
+| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation-semchange-delta.yaml` | relation repair config | reuse the existing relation-based repair variant on the frozen surface | keeps the next nearby repair narrow without architectural drift | low |
+| `experiments/main/scripts/run_shared_gating_relation_repair_smoke.sh` | bounded relation repair launcher | add a rerunnable relation-specific wrapper that mirrors the blueprint smoke entrypoint | gives the current run branch a clean launch surface for the next bounded repair | low |
 | `experiments/main/upstream_shared_gating_snapshot/tools/smoke_teacher_loss.py` | lightweight teacher-path validator | reuse to confirm the relation repair path before a real run | catches config or loss-path issues cheaply | low |
 
 ## 4. Execution Design
 
 - minimal experiment:
-  - write the relation repair config
+  - reuse the existing relation repair config
+  - add a rerunnable relation repair smoke wrapper
   - validate the chosen relation path with the lightweight teacher-loss smoke utility
   - if that smoke passes, prepare one bounded relation repair run on the same frozen widened surface
   - after a repaired checkpoint exists, export a teacher packet bundle and rerun the bounded teacher-packet evaluation
@@ -87,7 +89,7 @@
   - confirm `teacher_relation_consistency` is executable in the frozen NVRC task path on top of the same bounded setup
   - do not widen to a custom new loss family before the relation path is interpreted
 - expected outputs:
-  - one rerunnable relation repair config
+  - one rerunnable relation repair smoke wrapper
   - one smoke validation result for the chosen relation loss path
   - one explicit go/no-go judgment on whether a bounded relation repair run should launch
 - stop condition:
@@ -101,7 +103,7 @@
 
 - immediate next actions:
   - sync the current branch docs to the completed blueprint downgrade
-  - add the relation repair config
+  - add the relation repair smoke wrapper
   - run the lightweight teacher-loss smoke for the chosen relation config
   - if that smoke passes, prepare one bounded relation repair run on the same frozen widened surface
 - artifact locations:
@@ -128,4 +130,4 @@
 ## 7. Checklist Link
 
 - checklist path: `CHECKLIST.md`
-- next unchecked item: add and validate the relation repair config with the lightweight teacher-loss smoke
+- next unchecked item: validate the relation repair path with the lightweight teacher-loss smoke

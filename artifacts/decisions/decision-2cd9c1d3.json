@@ -1,0 +1,62 @@
+{
+  "kind": "decision",
+  "schema_version": 1,
+  "artifact_id": "decision-2cd9c1d3",
+  "id": "decision-2cd9c1d3",
+  "quest_id": "002",
+  "created_at": "2026-04-17T08:32:43+00:00",
+  "updated_at": "2026-04-17T08:32:43+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "run/shared_gating_relation_semchange_delta_smoke_r1",
+  "head_commit": "2aa0050445f591c40de5392ee9bde6eb7004c11d",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1",
+  "verdict": "continue",
+  "action": "activate_branch",
+  "summary": "Activated durable branch `run/shared_gating_relation_semchange_delta_smoke_r1` as the current workspace.",
+  "reason": "Return to an existing research branch without creating a new lineage node, so follow-up experiments or decisions continue from the correct historical context.",
+  "idea_id": "idea-253b77bd",
+  "run_id": null,
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1",
+  "worktree_rel_path": ".ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1",
+  "flow_type": "branch_activation",
+  "protocol_step": "activate",
+  "details": {
+    "activate_branch_by": "branch",
+    "promote_to_head": false,
+    "worktree_created": false,
+    "next_anchor": "experiment",
+    "workspace_mode": "run",
+    "latest_main_run_id": null,
+    "branch_kind": "run",
+    "paper_parent_branch": null
+  },
+  "semantic_key": "decision:idea:activate_branch:continue:24299ff8473154b8ae28b3ddd6111f15cda6ee700e27accc447bdd8a6a34f92b",
+  "guidance_vm": {
+    "current_anchor": "decision",
+    "recommended_skill": "decision",
+    "recommended_action": "activate_branch",
+    "summary": "A decision was recorded. Follow the chosen route and keep the next outcome durable.",
+    "why_now": "Return to an existing research branch without creating a new lineage node, so follow-up experiments or decisions continue from the correct historical context.",
+    "complete_when": [
+      "The next stage starts and writes its first durable output.",
+      "Any new ambiguity is converted into another explicit decision."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(...)",
+        "purpose": "Persist the first durable output of the chosen route."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "decision",
+    "source_artifact_id": "decision-2cd9c1d3",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}
