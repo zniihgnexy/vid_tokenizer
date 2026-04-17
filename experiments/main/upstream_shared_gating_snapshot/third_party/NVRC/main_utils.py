@@ -144,6 +144,10 @@ class OverfitTaskConfig:
     teacher_semantic_change_weighting: bool = False
     teacher_semantic_change_floor: float = 0.25
     teacher_semantic_change_gamma: float = 1.0
+    teacher_pred_variance_weight: float = 0.0
+    teacher_pred_variance_margin: float = 0.1
+    teacher_pred_delta_variance_weight: float = 0.0
+    teacher_pred_delta_variance_margin: float = 0.1
     teacher_function_readout_consistency: bool = False
     teacher_function_readout_weight: float = 1.0
     teacher_function_readout_bank_size: int = 4
@@ -219,6 +223,14 @@ def parse_args():
                        help='Minimum normalized floor for semantic-change weights')
     group.add_argument('--teacher-semantic-change-gamma', type=float, default=None,
                        help='Power-law gain for semantic-change weights')
+    group.add_argument('--teacher-pred-variance-weight', type=float, default=None,
+                       help='Relative auxiliary weight for predicted-feature variance-floor regularization')
+    group.add_argument('--teacher-pred-variance-margin', type=float, default=None,
+                       help='Minimum per-channel standard-deviation floor for predicted features')
+    group.add_argument('--teacher-pred-delta-variance-weight', type=float, default=None,
+                       help='Relative auxiliary weight for predicted-delta variance-floor regularization')
+    group.add_argument('--teacher-pred-delta-variance-margin', type=float, default=None,
+                       help='Minimum per-channel standard-deviation floor for predicted deltas')
     group.add_argument('--teacher-function-readout-consistency', type=str_to_bool, default=None,
                        help='Enable frozen nonlinear readout-bank supervision for teacher consistency')
     group.add_argument('--teacher-function-readout-weight', type=float, default=None,
@@ -339,7 +351,9 @@ def parse_args():
              'teacher_temporal_delta_consistency', 'teacher_temporal_delta_weight',
              'teacher_temporal_delta_semantic_gating',
              'teacher_semantic_change_weighting', 'teacher_semantic_change_floor',
-             'teacher_semantic_change_gamma', 'teacher_function_readout_consistency',
+             'teacher_semantic_change_gamma', 'teacher_pred_variance_weight',
+              'teacher_pred_variance_margin', 'teacher_pred_delta_variance_weight',
+              'teacher_pred_delta_variance_margin', 'teacher_function_readout_consistency',
               'teacher_function_readout_weight', 'teacher_function_readout_bank_size',
               'teacher_function_readout_hidden_dim', 'teacher_function_readout_out_dim',
               'teacher_function_readout_seed', 'teacher_function_readout_seeds']:

@@ -60,6 +60,14 @@ def parse_args():
                         help='Minimum normalized floor used by semantic-change weighting.')
     parser.add_argument('--semantic-change-gamma', type=float, default=1.0,
                         help='Power-law gain applied to semantic-change weights.')
+    parser.add_argument('--pred-variance-weight', type=float, default=0.0,
+                        help='Relative auxiliary weight for predicted-feature variance-floor regularization.')
+    parser.add_argument('--pred-variance-margin', type=float, default=0.1,
+                        help='Minimum per-channel standard-deviation floor for predicted features.')
+    parser.add_argument('--pred-delta-variance-weight', type=float, default=0.0,
+                        help='Relative auxiliary weight for predicted-delta variance-floor regularization.')
+    parser.add_argument('--pred-delta-variance-margin', type=float, default=0.1,
+                        help='Minimum per-channel standard-deviation floor for predicted deltas.')
     parser.add_argument('--function-readout-consistency', action='store_true',
                         help='Enable frozen function-readout supervision during the teacher-loss smoke.')
     parser.add_argument('--function-readout-weight', type=float, default=1.0,
@@ -105,6 +113,10 @@ def main():
         teacher_semantic_change_weighting=args.semantic_change_weighting,
         teacher_semantic_change_floor=args.semantic_change_floor,
         teacher_semantic_change_gamma=args.semantic_change_gamma,
+        teacher_pred_variance_weight=args.pred_variance_weight,
+        teacher_pred_variance_margin=args.pred_variance_margin,
+        teacher_pred_delta_variance_weight=args.pred_delta_variance_weight,
+        teacher_pred_delta_variance_margin=args.pred_delta_variance_margin,
         teacher_function_readout_consistency=args.function_readout_consistency,
         teacher_function_readout_weight=args.function_readout_weight,
         teacher_function_readout_bank_size=args.function_readout_bank_size,
@@ -118,7 +130,7 @@ def main():
     target = torch.rand_like(pred)
     loss = task.compute_d_loss(pred, target, torch.tensor([1.0]))
     metrics = task.compute_metrics(pred, target)
-    features = task.teacher_adapter.extract_features(pred)
+    pred_features, target_features = task.teacher_adapter.consistency_features(pred, target)
 
     summary = {
         'run': 'teacher-loss-smoke',
@@ -131,19 +143,47 @@ def main():
         'temporal_delta_weight': args.temporal_delta_weight,
         'temporal_delta_semantic_gating': args.temporal_delta_semantic_gating,
         'semantic_change_weighting': args.semantic_change_weighting,
+        'pred_variance_weight': args.pred_variance_weight,
+        'pred_variance_margin': args.pred_variance_margin,
+        'pred_delta_variance_weight': args.pred_delta_variance_weight,
+        'pred_delta_variance_margin': args.pred_delta_variance_margin,
         'function_readout_consistency': args.function_readout_consistency,
         'function_readout_weight': args.function_readout_weight,
         'function_readout_seeds': list(function_readout_seeds),
         'loss_value': float(loss.item()),
-        'feature_shape': list(features.shape),
+        'feature_shape': list(pred_features.shape),
         'teacher_mse_shape': list(metrics['teacher-mse'].shape),
         'psnr_shape': list(metrics['psnr'].shape),
     }
+    if args.pred_variance_weight > 0:
+        summary.update({
+            'pred_variance_penalty': float(
+                task.variance_floor_penalty(
+                    pred_features,
+                    margin=args.pred_variance_margin,
+                ).item()
+            ),
+            'target_feature_shape': list(target_features.shape),
+        })
+    if args.pred_delta_variance_weight > 0:
+        pred_delta, target_delta = task.teacher_adapter.temporal_delta_consistency_features(
+            pred_feat=pred_features,
+            target_feat=target_features,
+        )
+        summary.update({
+            'pred_delta_variance_penalty': float(
+                task.variance_floor_penalty(
+                    pred_delta,
+                    margin=args.pred_delta_variance_margin,
+                ).item()
+            ),
+            'pred_delta_shape': list(pred_delta.shape),
+            'target_delta_shape': list(target_delta.shape),
+        })
     if args.semantic_blueprint:
-        pred_feat, target_feat = task.teacher_adapter.consistency_features(pred, target)
         pred_blueprint, target_blueprint, blueprint = task.teacher_adapter.blueprint_consistency_features(
-            pred_feat=pred_feat,
-            target_feat=target_feat,
+            pred_feat=pred_features,
+            target_feat=target_features,
             rank=args.semantic_blueprint_rank,
         )
         summary.update({
@@ -168,8 +208,8 @@ def main():
     if args.relation_consistency:
         pred_feat, target_feat = task.teacher_adapter.consistency_features(pred, target)
         pred_rel, target_rel = task.teacher_adapter.relation_consistency_features(
-            pred_feat=pred_feat,
-            target_feat=target_feat,
+            pred_feat=pred_features,
+            target_feat=target_features,
             mode=args.relation_mode,
         )
         summary.update({
@@ -181,8 +221,8 @@ def main():
     if args.temporal_delta_consistency:
         pred_feat, target_feat = task.teacher_adapter.consistency_features(pred, target)
         pred_delta, target_delta = task.teacher_adapter.temporal_delta_consistency_features(
-            pred_feat=pred_feat,
-            target_feat=target_feat,
+            pred_feat=pred_features,
+            target_feat=target_features,
         )
         summary.update({
             'temporal_delta_shape': list(pred_delta.shape),
@@ -191,10 +231,9 @@ def main():
             'temporal_delta_target_abs_mean': float(target_delta.abs().mean().item()),
         })
     if args.function_readout_consistency:
-        pred_feat, target_feat = task.teacher_adapter.consistency_features(pred, target)
         pred_readout, target_readout = task.teacher_adapter.function_readout_consistency_features(
-            pred_feat=pred_feat,
-            target_feat=target_feat,
+            pred_feat=pred_features,
+            target_feat=target_features,
             bank_size=args.function_readout_bank_size,
             hidden_dim=args.function_readout_hidden_dim,
             out_dim=args.function_readout_out_dim,

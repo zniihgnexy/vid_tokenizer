@@ -1,163 +1,108 @@
-# Idea Round Plan
+# Main Experiment Plan
 
 ## 1. Objective
 
 - idea id: `idea-2835dace`
 - selected idea in `1-2` sentences:
-  the bounded relation repair became the second negative teacher-side result on
-  the same frozen widened packet bridge. The next round should stay on the same
-  comparison surface but shift the bottleneck story back to the predicted side:
-  localize what is still accessible around the query-side packet path, then test
-  one minimal anti-collapse repair that acts on predicted packet features instead
-  of adding another teacher-side auxiliary loss.
+  the relation repair is now the second measured negative teacher-side result on
+  the same frozen widened packet bridge. The next evidence-producing step should
+  keep the export and evaluation surface fixed, but inject one minimal
+  predicted-side anti-collapse repair directly into the current teacher-loss
+  path, with `pred_feat` as the first intervention surface.
 - user's core requirements:
-  - keep the pipeline runnable from upstream compression to downstream machine use
+  - keep the full pipeline runnable from upstream compression to downstream machine use
   - produce an inspectable result batch that shows whether this direction is worth doing
-  - focus the innovation on pipeline/interface construction rather than reopening codec novelty
-  - leave behind code that can be rerun locally and later shared cleanly
-- non-negotiable user constraints:
-  - do not reopen the upstream codec-line ranking
+  - focus the novelty on pipeline/interface usefulness rather than reopening codec ranking
+  - leave behind code and scripts that can be rerun locally
+- non-negotiable constraints:
   - keep the accepted `nvrc-local-source` baseline contract visible
-  - treat reconstructed video as a bounded control, not as the default winner
-  - avoid a confounded direct VLM/LLM demo before the local bridge is proven
+  - do not reopen upstream codec-line ranking
+  - keep reconstructed video as a bounded control, not the main winner claim
+  - do not widen scope to a larger-model demo before the local packet bridge is trustworthy
 - current pass objective:
-  close the current idea round with a literature-grounded and code-grounded
-  route choice for one bounded predicted-side anti-collapse experiment package.
+  implement and validate one bounded predicted-side variance-floor repair package
+  on the same frozen widened surface, then use that smoke result to decide
+  whether the line deserves a dedicated `run/*` main experiment branch.
 - research question:
-  on the same frozen widened packet bridge surface, can one minimal
-  predicted-side anti-collapse control recover more predicted-to-target packet
-  alignment than the downgraded blueprint repair and the negative relation repair?
-- null hypothesis:
-  the accessible predicted packet surfaces are already too late or too collapsed,
-  so even a direct anti-collapse control will not improve packet alignment
-  meaningfully.
-- alternative hypothesis:
-  a bounded predicted-side anti-collapse control, especially explicit variance
-  regularization on the accessible packet features or deltas, improves at least
-  one predicted-to-target comparison while preserving the same export and eval
-  surface.
+  can one explicit predicted-feature variance floor recover more predicted-to-target
+  packet alignment than the downgraded blueprint repair and the negative relation
+  repair without changing the current export/eval contract?
 
-## 2. Evidence And Comparability
+## 2. Baseline And Comparability
 
 - baseline id: `nvrc-local-source`
 - baseline variant: `tiny-local-teacher-pilot-r3`
-- locked failure boundary from the localization package:
+- locked failure boundary from localization:
   - `target_feat_to_target_feat_seq_concat_top1_accuracy=1.0`
   - `target_delta_to_target_delta_seq_concat_top1_accuracy=1.0`
   - `pred_feat_to_pred_feat_seq_concat_top1_accuracy=0.25`
   - `pred_delta_to_pred_delta_seq_concat_top1_accuracy=0.25`
   - `pred_feat` and `pred_delta` cross-chunk cosine matrices are all `1.0`
-  - `pred_feat` and `pred_delta` raw mean dimension variance are both `0.0`
-  - earliest accessible collapse surface:
-    `exported_predicted_packets_or_earlier`
-- first repair that was downgraded:
-  - blueprint repair single-bundle eval:
-    - `target_feat_to_target_feat_top1_accuracy=1.0`
-    - `pred_feat_to_target_feat_top1_accuracy=0.0625`
-    - `pred_delta_to_target_delta_top1_accuracy=0.1875`
-    - `pred_delta_to_target_delta_mean_margin_vs_best_nonmatch=-0.0784`
-  - interpretation:
-    self-discrimination improved, but usable predicted-to-target alignment did
-    not.
-- second repair that was rejected:
-  - relation main result:
-    `uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr=24` vs baseline `24` (`delta=0`)
-  - route implication:
-    another teacher-side repair family did not move the active packet-bridge
-    line forward.
-- accessible code surfaces today:
-  - `pred_feat`, `target_feat`, `pred_delta`, `target_delta`
-  - relation matrices and current packet export/eval scripts
-- inaccessible deeper surfaces today:
-  - `query_projection`
-  - `query_packet_head`
-- comparability rule:
-  - keep the same frozen widened dataset family, shared-gating initialization,
-    packet exporter, and packet evaluator
-  - change exactly one predicted-side repair family at a time
-  - do not reopen codec ranking, broader interface redesign, or larger-model
-    integration in this pass
+  - earliest accessible collapse surface: `exported_predicted_packets_or_earlier`
+- nearby failed repair evidence:
+  - blueprint repair improved self-discrimination but did not restore usable predicted-to-target alignment
+  - relation repair ended at primary-metric delta `0` vs baseline and did not rescue the packet bridge
+- fixed control surfaces for this pass:
+  - same frozen widened dataset family
+  - same shared-gating initialization / resume path
+  - same teacher packet export scripts
+  - same packet retrieval evaluator
+- explicit change boundary:
+  - change one repair family only
+  - keep `pred_feat` as the primary intervention surface
+  - keep `pred_delta` variance regularization optional and off by default in the first config
 
-## 3. Candidate Frontier
+## 3. Code Touchpoints
 
-### Candidate A: localization-first plus variance-floor repair
+| Path | Planned change | Why this is needed |
+|---|---|---|
+| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/tasks.py` | add a minimal variance-floor penalty on predicted teacher features, with optional delta-side extension | this is the narrowest loss-side intervention that matches the measured collapse evidence |
+| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/main_utils.py` | expose the new task-config fields and CLI plumbing | needed so the new repair can be driven by config like the existing teacher repairs |
+| `experiments/main/upstream_shared_gating_snapshot/tools/smoke_teacher_loss.py` | add CLI switches and summary output for variance-floor smoke validation | fastest bounded proof that the new path is wired correctly |
+| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/scripts/configs/tasks/overfit/*.yaml` | add one task config for the variance-floor repair | keeps the first bounded run reproducible and comparable |
+| `experiments/main/scripts/run_shared_gating_variance_repair_smoke.sh` | add one bounded launcher for the new repair | provides the same rerunnable entrypoint shape as the relation run |
 
-- recommended: yes
-- mechanism:
-  keep the current active idea family, expose deeper query-side surfaces only if
-  cheap, and otherwise add one explicit variance-floor control on accessible
-  `pred_feat` / `pred_delta`, with a tiny covariance term only if needed.
-- why it wins:
-  it matches the measured failure mode directly, keeps the next result
-  interpretable, and is the smallest code-path change supported by the current
-  literature sweep.
+## 4. Execution Design
 
-### Candidate B: redundancy-reduction or covariance-heavy repair
+- smoke path:
+  - wire the new predicted-side variance-floor penalty into `OverfitTask`
+  - expose config fields in `main_utils.py`
+  - extend `smoke_teacher_loss.py` so the summary proves the penalty is active
+  - run the smoke utility with a variance-floor-on configuration
+- if smoke passes:
+  - update `status.md` with the validated implementation state
+  - decide whether to open a dedicated `run/*` branch and launch the bounded main run
+  - keep packet export/eval unchanged so the post-run comparison stays interpretable
+- if smoke fails:
+  - stop before main-run launch
+  - record the exact failure mode
+  - fix only the smallest blocking issue instead of widening scope
 
-- recommended: second best
-- mechanism:
-  use a Barlow/VICReg-style decorrelation-heavy repair on predicted packet
-  features.
-- why not first:
-  it is broader than the variance-first route and would make another negative
-  result harder to interpret.
+## 5. Success And Abandonment Criteria
 
-### Candidate C: return to interface redesign
-
-- recommended: fallback only
-- mechanism:
-  stop local repair and go back to chunk-aware or packet-structure redesign.
-- why not first:
-  the direct predicted-side collapse evidence is still too strong to skip one
-  bounded predicted-side repair.
-
-## 4. Code Translation Plan
-
-| Path | Current role | Planned change | Why this is needed | Risk |
-|---|---|---|---|---|
-| `experiments/main/scripts/run_query_collapse_localization.py` | locked failure-boundary diagnostic | keep as the reference package and reuse its missing-surface report | preserves the decisive pre-repair boundary | low |
-| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/teacher_utils.py` | exposes `pred_feat`, `target_feat`, `pred_delta`, `target_delta` | inspect whether a minimal predicted-side variance control can be inserted without changing the baseline contract | this is the nearest accessible intervention surface | medium |
-| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/tasks.py` | teacher-consistency loss assembly | identify the smallest hook point for a bounded predicted-side anti-collapse regularizer | keeps the intervention in the current loss path rather than inventing a new exporter-centric hack | medium |
-| `experiments/main/scripts/export_teacher_feature_interface.py` | packet bundle export | keep unchanged as the post-repair export surface unless deeper query-side tensors become cheaply exposable | preserves packet-surface comparability | low |
-| `experiments/main/scripts/run_teacher_packet_eval.py` | bounded packet retrieval evaluator | keep unchanged as the main predicted-to-target comparison surface | ensures direct comparison to blueprint and relation results | low |
-
-## 5. Execution Design
-
-- first bounded package:
-  - re-read the localization package and current hook points
-  - confirm whether `query_projection` or `query_packet_head` can be exposed
-    cheaply; if not, treat accessible predicted packet tensors as the intervention
-    surface
-  - implement exactly one explicit predicted-side anti-collapse control
-    (variance-floor first)
-  - rerun the same packet export and teacher-packet evaluation
-- success criteria:
-  - the current idea round leaves one explicit next experiment package instead of
-    another vague anti-collapse bucket
-  - the chosen repair improves at least one predicted-to-target packet metric
-    beyond the downgraded blueprint and negative relation results, or produces a
-    clearer negative result that justifies reopening interface redesign
+- smoke success criteria:
+  - the new loss path runs without shape or config errors
+  - the smoke summary shows the variance-floor settings and penalty value explicitly
+  - no unrelated export/eval changes are required just to activate the repair
+- main-pass success criteria:
+  - the line is ready for one dedicated bounded run with the same external comparison surface
+  - the run can later be judged against both the blueprint and relation repair evidence
 - abandonment criteria:
-  - deeper query-side surfaces remain inaccessible and the accessible control
-    cannot be added cleanly without wider architecture drift
-  - the chosen repair is implemented cleanly but still leaves alignment near
-    chance, in which case the next move should be interface redesign instead of
-    another nearby regularizer
+  - the repair cannot be wired cleanly without wider architecture drift
+  - the smoke result exposes an earlier inaccessible bottleneck that makes this intervention no longer defensible
 
 ## 6. Runtime Strategy
 
-- immediate next actions:
-  - create the missing literature survey for the active branch
-  - sync `PLAN.md`, `CHECKLIST.md`, and `status.md` to the active anti-collapse route
-  - revise the active idea package with the literature-grounded candidate ranking
-  - hand off to `experiment` for one bounded predicted-side localization-plus-repair package
 - safe efficiency levers:
-  - reuse the frozen widened dataset family and the same export/eval scripts
-  - prefer a hook-point audit before broader code edits
-  - keep the first repair minimal and local to accessible predicted-side tensors
+  - reuse the frozen widened dataset family and current resume root
+  - validate the repair path with the lightweight smoke utility before any real run
+  - keep delta-side variance regularization off in the first config to reduce confounds
+- main-run branch rule:
+  - do not record a main experiment from this idea branch
+  - if smoke passes, create or confirm a dedicated `run/*` branch/worktree before the bounded main run
 
 ## 7. Checklist Link
 
 - checklist path: `CHECKLIST.md`
-- next unchecked item: revise the active idea durably, then hand off to
-  experiment for the bounded predicted-side repair package
+- next unchecked item:
+  implement the variance-floor repair package and run the first smoke validation

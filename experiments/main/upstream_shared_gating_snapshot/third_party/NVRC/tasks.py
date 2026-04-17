@@ -32,6 +32,10 @@ class OverfitTask:
                  teacher_semantic_change_weighting=False,
                  teacher_semantic_change_floor=0.25,
                  teacher_semantic_change_gamma=1.0,
+                 teacher_pred_variance_weight=0.0,
+                 teacher_pred_variance_margin=0.1,
+                 teacher_pred_delta_variance_weight=0.0,
+                 teacher_pred_delta_variance_margin=0.1,
                  teacher_function_readout_consistency=False,
                  teacher_function_readout_weight=1.0,
                  teacher_function_readout_bank_size=4,
@@ -70,6 +74,10 @@ class OverfitTask:
         self.teacher_semantic_change_weighting = teacher_semantic_change_weighting
         self.teacher_semantic_change_floor = float(teacher_semantic_change_floor)
         self.teacher_semantic_change_gamma = float(teacher_semantic_change_gamma)
+        self.teacher_pred_variance_weight = float(teacher_pred_variance_weight)
+        self.teacher_pred_variance_margin = float(teacher_pred_variance_margin)
+        self.teacher_pred_delta_variance_weight = float(teacher_pred_delta_variance_weight)
+        self.teacher_pred_delta_variance_margin = float(teacher_pred_delta_variance_margin)
         self.teacher_function_readout_consistency = teacher_function_readout_consistency
         self.teacher_function_readout_weight = float(teacher_function_readout_weight)
         self.teacher_function_readout_bank_size = int(teacher_function_readout_bank_size)
@@ -114,6 +122,10 @@ class OverfitTask:
                 f'semantic_change_weighting={self.teacher_semantic_change_weighting} '
                 f'semantic_change_floor={self.teacher_semantic_change_floor:.4f} '
                 f'semantic_change_gamma={self.teacher_semantic_change_gamma:.4f} '
+                f'pred_variance_weight={self.teacher_pred_variance_weight:.4f} '
+                f'pred_variance_margin={self.teacher_pred_variance_margin:.4f} '
+                f'pred_delta_variance_weight={self.teacher_pred_delta_variance_weight:.4f} '
+                f'pred_delta_variance_margin={self.teacher_pred_delta_variance_margin:.4f} '
                 f'function_readout_consistency={self.teacher_function_readout_consistency} '
                 f'function_readout_weight={self.teacher_function_readout_weight:.4f} '
                 f'function_readout_bank_size={self.teacher_function_readout_bank_size} '
@@ -178,6 +190,13 @@ class OverfitTask:
         """
         return output.contiguous()
 
+    def variance_floor_penalty(self, features, margin):
+        flat_features = features.reshape(-1, features.shape[-1])
+        if flat_features.shape[0] <= 1:
+            return flat_features.new_zeros(())
+        channel_std = torch.sqrt(flat_features.var(dim=0, unbiased=False) + 1e-6)
+        return F.relu(float(margin) - channel_std).mean()
+
     def compute_d_loss(self, x, y, lamb):
         loss = 0.
         for i in range(len(self.loss_cfg) // 2):
@@ -206,6 +225,35 @@ class OverfitTask:
                 )
                 teacher_consistency = teacher_consistency * teacher_weights
             loss += self.teacher_loss_weight * lamb * teacher_consistency.mean()
+            if self.teacher_pred_variance_weight > 0:
+                pred_variance_penalty = self.variance_floor_penalty(
+                    pred_feat,
+                    margin=self.teacher_pred_variance_margin,
+                )
+                loss += (
+                    self.teacher_loss_weight
+                    * self.teacher_pred_variance_weight
+                    * lamb
+                    * pred_variance_penalty
+                )
+            pred_delta = None
+            target_delta = None
+            if self.teacher_pred_delta_variance_weight > 0 or self.teacher_temporal_delta_consistency:
+                pred_delta, target_delta = self.teacher_adapter.temporal_delta_consistency_features(
+                    pred_feat=pred_feat,
+                    target_feat=target_feat,
+                )
+            if self.teacher_pred_delta_variance_weight > 0:
+                pred_delta_variance_penalty = self.variance_floor_penalty(
+                    pred_delta,
+                    margin=self.teacher_pred_delta_variance_margin,
+                )
+                loss += (
+                    self.teacher_loss_weight
+                    * self.teacher_pred_delta_variance_weight
+                    * lamb
+                    * pred_delta_variance_penalty
+                )
             if self.teacher_function_readout_consistency:
                 pred_readout, target_readout = self.teacher_adapter.function_readout_consistency_features(
                     pred_feat=pred_feat,
@@ -233,10 +281,6 @@ class OverfitTask:
                 relation_consistency = F.mse_loss(pred_rel, target_rel, reduction='none').mean(dim=(1, 2))
                 loss += self.teacher_loss_weight * self.teacher_relation_weight * lamb * relation_consistency.mean()
             if self.teacher_temporal_delta_consistency:
-                pred_delta, target_delta = self.teacher_adapter.temporal_delta_consistency_features(
-                    pred_feat=pred_feat,
-                    target_feat=target_feat,
-                )
                 temporal_delta_consistency = F.mse_loss(pred_delta, target_delta, reduction='none').mean(dim=2)
                 if (
                     self.teacher_temporal_delta_semantic_gating
