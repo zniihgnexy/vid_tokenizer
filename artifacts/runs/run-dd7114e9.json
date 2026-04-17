@@ -42,7 +42,7 @@
     "auto_promoted_run_branch": false,
     "changed_file_count": 8,
     "evidence_count": 5,
-    "connector_chart_count": 0,
+    "connector_chart_count": 14,
     "evaluation_summary": null
   },
   "delivery_policy": {
@@ -922,5 +922,147 @@
       "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/RESULT.json"
     ],
     "stage_status": "ready"
-  }
+  },
+  "connector_metric_charts": [
+    {
+      "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+      "label": "UVG BD Rate Reduction PCT VS VTM RA Psnr",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/uvg-bd-rate-reduction-pct-vs-vtm-ra-psnr-timeline.png",
+      "baseline_value": 24.0,
+      "latest_value": 24.0,
+      "point_count": 4,
+      "direction": "maximize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "local_resnet18_teacher_smoke_loss_value",
+      "label": "Local Resnet18 Teacher Smoke Loss Value",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/local-resnet18-teacher-smoke-loss-value-timeline.png",
+      "baseline_value": 0.3541456162929535,
+      "latest_value": 0.3541456162929535,
+      "point_count": 4,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "tiny_local_teacher_pilot_bpp_avg",
+      "label": "Tiny Local Teacher Pilot BPP AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/tiny-local-teacher-pilot-bpp-avg-timeline.png",
+      "baseline_value": 88.2109,
+      "latest_value": 88.2266,
+      "point_count": 4,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "tiny_local_teacher_pilot_psnr_avg",
+      "label": "Tiny Local Teacher Pilot Psnr AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/tiny-local-teacher-pilot-psnr-avg-timeline.png",
+      "baseline_value": 10.8996,
+      "latest_value": 10.9012,
+      "point_count": 4,
+      "direction": "maximize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
+      "label": "Tiny Local Teacher Pilot Teacher MSE AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/tiny-local-teacher-pilot-teacher-mse-avg-timeline.png",
+      "baseline_value": 0.5145,
+      "latest_value": 0.5126,
+      "point_count": 4,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "beauty_teacher_smoke_bpp_avg",
+      "label": "Beauty Teacher Smoke BPP AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/beauty-teacher-smoke-bpp-avg-timeline.png",
+      "baseline_value": 2.091,
+      "latest_value": 2.091,
+      "point_count": 4,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "beauty_teacher_smoke_psnr_avg",
+      "label": "Beauty Teacher Smoke Psnr AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/beauty-teacher-smoke-psnr-avg-timeline.png",
+      "baseline_value": 14.9552,
+      "latest_value": 14.9552,
+      "point_count": 4,
+      "direction": "maximize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "beauty_teacher_smoke_teacher_mse_avg",
+      "label": "Beauty Teacher Smoke Teacher MSE AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/beauty-teacher-smoke-teacher-mse-avg-timeline.png",
+      "baseline_value": 0.0363,
+      "latest_value": 0.0363,
+      "point_count": 4,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "beauty_no_teacher_partial_teacher_mse",
+      "label": "Beauty NO Teacher Partial Teacher MSE",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/beauty-no-teacher-partial-teacher-mse-timeline.png",
+      "baseline_value": 0.0472,
+      "latest_value": 0.0472,
+      "point_count": 4,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "pred_feat_to_target_feat_top1_accuracy",
+      "label": "Pred Feat TO Target Feat Top1 Accuracy",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/pred-feat-to-target-feat-top1-accuracy-timeline.png",
+      "baseline_value": null,
+      "latest_value": 0.25,
+      "point_count": 2,
+      "direction": "maximize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "pred_delta_to_target_delta_top1_accuracy",
+      "label": "Pred Delta TO Target Delta Top1 Accuracy",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/pred-delta-to-target-delta-top1-accuracy-timeline.png",
+      "baseline_value": null,
+      "latest_value": 0.75,
+      "point_count": 2,
+      "direction": "maximize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "teacher_gallery_anchor_joint_to_target_feat_top1_accuracy",
+      "label": "Teacher Gallery Anchor Joint TO Target Feat Top1 Accuracy",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/teacher-gallery-anchor-joint-to-target-feat-top1-accuracy-timeline.png",
+      "baseline_value": null,
+      "latest_value": 0.75,
+      "point_count": 1,
+      "direction": "maximize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "teacher_gallery_anchor_joint_to_target_feat_mean_match_rank",
+      "label": "Teacher Gallery Anchor Joint TO Target Feat Mean Match Rank",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/teacher-gallery-anchor-joint-to-target-feat-mean-match-rank-timeline.png",
+      "baseline_value": null,
+      "latest_value": 1.5,
+      "point_count": 1,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "pred_feat_plus_8p0x_delta_concat_to_target_feat_plus_8p0x_delta_concat_top1_accuracy",
+      "label": "Pred Feat Plus 8p0x Delta Concat TO Target Feat Plus 8p0x Delta Concat Top1 Accuracy",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/pred-feat-plus-8p0x-delta-concat-to-target-feat-plus-8p0x-delta-concat-top1-accuracy-timeline.png",
+      "baseline_value": null,
+      "latest_value": 0.75,
+      "point_count": 1,
+      "direction": "maximize",
+      "style": "branded"
+    }
+  ]
 }

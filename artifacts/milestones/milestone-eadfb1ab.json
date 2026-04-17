@@ -1,0 +1,215 @@
+{
+  "kind": "milestone",
+  "schema_version": 1,
+  "artifact_id": "milestone-eadfb1ab",
+  "id": "milestone-eadfb1ab",
+  "quest_id": "002",
+  "created_at": "2026-04-17T15:07:08+00:00",
+  "updated_at": "2026-04-17T15:07:08+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "completed",
+  "branch": "run/teacher_anchored_packet_adapter_smoke_r1",
+  "head_commit": "1814f8913e1d62749d07664d0ed5218b1c109338",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/teacher-anchored-packet-adapter-smoke-r1",
+  "message": "Main experiment `teacher_anchored_packet_adapter_smoke_r1` finished on branch `run/teacher_anchored_packet_adapter_smoke_r1`.\n\nOutcome:\n- Metric: uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr=24, baseline=24, delta=0\n- Verdict: Improved\n- Breakthrough level: none\n- Recommended next route: Revise Idea\n\nConclusion:\nThis bounded smoke supports continuing the packet-memory interface line. The route should not widen to a larger-model handoff yet, but it has now cleared the minimum bar for a real runnable packet-interface result batch and justifies either a wider packet-memory validation pass or a targeted redesign around the remaining 0000/0001 confusion.\n\nFiles:\n- Run log: `.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/RUN.md`\n- Result: `.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/RESULT.json`",
+  "summary": "Main experiment `teacher_anchored_packet_adapter_smoke_r1` finished on branch `run/teacher_anchored_packet_adapter_smoke_r1`. Outcome: - Metric: uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr=24, baseline=24, delta=0 - Verdic…",
+  "summary_preview": "Main experiment `teacher_anchored_packet_adapter_smoke_r1` finished on branch `run/teacher_anchored_packet_adapter_smoke_r1`. Outcome: - Metric: uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr=24, baseline=24, delta=0 - Verdic…",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [
+    {
+      "kind": "main_experiment_recorded",
+      "run_id": "teacher_anchored_packet_adapter_smoke_r1",
+      "branch": "run/teacher_anchored_packet_adapter_smoke_r1",
+      "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1",
+      "run_md_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/RUN.md",
+      "result_json_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/RESULT.json",
+      "verdict": "improved",
+      "primary_metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+      "delta_vs_baseline": 0.0,
+      "breakthrough": false,
+      "breakthrough_level": "none",
+      "need_research_paper": true,
+      "recommended_next_route": "revise_idea",
+      "evaluation_summary": null,
+      "connector_metric_charts": [
+        {
+          "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+          "label": "UVG BD Rate Reduction PCT VS VTM RA Psnr",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/uvg-bd-rate-reduction-pct-vs-vtm-ra-psnr-timeline.png",
+          "baseline_value": 24.0,
+          "latest_value": 24.0,
+          "point_count": 4,
+          "direction": "maximize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "local_resnet18_teacher_smoke_loss_value",
+          "label": "Local Resnet18 Teacher Smoke Loss Value",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/local-resnet18-teacher-smoke-loss-value-timeline.png",
+          "baseline_value": 0.3541456162929535,
+          "latest_value": 0.3541456162929535,
+          "point_count": 4,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "tiny_local_teacher_pilot_bpp_avg",
+          "label": "Tiny Local Teacher Pilot BPP AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/tiny-local-teacher-pilot-bpp-avg-timeline.png",
+          "baseline_value": 88.2109,
+          "latest_value": 88.2266,
+          "point_count": 4,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "tiny_local_teacher_pilot_psnr_avg",
+          "label": "Tiny Local Teacher Pilot Psnr AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/tiny-local-teacher-pilot-psnr-avg-timeline.png",
+          "baseline_value": 10.8996,
+          "latest_value": 10.9012,
+          "point_count": 4,
+          "direction": "maximize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
+          "label": "Tiny Local Teacher Pilot Teacher MSE AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/tiny-local-teacher-pilot-teacher-mse-avg-timeline.png",
+          "baseline_value": 0.5145,
+          "latest_value": 0.5126,
+          "point_count": 4,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "beauty_teacher_smoke_bpp_avg",
+          "label": "Beauty Teacher Smoke BPP AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/beauty-teacher-smoke-bpp-avg-timeline.png",
+          "baseline_value": 2.091,
+          "latest_value": 2.091,
+          "point_count": 4,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "beauty_teacher_smoke_psnr_avg",
+          "label": "Beauty Teacher Smoke Psnr AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/beauty-teacher-smoke-psnr-avg-timeline.png",
+          "baseline_value": 14.9552,
+          "latest_value": 14.9552,
+          "point_count": 4,
+          "direction": "maximize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "beauty_teacher_smoke_teacher_mse_avg",
+          "label": "Beauty Teacher Smoke Teacher MSE AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/beauty-teacher-smoke-teacher-mse-avg-timeline.png",
+          "baseline_value": 0.0363,
+          "latest_value": 0.0363,
+          "point_count": 4,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "beauty_no_teacher_partial_teacher_mse",
+          "label": "Beauty NO Teacher Partial Teacher MSE",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/beauty-no-teacher-partial-teacher-mse-timeline.png",
+          "baseline_value": 0.0472,
+          "latest_value": 0.0472,
+          "point_count": 4,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "pred_feat_to_target_feat_top1_accuracy",
+          "label": "Pred Feat TO Target Feat Top1 Accuracy",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/pred-feat-to-target-feat-top1-accuracy-timeline.png",
+          "baseline_value": null,
+          "latest_value": 0.25,
+          "point_count": 2,
+          "direction": "maximize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "pred_delta_to_target_delta_top1_accuracy",
+          "label": "Pred Delta TO Target Delta Top1 Accuracy",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/pred-delta-to-target-delta-top1-accuracy-timeline.png",
+          "baseline_value": null,
+          "latest_value": 0.75,
+          "point_count": 2,
+          "direction": "maximize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "teacher_gallery_anchor_joint_to_target_feat_top1_accuracy",
+          "label": "Teacher Gallery Anchor Joint TO Target Feat Top1 Accuracy",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/teacher-gallery-anchor-joint-to-target-feat-top1-accuracy-timeline.png",
+          "baseline_value": null,
+          "latest_value": 0.75,
+          "point_count": 1,
+          "direction": "maximize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "teacher_gallery_anchor_joint_to_target_feat_mean_match_rank",
+          "label": "Teacher Gallery Anchor Joint TO Target Feat Mean Match Rank",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/teacher-gallery-anchor-joint-to-target-feat-mean-match-rank-timeline.png",
+          "baseline_value": null,
+          "latest_value": 1.5,
+          "point_count": 1,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "pred_feat_plus_8p0x_delta_concat_to_target_feat_plus_8p0x_delta_concat_top1_accuracy",
+          "label": "Pred Feat Plus 8p0x Delta Concat TO Target Feat Plus 8p0x Delta Concat Top1 Accuracy",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/connector-charts/pred-feat-plus-8p0x-delta-concat-to-target-feat-plus-8p0x-delta-concat-top1-accuracy-timeline.png",
+          "baseline_value": null,
+          "latest_value": 0.75,
+          "point_count": 1,
+          "direction": "maximize",
+          "style": "branded"
+        }
+      ]
+    }
+  ],
+  "interaction_id": "milestone-eadfb1ab",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "milestone",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Milestone recorded. Continue from the current anchor and keep the next checkpoint durable.",
+    "why_now": "Milestones should mark meaningful progress, not end the route prematurely.",
+    "complete_when": [
+      "The next substantive output is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.interact(kind='progress', ...)",
+        "purpose": "Send the next checkpoint update across active surfaces."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "milestone",
+    "source_artifact_id": "milestone-eadfb1ab",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}
