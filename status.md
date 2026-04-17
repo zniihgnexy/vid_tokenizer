@@ -3,34 +3,43 @@
 Baseline reuse is already resolved: `nvrc-local-source` remains the accepted
 upstream asset.
 
-Current stage: `experiment_prep`
+Current stage: `experiment`
 
 Current judgment:
-- The active child line is now `Teacher-Anchored Packet Adapter After Mixed Variance-Floor Repair`.
-- The corrected variance-floor run is useful only as route evidence; it does not justify another immediate low-level repair sweep.
-- The current teacher-feature packet exporter is already sufficient for the next bounded step:
-  - packet payloads include `pred_feat`, `target_feat`, `pred_delta`, and `target_delta`
-  - the manifest already stores packet paths, frame-level decoded/eval metrics,
-    aggregate metrics, and a teacher packet summary
-- The current packet-side bottleneck is no longer “we have no bridge at all”.
-  The stronger reading is:
-  - direct packet controls are weak but non-zero
-  - the naive ridge bridge is even worse
-  - the missing evidence is whether a teacher-anchored adapter can improve the handoff on the same bundle
-- The current comparison anchor stays fixed:
-  - same frozen upstream surface
-  - same tiny-local `4`-frame smoke surface for the next bounded package
-  - same retrieval-style packet evaluation contract
-- The best-supported next route is to reuse the existing bundle and add one
-  teacher-anchored adapter comparison before any bundle redesign or larger-model integration.
+- The run is now on a dedicated branch:
+  `run/teacher_anchored_packet_adapter_smoke_r1`.
+- The chosen bounded experiment is no longer “find another local loss fix”.
+  It is:
+  use the existing `4`-frame teacher packet bundle as a retrieval-time memory
+  bank and test whether one teacher gallery-anchor projection can improve the
+  handoff into `target_feat` space.
+- The current local bundle is sufficient:
+  - packet payloads already expose `pred_feat`, `target_feat`, `pred_delta`,
+    and `target_delta`
+  - no exporter change is required for the first smoke
+- The strongest bounded evidence right now is:
+  - direct `pred_feat -> target_feat` top-1 is only `0.25`
+  - direct joint packet matching can already reach `0.75`
+  - the old leave-one-out ridge bridge stayed at `0.0`
+  - the measured teacher gallery-anchor smoke now reaches `0.75` top-1 and
+    `1.5` mean match rank in `target_feat` space with `delta_weight = 8.0` and
+    `anchor_logit_scale = 16.0`
+  - only query `0000` remains confused with `0001`; queries `0001`, `0002`, and
+    `0003` are correct under the new adapter
+- The main caveat is explicit:
+  this first adapter is a gallery-memory interface, not yet a standalone
+  learned bridge. That is acceptable for a first runnable packet-interface
+  result batch because the user asked for pipeline evidence first.
 
 Deferred:
-- another immediate low-level anti-collapse or variance-floor sweep
+- reopening upstream codec or loss-family ranking
 - packet bundle schema redesign without concrete missing-field evidence
+- a strict leave-one-out adapter as the first packet-interface claim
 - direct VLM/LLM integration
-- reopening codec-line ranking
 
 Next durable action:
-- finish the idea-stage convergence pass with the rewritten survey and control files
-- define one non-leaking teacher-anchored adapter comparison
-- hand off to `experiment` for a bounded packet-adapter smoke on the existing bundle surface
+- record the result as a durable main experiment
+- write the route decision from this measured packet-memory result
+- then decide whether the next best move is a wider packet-memory validation
+  package or a deeper interface redesign around the remaining `0000` / `0001`
+  confusion
