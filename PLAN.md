@@ -1,148 +1,159 @@
-# Teacher Gallery-Anchor Packet Adapter Plan
+# Querybank-Normalized Teacher-Anchor Hubness Smoke Plan
 
 ## 1. Run Contract
 
-- run id: `teacher_anchored_packet_adapter_smoke_r1`
-- parent idea id: `idea-76fee64d`
+- run id: `querybank_teacher_anchor_smoke_r1`
+- parent idea id: `idea-e313b721`
 - selected idea in `1-2` sentences:
-  the next bounded experiment should stop reopening upstream loss tuning and
-  instead test whether the already exported teacher-feature packet bundle can be
-  turned into a more usable machine-facing interface through one lightweight,
-  teacher-anchored retrieval adapter.
+  the next bounded experiment should keep the frozen `16`-frame teacher-anchor
+  packet bundles and evaluation surface unchanged, then test whether
+  querybank-normalized teacher-anchor scoring can rescue retrieval stability
+  better than raw global-bank scoring without reopening training.
 - user-facing objective:
-  keep the pipeline runnable, produce an inspectable first result batch, and
-  decide whether the packet-side interface is worth pushing further before any
-  larger-model integration.
+  produce one rerunnable result batch that shows whether inference-time hubness
+  correction is enough to stabilize the packet interface before we spend more
+  effort on a heavier downstream bridge or a new training-side repair.
 - baseline and comparability contract:
   - confirmed baseline remains `nvrc-local-source` / `tiny-local-teacher-pilot-r3`
-  - keep the upstream compression result frozen
-  - keep the packet bundle schema unchanged
-  - keep the first packet smoke on the same bounded `4`-frame bundle surface
-  - keep the downstream evaluation as retrieval-style matching against
-    target-side teacher space
+  - the UVG paper-facing coding metrics stay read-only reference metrics
+  - this pass is a local `16`-frame packet-interface smoke, not a UVG-comparable
+    coding run
+  - reuse the four frozen bundle chunks already recorded in
+    `experiments/main/evals/shared_gating_query_collapse_localization_smoke_r1/summary.json`
+  - no upstream retraining, exporter schema change, dataset change, or split
+    change is allowed
 - research question:
-  can one teacher gallery-anchor projection map the current packet bundle into
-  `target_feat` space better than the existing direct `pred_feat -> target_feat`
-  control, while staying inside the same tiny-local packet bundle?
+  can querybank-normalized teacher-anchor scoring recover better retrieval on the
+  existing `16`-frame packet bundles than raw global-bank scoring while reducing
+  the collapse onto anchors `0009/0010/0011`?
 - null hypothesis:
-  the teacher gallery-anchor projection does not improve `target_feat`-space
-  retrieval over the direct `pred_feat -> target_feat` control.
+  post-hoc hubness correction only reshuffles the same mistakes; the best
+  corrected mode does not materially improve over raw global-bank retrieval and
+  does not reduce hub concentration.
 - alternative hypothesis:
-  a teacher gallery-anchor projection built from the joint
-  `pred_feat + 8.0 * pred_delta` query can materially improve `target_feat`-space
-  retrieval on the same bundle.
+  a querybank-normalized or Dynamic Inverted Softmax style score can improve
+  retrieval on the same frozen bundles and spread anchor usage away from the
+  `0009/0010/0011` hub cluster without retraining.
 - primary metric:
-  `consumer_metrics.teacher_gallery_anchor_joint_to_target_feat.top1_accuracy`
-- secondary metrics:
-  - `mean_match_rank`
-  - `mean_margin_vs_best_nonmatch`
-  - comparison against
-    `consumer_metrics.pred_feat_to_target_feat.top1_accuracy`
+  `consumer_metrics.qb_norm_teacher_anchor_to_target_feat.top1_accuracy`
+- required metric keys for acceptance:
+  - `consumer_metrics.raw_global_bank_to_target_feat.top1_accuracy`
+  - `consumer_metrics.qb_norm_teacher_anchor_to_target_feat.top1_accuracy`
+  - `consumer_metrics.dis_teacher_anchor_to_target_feat.top1_accuracy`
+  - `consumer_metrics.csls_teacher_anchor_to_target_feat.top1_accuracy`
+  - `diagnostics.raw_global_bank.hub_cluster_share_0009_0010_0011`
+  - `diagnostics.qb_norm_teacher_anchor.hub_cluster_share_0009_0010_0011`
+  - `diagnostics.raw_global_bank.unique_top1_anchor_count`
+  - `diagnostics.qb_norm_teacher_anchor.unique_top1_anchor_count`
 - stop condition for this bounded pass:
-  one runnable smoke command, one durable summary/report, and an explicit route
-  decision from the measured result
+  one runnable smoke command, one durable result directory, one report that
+  compares the four scoring modes, and one explicit route decision from the
+  measured result.
 
 ## 2. Strongest Existing Evidence
 
-- frozen downstream control from the reconstructed-video line:
-  - `original_to_original_top1_accuracy = 1.0`
-  - `reconstructed_to_original_top1_accuracy = 0.25`
-- current packet-side control on the reusable `4`-frame bundle:
-  - `pred_feat_to_target_feat top1 = 0.25`
-  - `pred_delta_to_target_delta top1 = 0.75`
-  - `pred_feat_plus_8p0x_delta_concat_to_target_feat_plus_8p0x_delta_concat top1 = 0.75`
-- old weak bridge evidence:
-  - `delta_ridge_to_target_feat_loo top1 = 0.0`
-  - `feat_plus_8p0x_delta_ridge_to_target_feat_loo top1 = 0.0`
-- local packet payload and manifest are already sufficient:
-  - packet fields: `pred_feat`, `target_feat`, `pred_delta`, `target_delta`
-  - no exporter change is required for the first adapter smoke
-- quick prototype on the active run worktree:
-  - teacher gallery-anchor softmax with `delta_weight = 8.0` and
-    `anchor_logit_scale = 16.0` raises `target_feat`-space top-1 from `0.25` to
-    `0.75`
-  - strict leave-one-out gallery exclusion collapses to `0.0`, so the honest
-    first bounded test is the retrieval-time gallery-memory setting, not a
-    self-excluded adapter
+- the widened packet-interface line already showed that packet-side signal still
+  exists; the main failure is retrieval geometry, not missing packet content
+- the current raw global-bank `16`-frame result is `top1_accuracy = 0.125`
+  together with strong concentration on anchors `0009/0010/0011`
+- the earlier `4`-frame packet-adapter line proved that teacher-anchor style
+  retrieval can work in a bounded setting, but it does not answer the widened
+  hubness failure
+- the selected idea package and literature sweep both converge on lightweight
+  post-hoc cross-modal normalization as the most defensible next correction
 
-## 3. Chosen Adapter Formulation
+## 3. Chosen Comparison Surface
 
-- query key:
-  normalized `concat(pred_feat, 8.0 * pred_delta)`
-- gallery anchor keys:
-  normalized `concat(target_feat, 8.0 * target_delta)`
-- gallery anchor values:
-  normalized `target_feat`
-- projection rule:
-  `softmax(16.0 * cosine(query_key, gallery_anchor_keys)) @ gallery_anchor_values`
-- interpretation:
-  this is a fixed teacher gallery-memory adapter. It does not learn a new
-  regression map; it uses the teacher packet bank as the retrieval-time memory
-  that projects the predicted packet into `target_feat` space.
-- caveat:
-  this is a gallery-memory interface, not yet a standalone parametric bridge.
-  That is acceptable for the first bounded packet-interface smoke because the
-  user asked for a runnable first pipeline version and an inspectable result
-  batch, not yet a final larger-model handoff.
+- `raw_global_bank_to_target_feat`
+  - current control and failure reference
+- `qb_norm_teacher_anchor_to_target_feat`
+  - main route and headline comparison
+- `dis_teacher_anchor_to_target_feat`
+  - close sibling of QB-Norm; keep as fallback within the same smoke
+- `csls_teacher_anchor_to_target_feat`
+  - classical control that tests whether local scaling alone explains the gain
+- `hard_shortlist_teacher_anchor_to_target_feat`
+  - optional secondary control only if the first four modes leave ambiguity
 
-## 4. Comparison Table For The Smoke
+## 4. Bundle And Output Contract
 
-- `target_feat_to_target_feat`
-- `pred_feat_to_target_feat`
-- `pred_delta_to_target_delta`
-- `pred_feat_plus_8p0x_delta_concat_to_target_feat_plus_8p0x_delta_concat`
-- `teacher_gallery_anchor_joint_to_target_feat`
+- input bundle surface:
+  - reuse the four bundle chunks already referenced by
+    `experiments/main/evals/shared_gating_query_collapse_localization_smoke_r1/summary.json`
+  - chunk names:
+    - `shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk00_smoke_r1`
+    - `shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk01_smoke_r1`
+    - `shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk02_smoke_r1`
+    - `shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk03_smoke_r1`
+- default output directory:
+  `experiments/main/evals/querybank_teacher_anchor_smoke_r1`
+- required outputs:
+  - `summary.json`
+  - `report.md`
+  - per-mode row csv files
+  - per-mode similarity matrices
+  - anchor-weight csv or equivalent per-mode diagnostic export
+  - concentration summary for hubs `0009/0010/0011`
 
 ## 5. Code Touchpoints
 
 | Path | Planned change | Why this is needed |
 |---|---|---|
-| `experiments/main/scripts/run_teacher_anchor_packet_eval.py` | add a dedicated teacher gallery-anchor evaluator | keep the new adapter logic isolated instead of overloading the direct evaluator |
-| `experiments/main/scripts/run_teacher_anchor_packet_adapter_smoke.sh` | add a reproducible bounded smoke launcher | make the result rerunnable from one command |
-| `PLAN.md`, `CHECKLIST.md`, `status.md` | rewrite around the run contract | make the run branch auditable as an experiment, not only as idea prep |
+| `experiments/main/scripts/run_teacher_anchor_packet_eval.py` | extend the existing evaluator so it can score raw, QB-Norm, DIS, and CSLS modes and emit per-mode concentration diagnostics | keep the hubness experiment close to the existing teacher-anchor code path |
+| `experiments/main/scripts/run_query_collapse_localization.py` | reuse or factor helper logic for multi-chunk loading and concentration summaries if that is cleaner than duplicating it | the new smoke should stay comparable to the existing collapse diagnosis |
+| `experiments/main/scripts/run_querybank_teacher_anchor_smoke.sh` | add a reproducible bounded launcher for the four-chunk smoke | make the result rerunnable from one command |
+| `PLAN.md`, `CHECKLIST.md`, `plan.md`, `status.md`, `SUMMARY.md` | sync the control surface onto the active querybank-normalized line | avoid carrying stale packet-adapter assumptions into the new run |
 
-## 6. Smoke Command And Outputs
+## 6. Safe Efficiency Levers
 
-- default bundle:
-  `experiments/main/interface_bundles/shared_gating_teacher_packet_smoke_r1`
-- default output:
-  `experiments/main/evals/teacher_anchor_packet_adapter_smoke_r1`
-- smoke command:
-  `./experiments/main/scripts/run_teacher_anchor_packet_adapter_smoke.sh`
-- required outputs:
-  - `summary.json`
-  - `report.md`
-  - per-comparison row csv files
-  - anchor-weight csv for the new teacher gallery-anchor comparison
+- inference-only change on already exported packet bundles
+- reuse existing bundle manifests and packet payloads instead of regenerating
+  them
+- keep all comparisons inside one bounded smoke so every mode sees the same
+  inputs
+- only widen to a heavier run if the first smoke produces a clean, interpretable
+  delta
 
-## 7. Success And Abandonment Criteria
+## 7. Smoke Command
+
+- planned launcher:
+  `./experiments/main/scripts/run_querybank_teacher_anchor_smoke.sh`
+- launcher responsibilities:
+  - pass the four `16`-frame bundle chunk directories
+  - run raw, QB-Norm, DIS, and CSLS comparisons in one smoke
+  - collect retrieval plus concentration diagnostics into the same output
+    directory
+
+## 8. Success And Abandonment Criteria
 
 - success:
-  - the new script runs on the current local bundle without exporter changes
-  - `teacher_gallery_anchor_joint_to_target_feat.top1_accuracy > 0.25`
-  - the run leaves a durable report and summary that show what the packet-side
-    output actually looks like
+  - at least one corrected mode beats the raw global-bank `0.125` top-1 control
+  - the winning corrected mode reduces hub-cluster share on
+    `0009/0010/0011`
+  - the smoke leaves a clear rerunnable report
 - strong success:
-  - the new comparison reaches `0.75` top-1 or better and therefore matches the
-    strongest existing joint-space direct control while improving the
-    `target_feat`-space handoff
+  - `qb_norm_teacher_anchor_to_target_feat.top1_accuracy >= 0.25`
+  - the winning mode also increases the number of unique top-1 anchors versus
+    raw global-bank
 - abandonment or downgrade:
-  - the runnable script fails on the current bundle
-  - the new comparison stays at or below `0.25` top-1
-  - the adapter only works after a schema change or a hidden extra dependency
+  - all corrected modes tie or underperform the raw control
+  - hub concentration stays essentially unchanged even when top-1 moves
+  - only ad hoc shortlist pruning helps, which would point away from the current
+    single-bank normalization claim
 
-## 8. Why This Route Dominates The Alternatives
+## 9. Why This Route Dominates The Alternatives
 
-- it reuses the exact packet bundle the repo already owns
-- it gives the user a runnable first result batch immediately
-- it focuses innovation on pipeline/interface usefulness rather than reopening
-  codec ranking
-- it is a cleaner first packet-interface test than another weak ridge map
-- it is still bounded enough that failure would clearly justify a deeper
-  interface redesign instead of another ambiguous tuning round
+- it keeps the frozen packet-interface story intact and tests the lightest
+  plausible correction first
+- it is more directly aligned with the observed widened failure than reopening
+  training-side anti-collapse repair
+- it is cleaner and cheaper than dual-bank normalization as a first step
+- it still includes CSLS as a serious control, so the next decision should be
+  evidence-based rather than slogan-based
 
-## 9. Checklist Link
+## 10. Checklist Link
 
 - checklist path: `CHECKLIST.md`
 - immediate next unchecked item:
-  add the dedicated evaluator, launcher, and run the bounded smoke
+  prepare the dedicated run branch/worktree, then extend the evaluator with the
+  four scoring modes and concentration outputs

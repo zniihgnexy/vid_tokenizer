@@ -1,67 +1,69 @@
-# Teacher Gallery-Anchor Packet Adapter Checklist
+# Querybank-Normalized Teacher-Anchor Hubness Smoke Checklist
 
-Update this while implementing and validating the bounded packet-adapter smoke.
+Update this while preparing, implementing, and validating the bounded
+`16`-frame hubness smoke.
 
 ## Identity
 
-- idea id: `idea-76fee64d`
-- run id: `teacher_anchored_packet_adapter_smoke_r1`
+- idea id: `idea-e313b721`
+- planned run id: `querybank_teacher_anchor_smoke_r1`
 - stage: `experiment`
 
 ## Preconditions
 
 - [x] confirm the accepted baseline contract is still `nvrc-local-source`
-- [x] confirm the active route is the teacher-anchored packet-adapter line
-- [x] confirm the first package stays on the same bounded `4`-frame packet bundle
-- [x] confirm the current packet bundle schema already exposes packet paths, metrics, and teacher packet summary
-- [x] confirm the local reusable bundle exists at `experiments/main/interface_bundles/shared_gating_teacher_packet_smoke_r1`
+- [x] confirm the active route is the querybank-normalized teacher-anchor line
+- [x] confirm the widened failure is currently diagnosed as retrieval-time hub
+  collapse
+- [x] confirm the four frozen `16`-frame packet bundle chunks already exist in
+  the prior collapse-diagnosis outputs
+- [x] confirm the current evaluator entrypoint is
+  `experiments/main/scripts/run_teacher_anchor_packet_eval.py`
 
 ## Run Contract
 
-- [x] rewrite `PLAN.md` around the dedicated run contract
-- [x] rewrite `CHECKLIST.md` for the run branch
-- [x] rewrite `status.md` for the run branch
-- [x] choose the first adapter formula:
-  teacher gallery-anchor softmax projection from
-  `pred_feat + 8.0 * pred_delta` into `target_feat`
-- [x] choose a bounded default scale:
-  `anchor_logit_scale = 16.0`
-- [x] define the smoke command and output directory contract
-- [x] define the comparison table for the smoke report
+- [x] rewrite the quest `plan.md` around the querybank-normalized line
+- [x] rewrite the quest `status.md` and `SUMMARY.md` around the same line
+- [x] rewrite the workspace `PLAN.md` and `CHECKLIST.md`
+- [x] lock the bounded comparison table to raw global-bank, QB-Norm, DIS, and
+  CSLS
+- [x] lock the first success threshold to beating raw top-1 `0.125` while
+  reducing hub concentration on `0009/0010/0011`
+- [ ] prepare the dedicated run branch/worktree for
+  `querybank_teacher_anchor_smoke_r1`
 
 ## Implementation
 
-- [x] add the dedicated `run_teacher_anchor_packet_eval.py` helper
-- [x] add the bounded launcher `run_teacher_anchor_packet_adapter_smoke.sh`
-- [x] write report fields for the teacher gallery-anchor comparison
-- [x] write anchor-weight export for the new comparison
+- [ ] decide whether to extend `run_teacher_anchor_packet_eval.py` directly or
+  wrap it with a multi-chunk driver
+- [ ] add raw global-bank, QB-Norm, DIS, and CSLS scoring modes
+- [ ] export per-mode anchor concentration diagnostics and hub-cluster share
+- [ ] add the bounded launcher
+  `experiments/main/scripts/run_querybank_teacher_anchor_smoke.sh`
 
 ## Smoke Gate
 
-- [x] run the bounded packet-adapter smoke on the local `4`-frame bundle
-- [x] verify `teacher_gallery_anchor_joint_to_target_feat.top1_accuracy > 0.25`
-- [x] verify the new comparison beats the old ridge bridge baseline (`0.0`)
-- [x] inspect whether the result is close enough to the `0.75` joint-space direct control to justify a fuller packet-interface run
+- [ ] run the bounded smoke on the four frozen `16`-frame bundle chunks
+- [ ] verify the raw mode reproduces the current weak global-bank behavior
+- [ ] verify at least one corrected mode beats raw global-bank top-1
+- [ ] inspect whether QB-Norm or DIS actually lowers the
+  `0009/0010/0011` hub-cluster share
+- [ ] decide whether hard shortlist pruning is still unnecessary after the first
+  four-mode comparison
 
 ## Durable Recording
 
 - [ ] record the measured result with `artifact.record_main_experiment(...)`
-- [ ] write the route decision for whether to keep pushing this packet-memory interface or widen scope
+- [ ] write the next route decision from the smoke result
+- [ ] update the quest status surfaces with the measured outcome
 
 ## Notes
 
-- current bounded packet evidence:
-  - `pred_feat_to_target_feat top1 = 0.25`
-  - `pred_delta_to_target_delta top1 = 0.75`
-  - `pred_feat_plus_8p0x_delta_concat_to_target_feat_plus_8p0x_delta_concat top1 = 0.75`
-  - old ridge bridge top-1 stayed at `0.0`
-- quick prototype evidence on this run branch:
-  - teacher gallery-anchor projection reaches `0.75` top-1 at
-    `anchor_logit_scale = 16.0`
-  - strict leave-one-out gallery exclusion collapses to `0.0`, so the honest
-    first smoke is the retrieval-time gallery-memory setting
-- measured smoke result:
-  - `teacher_gallery_anchor_joint_to_target_feat top1 = 0.75`
-  - `teacher_gallery_anchor_joint_to_target_feat mean_match_rank = 1.5`
-  - `pred_feat_to_target_feat top1 = 0.25`
-  - only query `0000` still collapses toward `0001`; the other three queries are correct
+- current raw widened reference:
+  - `raw_global_bank_to_target_feat.top1_accuracy = 0.125`
+  - main hub cluster: `0009/0010/0011`
+- current preferred route:
+  - `QB-Norm` is the headline correction
+  - `DIS` is the closest sibling fallback
+  - `CSLS` is the classical control
+  - hard shortlist pruning is optional secondary control only

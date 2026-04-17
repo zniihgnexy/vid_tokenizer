@@ -1,11 +1,11 @@
 # Plan
-
 - [x] Reuse the confirmed `nvrc-local-source` baseline contract instead of rebuilding the old upstream line.
-- [x] Update the literature survey and select the new child line `Delta-Packet Bridge to Frozen Consumer Space`.
-- [x] Sync the active branch onto the bridge narrative instead of the older plain-feature or delta-follow-up-only story.
-- [ ] Choose the smallest widened bounded comparison surface beyond the current 4 samples while preserving the same comparison contract.
-- [ ] Reuse the packet exporter/evaluator scaffold and identify the minimal code touchpoints needed for a consumer-side bridge.
-- [ ] Implement one lightweight delta-packet adapter path that outputs frozen-consumer embeddings.
-- [ ] Run one bounded smoke for the widened bridge pipeline.
-- [ ] Run the first bounded bridge comparison against reconstructed-video control plus delta-only and delta-dominant concat variants.
-- [ ] Record the first bridge-side experiment result and the next route decision.
+- [x] Preserve the downstream pipeline skeleton and stop treating reconstructed video as the preferred machine-facing handoff.
+- [x] Diagnose the widened `16`-frame teacher-packet failure as retrieval-time hub collapse rather than total packet-signal loss.
+- [x] Refresh the related-work and idea slate around hubness-calibrated post-hoc retrieval correction.
+- [x] Submit the child idea line `Querybank-Normalized Teacher-Anchor Packet Interface After Hubness Diagnosis`.
+- [ ] Rewrite the quest and workspace experiment-control documents so they all point at the same `QB-Norm / DIS / CSLS` comparison surface.
+- [ ] Prepare a dedicated `run/querybank_teacher_anchor_smoke_r1` branch/worktree for the bounded `16`-frame smoke.
+- [ ] Extend the existing teacher-anchor evaluator so one rerunnable smoke can compare raw global-bank scoring, QB-Norm, Dynamic Inverted Softmax, and CSLS-style local scaling on the frozen `16`-frame packet bundles.
+- [ ] Export retrieval rows plus anchor-concentration diagnostics for the four reused `16`-frame chunk bundles.
+- [ ] Record the measured result durably and choose the next route: keep single-bank normalization, escalate to dual-bank normalization, or return to query-side geometry repair.
