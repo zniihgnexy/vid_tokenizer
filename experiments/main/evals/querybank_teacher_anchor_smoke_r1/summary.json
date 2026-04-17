@@ -1,0 +1,209 @@
+{
+  "aggregate_metrics_by_bundle": {
+    "shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk00_smoke_r1": {
+      "bpp_avg": 88.2266,
+      "bpp_est_avg": 93.7417,
+      "ent_dec_time_avg": 13.2718,
+      "ent_enc_time_avg": 8.3836,
+      "eval_time_avg": 0.2558,
+      "macs_avg": NaN,
+      "macs_rate_avg": NaN,
+      "params_avg": 4283.0,
+      "params_codec_avg": 38027.0,
+      "psnr_avg": 8.0643,
+      "size": 361376.0,
+      "teacher-mse_avg": 0.5573,
+      "train_time_avg": 0.8669
+    },
+    "shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk01_smoke_r1": {
+      "bpp_avg": 88.2266,
+      "bpp_est_avg": 93.7417,
+      "ent_dec_time_avg": 13.2147,
+      "ent_enc_time_avg": 8.1587,
+      "eval_time_avg": 0.1289,
+      "macs_avg": NaN,
+      "macs_rate_avg": NaN,
+      "params_avg": 4283.0,
+      "params_codec_avg": 38027.0,
+      "psnr_avg": 8.075,
+      "size": 361376.0,
+      "teacher-mse_avg": 0.4909,
+      "train_time_avg": 0.9465
+    },
+    "shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk02_smoke_r1": {
+      "bpp_avg": 88.2266,
+      "bpp_est_avg": 93.7417,
+      "ent_dec_time_avg": 13.5425,
+      "ent_enc_time_avg": 8.2344,
+      "eval_time_avg": 0.1134,
+      "macs_avg": NaN,
+      "macs_rate_avg": NaN,
+      "params_avg": 4283.0,
+      "params_codec_avg": 38027.0,
+      "psnr_avg": 8.053,
+      "size": 361376.0,
+      "teacher-mse_avg": 0.4666,
+      "train_time_avg": 0.9246
+    },
+    "shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk03_smoke_r1": {
+      "bpp_avg": 88.2266,
+      "bpp_est_avg": 93.7417,
+      "ent_dec_time_avg": 13.2473,
+      "ent_enc_time_avg": 8.1508,
+      "eval_time_avg": 0.1047,
+      "macs_avg": NaN,
+      "macs_rate_avg": NaN,
+      "params_avg": 4283.0,
+      "params_codec_avg": 38027.0,
+      "psnr_avg": 8.1127,
+      "size": 361376.0,
+      "teacher-mse_avg": 0.4688,
+      "train_time_avg": 0.9322
+    }
+  },
+  "anchor_logit_scale": 16.0,
+  "bundle_count": 4,
+  "bundle_dirs": [
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/experiments/main/interface_bundles/shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk00_smoke_r1",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/experiments/main/interface_bundles/shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk01_smoke_r1",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/experiments/main/interface_bundles/shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk02_smoke_r1",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/experiments/main/interface_bundles/shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk03_smoke_r1"
+  ],
+  "consumer_metrics": {
+    "csls_teacher_anchor_to_target_feat": {
+      "mean_best_nonmatch_similarity": 0.9946725554764271,
+      "mean_margin_vs_best_nonmatch": -0.005182582885026932,
+      "mean_match_rank": 2.5,
+      "mean_matching_similarity": 0.9894899725914001,
+      "query_count": 16.0,
+      "top1_accuracy": 0.1875
+    },
+    "dis_teacher_anchor_to_target_feat": {
+      "mean_best_nonmatch_similarity": 0.9941956326365471,
+      "mean_margin_vs_best_nonmatch": -0.003512278199195862,
+      "mean_match_rank": 2.25,
+      "mean_matching_similarity": 0.9906833544373512,
+      "query_count": 16.0,
+      "top1_accuracy": 0.3125
+    },
+    "pred_delta_to_target_delta": {
+      "mean_best_nonmatch_similarity": 0.04747543158009648,
+      "mean_margin_vs_best_nonmatch": -0.05261221877299249,
+      "mean_match_rank": 2.5,
+      "mean_matching_similarity": -0.0051367871928960085,
+      "query_count": 16.0,
+      "top1_accuracy": 0.1875
+    },
+    "pred_feat_plus_8p0x_delta_concat_to_target_feat_plus_8p0x_delta_concat": {
+      "mean_best_nonmatch_similarity": 0.1994016468524933,
+      "mean_margin_vs_best_nonmatch": -0.04504131793510169,
+      "mean_match_rank": 2.625,
+      "mean_matching_similarity": 0.1543603289173916,
+      "query_count": 16.0,
+      "top1_accuracy": 0.1875
+    },
+    "pred_feat_to_target_feat": {
+      "mean_best_nonmatch_similarity": 0.5948382057249546,
+      "mean_margin_vs_best_nonmatch": -0.014023996889591217,
+      "mean_match_rank": 2.5,
+      "mean_matching_similarity": 0.5808142088353634,
+      "query_count": 16.0,
+      "top1_accuracy": 0.25
+    },
+    "qb_norm_teacher_anchor_to_target_feat": {
+      "mean_best_nonmatch_similarity": 0.9947620704770088,
+      "mean_margin_vs_best_nonmatch": -0.006525885313749313,
+      "mean_match_rank": 2.125,
+      "mean_matching_similarity": 0.9882361851632595,
+      "query_count": 16.0,
+      "top1_accuracy": 0.375
+    },
+    "raw_global_bank_to_target_feat": {
+      "mean_best_nonmatch_similarity": 0.9953711852431297,
+      "mean_margin_vs_best_nonmatch": -0.00534723699092865,
+      "mean_match_rank": 2.5,
+      "mean_matching_similarity": 0.9900239482522011,
+      "query_count": 16.0,
+      "top1_accuracy": 0.25
+    },
+    "target_feat_to_target_feat": {
+      "mean_best_nonmatch_similarity": 0.9846084304153919,
+      "mean_margin_vs_best_nonmatch": 0.01539158821105957,
+      "mean_match_rank": 1.0,
+      "mean_matching_similarity": 1.0000000186264515,
+      "query_count": 16.0,
+      "top1_accuracy": 1.0
+    }
+  },
+  "csls_k": 3,
+  "delta_weight": 8.0,
+  "diagnostics": {
+    "csls_teacher_anchor_to_target_feat": {
+      "hub_cluster_share_0009_0010_0011": 0.0,
+      "max_top1_anchor_share": 0.5,
+      "mean_weight_mass_on_hub_cluster": 0.0,
+      "top1_anchor_histogram": {
+        "0000": 1,
+        "0001": 1,
+        "0002": 8,
+        "0003": 6
+      },
+      "unique_top1_anchor_count": 4
+    },
+    "dis_teacher_anchor_to_target_feat": {
+      "hub_cluster_share_0009_0010_0011": 0.0,
+      "max_top1_anchor_share": 0.375,
+      "mean_weight_mass_on_hub_cluster": 0.0,
+      "top1_anchor_histogram": {
+        "0000": 3,
+        "0001": 1,
+        "0002": 6,
+        "0003": 6
+      },
+      "unique_top1_anchor_count": 4
+    },
+    "qb_norm_teacher_anchor_to_target_feat": {
+      "hub_cluster_share_0009_0010_0011": 0.0,
+      "max_top1_anchor_share": 0.3125,
+      "mean_weight_mass_on_hub_cluster": 0.0,
+      "top1_anchor_histogram": {
+        "0000": 4,
+        "0001": 2,
+        "0002": 5,
+        "0003": 5
+      },
+      "unique_top1_anchor_count": 4
+    },
+    "raw_global_bank_to_target_feat": {
+      "hub_cluster_share_0009_0010_0011": 0.0,
+      "max_top1_anchor_share": 0.5,
+      "mean_weight_mass_on_hub_cluster": 0.0,
+      "top1_anchor_histogram": {
+        "0000": 1,
+        "0001": 1,
+        "0002": 8,
+        "0003": 6
+      },
+      "unique_top1_anchor_count": 4
+    }
+  },
+  "frame_count_per_bundle": 4,
+  "mode": "smoke",
+  "output_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/querybank-teacher-anchor-smoke-r1/experiments/main/evals/querybank_teacher_anchor_smoke_r1",
+  "teacher_packet_summary": {
+    "device": "cuda",
+    "feature_dim": 512,
+    "frame_count": 4,
+    "mean_consistency_mse": 0.5598695278167725,
+    "mean_delta_cosine": 0.055519405752420425,
+    "mean_feature_cosine": 0.5777375102043152,
+    "mean_semantic_weight": 0.9999990463256836,
+    "packet_fields": [
+      "pred_feat",
+      "target_feat",
+      "pred_delta",
+      "target_delta"
+    ],
+    "teacher_type": "resnet18_imagenet"
+  }
+}
