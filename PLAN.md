@@ -20,9 +20,10 @@
   - keep reconstructed video as a bounded control, not the main winner claim
   - do not widen scope to a larger-model demo before the local packet bridge is trustworthy
 - current pass objective:
-  implement and validate one bounded predicted-side variance-floor repair package
-  on the same frozen widened surface, then use that smoke result to decide
-  whether the line deserves a dedicated `run/*` main experiment branch.
+  complete one corrected bounded predicted-side variance-floor main run on the
+  same frozen widened surface, verify that the variance-floor penalty is truly
+  active in the real training path, and use the resulting teacher-mse / rate /
+  reconstruction trade-off to decide whether this line deserves a larger follow-up.
 - research question:
   can one explicit predicted-feature variance floor recover more predicted-to-target
   packet alignment than the downgraded blueprint repair and the negative relation
@@ -71,12 +72,20 @@
   - run the smoke utility with a variance-floor-on configuration
 - if smoke passes:
   - update `status.md` with the validated implementation state
-  - decide whether to open a dedicated `run/*` branch and launch the bounded main run
+  - open a dedicated `run/*` branch and launch the bounded main run
   - keep packet export/eval unchanged so the post-run comparison stays interpretable
 - if smoke fails:
   - stop before main-run launch
   - record the exact failure mode
   - fix only the smallest blocking issue instead of widening scope
+- run-branch outcome in this worktree:
+  - the first bounded run exposed a missing `create_overfit_task(...)`
+    passthrough, so the configured variance-floor weight stayed at `0.0` in the
+    real training path and that first output was archived as invalid
+  - after fixing the missing passthrough, the corrected bounded run completed
+    with `pred_variance_weight=1.0` active in both train and eval logs
+  - the corrected run mildly improved `teacher-mse`, but slightly worsened
+    `bpp` and `psnr`, so the next step is route judgment rather than claiming a win
 
 ## 5. Success And Abandonment Criteria
 
@@ -105,4 +114,4 @@
 
 - checklist path: `CHECKLIST.md`
 - next unchecked item:
-  implement the variance-floor repair package and run the first smoke validation
+  record the corrected bounded run durably and route the next step through decision
