@@ -1,9 +1,15 @@
-# Main Experiment Plan
+# Idea Round Plan
 
 ## 1. Objective
 
-- run id: `shared_gating_relation_semchange_delta_smoke_r1`
-- selected idea in `1-2` sentences: The first bounded `blueprint + semantic-change + temporal-delta` repair no longer looks like a total constant-vector collapse, but it still fails the core target-alignment test. On the repaired 16-frame bundle, `target_feat` remains perfectly discriminative while `pred_feat -> target_feat` stays at `0.0625` top-1 and `pred_delta -> target_delta` reaches only `0.1875` with negative mean margin. The next move is exactly one more nearby repair that targets cross-view alignment more directly: `teacher_relation_consistency` on the same frozen surface.
+- idea id: `idea-2835dace`
+- selected idea in `1-2` sentences:
+  the bounded relation repair became the second negative teacher-side result on
+  the same frozen widened packet bridge. The next round should stay on the same
+  comparison surface but shift the bottleneck story back to the predicted side:
+  localize what is still accessible around the query-side packet path, then test
+  one minimal anti-collapse repair that acts on predicted packet features instead
+  of adding another teacher-side auxiliary loss.
 - user's core requirements:
   - keep the pipeline runnable from upstream compression to downstream machine use
   - produce an inspectable result batch that shows whether this direction is worth doing
@@ -14,120 +20,144 @@
   - keep the accepted `nvrc-local-source` baseline contract visible
   - treat reconstructed video as a bounded control, not as the default winner
   - avoid a confounded direct VLM/LLM demo before the local bridge is proven
-- current pass objective: downgrade the insufficient blueprint repair cleanly, then validate and prepare one bounded relation-based repair on the same frozen widened surface
-- research question: Can relation-consistency supervision recover predicted-to-target packet alignment after blueprint already showed that self-discrimination alone is not enough?
-- null hypothesis: relation consistency also fails to lift packet alignment beyond near-chance retrieval, leaving the packet-bridge line unsupported on this frozen surface
-- alternative hypothesis: relation consistency improves at least one predicted-to-target packet comparison beyond the current blueprint result while preserving the same bounded pipeline and export surfaces
+- current pass objective:
+  close the current idea round with a literature-grounded and code-grounded
+  route choice for one bounded predicted-side anti-collapse experiment package.
+- research question:
+  on the same frozen widened packet bridge surface, can one minimal
+  predicted-side anti-collapse control recover more predicted-to-target packet
+  alignment than the downgraded blueprint repair and the negative relation repair?
+- null hypothesis:
+  the accessible predicted packet surfaces are already too late or too collapsed,
+  so even a direct anti-collapse control will not improve packet alignment
+  meaningfully.
+- alternative hypothesis:
+  a bounded predicted-side anti-collapse control, especially explicit variance
+  regularization on the accessible packet features or deltas, improves at least
+  one predicted-to-target comparison while preserving the same export and eval
+  surface.
 
-## 2. Baseline And Comparability
+## 2. Evidence And Comparability
 
 - baseline id: `nvrc-local-source`
 - baseline variant: `tiny-local-teacher-pilot-r3`
-- locked failure boundary from the completed localization smoke:
+- locked failure boundary from the localization package:
   - `target_feat_to_target_feat_seq_concat_top1_accuracy=1.0`
   - `target_delta_to_target_delta_seq_concat_top1_accuracy=1.0`
   - `pred_feat_to_pred_feat_seq_concat_top1_accuracy=0.25`
   - `pred_delta_to_pred_delta_seq_concat_top1_accuracy=0.25`
-  - `pred_feat` cross-chunk cosine matrix is all `1.0`
-  - `pred_delta` cross-chunk cosine matrix is all `1.0`
+  - `pred_feat` and `pred_delta` cross-chunk cosine matrices are all `1.0`
   - `pred_feat` and `pred_delta` raw mean dimension variance are both `0.0`
-  - the earliest accessible collapse surface remains `exported_predicted_packets_or_earlier`
-- first repair result that triggered the downgrade:
-  - bounded repair run aggregate metrics:
-    - `bpp_avg=23.8984`
-    - `psnr_avg=10.6733`
-    - `teacher-mse_avg=0.5481`
-  - repaired single-bundle teacher-packet evaluation:
+  - earliest accessible collapse surface:
+    `exported_predicted_packets_or_earlier`
+- first repair that was downgraded:
+  - blueprint repair single-bundle eval:
     - `target_feat_to_target_feat_top1_accuracy=1.0`
     - `pred_feat_to_target_feat_top1_accuracy=0.0625`
     - `pred_delta_to_target_delta_top1_accuracy=0.1875`
     - `pred_delta_to_target_delta_mean_margin_vs_best_nonmatch=-0.0784`
-  - within-bundle self checks on the repaired 16-frame packet bundle:
-    - `pred_feat_self_top1=1.0`, `offdiag_mean=0.9947`, `raw_mean_dim_var=0.274643`
-    - `pred_delta_self_top1=0.9375`, `offdiag_mean=-0.0543`, `raw_mean_dim_var=0.000028`
-- interpretation of the downgrade:
-  - the blueprint repair no longer looks like the earlier all-ones cross-chunk constant collapse
-  - but the exported predicted packets still do not align cleanly enough to target packets for a credible machine-facing interface claim
-  - this means the remaining bottleneck is target alignment, not merely injecting more self-variance
-- chosen next repair family:
-  - `teacher_relation_consistency=true`
-  - keep the same frozen bounded dataset family and packet export/eval surface
-  - keep semantic-change weighting and temporal-delta consistency unless the existing relation path requires a simpler first validation
-- why relation now wins over staying on blueprint:
-  - blueprint already showed that extra self-discrimination does not automatically recover predicted-to-target alignment
-  - relation consistency is the nearest existing repair family that directly regularizes cross-view relational structure between predicted and target features
-  - inventing a new custom contrastive packet loss would add unnecessary code risk before exhausting the built-in nearby repair
-- comparison rule:
-  - keep the same frozen bounded dataset family, shared-gating initialization, and packet-evaluation scripts
-  - change exactly one repair family at a time
-  - do not reopen aggregator tuning, broader bridge redesign, or larger multimodal integration in this pass
-- comparability risks:
-  - the repaired single-bundle result is not directly comparable to the earlier 4-chunk localization package
-  - deeper `query_projection` and `query_packet_head` tensors are still not exported
-  - a small delta-only gain without positive matching margin would still not count as a real repair
+  - interpretation:
+    self-discrimination improved, but usable predicted-to-target alignment did
+    not.
+- second repair that was rejected:
+  - relation main result:
+    `uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr=24` vs baseline `24` (`delta=0`)
+  - route implication:
+    another teacher-side repair family did not move the active packet-bridge
+    line forward.
+- accessible code surfaces today:
+  - `pred_feat`, `target_feat`, `pred_delta`, `target_delta`
+  - relation matrices and current packet export/eval scripts
+- inaccessible deeper surfaces today:
+  - `query_projection`
+  - `query_packet_head`
+- comparability rule:
+  - keep the same frozen widened dataset family, shared-gating initialization,
+    packet exporter, and packet evaluator
+  - change exactly one predicted-side repair family at a time
+  - do not reopen codec ranking, broader interface redesign, or larger-model
+    integration in this pass
 
-## 3. Code Translation Plan
+## 3. Candidate Frontier
+
+### Candidate A: localization-first plus variance-floor repair
+
+- recommended: yes
+- mechanism:
+  keep the current active idea family, expose deeper query-side surfaces only if
+  cheap, and otherwise add one explicit variance-floor control on accessible
+  `pred_feat` / `pred_delta`, with a tiny covariance term only if needed.
+- why it wins:
+  it matches the measured failure mode directly, keeps the next result
+  interpretable, and is the smallest code-path change supported by the current
+  literature sweep.
+
+### Candidate B: redundancy-reduction or covariance-heavy repair
+
+- recommended: second best
+- mechanism:
+  use a Barlow/VICReg-style decorrelation-heavy repair on predicted packet
+  features.
+- why not first:
+  it is broader than the variance-first route and would make another negative
+  result harder to interpret.
+
+### Candidate C: return to interface redesign
+
+- recommended: fallback only
+- mechanism:
+  stop local repair and go back to chunk-aware or packet-structure redesign.
+- why not first:
+  the direct predicted-side collapse evidence is still too strong to skip one
+  bounded predicted-side repair.
+
+## 4. Code Translation Plan
 
 | Path | Current role | Planned change | Why this is needed | Risk |
 |---|---|---|---|---|
-| `experiments/main/scripts/run_query_collapse_localization.py` | locked failure-boundary diagnostic | keep as the reference localization package for the earlier collapse claim | preserves the decisive pre-repair boundary | low |
-| `experiments/main/scripts/export_teacher_feature_interface.py` | packet bundle export | keep as the same bundle export surface for repaired runs | preserves interface comparability | low |
-| `experiments/main/scripts/run_teacher_packet_eval.py` | single-bundle packet retrieval evaluator | keep as the bounded alignment check for repaired runs | directly measures whether predicted packets align to target packets | low |
-| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation-semchange-delta.yaml` | relation repair config | reuse the existing relation-based repair variant on the frozen surface | keeps the next nearby repair narrow without architectural drift | low |
-| `experiments/main/scripts/run_shared_gating_relation_repair_smoke.sh` | bounded relation repair launcher | add a rerunnable relation-specific wrapper that mirrors the blueprint smoke entrypoint | gives the current run branch a clean launch surface for the next bounded repair | low |
-| `experiments/main/upstream_shared_gating_snapshot/tools/smoke_teacher_loss.py` | lightweight teacher-path validator | reuse to confirm the relation repair path before a real run | catches config or loss-path issues cheaply | low |
+| `experiments/main/scripts/run_query_collapse_localization.py` | locked failure-boundary diagnostic | keep as the reference package and reuse its missing-surface report | preserves the decisive pre-repair boundary | low |
+| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/teacher_utils.py` | exposes `pred_feat`, `target_feat`, `pred_delta`, `target_delta` | inspect whether a minimal predicted-side variance control can be inserted without changing the baseline contract | this is the nearest accessible intervention surface | medium |
+| `experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/tasks.py` | teacher-consistency loss assembly | identify the smallest hook point for a bounded predicted-side anti-collapse regularizer | keeps the intervention in the current loss path rather than inventing a new exporter-centric hack | medium |
+| `experiments/main/scripts/export_teacher_feature_interface.py` | packet bundle export | keep unchanged as the post-repair export surface unless deeper query-side tensors become cheaply exposable | preserves packet-surface comparability | low |
+| `experiments/main/scripts/run_teacher_packet_eval.py` | bounded packet retrieval evaluator | keep unchanged as the main predicted-to-target comparison surface | ensures direct comparison to blueprint and relation results | low |
 
-## 4. Execution Design
+## 5. Execution Design
 
-- minimal experiment:
-  - reuse the existing relation repair config
-  - add a rerunnable relation repair smoke wrapper
-  - validate the chosen relation path with the lightweight teacher-loss smoke utility
-  - if that smoke passes, prepare one bounded relation repair run on the same frozen widened surface
-  - after a repaired checkpoint exists, export a teacher packet bundle and rerun the bounded teacher-packet evaluation
-- smoke / pilot plan:
-  - confirm `teacher_relation_consistency` is executable in the frozen NVRC task path on top of the same bounded setup
-  - do not widen to a custom new loss family before the relation path is interpreted
-- expected outputs:
-  - one rerunnable relation repair smoke wrapper
-  - one smoke validation result for the chosen relation loss path
-  - one explicit go/no-go judgment on whether a bounded relation repair run should launch
-- stop condition:
-  - the relation repair path is validated and the next bounded repair run is specified cleanly
-- abandonment condition:
-  - relation consistency is invalid or unsupported in the current code path
-  - a relation-path smoke reveals no meaningful way to evaluate against the existing packet surfaces
-  - a later bounded relation run still leaves predicted-to-target packet alignment near chance, in which case the packet-bridge line should be downgraded again instead of widened
+- first bounded package:
+  - re-read the localization package and current hook points
+  - confirm whether `query_projection` or `query_packet_head` can be exposed
+    cheaply; if not, treat accessible predicted packet tensors as the intervention
+    surface
+  - implement exactly one explicit predicted-side anti-collapse control
+    (variance-floor first)
+  - rerun the same packet export and teacher-packet evaluation
+- success criteria:
+  - the current idea round leaves one explicit next experiment package instead of
+    another vague anti-collapse bucket
+  - the chosen repair improves at least one predicted-to-target packet metric
+    beyond the downgraded blueprint and negative relation results, or produces a
+    clearer negative result that justifies reopening interface redesign
+- abandonment criteria:
+  - deeper query-side surfaces remain inaccessible and the accessible control
+    cannot be added cleanly without wider architecture drift
+  - the chosen repair is implemented cleanly but still leaves alignment near
+    chance, in which case the next move should be interface redesign instead of
+    another nearby regularizer
 
-## 5. Runtime Strategy
+## 6. Runtime Strategy
 
 - immediate next actions:
-  - sync the current branch docs to the completed blueprint downgrade
-  - add the relation repair smoke wrapper
-  - run the lightweight teacher-loss smoke for the chosen relation config
-  - if that smoke passes, prepare one bounded relation repair run on the same frozen widened surface
-- artifact locations:
-  - locked localization root:
-    `experiments/main/evals/shared_gating_query_collapse_localization_smoke_r1/`
-  - downgraded blueprint single-bundle eval:
-    `experiments/main/evals/shared_gating_blueprint_repair_teacher_packet_smoke_r1/`
-  - downgraded blueprint bundle:
-    `experiments/main/interface_bundles/shared_gating_blueprint_repair_teacher_packet_smoke_r1/`
+  - create the missing literature survey for the active branch
+  - sync `PLAN.md`, `CHECKLIST.md`, and `status.md` to the active anti-collapse route
+  - revise the active idea package with the literature-grounded candidate ranking
+  - hand off to `experiment` for one bounded predicted-side localization-plus-repair package
 - safe efficiency levers:
-  - reuse the frozen bounded dataset and shared-gating initialization
-  - validate the relation path with the cheap teacher-loss smoke before any real run
-  - keep the post-repair comparison on the same packet export and teacher-packet evaluation scripts
-
-## 6. Fallbacks And Recovery
-
-- if the relation loss path fails to validate:
-  - stop stacking built-in teacher repair families and reopen route selection explicitly
-- if the relation path validates but a later bounded run still stays near chance:
-  - downgrade the packet-bridge line again instead of adding more ad hoc regularizers
-- if deeper query-head tensors remain inaccessible:
-  - continue treating exported predicted packets and bounded teacher-packet evaluation as the primary evaluation surface
+  - reuse the frozen widened dataset family and the same export/eval scripts
+  - prefer a hook-point audit before broader code edits
+  - keep the first repair minimal and local to accessible predicted-side tensors
 
 ## 7. Checklist Link
 
 - checklist path: `CHECKLIST.md`
-- next unchecked item: validate the relation repair path with the lightweight teacher-loss smoke
+- next unchecked item: revise the active idea durably, then hand off to
+  experiment for the bounded predicted-side repair package

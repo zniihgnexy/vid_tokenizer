@@ -1,73 +1,61 @@
-# Main Experiment Checklist
+# Idea Round Checklist
 
-Update this while interpreting the blueprint result, downgrading it honestly, and validating the next relation-based repair.
+Update this while closing the current anti-collapse idea round and preparing the
+next bounded predicted-side repair package.
 
 ## Identity
 
-- run id: `shared_gating_relation_semchange_delta_smoke_r1`
-- idea id: `idea-253b77bd`
-- stage: `experiment_prep`
+- idea id: `idea-2835dace`
+- stage: `idea`
 
-## Planning
+## Evidence Recovery
 
-- [x] localization evidence interpreted
-- [x] earliest accessible collapse surface made explicit
-- [x] exactly one first repair family selected
-- [x] first repair family executed and interpreted
-- [x] first repair family downgraded explicitly when the evidence weakened it
-- [x] baseline and comparison contract kept stable
-- [x] next nearby repair family selected
+- [x] re-read the latest negative relation result
+- [x] re-read the locked localization package
+- [x] confirm that target packets remain discriminative while predicted packets collapse
+- [x] confirm that the current active branch is already the anti-collapse branch
 
-## Implementation
+## Literature And Framing
 
-- [x] localization entrypoint written
-- [x] localization result package generated
-- [x] blueprint repair config added
-- [x] blueprint teacher-loss smoke executed
-- [x] bounded blueprint repair run executed
-- [x] repaired teacher-packet bundle exported
-- [x] repaired single-bundle teacher-packet evaluation generated
-- [x] relation repair config added
-- [x] relation teacher-loss smoke executed
+- [x] run a quest memory sweep
+- [x] run a fresh primary-paper sweep for anti-collapse mechanisms
+- [x] compare at least `5` directly usable or adjacent papers
+- [x] identify a small `2-3` serious candidate frontier
+- [x] explain why another teacher-side repair should not be the default next move
+- [x] create the missing active-branch literature survey
 
-## Validation
+## Code-Path Feasibility
 
-- [x] target packet discrimination remains explicit after the blueprint repair
-- [x] blueprint repair result shows target-alignment is still unresolved
-- [x] blueprint downgrade is explicit
-- [x] relation repair path validates cleanly
-- [ ] at least one relation-based predicted-to-target packet comparison beats the current blueprint result
-- [ ] downgrade the packet-bridge line again if relation still leaves target alignment near chance
+- [x] inspect accessible predicted-side hook points in the current code path
+- [x] confirm that `query_projection` and `query_packet_head` are still missing surfaces
+- [x] confirm that `pred_feat` / `pred_delta` remain the nearest accessible repair surfaces
+
+## Route Choice
+
+- [x] keep the current anti-collapse branch as the active incumbent
+- [x] rank the serious alternatives explicitly
+- [x] recommend variance-floor-first repair over broader decorrelation or immediate interface redesign
+- [ ] revise the active idea package durably with the refreshed route judgment
+- [ ] seed a lightweight paper-outline candidate for this line
+
+## Handoff
+
+- [x] sync the active branch control files away from the stale relation-prep story
+- [ ] hand off to `experiment` with one bounded predicted-side localization-plus-repair package
 
 ## Notes
 
 - locked localization result:
-  - `target_feat_to_target_feat_seq_concat_top1_accuracy=1.0`
-  - `target_delta_to_target_delta_seq_concat_top1_accuracy=1.0`
-  - `pred_feat_to_pred_feat_seq_concat_top1_accuracy=0.25`
-  - `pred_delta_to_pred_delta_seq_concat_top1_accuracy=0.25`
-  - `pred_feat` and `pred_delta` cross-chunk cosine matrices are all `1.0`
-  - `pred_feat` and `pred_delta` raw mean dimension variance are both `0.0`
-- bounded blueprint repair aggregate metrics:
-  - `bpp_avg=23.8984`
-  - `psnr_avg=10.6733`
-  - `teacher-mse_avg=0.5481`
-- bounded blueprint single-bundle packet evaluation:
-  - `target_feat_to_target_feat_top1_accuracy=1.0`
-  - `pred_feat_to_target_feat_top1_accuracy=0.0625`
-  - `pred_delta_to_target_delta_top1_accuracy=0.1875`
-  - `pred_delta_to_target_delta_mean_margin_vs_best_nonmatch=-0.0784`
-- bounded blueprint self checks:
-  - `pred_feat_self_top1=1.0`, `offdiag_mean=0.9947`, `raw_mean_dim_var=0.274643`
-  - `pred_delta_self_top1=0.9375`, `offdiag_mean=-0.0543`, `raw_mean_dim_var=0.000028`
-- downgrade interpretation:
-  - blueprint recovered some self-discrimination but not usable predicted-to-target alignment
-- chosen next repair:
-  - `teacher_relation_consistency`
-- relation teacher-loss smoke summary:
-  - `feature_shape=[2, 4, 512]`
-  - `relation_shape=[2, 4, 4]`
-  - `temporal_delta_shape=[2, 4, 512]`
-  - `semantic_weight_min=0.6056`, `semantic_weight_max=1.3631`, `semantic_weight_mean=1.0000`
+  - earliest accessible collapse surface:
+    `exported_predicted_packets_or_earlier`
+  - missing deeper surfaces:
+    `query_projection`, `query_packet_head`
+- measured negative repair history:
+  - blueprint repair improved self-discrimination but not usable predicted-to-target alignment
+  - relation repair ended with primary-metric delta `0` vs baseline and did not rescue the line
+- current serious frontier:
+  - recommended: localization-first plus explicit variance-floor repair
+  - second best: redundancy-reduction or covariance-heavy repair
+  - fallback: return to interface redesign
 - next unchecked item:
-  - launch the bounded relation repair run on the frozen widened surface
+  - revise the active idea durably, then open the bounded predicted-side repair package in `experiment`
