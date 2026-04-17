@@ -1,0 +1,225 @@
+{
+  "kind": "milestone",
+  "schema_version": 1,
+  "artifact_id": "milestone-1609efd6",
+  "id": "milestone-1609efd6",
+  "quest_id": "002",
+  "created_at": "2026-04-17T14:29:11+00:00",
+  "updated_at": "2026-04-17T14:29:11+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "completed",
+  "branch": "run/shared_gating_pred_variance_repair_ego4d16f_smoke_r1",
+  "head_commit": "36cbf0d977051911b9c6358e14f9f34d440d6faf",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1",
+  "message": "Main experiment `shared_gating_pred_variance_repair_ego4d16f_smoke_r1` finished on branch `run/shared_gating_pred_variance_repair_ego4d16f_smoke_r1`.\n\nOutcome:\n- Metric: uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr=24, baseline=24, delta=0\n- Verdict: Mixed\n- Breakthrough level: none\n- Recommended next route: Revise Idea\n\nConclusion:\nThe minimal predicted-side variance-floor repair is now validated as an effective live regularizer in the real bounded main-run path, but its first measured trade-off is mixed rather than clearly positive. It is good enough to support route judgment, but not good enough to claim that this repair family already improves the bridge end to end.\n\nFiles:\n- Run log: `.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/RUN.md`\n- Result: `.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/RESULT.json`",
+  "summary": "Main experiment `shared_gating_pred_variance_repair_ego4d16f_smoke_r1` finished on branch `run/shared_gating_pred_variance_repair_ego4d16f_smoke_r1`. Outcome: - Metric: uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr=24, basel…",
+  "summary_preview": "Main experiment `shared_gating_pred_variance_repair_ego4d16f_smoke_r1` finished on branch `run/shared_gating_pred_variance_repair_ego4d16f_smoke_r1`. Outcome: - Metric: uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr=24, basel…",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [
+    {
+      "kind": "main_experiment_recorded",
+      "run_id": "shared_gating_pred_variance_repair_ego4d16f_smoke_r1",
+      "branch": "run/shared_gating_pred_variance_repair_ego4d16f_smoke_r1",
+      "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1",
+      "run_md_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/RUN.md",
+      "result_json_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/RESULT.json",
+      "verdict": "mixed",
+      "primary_metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+      "delta_vs_baseline": 0.0,
+      "breakthrough": false,
+      "breakthrough_level": "none",
+      "need_research_paper": true,
+      "recommended_next_route": "revise_idea",
+      "evaluation_summary": null,
+      "connector_metric_charts": [
+        {
+          "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+          "label": "UVG BD Rate Reduction PCT VS VTM RA Psnr",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/uvg-bd-rate-reduction-pct-vs-vtm-ra-psnr-timeline.png",
+          "baseline_value": 24.0,
+          "latest_value": 24.0,
+          "point_count": 3,
+          "direction": "maximize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "local_resnet18_teacher_smoke_loss_value",
+          "label": "Local Resnet18 Teacher Smoke Loss Value",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/local-resnet18-teacher-smoke-loss-value-timeline.png",
+          "baseline_value": 0.3541456162929535,
+          "latest_value": 0.3541456162929535,
+          "point_count": 3,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "tiny_local_teacher_pilot_bpp_avg",
+          "label": "Tiny Local Teacher Pilot BPP AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/tiny-local-teacher-pilot-bpp-avg-timeline.png",
+          "baseline_value": 88.2109,
+          "latest_value": 88.2109,
+          "point_count": 3,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "tiny_local_teacher_pilot_psnr_avg",
+          "label": "Tiny Local Teacher Pilot Psnr AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/tiny-local-teacher-pilot-psnr-avg-timeline.png",
+          "baseline_value": 10.8996,
+          "latest_value": 10.8996,
+          "point_count": 3,
+          "direction": "maximize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
+          "label": "Tiny Local Teacher Pilot Teacher MSE AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/tiny-local-teacher-pilot-teacher-mse-avg-timeline.png",
+          "baseline_value": 0.5145,
+          "latest_value": 0.5145,
+          "point_count": 3,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "beauty_teacher_smoke_bpp_avg",
+          "label": "Beauty Teacher Smoke BPP AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/beauty-teacher-smoke-bpp-avg-timeline.png",
+          "baseline_value": 2.091,
+          "latest_value": 2.091,
+          "point_count": 3,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "beauty_teacher_smoke_psnr_avg",
+          "label": "Beauty Teacher Smoke Psnr AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/beauty-teacher-smoke-psnr-avg-timeline.png",
+          "baseline_value": 14.9552,
+          "latest_value": 14.9552,
+          "point_count": 3,
+          "direction": "maximize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "beauty_teacher_smoke_teacher_mse_avg",
+          "label": "Beauty Teacher Smoke Teacher MSE AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/beauty-teacher-smoke-teacher-mse-avg-timeline.png",
+          "baseline_value": 0.0363,
+          "latest_value": 0.0363,
+          "point_count": 3,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "beauty_no_teacher_partial_teacher_mse",
+          "label": "Beauty NO Teacher Partial Teacher MSE",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/beauty-no-teacher-partial-teacher-mse-timeline.png",
+          "baseline_value": 0.0472,
+          "latest_value": 0.0472,
+          "point_count": 3,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "bpp_avg",
+          "label": "BPP AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/bpp-avg-timeline.png",
+          "baseline_value": null,
+          "latest_value": 23.9277,
+          "point_count": 2,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "psnr_avg",
+          "label": "Psnr AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/psnr-avg-timeline.png",
+          "baseline_value": null,
+          "latest_value": 10.4509,
+          "point_count": 2,
+          "direction": "maximize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "teacher_mse_avg",
+          "label": "Teacher MSE AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/teacher-mse-avg-timeline.png",
+          "baseline_value": null,
+          "latest_value": 0.4821,
+          "point_count": 2,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "bounded_bridge_bpp_avg",
+          "label": "Bounded Bridge BPP AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/bounded-bridge-bpp-avg-timeline.png",
+          "baseline_value": null,
+          "latest_value": 23.9277,
+          "point_count": 1,
+          "direction": "minimize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "bounded_bridge_psnr_avg",
+          "label": "Bounded Bridge Psnr AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/bounded-bridge-psnr-avg-timeline.png",
+          "baseline_value": null,
+          "latest_value": 10.4509,
+          "point_count": 1,
+          "direction": "maximize",
+          "style": "branded"
+        },
+        {
+          "metric_id": "bounded_bridge_teacher_mse_avg",
+          "label": "Bounded Bridge Teacher MSE AVG",
+          "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/bounded-bridge-teacher-mse-avg-timeline.png",
+          "baseline_value": null,
+          "latest_value": 0.4821,
+          "point_count": 1,
+          "direction": "minimize",
+          "style": "branded"
+        }
+      ]
+    }
+  ],
+  "interaction_id": "milestone-1609efd6",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "milestone",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Milestone recorded. Continue from the current anchor and keep the next checkpoint durable.",
+    "why_now": "Milestones should mark meaningful progress, not end the route prematurely.",
+    "complete_when": [
+      "The next substantive output is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.interact(kind='progress', ...)",
+        "purpose": "Send the next checkpoint update across active surfaces."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "milestone",
+    "source_artifact_id": "milestone-1609efd6",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}
