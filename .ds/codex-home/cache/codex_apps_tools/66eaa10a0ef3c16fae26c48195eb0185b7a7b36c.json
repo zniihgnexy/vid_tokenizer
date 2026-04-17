@@ -37,6 +37,10 @@
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
+        },
         "annotations": {
           "readOnlyHint": true,
           "destructiveHint": false,
@@ -81,6 +85,10 @@
           },
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -148,6 +156,10 @@
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
+        },
         "annotations": {
           "readOnlyHint": true,
           "destructiveHint": false,
@@ -206,6 +218,10 @@
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
+        },
         "annotations": {
           "readOnlyHint": true,
           "destructiveHint": false,
@@ -263,6 +279,10 @@
           ],
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -326,6 +346,10 @@
           ],
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -428,6 +452,10 @@
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
+        },
         "annotations": {
           "readOnlyHint": false,
           "destructiveHint": false,
@@ -483,6 +511,10 @@
           ],
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -540,6 +572,10 @@
           ],
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -734,6 +770,10 @@
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
+        },
         "annotations": {
           "readOnlyHint": false,
           "destructiveHint": false,
@@ -771,6 +811,10 @@
           "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {}
+        },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -861,6 +905,10 @@
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
+        },
         "annotations": {
           "readOnlyHint": false,
           "destructiveHint": false,
@@ -918,29 +966,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "add_comment_to_issue_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubCommentResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "id": {
-                  "title": "Id",
-                  "default": {},
-                  "type": "integer"
-                }
-              },
-              "required": [
-                "id"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1002,62 +1029,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "add_issue_assignees_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "WriteIssueResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "issue": {
-                  "title": "Issue",
-                  "default": {},
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "url": {
-                  "title": "Url",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "title": {
-                  "title": "Title",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "issue",
-                "url",
-                "title"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1119,62 +1092,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "add_issue_labels_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "WriteIssueResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "issue": {
-                  "title": "Issue",
-                  "default": {},
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "url": {
-                  "title": "Url",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "title": {
-                  "title": "Title",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "issue",
-                "url",
-                "title"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1233,120 +1152,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "add_reaction_to_issue_comment_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubReaction",
-              "description": "Reaction on an issue or pull request.",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "id": {
-                  "title": "Id",
-                  "default": {},
-                  "type": "integer"
-                },
-                "node_id": {
-                  "title": "Node Id",
-                  "default": {},
-                  "type": "string"
-                },
-                "user": {
-                  "title": "GithubUser",
-                  "default": {},
-                  "type": "object",
-                  "properties": {
-                    "login": {
-                      "title": "Login",
-                      "default": {},
-                      "type": "string"
-                    },
-                    "name": {
-                      "title": "Name",
-                      "type": "anyOf",
-                      "anyOf": [
-                        {
-                          "default": {},
-                          "type": "string"
-                        },
-                        {
-                          "default": {},
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "email": {
-                      "title": "Email",
-                      "type": "anyOf",
-                      "anyOf": [
-                        {
-                          "default": {},
-                          "type": "string"
-                        },
-                        {
-                          "default": {},
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "avatar_url": {
-                      "title": "Avatar Url",
-                      "type": "anyOf",
-                      "anyOf": [
-                        {
-                          "default": {},
-                          "type": "string"
-                        },
-                        {
-                          "default": {},
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "id": {
-                      "title": "Id",
-                      "type": "anyOf",
-                      "anyOf": [
-                        {
-                          "default": {},
-                          "type": "integer"
-                        },
-                        {
-                          "default": {},
-                          "type": "null"
-                        }
-                      ]
-                    }
-                  },
-                  "required": [
-                    "login"
-                  ]
-                },
-                "content": {
-                  "title": "Content",
-                  "default": {},
-                  "type": "string"
-                },
-                "created_at": {
-                  "title": "Created At",
-                  "default": {},
-                  "type": "string"
-                }
-              },
-              "required": [
-                "id",
-                "node_id",
-                "user",
-                "content",
-                "created_at"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1405,120 +1212,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "add_reaction_to_pr_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubReaction",
-              "description": "Reaction on an issue or pull request.",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "id": {
-                  "title": "Id",
-                  "default": {},
-                  "type": "integer"
-                },
-                "node_id": {
-                  "title": "Node Id",
-                  "default": {},
-                  "type": "string"
-                },
-                "user": {
-                  "title": "GithubUser",
-                  "default": {},
-                  "type": "object",
-                  "properties": {
-                    "login": {
-                      "title": "Login",
-                      "default": {},
-                      "type": "string"
-                    },
-                    "name": {
-                      "title": "Name",
-                      "type": "anyOf",
-                      "anyOf": [
-                        {
-                          "default": {},
-                          "type": "string"
-                        },
-                        {
-                          "default": {},
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "email": {
-                      "title": "Email",
-                      "type": "anyOf",
-                      "anyOf": [
-                        {
-                          "default": {},
-                          "type": "string"
-                        },
-                        {
-                          "default": {},
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "avatar_url": {
-                      "title": "Avatar Url",
-                      "type": "anyOf",
-                      "anyOf": [
-                        {
-                          "default": {},
-                          "type": "string"
-                        },
-                        {
-                          "default": {},
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "id": {
-                      "title": "Id",
-                      "type": "anyOf",
-                      "anyOf": [
-                        {
-                          "default": {},
-                          "type": "integer"
-                        },
-                        {
-                          "default": {},
-                          "type": "null"
-                        }
-                      ]
-                    }
-                  },
-                  "required": [
-                    "login"
-                  ]
-                },
-                "content": {
-                  "title": "Content",
-                  "default": {},
-                  "type": "string"
-                },
-                "created_at": {
-                  "title": "Created At",
-                  "default": {},
-                  "type": "string"
-                }
-              },
-              "required": [
-                "id",
-                "node_id",
-                "user",
-                "content",
-                "created_at"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1577,120 +1272,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "add_reaction_to_pr_review_comment_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubReaction",
-              "description": "Reaction on an issue or pull request.",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "id": {
-                  "title": "Id",
-                  "default": {},
-                  "type": "integer"
-                },
-                "node_id": {
-                  "title": "Node Id",
-                  "default": {},
-                  "type": "string"
-                },
-                "user": {
-                  "title": "GithubUser",
-                  "default": {},
-                  "type": "object",
-                  "properties": {
-                    "login": {
-                      "title": "Login",
-                      "default": {},
-                      "type": "string"
-                    },
-                    "name": {
-                      "title": "Name",
-                      "type": "anyOf",
-                      "anyOf": [
-                        {
-                          "default": {},
-                          "type": "string"
-                        },
-                        {
-                          "default": {},
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "email": {
-                      "title": "Email",
-                      "type": "anyOf",
-                      "anyOf": [
-                        {
-                          "default": {},
-                          "type": "string"
-                        },
-                        {
-                          "default": {},
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "avatar_url": {
-                      "title": "Avatar Url",
-                      "type": "anyOf",
-                      "anyOf": [
-                        {
-                          "default": {},
-                          "type": "string"
-                        },
-                        {
-                          "default": {},
-                          "type": "null"
-                        }
-                      ]
-                    },
-                    "id": {
-                      "title": "Id",
-                      "type": "anyOf",
-                      "anyOf": [
-                        {
-                          "default": {},
-                          "type": "integer"
-                        },
-                        {
-                          "default": {},
-                          "type": "null"
-                        }
-                      ]
-                    }
-                  },
-                  "required": [
-                    "login"
-                  ]
-                },
-                "content": {
-                  "title": "Content",
-                  "default": {},
-                  "type": "string"
-                },
-                "created_at": {
-                  "title": "Created At",
-                  "default": {},
-                  "type": "string"
-                }
-              },
-              "required": [
-                "id",
-                "node_id",
-                "user",
-                "content",
-                "created_at"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1723,96 +1306,6 @@
         "title": "add_review_to_pr",
         "description": "Add a review to a GitHub pull request. review is required for REQUEST_CHANGES and COMMENT events.",
         "inputSchema": {
-          "$defs": {
-            "GithubFileComment": {
-              "properties": {
-                "path": {
-                  "title": "Path",
-                  "type": "string"
-                },
-                "position": {
-                  "anyOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ],
-                  "default": null,
-                  "description": "The position in the diff where you want to add a review comment. Note this value is not the same as the line number in the file. The position value equals the number of lines down from the first \"@@\" hunk header in the file you want to add a comment. The line just below the \"@@\" line is position 1, the next line is position 2, and so on. The position in the diff continues to increase through lines of whitespace and additional hunks until the beginning of a new file.",
-                  "title": "Position"
-                },
-                "body": {
-                  "title": "Body",
-                  "type": "string"
-                },
-                "line": {
-                  "anyOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ],
-                  "default": null,
-                  "title": "Line"
-                },
-                "side": {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ],
-                  "default": null,
-                  "title": "Side"
-                },
-                "start_line": {
-                  "anyOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ],
-                  "default": null,
-                  "title": "Start Line"
-                },
-                "start_side": {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ],
-                  "default": null,
-                  "title": "Start Side"
-                }
-              },
-              "required": [
-                "path",
-                "body"
-              ],
-              "title": "GithubFileComment",
-              "type": "object"
-            },
-            "GithubReviewAction": {
-              "enum": [
-                "COMMENT",
-                "APPROVE",
-                "REQUEST_CHANGES"
-              ],
-              "title": "GithubReviewAction",
-              "type": "string"
-            }
-          },
           "properties": {
             "repo_full_name": {
               "description": "Repository in `owner/name` form, such as `openai/openai`.",
@@ -1839,7 +1332,13 @@
             "action": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubReviewAction"
+                  "enum": [
+                    "COMMENT",
+                    "APPROVE",
+                    "REQUEST_CHANGES"
+                  ],
+                  "title": "GithubReviewAction",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -1850,7 +1349,89 @@
             "file_comments": {
               "description": "Optional inline file comments to include with the review.",
               "items": {
-                "$ref": "#/$defs/GithubFileComment"
+                "properties": {
+                  "path": {
+                    "description": "Repository path of the file to comment on.",
+                    "title": "Path",
+                    "type": "string"
+                  },
+                  "position": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The position in the diff where you want to add a review comment. Note this value is not the same as the line number in the file. The position value equals the number of lines down from the first \"@@\" hunk header in the file you want to add a comment. The line just below the \"@@\" line is position 1, the next line is position 2, and so on. The position in the diff continues to increase through lines of whitespace and additional hunks until the beginning of a new file.",
+                    "title": "Position"
+                  },
+                  "body": {
+                    "description": "Body text for the review comment.",
+                    "title": "Body",
+                    "type": "string"
+                  },
+                  "line": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "File line number for line-based review comments.",
+                    "title": "Line"
+                  },
+                  "side": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Diff side for `line`, such as `LEFT` or `RIGHT`.",
+                    "title": "Side"
+                  },
+                  "start_line": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Starting line number for a multi-line review comment range.",
+                    "title": "Start Line"
+                  },
+                  "start_side": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Diff side for `start_line`, such as `LEFT` or `RIGHT`.",
+                    "title": "Start Side"
+                  }
+                },
+                "required": [
+                  "path",
+                  "body"
+                ],
+                "title": "GithubFileComment",
+                "type": "object"
               },
               "title": "File Comments",
               "type": "array"
@@ -1880,47 +1461,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "add_review_to_pr_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubReviewResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "success": {
-                  "title": "Success",
-                  "default": {},
-                  "type": "boolean"
-                },
-                "review_id": {
-                  "title": "Review Id",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "integer"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "success"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1966,29 +1508,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "check_repo_initialized_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "CheckRepoInitializedResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "initialized": {
-                  "title": "Initialized",
-                  "default": {},
-                  "type": "boolean"
-                }
-              },
-              "required": [
-                "initialized"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -2043,6 +1564,10 @@
           "title": "compare_commits_input",
           "type": "object"
         },
+        "outputSchema": {
+          "default": {},
+          "type": "object"
+        },
         "annotations": {
           "readOnlyHint": true,
           "destructiveHint": false,
@@ -2094,20 +1619,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "convert_pull_request_to_draft_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2170,20 +1683,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "create_blob_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2242,20 +1743,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "create_branch_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2320,20 +1809,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "create_commit_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2411,20 +1888,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "create_file_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2535,62 +2000,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "create_issue_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "WriteIssueResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "issue": {
-                  "title": "Issue",
-                  "default": {},
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "url": {
-                  "title": "Url",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "title": {
-                  "title": "Title",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "issue",
-                "url",
-                "title"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2667,20 +2078,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "create_pull_request_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2750,20 +2149,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "create_tree_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2841,20 +2228,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "delete_file_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2907,30 +2282,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "dismiss_pull_request_review_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "DismissPullRequestReviewResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "review": {
-                  "title": "Review",
-                  "default": {},
-                  "type": "object",
-                  "additionalProperties": true
-                }
-              },
-              "required": [
-                "review"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2977,20 +2330,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "download_user_content_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3043,20 +2384,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "enable_auto_merge_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -3103,71 +2432,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "content": {
-                  "title": "Content",
-                  "default": {},
-                  "type": "string"
-                },
-                "title": {
-                  "title": "Title",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "modified_date": {
-                  "title": "Modified Date",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "url": {
-                  "title": "Url",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "content"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3220,20 +2486,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_blob_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3286,72 +2540,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_commit_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchCommitResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "commit": {
-                  "title": "Commit",
-                  "default": {},
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "url": {
-                  "title": "Url",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "title": {
-                  "title": "Title",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "diff": {
-                  "title": "Diff",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "commit"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3404,34 +2594,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_commit_workflow_runs_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchCommitWorkflowRunsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "workflow_runs": {
-                  "title": "Workflow Runs",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "workflow_runs"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3500,20 +2664,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_file_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3564,62 +2716,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_issue_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchIssueResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "issue": {
-                  "title": "Issue",
-                  "default": {},
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "url": {
-                  "title": "Url",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "title": {
-                  "title": "Title",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "issue",
-                "url",
-                "title"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3672,62 +2770,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_issue_comments_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchPrCommentsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "comments": {
-                  "title": "Comments",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                },
-                "url": {
-                  "title": "Url",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "title": {
-                  "title": "Title",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "comments"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3780,91 +2824,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_pr_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchPullRequestResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "pull_request": {
-                  "title": "Pull Request",
-                  "default": {},
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "url": {
-                  "title": "Url",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "title": {
-                  "title": "Title",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "diff": {
-                  "title": "Diff",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "comments": {
-                  "title": "Comments",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "array",
-                      "items": {
-                        "default": {},
-                        "type": "object",
-                        "additionalProperties": true
-                      }
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "pull_request"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3917,62 +2878,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_pr_comments_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchPrCommentsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "comments": {
-                  "title": "Comments",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                },
-                "url": {
-                  "title": "Url",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "title": {
-                  "title": "Title",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "comments"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4031,69 +2938,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_pr_file_patch_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchPrFilePatchSingleResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "patch": {
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "title": "GithubFilePatch",
-                      "default": {},
-                      "type": "object",
-                      "properties": {
-                        "filename": {
-                          "title": "Filename",
-                          "type": "anyOf",
-                          "anyOf": [
-                            {
-                              "default": {},
-                              "type": "string"
-                            },
-                            {
-                              "default": {},
-                              "type": "null"
-                            }
-                          ]
-                        },
-                        "patch": {
-                          "title": "Patch",
-                          "type": "anyOf",
-                          "anyOf": [
-                            {
-                              "default": {},
-                              "type": "string"
-                            },
-                            {
-                              "default": {},
-                              "type": "null"
-                            }
-                          ]
-                        }
-                      }
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "patch"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4146,92 +2992,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_pr_patch_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchPrPatchResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "patches": {
-                  "title": "Patches",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "title": "GithubFilePatch",
-                    "default": {},
-                    "type": "object",
-                    "properties": {
-                      "filename": {
-                        "title": "Filename",
-                        "type": "anyOf",
-                        "anyOf": [
-                          {
-                            "default": {},
-                            "type": "string"
-                          },
-                          {
-                            "default": {},
-                            "type": "null"
-                          }
-                        ]
-                      },
-                      "patch": {
-                        "title": "Patch",
-                        "type": "anyOf",
-                        "anyOf": [
-                          {
-                            "default": {},
-                            "type": "string"
-                          },
-                          {
-                            "default": {},
-                            "type": "null"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                },
-                "url": {
-                  "title": "Url",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "title": {
-                  "title": "Title",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "patches"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4284,29 +3046,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_workflow_job_logs_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchWorkflowJobLogsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "content": {
-                  "title": "Content",
-                  "default": {},
-                  "type": "string"
-                }
-              },
-              "required": [
-                "content"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4359,34 +3100,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_workflow_job_steps_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchWorkflowJobStepsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "steps": {
-                  "title": "Steps",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "steps"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4439,34 +3154,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "fetch_workflow_run_jobs_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchWorkflowRunJobsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "jobs": {
-                  "title": "Jobs",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "jobs"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4519,34 +3208,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "get_commit_combined_status_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "FetchCommitCombinedStatusResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "statuses": {
-                  "title": "Statuses",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "statuses"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4625,135 +3288,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "get_issue_comment_reactions_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubReactionsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "reactions": {
-                  "title": "Reactions",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "title": "GithubReaction",
-                    "description": "Reaction on an issue or pull request.",
-                    "default": {},
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "title": "Id",
-                        "default": {},
-                        "type": "integer"
-                      },
-                      "node_id": {
-                        "title": "Node Id",
-                        "default": {},
-                        "type": "string"
-                      },
-                      "user": {
-                        "title": "GithubUser",
-                        "default": {},
-                        "type": "object",
-                        "properties": {
-                          "login": {
-                            "title": "Login",
-                            "default": {},
-                            "type": "string"
-                          },
-                          "name": {
-                            "title": "Name",
-                            "type": "anyOf",
-                            "anyOf": [
-                              {
-                                "default": {},
-                                "type": "string"
-                              },
-                              {
-                                "default": {},
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "email": {
-                            "title": "Email",
-                            "type": "anyOf",
-                            "anyOf": [
-                              {
-                                "default": {},
-                                "type": "string"
-                              },
-                              {
-                                "default": {},
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "avatar_url": {
-                            "title": "Avatar Url",
-                            "type": "anyOf",
-                            "anyOf": [
-                              {
-                                "default": {},
-                                "type": "string"
-                              },
-                              {
-                                "default": {},
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "id": {
-                            "title": "Id",
-                            "type": "anyOf",
-                            "anyOf": [
-                              {
-                                "default": {},
-                                "type": "integer"
-                              },
-                              {
-                                "default": {},
-                                "type": "null"
-                              }
-                            ]
-                          }
-                        },
-                        "required": [
-                          "login"
-                        ]
-                      },
-                      "content": {
-                        "title": "Content",
-                        "default": {},
-                        "type": "string"
-                      },
-                      "created_at": {
-                        "title": "Created At",
-                        "default": {},
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "node_id",
-                      "user",
-                      "content",
-                      "created_at"
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "reactions"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4816,29 +3352,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "get_pr_diff_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GetPrDiffResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "diff": {
-                  "title": "Diff",
-                  "default": {},
-                  "type": "string"
-                }
-              },
-              "required": [
-                "diff"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4891,20 +3406,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "get_pr_info_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4983,135 +3486,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "get_pr_reactions_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubReactionsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "reactions": {
-                  "title": "Reactions",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "title": "GithubReaction",
-                    "description": "Reaction on an issue or pull request.",
-                    "default": {},
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "title": "Id",
-                        "default": {},
-                        "type": "integer"
-                      },
-                      "node_id": {
-                        "title": "Node Id",
-                        "default": {},
-                        "type": "string"
-                      },
-                      "user": {
-                        "title": "GithubUser",
-                        "default": {},
-                        "type": "object",
-                        "properties": {
-                          "login": {
-                            "title": "Login",
-                            "default": {},
-                            "type": "string"
-                          },
-                          "name": {
-                            "title": "Name",
-                            "type": "anyOf",
-                            "anyOf": [
-                              {
-                                "default": {},
-                                "type": "string"
-                              },
-                              {
-                                "default": {},
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "email": {
-                            "title": "Email",
-                            "type": "anyOf",
-                            "anyOf": [
-                              {
-                                "default": {},
-                                "type": "string"
-                              },
-                              {
-                                "default": {},
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "avatar_url": {
-                            "title": "Avatar Url",
-                            "type": "anyOf",
-                            "anyOf": [
-                              {
-                                "default": {},
-                                "type": "string"
-                              },
-                              {
-                                "default": {},
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "id": {
-                            "title": "Id",
-                            "type": "anyOf",
-                            "anyOf": [
-                              {
-                                "default": {},
-                                "type": "integer"
-                              },
-                              {
-                                "default": {},
-                                "type": "null"
-                              }
-                            ]
-                          }
-                        },
-                        "required": [
-                          "login"
-                        ]
-                      },
-                      "content": {
-                        "title": "Content",
-                        "default": {},
-                        "type": "string"
-                      },
-                      "created_at": {
-                        "title": "Created At",
-                        "default": {},
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "node_id",
-                      "user",
-                      "content",
-                      "created_at"
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "reactions"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5190,135 +3566,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "get_pr_review_comment_reactions_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubReactionsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "reactions": {
-                  "title": "Reactions",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "title": "GithubReaction",
-                    "description": "Reaction on an issue or pull request.",
-                    "default": {},
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "title": "Id",
-                        "default": {},
-                        "type": "integer"
-                      },
-                      "node_id": {
-                        "title": "Node Id",
-                        "default": {},
-                        "type": "string"
-                      },
-                      "user": {
-                        "title": "GithubUser",
-                        "default": {},
-                        "type": "object",
-                        "properties": {
-                          "login": {
-                            "title": "Login",
-                            "default": {},
-                            "type": "string"
-                          },
-                          "name": {
-                            "title": "Name",
-                            "type": "anyOf",
-                            "anyOf": [
-                              {
-                                "default": {},
-                                "type": "string"
-                              },
-                              {
-                                "default": {},
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "email": {
-                            "title": "Email",
-                            "type": "anyOf",
-                            "anyOf": [
-                              {
-                                "default": {},
-                                "type": "string"
-                              },
-                              {
-                                "default": {},
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "avatar_url": {
-                            "title": "Avatar Url",
-                            "type": "anyOf",
-                            "anyOf": [
-                              {
-                                "default": {},
-                                "type": "string"
-                              },
-                              {
-                                "default": {},
-                                "type": "null"
-                              }
-                            ]
-                          },
-                          "id": {
-                            "title": "Id",
-                            "type": "anyOf",
-                            "anyOf": [
-                              {
-                                "default": {},
-                                "type": "integer"
-                              },
-                              {
-                                "default": {},
-                                "type": "null"
-                              }
-                            ]
-                          }
-                        },
-                        "required": [
-                          "login"
-                        ]
-                      },
-                      "content": {
-                        "title": "Content",
-                        "default": {},
-                        "type": "string"
-                      },
-                      "created_at": {
-                        "title": "Created At",
-                        "default": {},
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "node_id",
-                      "user",
-                      "content",
-                      "created_at"
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "reactions"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5356,92 +3605,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "get_profile_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Profile",
-              "description": "Many connectors (especially OAuth-based) act on behalf of a user.\nThis class represents the user's profile, which is typically retrieved from\nthe connector's API during the OAuth flow.\n\nImplementation details for different connectors vary, so we can't guarantee\nthat all fields will be present.",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "id": {
-                  "title": "Id",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "name": {
-                  "title": "Name",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "email": {
-                  "title": "Email",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "nickname": {
-                  "title": "Nickname",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "picture": {
-                  "title": "Picture",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5487,20 +3652,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "get_repo_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5553,39 +3706,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "get_repo_collaborator_permission_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "RepoCollaboratorPermissionResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "permission": {
-                  "title": "Permission",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "permission"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5623,20 +3745,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "get_user_login_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5707,34 +3817,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "get_users_recent_prs_in_repo_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "ListPullRequestsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "pull_requests": {
-                  "title": "Pull Requests",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "pull_requests"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5793,20 +3877,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "label_pr_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -5844,34 +3916,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "list_installations_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "ListInstallationsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "installations": {
-                  "title": "Installations",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "installations"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5909,34 +3955,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "list_installed_accounts_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "ListInstalledAccountsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "accounts": {
-                  "title": "Accounts",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "accounts"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5989,33 +4009,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "list_pr_changed_filenames_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "ListPrChangedFilenamesResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "filenames": {
-                  "title": "Filenames",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "string"
-                  }
-                }
-              },
-              "required": [
-                "filenames"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -6068,34 +4063,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "list_pull_request_review_threads_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "ListPullRequestReviewThreadsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "review_threads": {
-                  "title": "Review Threads",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "review_threads"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -6148,34 +4117,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "list_pull_request_reviews_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "ListPullRequestReviewsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "reviews": {
-                  "title": "Reviews",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "reviews"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -6219,34 +4162,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "list_recent_issues_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "ListIssuesResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "issues": {
-                  "title": "Issues",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "issues"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -6303,34 +4220,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "list_repositories_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "ListRepositoriesResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "repositories": {
-                  "title": "Repositories",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "repositories"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -6389,34 +4280,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "list_repositories_by_affiliation_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "ListRepositoriesResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "repositories": {
-                  "title": "Repositories",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "repositories"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -6475,34 +4340,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "list_repositories_by_installation_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "ListRepositoriesResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "repositories": {
-                  "title": "Repositories",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "repositories"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -6540,20 +4379,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "list_user_org_memberships_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -6591,20 +4418,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "list_user_orgs_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -6676,29 +4491,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "lock_issue_conversation_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubSuccessResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "success": {
-                  "title": "Success",
-                  "default": {},
-                  "type": "boolean"
-                }
-              },
-              "required": [
-                "success"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -6751,20 +4545,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "mark_pull_request_ready_for_review_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -6874,57 +4656,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "merge_pull_request_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "MergePullRequestResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "sha": {
-                  "title": "Sha",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "merged": {
-                  "title": "Merged",
-                  "default": {},
-                  "type": "boolean"
-                },
-                "message": {
-                  "title": "Message",
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "merged"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -6986,62 +4719,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "remove_issue_assignees_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "WriteIssueResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "issue": {
-                  "title": "Issue",
-                  "default": {},
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "url": {
-                  "title": "Url",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "title": {
-                  "title": "Title",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "issue",
-                "url",
-                "title"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -7100,62 +4779,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "remove_issue_label_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "WriteIssueResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "issue": {
-                  "title": "Issue",
-                  "default": {},
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "url": {
-                  "title": "Url",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "title": {
-                  "title": "Title",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "issue",
-                "url",
-                "title"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -7240,20 +4865,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "remove_pull_request_reviewers_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -7312,29 +4925,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "remove_reaction_from_issue_comment_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubReactionActionResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "success": {
-                  "title": "Success",
-                  "default": {},
-                  "type": "boolean"
-                }
-              },
-              "required": [
-                "success"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -7393,29 +4985,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "remove_reaction_from_pr_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubReactionActionResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "success": {
-                  "title": "Success",
-                  "default": {},
-                  "type": "boolean"
-                }
-              },
-              "required": [
-                "success"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -7474,29 +5045,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "remove_reaction_from_pr_review_comment_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubReactionActionResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "success": {
-                  "title": "Success",
-                  "default": {},
-                  "type": "boolean"
-                }
-              },
-              "required": [
-                "success"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -7561,29 +5111,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "reply_to_review_comment_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubCommentResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "id": {
-                  "title": "Id",
-                  "default": {},
-                  "type": "integer"
-                }
-              },
-              "required": [
-                "id"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -7668,20 +5197,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "request_pull_request_reviewers_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -7728,30 +5245,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "resolve_review_thread_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubReviewThreadResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "review_thread": {
-                  "title": "Review Thread",
-                  "default": {},
-                  "type": "object",
-                  "additionalProperties": true
-                }
-              },
-              "required": [
-                "review_thread"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -7836,34 +5331,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "search_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "SearchResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "results": {
-                  "title": "Results",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "results"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -7941,20 +5410,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "search_branches_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -7987,25 +5444,6 @@
         "title": "search_commits",
         "description": "Search GitHub commits across one or more repositories.",
         "inputSchema": {
-          "$defs": {
-            "GithubCommitSort": {
-              "enum": [
-                "best-match",
-                "author-date",
-                "committer-date"
-              ],
-              "title": "GithubCommitSort",
-              "type": "string"
-            },
-            "GithubSearchResultOrder": {
-              "enum": [
-                "desc",
-                "asc"
-              ],
-              "title": "GithubSearchResultOrder",
-              "type": "string"
-            }
-          },
           "properties": {
             "query": {
               "description": "Search query string.",
@@ -8053,7 +5491,13 @@
             "sort": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubCommitSort"
+                  "enum": [
+                    "best-match",
+                    "author-date",
+                    "committer-date"
+                  ],
+                  "title": "GithubCommitSort",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -8065,7 +5509,12 @@
             "order": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubSearchResultOrder"
+                  "enum": [
+                    "desc",
+                    "asc"
+                  ],
+                  "title": "GithubSearchResultOrder",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -8082,34 +5531,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "search_commits_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "SearchCommitsResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "commits": {
-                  "title": "Commits",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "commits"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -8187,20 +5610,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "search_installed_repositories_streaming_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -8281,34 +5692,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "search_installed_repositories_v2_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "SearchRepositoriesResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "repositories": {
-                  "title": "Repositories",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "repositories"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -8341,28 +5726,6 @@
         "title": "search_issues",
         "description": "Search GitHub issues.",
         "inputSchema": {
-          "$defs": {
-            "GithubIssueSort": {
-              "enum": [
-                "best-match",
-                "created",
-                "updated",
-                "comments",
-                "reactions",
-                "interactions"
-              ],
-              "title": "GithubIssueSort",
-              "type": "string"
-            },
-            "GithubSearchResultOrder": {
-              "enum": [
-                "desc",
-                "asc"
-              ],
-              "title": "GithubSearchResultOrder",
-              "type": "string"
-            }
-          },
           "properties": {
             "query": {
               "description": "Search query string.",
@@ -8393,7 +5756,16 @@
             "sort": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubIssueSort"
+                  "enum": [
+                    "best-match",
+                    "created",
+                    "updated",
+                    "comments",
+                    "reactions",
+                    "interactions"
+                  ],
+                  "title": "GithubIssueSort",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -8405,7 +5777,12 @@
             "order": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubSearchResultOrder"
+                  "enum": [
+                    "desc",
+                    "asc"
+                  ],
+                  "title": "GithubSearchResultOrder",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -8423,34 +5800,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "search_issues_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "SearchIssuesResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "issues": {
-                  "title": "Issues",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "issues"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -8483,28 +5834,6 @@
         "title": "search_prs",
         "description": "Search GitHub pull requests.",
         "inputSchema": {
-          "$defs": {
-            "GithubIssueSort": {
-              "enum": [
-                "best-match",
-                "created",
-                "updated",
-                "comments",
-                "reactions",
-                "interactions"
-              ],
-              "title": "GithubIssueSort",
-              "type": "string"
-            },
-            "GithubSearchResultOrder": {
-              "enum": [
-                "desc",
-                "asc"
-              ],
-              "title": "GithubSearchResultOrder",
-              "type": "string"
-            }
-          },
           "properties": {
             "query": {
               "description": "Search query string.",
@@ -8552,7 +5881,16 @@
             "sort": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubIssueSort"
+                  "enum": [
+                    "best-match",
+                    "created",
+                    "updated",
+                    "comments",
+                    "reactions",
+                    "interactions"
+                  ],
+                  "title": "GithubIssueSort",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -8564,7 +5902,12 @@
             "order": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubSearchResultOrder"
+                  "enum": [
+                    "desc",
+                    "asc"
+                  ],
+                  "title": "GithubSearchResultOrder",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -8581,34 +5924,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "search_prs_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "SearchIssuesResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "issues": {
-                  "title": "Issues",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "issues"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -8700,34 +6017,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "search_repositories_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "SearchRepositoriesResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "repositories": {
-                  "title": "Repositories",
-                  "default": {},
-                  "type": "array",
-                  "items": {
-                    "default": {},
-                    "type": "object",
-                    "additionalProperties": true
-                  }
-                }
-              },
-              "required": [
-                "repositories"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -8780,29 +6071,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "unlock_issue_conversation_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubSuccessResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "success": {
-                  "title": "Success",
-                  "default": {},
-                  "type": "boolean"
-                }
-              },
-              "required": [
-                "success"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -8849,30 +6119,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "unresolve_review_thread_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubReviewThreadResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "review_thread": {
-                  "title": "Review Thread",
-                  "default": {},
-                  "type": "object",
-                  "additionalProperties": true
-                }
-              },
-              "required": [
-                "review_thread"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -8956,20 +6204,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "update_file_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -9129,62 +6365,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "update_issue_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "WriteIssueResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "issue": {
-                  "title": "Issue",
-                  "default": {},
-                  "type": "object",
-                  "additionalProperties": true
-                },
-                "url": {
-                  "title": "Url",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                },
-                "title": {
-                  "title": "Title",
-                  "default": {},
-                  "type": "anyOf",
-                  "anyOf": [
-                    {
-                      "default": {},
-                      "type": "string"
-                    },
-                    {
-                      "default": {},
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "issue",
-                "url",
-                "title"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -9243,29 +6425,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "update_issue_comment_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubCommentResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "id": {
-                  "title": "Id",
-                  "default": {},
-                  "type": "integer"
-                }
-              },
-              "required": [
-                "id"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -9387,20 +6548,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "update_pull_request_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -9465,20 +6614,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "update_ref_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "Result",
-              "default": {},
-              "type": "object",
-              "additionalProperties": true
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -9537,29 +6674,8 @@
           "type": "object"
         },
         "outputSchema": {
-          "title": "update_review_comment_output",
           "default": {},
-          "type": "object",
-          "properties": {
-            "result": {
-              "title": "GithubCommentResponse",
-              "default": {},
-              "type": "object",
-              "properties": {
-                "id": {
-                  "title": "Id",
-                  "default": {},
-                  "type": "integer"
-                }
-              },
-              "required": [
-                "id"
-              ]
-            }
-          },
-          "required": [
-            "result"
-          ]
+          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
