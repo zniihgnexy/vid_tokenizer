@@ -966,8 +966,30 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "add_comment_to_issue_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubCommentResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "id": {
+                  "title": "Id",
+                  "description": "Identifier of the created GitHub comment.",
+                  "default": {},
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1029,8 +1051,61 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "add_issue_assignees_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "WriteIssueResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "issue": {
+                  "title": "Issue",
+                  "description": "GitHub issue payload after the write operation.",
+                  "default": {},
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical URL for the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Title of the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "issue"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1092,8 +1167,61 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "add_issue_labels_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "WriteIssueResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "issue": {
+                  "title": "Issue",
+                  "description": "GitHub issue payload after the write operation.",
+                  "default": {},
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical URL for the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Title of the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "issue"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1152,8 +1280,120 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "add_reaction_to_issue_comment_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubReaction",
+              "description": "Reaction on an issue or pull request.",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "id": {
+                  "title": "Id",
+                  "default": {},
+                  "type": "integer"
+                },
+                "node_id": {
+                  "title": "Node Id",
+                  "default": {},
+                  "type": "string"
+                },
+                "user": {
+                  "title": "GithubUser",
+                  "default": {},
+                  "type": "object",
+                  "properties": {
+                    "login": {
+                      "title": "Login",
+                      "default": {},
+                      "type": "string"
+                    },
+                    "name": {
+                      "title": "Name",
+                      "type": "anyOf",
+                      "anyOf": [
+                        {
+                          "default": {},
+                          "type": "string"
+                        },
+                        {
+                          "default": {},
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "email": {
+                      "title": "Email",
+                      "type": "anyOf",
+                      "anyOf": [
+                        {
+                          "default": {},
+                          "type": "string"
+                        },
+                        {
+                          "default": {},
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "avatar_url": {
+                      "title": "Avatar Url",
+                      "type": "anyOf",
+                      "anyOf": [
+                        {
+                          "default": {},
+                          "type": "string"
+                        },
+                        {
+                          "default": {},
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "id": {
+                      "title": "Id",
+                      "type": "anyOf",
+                      "anyOf": [
+                        {
+                          "default": {},
+                          "type": "integer"
+                        },
+                        {
+                          "default": {},
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "login"
+                  ]
+                },
+                "content": {
+                  "title": "Content",
+                  "default": {},
+                  "type": "string"
+                },
+                "created_at": {
+                  "title": "Created At",
+                  "default": {},
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "node_id",
+                "user",
+                "content",
+                "created_at"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1212,8 +1452,120 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "add_reaction_to_pr_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubReaction",
+              "description": "Reaction on an issue or pull request.",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "id": {
+                  "title": "Id",
+                  "default": {},
+                  "type": "integer"
+                },
+                "node_id": {
+                  "title": "Node Id",
+                  "default": {},
+                  "type": "string"
+                },
+                "user": {
+                  "title": "GithubUser",
+                  "default": {},
+                  "type": "object",
+                  "properties": {
+                    "login": {
+                      "title": "Login",
+                      "default": {},
+                      "type": "string"
+                    },
+                    "name": {
+                      "title": "Name",
+                      "type": "anyOf",
+                      "anyOf": [
+                        {
+                          "default": {},
+                          "type": "string"
+                        },
+                        {
+                          "default": {},
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "email": {
+                      "title": "Email",
+                      "type": "anyOf",
+                      "anyOf": [
+                        {
+                          "default": {},
+                          "type": "string"
+                        },
+                        {
+                          "default": {},
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "avatar_url": {
+                      "title": "Avatar Url",
+                      "type": "anyOf",
+                      "anyOf": [
+                        {
+                          "default": {},
+                          "type": "string"
+                        },
+                        {
+                          "default": {},
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "id": {
+                      "title": "Id",
+                      "type": "anyOf",
+                      "anyOf": [
+                        {
+                          "default": {},
+                          "type": "integer"
+                        },
+                        {
+                          "default": {},
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "login"
+                  ]
+                },
+                "content": {
+                  "title": "Content",
+                  "default": {},
+                  "type": "string"
+                },
+                "created_at": {
+                  "title": "Created At",
+                  "default": {},
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "node_id",
+                "user",
+                "content",
+                "created_at"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1272,8 +1624,120 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "add_reaction_to_pr_review_comment_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubReaction",
+              "description": "Reaction on an issue or pull request.",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "id": {
+                  "title": "Id",
+                  "default": {},
+                  "type": "integer"
+                },
+                "node_id": {
+                  "title": "Node Id",
+                  "default": {},
+                  "type": "string"
+                },
+                "user": {
+                  "title": "GithubUser",
+                  "default": {},
+                  "type": "object",
+                  "properties": {
+                    "login": {
+                      "title": "Login",
+                      "default": {},
+                      "type": "string"
+                    },
+                    "name": {
+                      "title": "Name",
+                      "type": "anyOf",
+                      "anyOf": [
+                        {
+                          "default": {},
+                          "type": "string"
+                        },
+                        {
+                          "default": {},
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "email": {
+                      "title": "Email",
+                      "type": "anyOf",
+                      "anyOf": [
+                        {
+                          "default": {},
+                          "type": "string"
+                        },
+                        {
+                          "default": {},
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "avatar_url": {
+                      "title": "Avatar Url",
+                      "type": "anyOf",
+                      "anyOf": [
+                        {
+                          "default": {},
+                          "type": "string"
+                        },
+                        {
+                          "default": {},
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "id": {
+                      "title": "Id",
+                      "type": "anyOf",
+                      "anyOf": [
+                        {
+                          "default": {},
+                          "type": "integer"
+                        },
+                        {
+                          "default": {},
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "login"
+                  ]
+                },
+                "content": {
+                  "title": "Content",
+                  "default": {},
+                  "type": "string"
+                },
+                "created_at": {
+                  "title": "Created At",
+                  "default": {},
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "node_id",
+                "user",
+                "content",
+                "created_at"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1461,8 +1925,49 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "add_review_to_pr_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubReviewResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "success": {
+                  "title": "Success",
+                  "description": "Whether the review operation completed successfully.",
+                  "default": {},
+                  "type": "boolean"
+                },
+                "review_id": {
+                  "title": "Review Id",
+                  "description": "Identifier of the created or updated review, when available.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "integer"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "success"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1508,8 +2013,30 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "check_repo_initialized_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "CheckRepoInitializedResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "initialized": {
+                  "title": "Initialized",
+                  "description": "Whether the repository contains at least one commit.",
+                  "default": {},
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "initialized"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -1564,10 +2091,6 @@
           "title": "compare_commits_input",
           "type": "object"
         },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
-        },
         "annotations": {
           "readOnlyHint": true,
           "destructiveHint": false,
@@ -1619,8 +2142,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "convert_pull_request_to_draft_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1683,8 +2218,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "create_blob_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1743,8 +2290,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "create_branch_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1809,8 +2368,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "create_commit_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1888,8 +2459,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "create_file_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2000,8 +2583,61 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "create_issue_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "WriteIssueResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "issue": {
+                  "title": "Issue",
+                  "description": "GitHub issue payload after the write operation.",
+                  "default": {},
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical URL for the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Title of the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "issue"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2078,8 +2714,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "create_pull_request_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2149,8 +2797,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "create_tree_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2228,8 +2888,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "delete_file_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2282,8 +2954,31 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "dismiss_pull_request_review_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "DismissPullRequestReviewResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "review": {
+                  "title": "Review",
+                  "description": "Dismissed review payload returned by GitHub.",
+                  "default": {},
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              },
+              "required": [
+                "review"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2330,8 +3025,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "download_user_content_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -2384,8 +3091,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "enable_auto_merge_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -2432,8 +3151,75 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "content": {
+                  "title": "Content",
+                  "description": "Fetched document or page content.",
+                  "default": {},
+                  "type": "string"
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Title inferred for the fetched content.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "modified_date": {
+                  "title": "Modified Date",
+                  "description": "Last modified timestamp for the fetched content, when available.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical GitHub URL for the fetched content.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "content"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -2486,8 +3272,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_blob_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -2540,8 +3338,76 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_commit_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchCommitResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "commit": {
+                  "title": "Commit",
+                  "description": "Fetched GitHub commit payload.",
+                  "default": {},
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical URL for the commit.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Display title for the commit.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "diff": {
+                  "title": "Diff",
+                  "description": "Unified diff for the commit, when requested.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "commit"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -2594,8 +3460,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_commit_workflow_runs_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchCommitWorkflowRunsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "workflow_runs": {
+                  "title": "Workflow Runs",
+                  "description": "Workflow runs associated with the commit.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "workflow_runs"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -2664,8 +3557,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_file_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -2716,8 +3621,61 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_issue_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchIssueResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "issue": {
+                  "title": "Issue",
+                  "description": "Fetched GitHub issue payload.",
+                  "default": {},
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical URL for the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Title of the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "issue"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -2770,8 +3728,65 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_issue_comments_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchPrCommentsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "comments": {
+                  "title": "Comments",
+                  "description": "Comments associated with the pull request.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical URL for the pull request.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Title of the pull request.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "comments"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -2824,8 +3839,96 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_pr_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchPullRequestResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "pull_request": {
+                  "title": "Pull Request",
+                  "description": "Fetched GitHub pull request payload.",
+                  "default": {},
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical URL for the pull request.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Title of the pull request.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "diff": {
+                  "title": "Diff",
+                  "description": "Unified diff for the pull request, when requested.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "comments": {
+                  "title": "Comments",
+                  "description": "Pull request comments included in the response, when requested.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "array",
+                      "items": {
+                        "default": {},
+                        "type": "object",
+                        "additionalProperties": true
+                      }
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "pull_request"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -2878,8 +3981,65 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_pr_comments_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchPrCommentsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "comments": {
+                  "title": "Comments",
+                  "description": "Comments associated with the pull request.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical URL for the pull request.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Title of the pull request.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "comments"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -2938,8 +4098,66 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_pr_file_patch_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchPrFilePatchSingleResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "patch": {
+                  "description": "Patch for the requested pull request file, if GitHub returned one.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "title": "GithubFilePatch",
+                      "default": {},
+                      "type": "object",
+                      "properties": {
+                        "filename": {
+                          "title": "Filename",
+                          "type": "anyOf",
+                          "anyOf": [
+                            {
+                              "default": {},
+                              "type": "string"
+                            },
+                            {
+                              "default": {},
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "patch": {
+                          "title": "Patch",
+                          "type": "anyOf",
+                          "anyOf": [
+                            {
+                              "default": {},
+                              "type": "string"
+                            },
+                            {
+                              "default": {},
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -2992,8 +4210,95 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_pr_patch_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchPrPatchResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "patches": {
+                  "title": "Patches",
+                  "description": "Per-file patches for the pull request.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "title": "GithubFilePatch",
+                    "default": {},
+                    "type": "object",
+                    "properties": {
+                      "filename": {
+                        "title": "Filename",
+                        "type": "anyOf",
+                        "anyOf": [
+                          {
+                            "default": {},
+                            "type": "string"
+                          },
+                          {
+                            "default": {},
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "patch": {
+                        "title": "Patch",
+                        "type": "anyOf",
+                        "anyOf": [
+                          {
+                            "default": {},
+                            "type": "string"
+                          },
+                          {
+                            "default": {},
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical URL for the pull request.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Title of the pull request.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "patches"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3046,8 +4351,30 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_workflow_job_logs_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchWorkflowJobLogsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "content": {
+                  "title": "Content",
+                  "description": "Raw log content for the GitHub workflow job.",
+                  "default": {},
+                  "type": "string"
+                }
+              },
+              "required": [
+                "content"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3100,8 +4427,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_workflow_job_steps_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchWorkflowJobStepsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "steps": {
+                  "title": "Steps",
+                  "description": "Steps belonging to the selected GitHub workflow job.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "steps"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3154,8 +4508,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "fetch_workflow_run_jobs_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchWorkflowRunJobsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "jobs": {
+                  "title": "Jobs",
+                  "description": "Jobs belonging to the selected GitHub workflow run.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "jobs"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3208,8 +4589,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "get_commit_combined_status_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "FetchCommitCombinedStatusResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "statuses": {
+                  "title": "Statuses",
+                  "description": "Combined status checks reported for the commit.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "statuses"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3288,8 +4696,136 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "get_issue_comment_reactions_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubReactionsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "reactions": {
+                  "title": "Reactions",
+                  "description": "Reactions returned for the requested GitHub entity.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "title": "GithubReaction",
+                    "description": "Reaction on an issue or pull request.",
+                    "default": {},
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "title": "Id",
+                        "default": {},
+                        "type": "integer"
+                      },
+                      "node_id": {
+                        "title": "Node Id",
+                        "default": {},
+                        "type": "string"
+                      },
+                      "user": {
+                        "title": "GithubUser",
+                        "default": {},
+                        "type": "object",
+                        "properties": {
+                          "login": {
+                            "title": "Login",
+                            "default": {},
+                            "type": "string"
+                          },
+                          "name": {
+                            "title": "Name",
+                            "type": "anyOf",
+                            "anyOf": [
+                              {
+                                "default": {},
+                                "type": "string"
+                              },
+                              {
+                                "default": {},
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "email": {
+                            "title": "Email",
+                            "type": "anyOf",
+                            "anyOf": [
+                              {
+                                "default": {},
+                                "type": "string"
+                              },
+                              {
+                                "default": {},
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "avatar_url": {
+                            "title": "Avatar Url",
+                            "type": "anyOf",
+                            "anyOf": [
+                              {
+                                "default": {},
+                                "type": "string"
+                              },
+                              {
+                                "default": {},
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "id": {
+                            "title": "Id",
+                            "type": "anyOf",
+                            "anyOf": [
+                              {
+                                "default": {},
+                                "type": "integer"
+                              },
+                              {
+                                "default": {},
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "login"
+                        ]
+                      },
+                      "content": {
+                        "title": "Content",
+                        "default": {},
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "title": "Created At",
+                        "default": {},
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "node_id",
+                      "user",
+                      "content",
+                      "created_at"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "reactions"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3352,8 +4888,30 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "get_pr_diff_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GetPrDiffResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "diff": {
+                  "title": "Diff",
+                  "description": "Unified diff for the pull request.",
+                  "default": {},
+                  "type": "string"
+                }
+              },
+              "required": [
+                "diff"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3406,8 +4964,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "get_pr_info_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3486,8 +5056,136 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "get_pr_reactions_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubReactionsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "reactions": {
+                  "title": "Reactions",
+                  "description": "Reactions returned for the requested GitHub entity.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "title": "GithubReaction",
+                    "description": "Reaction on an issue or pull request.",
+                    "default": {},
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "title": "Id",
+                        "default": {},
+                        "type": "integer"
+                      },
+                      "node_id": {
+                        "title": "Node Id",
+                        "default": {},
+                        "type": "string"
+                      },
+                      "user": {
+                        "title": "GithubUser",
+                        "default": {},
+                        "type": "object",
+                        "properties": {
+                          "login": {
+                            "title": "Login",
+                            "default": {},
+                            "type": "string"
+                          },
+                          "name": {
+                            "title": "Name",
+                            "type": "anyOf",
+                            "anyOf": [
+                              {
+                                "default": {},
+                                "type": "string"
+                              },
+                              {
+                                "default": {},
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "email": {
+                            "title": "Email",
+                            "type": "anyOf",
+                            "anyOf": [
+                              {
+                                "default": {},
+                                "type": "string"
+                              },
+                              {
+                                "default": {},
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "avatar_url": {
+                            "title": "Avatar Url",
+                            "type": "anyOf",
+                            "anyOf": [
+                              {
+                                "default": {},
+                                "type": "string"
+                              },
+                              {
+                                "default": {},
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "id": {
+                            "title": "Id",
+                            "type": "anyOf",
+                            "anyOf": [
+                              {
+                                "default": {},
+                                "type": "integer"
+                              },
+                              {
+                                "default": {},
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "login"
+                        ]
+                      },
+                      "content": {
+                        "title": "Content",
+                        "default": {},
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "title": "Created At",
+                        "default": {},
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "node_id",
+                      "user",
+                      "content",
+                      "created_at"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "reactions"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3566,8 +5264,136 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "get_pr_review_comment_reactions_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubReactionsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "reactions": {
+                  "title": "Reactions",
+                  "description": "Reactions returned for the requested GitHub entity.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "title": "GithubReaction",
+                    "description": "Reaction on an issue or pull request.",
+                    "default": {},
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "title": "Id",
+                        "default": {},
+                        "type": "integer"
+                      },
+                      "node_id": {
+                        "title": "Node Id",
+                        "default": {},
+                        "type": "string"
+                      },
+                      "user": {
+                        "title": "GithubUser",
+                        "default": {},
+                        "type": "object",
+                        "properties": {
+                          "login": {
+                            "title": "Login",
+                            "default": {},
+                            "type": "string"
+                          },
+                          "name": {
+                            "title": "Name",
+                            "type": "anyOf",
+                            "anyOf": [
+                              {
+                                "default": {},
+                                "type": "string"
+                              },
+                              {
+                                "default": {},
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "email": {
+                            "title": "Email",
+                            "type": "anyOf",
+                            "anyOf": [
+                              {
+                                "default": {},
+                                "type": "string"
+                              },
+                              {
+                                "default": {},
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "avatar_url": {
+                            "title": "Avatar Url",
+                            "type": "anyOf",
+                            "anyOf": [
+                              {
+                                "default": {},
+                                "type": "string"
+                              },
+                              {
+                                "default": {},
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "id": {
+                            "title": "Id",
+                            "type": "anyOf",
+                            "anyOf": [
+                              {
+                                "default": {},
+                                "type": "integer"
+                              },
+                              {
+                                "default": {},
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "login"
+                        ]
+                      },
+                      "content": {
+                        "title": "Content",
+                        "default": {},
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "title": "Created At",
+                        "default": {},
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "node_id",
+                      "user",
+                      "content",
+                      "created_at"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "reactions"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3605,8 +5431,92 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "get_profile_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Profile",
+              "description": "Many connectors (especially OAuth-based) act on behalf of a user.\nThis class represents the user's profile, which is typically retrieved from\nthe connector's API during the OAuth flow.\n\nImplementation details for different connectors vary, so we can't guarantee\nthat all fields will be present.",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "id": {
+                  "title": "Id",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "name": {
+                  "title": "Name",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "email": {
+                  "title": "Email",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "nickname": {
+                  "title": "Nickname",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "picture": {
+                  "title": "Picture",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3652,8 +5562,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "get_repo_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3706,8 +5628,36 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "get_repo_collaborator_permission_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "RepoCollaboratorPermissionResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "permission": {
+                  "title": "Permission",
+                  "description": "Repository permission level for the requested collaborator.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3745,8 +5695,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "get_user_login_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3817,8 +5779,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "get_users_recent_prs_in_repo_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "ListPullRequestsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "pull_requests": {
+                  "title": "Pull Requests",
+                  "description": "Pull requests returned by the listing operation.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "pull_requests"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3877,8 +5866,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "label_pr_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -3916,8 +5917,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "list_installations_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "ListInstallationsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "installations": {
+                  "title": "Installations",
+                  "description": "GitHub App installations available to the account.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "installations"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -3955,8 +5983,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "list_installed_accounts_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "ListInstalledAccountsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "accounts": {
+                  "title": "Accounts",
+                  "description": "GitHub accounts or installations available to the app.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "accounts"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4009,8 +6064,34 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "list_pr_changed_filenames_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "ListPrChangedFilenamesResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "filenames": {
+                  "title": "Filenames",
+                  "description": "Changed file paths in the pull request.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "filenames"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4063,8 +6144,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "list_pull_request_review_threads_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "ListPullRequestReviewThreadsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "review_threads": {
+                  "title": "Review Threads",
+                  "description": "Review threads associated with the pull request.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "review_threads"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4117,8 +6225,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "list_pull_request_reviews_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "ListPullRequestReviewsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "reviews": {
+                  "title": "Reviews",
+                  "description": "Reviews recorded for the pull request.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "reviews"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4162,8 +6297,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "list_recent_issues_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "ListIssuesResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "issues": {
+                  "title": "Issues",
+                  "description": "Issues returned by the GitHub listing operation.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "issues"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4220,8 +6382,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "list_repositories_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "ListRepositoriesResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "repositories": {
+                  "title": "Repositories",
+                  "description": "Repositories visible to the linked GitHub account.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "repositories"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4280,8 +6469,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "list_repositories_by_affiliation_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "ListRepositoriesResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "repositories": {
+                  "title": "Repositories",
+                  "description": "Repositories visible to the linked GitHub account.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "repositories"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4340,8 +6556,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "list_repositories_by_installation_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "ListRepositoriesResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "repositories": {
+                  "title": "Repositories",
+                  "description": "Repositories visible to the linked GitHub account.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "repositories"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4379,8 +6622,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "list_user_org_memberships_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4418,8 +6673,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "list_user_orgs_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -4491,8 +6758,30 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "lock_issue_conversation_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubSuccessResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "success": {
+                  "title": "Success",
+                  "description": "Whether the GitHub action completed successfully.",
+                  "default": {},
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "success"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -4545,8 +6834,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "mark_pull_request_ready_for_review_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -4656,8 +6957,60 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "merge_pull_request_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "MergePullRequestResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "sha": {
+                  "title": "Sha",
+                  "description": "Commit SHA created by the merge, when present.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "merged": {
+                  "title": "Merged",
+                  "description": "Whether GitHub reports the pull request as merged.",
+                  "default": {},
+                  "type": "boolean"
+                },
+                "message": {
+                  "title": "Message",
+                  "description": "Status message returned by GitHub.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "merged"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -4719,8 +7072,61 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "remove_issue_assignees_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "WriteIssueResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "issue": {
+                  "title": "Issue",
+                  "description": "GitHub issue payload after the write operation.",
+                  "default": {},
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical URL for the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Title of the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "issue"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -4779,8 +7185,61 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "remove_issue_label_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "WriteIssueResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "issue": {
+                  "title": "Issue",
+                  "description": "GitHub issue payload after the write operation.",
+                  "default": {},
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical URL for the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Title of the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "issue"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -4865,8 +7324,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "remove_pull_request_reviewers_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -4925,8 +7396,30 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "remove_reaction_from_issue_comment_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubReactionActionResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "success": {
+                  "title": "Success",
+                  "description": "Whether the reaction action completed successfully.",
+                  "default": {},
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "success"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -4985,8 +7478,30 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "remove_reaction_from_pr_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubReactionActionResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "success": {
+                  "title": "Success",
+                  "description": "Whether the reaction action completed successfully.",
+                  "default": {},
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "success"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -5045,8 +7560,30 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "remove_reaction_from_pr_review_comment_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubReactionActionResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "success": {
+                  "title": "Success",
+                  "description": "Whether the reaction action completed successfully.",
+                  "default": {},
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "success"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -5111,8 +7648,30 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "reply_to_review_comment_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubCommentResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "id": {
+                  "title": "Id",
+                  "description": "Identifier of the created GitHub comment.",
+                  "default": {},
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -5197,8 +7756,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "request_pull_request_reviewers_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -5245,8 +7816,31 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "resolve_review_thread_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubReviewThreadResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "review_thread": {
+                  "title": "Review Thread",
+                  "description": "Single GitHub review thread payload.",
+                  "default": {},
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              },
+              "required": [
+                "review_thread"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -5331,8 +7925,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "search_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "SearchResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "results": {
+                  "title": "Results",
+                  "description": "GitHub search results matching the query.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "results"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5410,8 +8031,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "search_branches_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5531,8 +8164,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "search_commits_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "SearchCommitsResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "commits": {
+                  "title": "Commits",
+                  "description": "Commits matching the GitHub search query.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "commits"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5610,8 +8270,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "search_installed_repositories_streaming_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5692,8 +8364,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "search_installed_repositories_v2_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "SearchRepositoriesResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "repositories": {
+                  "title": "Repositories",
+                  "description": "Repositories matching the GitHub search query.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "repositories"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5800,8 +8499,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "search_issues_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "SearchIssuesResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "issues": {
+                  "title": "Issues",
+                  "description": "Issues matching the GitHub search query.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "issues"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -5924,8 +8650,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "search_prs_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "SearchIssuesResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "issues": {
+                  "title": "Issues",
+                  "description": "Issues matching the GitHub search query.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "issues"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -6017,8 +8770,35 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "search_repositories_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "SearchRepositoriesResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "repositories": {
+                  "title": "Repositories",
+                  "description": "Repositories matching the GitHub search query.",
+                  "default": {},
+                  "type": "array",
+                  "items": {
+                    "default": {},
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "required": [
+                "repositories"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": true,
@@ -6071,8 +8851,30 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "unlock_issue_conversation_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubSuccessResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "success": {
+                  "title": "Success",
+                  "description": "Whether the GitHub action completed successfully.",
+                  "default": {},
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "success"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -6119,8 +8921,31 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "unresolve_review_thread_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubReviewThreadResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "review_thread": {
+                  "title": "Review Thread",
+                  "description": "Single GitHub review thread payload.",
+                  "default": {},
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              },
+              "required": [
+                "review_thread"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -6204,8 +9029,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "update_file_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -6365,8 +9202,61 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "update_issue_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "WriteIssueResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "issue": {
+                  "title": "Issue",
+                  "description": "GitHub issue payload after the write operation.",
+                  "default": {},
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "url": {
+                  "title": "Url",
+                  "description": "Canonical URL for the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                },
+                "title": {
+                  "title": "Title",
+                  "description": "Title of the GitHub issue.",
+                  "type": "anyOf",
+                  "anyOf": [
+                    {
+                      "default": {},
+                      "type": "string"
+                    },
+                    {
+                      "default": {},
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "issue"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -6425,8 +9315,30 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "update_issue_comment_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubCommentResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "id": {
+                  "title": "Id",
+                  "description": "Identifier of the created GitHub comment.",
+                  "default": {},
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -6548,8 +9460,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "update_pull_request_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -6614,8 +9538,20 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "update_ref_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "Result",
+              "default": {},
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,
@@ -6674,8 +9610,30 @@
           "type": "object"
         },
         "outputSchema": {
+          "title": "update_review_comment_output",
           "default": {},
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "result": {
+              "title": "GithubCommentResponse",
+              "default": {},
+              "type": "object",
+              "properties": {
+                "id": {
+                  "title": "Id",
+                  "description": "Identifier of the created GitHub comment.",
+                  "default": {},
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id"
+              ]
+            }
+          },
+          "required": [
+            "result"
+          ]
         },
         "annotations": {
           "readOnlyHint": false,

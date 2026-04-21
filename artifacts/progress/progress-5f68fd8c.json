@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-5f68fd8c",
+  "id": "progress-5f68fd8c",
+  "quest_id": "002",
+  "created_at": "2026-04-17T20:58:04+00:00",
+  "updated_at": "2026-04-17T20:58:04+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "4857b3cd3261ed8ba5c5914abc5ed74860032779",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "message": "runtime 这边的锚点又跳了一次：它没有允许我手动激活 analysis 分支，但现在已经把当前工作区切回主线附近，而且补充分析不再是活动状态。我先再核一眼全局状态；如果这条补充验证确实已经退出活动态，我就不再纠缠工具细节，直接回到证据主线创建新的 child idea。",
+  "summary": "runtime 这边的锚点又跳了一次：它没有允许我手动激活 analysis 分支，但现在已经把当前工作区切回主线附近，而且补充分析不再是活动状态。我先再核一眼全局状态；如果这条补充验证确实已经退出活动态，我就不再纠缠工具细节，直接回到证据主线创建新的 child idea。",
+  "summary_preview": "runtime 这边的锚点又跳了一次：它没有允许我手动激活 analysis 分支，但现在已经把当前工作区切回主线附近，而且补充分析不再是活动状态。我先再核一眼全局状态；如果这条补充验证确实已经退出活动态，我就不再纠缠工具细节，直接回到证据主线创建新的 child idea。",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "progress-5f68fd8c",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-5f68fd8c",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

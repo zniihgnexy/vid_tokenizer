@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "outline_id": "outline-002",
+  "status": "selected",
+  "title": "Bounded Query-Adaptive Arbitration over Frozen Teacher-Anchor Packet Bundles",
+  "note": "Compiled compatibility view for the active query-adaptive paper line. The underlying outline candidate remains outline-002 while this paper branch now narrows the story to a bounded query-adaptive arbitration result on the current widened teacher-anchor retrieval surface.",
+  "story": "The paper story starts from a validated upstream machine-oriented compression pipeline whose frozen teacher-anchor packet bundle is already exportable but whose downstream retrieval behavior remains sensitive to route choice. The current paper line makes a deliberately narrow claim: keep the packet surface fixed, then test whether query-adaptive arbitration over two existing static routes can recover more retrieval signal on one bounded widened surface. The contribution is therefore a bounded feasibility result about downstream readout over a frozen packet surface, not a new coding architecture or a broadly validated machine-facing adapter.",
+  "ten_questions": [
+    "What exactly is preserved by the frozen teacher-anchor packet bundle on the current widened surface?",
+    "Why is downstream route choice the main bottleneck after the packet surface is frozen?",
+    "How do the raw-global and temporal-context routes fail differently on this surface?",
+    "Can a query-adaptive arbitration rule recover more headline retrieval signal without changing the upstream packets?",
+    "Does the adaptive gain indicate real downstream-usable structure in the frozen packet surface?",
+    "What limitation prevents this result from being written as a broad machine-facing adapter claim?",
+    "What is the smallest fair evidence package for this bounded paper line?",
+    "What future evidence would be needed before claiming broader downstream generalization?"
+  ],
+  "detailed_outline": {
+    "title": "Bounded Query-Adaptive Arbitration over Frozen Teacher-Anchor Packet Bundles",
+    "abstract": "This paper studies whether query-adaptive arbitration can extract more downstream retrieval signal from a frozen teacher-anchor packet bundle than two existing static routes on one bounded widened surface.",
+    "research_questions": [
+      "Can query-adaptive arbitration improve headline retrieval over both static parent routes on the same bounded widened teacher-anchor surface?",
+      "If such a gain appears, what does it imply about the amount of downstream-recoverable structure already present in the frozen packet surface?"
+    ],
+    "methodology": "Hold the upstream packet bundle, evaluation harness, and local retrieval setup fixed; compare raw-global, temporal-context, and query-adaptive arbitration on the same bounded surface.",
+    "experimental_designs": [
+      "One bounded evaluation package comparing the two static parent routes and the query-adaptive rule on the same widened teacher-anchor surface."
+    ],
+    "contributions": [
+      "A bounded query-adaptive arbitration result that improves headline retrieval on the fixed widened teacher-anchor surface.",
+      "An evidence-backed interpretation that the frozen packet surface contains downstream-recoverable structure that static routing leaves underused on that same surface."
+    ]
+  },
+  "sections": [
+    {
+      "section_id": "problem-and-motivation",
+      "title": "Problem and motivation",
+      "paper_role": "main_text",
+      "claims": [],
+      "required_items": [],
+      "optional_items": [],
+      "status": "planned",
+      "note": null,
+      "result_table": []
+    },
+    {
+      "section_id": "frozen-upstream-interface-contract",
+      "title": "Frozen upstream interface contract",
+      "paper_role": "main_text",
+      "claims": [],
+      "required_items": [],
+      "optional_items": [],
+      "status": "planned",
+      "note": null,
+      "result_table": []
+    },
+    {
+      "section_id": "teacher-anchored-adapter-hypothesis",
+      "title": "Query-adaptive arbitration hypothesis",
+      "paper_role": "main_text",
+      "claims": [],
+      "required_items": [],
+      "optional_items": [],
+      "status": "planned",
+      "note": null,
+      "result_table": []
+    },
+    {
+      "section_id": "bounded-packet-adapter-evaluation",
+      "title": "Bounded query-adaptive evaluation",
+      "paper_role": "main_text",
+      "claims": [
+        "C1",
+        "C2"
+      ],
+      "required_items": [
+        "query_adaptive_teacher_anchor_arbitration_smoke_r1"
+      ],
+      "optional_items": [],
+      "status": "planned",
+      "note": null,
+      "result_table": []
+    },
+    {
+      "section_id": "outcome-interpretation-and-next-route",
+      "title": "Outcome interpretation and next route",
+      "paper_role": "main_text",
+      "claims": [
+        "C2"
+      ],
+      "required_items": [
+        "query_adaptive_teacher_anchor_arbitration_smoke_r1"
+      ],
+      "optional_items": [],
+      "status": "planned",
+      "note": null,
+      "result_table": []
+    },
+    {
+      "section_id": "sec_teacher_anchor_adapter",
+      "title": "Appendix robustness note: wider-surface QB-Norm revalidation",
+      "paper_role": "appendix",
+      "claims": [
+        "C2"
+      ],
+      "required_items": [],
+      "optional_items": [
+        "AC-01"
+      ],
+      "status": "planned",
+      "note": "Appendix-only robustness evidence that narrows broader route-stability claims: wider-surface QB-Norm regularizes geometry but does not improve top-1 retrieval over the raw route.",
+      "result_table": []
+    }
+  ],
+  "evidence_contract": {
+    "main_text_items_must_be_ready": true,
+    "appendix_items_may_be_ready_or_reference_only": true,
+    "record_results_back_into_outline": true,
+    "result_table_required": true
+  },
+  "review_result": null,
+  "created_at": "2026-04-17T14:50:20+00:00",
+  "updated_at": "2026-04-21T10:49:00+00:00"
+}
