@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "selected_outline_ref": "outline-002",
+  "updated_at": "2026-04-22T07:35:00+00:00",
+  "claims": [
+    {
+      "claim_id": "C1",
+      "statement": "Query-adaptive arbitration improves headline retrieval top-1 accuracy on the bounded widened teacher-anchor surface.",
+      "scope": "One fixed widened teacher-anchor retrieval surface with the upstream packet bundle, evaluation harness, and consumer setup held fixed.",
+      "evidence": [
+        {
+          "item_id": "query_adaptive_teacher_anchor_arbitration_smoke_r1",
+          "section_id": "bounded-packet-adapter-evaluation",
+          "support": "Top-1 accuracy rises to 0.15625 from 0.125 for raw-global and 0.09375 for temporal-context on the same bounded surface."
+        },
+        {
+          "item_id": "query_adaptive_broader_retrieval_validation_smoke_r1",
+          "section_id": "outcome-interpretation-and-next-route",
+          "support": "On the repaired broader three-bundle surface, query-adaptive still keeps the best non-oracle top-1 at 0.125 versus 0.10416666666666667 for both static parent routes."
+        }
+      ],
+      "limitations": [
+        "Temporal-context remains stronger on chunk-level top-1 accuracy (0.375 vs 0.25) on the main bounded surface.",
+        "On the repaired broader three-bundle surface, temporal-context still has better mean_match_rank (7.8125 vs 8.479166666666666) and chunk_top1_accuracy (0.3333333333333333 vs 0.25), so the broader claim remains intentionally partial.",
+        "A first low-capacity downstream-consumer bridge smoke on the recovered chunked teacher-packet bundle was negative, so the manuscript does not claim broader consumer transfer.",
+        "No larger downstream consumer is reported yet."
+      ]
+    },
+    {
+      "claim_id": "C2",
+      "statement": "The frozen teacher-anchor packet surface contains downstream-recoverable structure that static routing underuses on the same bounded surface.",
+      "scope": "Interpretation is limited to the same frozen packet bundle and the same bounded retrieval surface.",
+      "evidence": [
+        {
+          "item_id": "query_adaptive_teacher_anchor_arbitration_smoke_r1",
+          "section_id": "bounded-packet-adapter-evaluation",
+          "support": "The adaptive rule improves top-1 accuracy while reducing hub-cluster share from 0.59375 to 0.28125 without changing the upstream packet representation."
+        },
+        {
+          "item_id": "query_adaptive_broader_retrieval_validation_smoke_r1",
+          "section_id": "outcome-interpretation-and-next-route",
+          "support": "The repaired broader follow-up keeps the headline top-1 edge for query-adaptive but shows that temporal-context remains the stronger ranking-side control, which sharpens the interpretation boundary instead of erasing the downstream-readable signal."
+        }
+      ],
+      "limitations": [
+        "This is evidence about downstream readout over a fixed packet surface, not a new packet schema or coding method.",
+        "The broader repaired three-bundle validation still does not justify a claim of uniform route superiority beyond the bounded paper surface.",
+        "A first low-capacity downstream-consumer bridge smoke was negative and is treated only as a future-work boundary note.",
+        "An appendix-level wider-surface QB-Norm revalidation improved geometry without improving top-1 retrieval, so broader route-stability claims remain unsupported."
+      ]
+    }
+  ]
+}

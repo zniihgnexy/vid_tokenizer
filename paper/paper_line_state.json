@@ -18,9 +18,9 @@
   "open_supplementary_count": 0,
   "contract_ok": true,
   "writing_ready": true,
-  "finalize_ready": false,
-  "closure_state": "bundle_not_ready",
-  "delivery_state": "not_ready",
+  "finalize_ready": true,
+  "closure_state": "delivery_ready",
+  "delivery_state": "bundle_ready",
   "delivered_at": null,
   "keep_bundle_fixed_by_default": false,
   "unresolved_required_count": 0,
@@ -29,6 +29,6 @@
   "recommended_next_stage": "write",
   "recommended_action": "continue_writing",
   "draft_status": "present",
-  "bundle_status": "missing",
-  "updated_at": "2026-04-21T16:47:30+00:00"
+  "bundle_status": "present",
+  "updated_at": "2026-04-22T07:35:00+00:00"
 }

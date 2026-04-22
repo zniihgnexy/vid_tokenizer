@@ -3,260 +3,190 @@
   "selected_outline_ref": "outline-002",
   "items": [
     {
-      "item_id": "shared_gating_pred_variance_repair_ego4d16f_smoke_r1",
-      "title": "Shared-gating predicted variance-floor repair on frozen widened bridge surface",
+      "item_id": "query_adaptive_teacher_anchor_arbitration_smoke_r1",
+      "title": "Query-adaptive teacher-anchor arbitration smoke on the widened multibundle surface",
       "kind": "main_experiment",
       "status": "completed",
       "paper_role": "main_text",
-      "section_id": "main-results",
-      "claim_links": [],
-      "setup": "Dedicated run branch/worktree on the active idea line. Resume root: shared_gating_interface_export_ego4d16f_chunk00_smoke_r1. Task config keeps semantic-change weighting and temporal-delta consistency enabled, turns on predicted-feature variance floor with weight=1.0 and margin=0.1, and keeps predicted-delta variance floor off. The external packet export/eval surface stays fixed to the same bounded ego4d_small_bridge_16f bridge subset.",
-      "result_summary": "{\"output_dir\":\"/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1\",\"archived_invalid_attempt_reason\":\"missing create_overfit_task passthrough kept pred_variance_weight at 0.0\",\"corrected_run_session\":\"bash-9cf7c4a3\",\"archived_invalid_run_session\":\"bash-4cf72434\"}",
+      "section_id": "bounded-packet-adapter-evaluation",
+      "claim_links": [
+        "C1",
+        "C2"
+      ],
+      "setup": "Reused the frozen widened two-bundle teacher-anchor packet interface and compared the new query-adaptive arbitration rule against the same raw-global and temporal predicted-chunk parent routes on the same bounded local surface.",
+      "result_summary": "Positive bounded retrieval signal on the widened teacher-anchor surface: query-adaptive arbitration raised top1_accuracy to 0.15625 from 0.125 for raw-global and 0.09375 for temporal-context, matched the best-of-two oracle top1, and cut hub-cluster share from 0.59375 to 0.28125.",
       "key_metrics": [
         {
-          "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
-          "value": 24.0,
+          "metric_id": "query_adaptive_raw_hub_risk_disagreement_teacher_anchor_to_target_feat_top1_accuracy",
+          "value": 0.15625,
           "direction": "maximize",
           "decimals": null
         },
         {
-          "metric_id": "local_resnet18_teacher_smoke_loss_value",
-          "value": 0.3541456162929535,
-          "direction": "minimize",
-          "decimals": null
-        },
-        {
-          "metric_id": "tiny_local_teacher_pilot_bpp_avg",
-          "value": 88.2109,
-          "direction": "minimize",
-          "decimals": null
-        },
-        {
-          "metric_id": "tiny_local_teacher_pilot_psnr_avg",
-          "value": 10.8996,
+          "metric_id": "raw_global_bank_to_target_feat_top1_accuracy",
+          "value": 0.125,
           "direction": "maximize",
           "decimals": null
         },
         {
-          "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
-          "value": 0.5145,
+          "metric_id": "temporal_context_predicted_chunk_teacher_anchor_to_target_feat_top1_accuracy",
+          "value": 0.09375,
+          "direction": "maximize",
+          "decimals": null
+        },
+        {
+          "metric_id": "query_adaptive_raw_hub_risk_disagreement_teacher_anchor_to_target_feat_hub_cluster_share_0009_0010_0011",
+          "value": 0.28125,
           "direction": "minimize",
           "decimals": null
         },
         {
-          "metric_id": "beauty_teacher_smoke_bpp_avg",
-          "value": 2.091,
+          "metric_id": "raw_global_bank_to_target_feat_hub_cluster_share_0009_0010_0011",
+          "value": 0.59375,
           "direction": "minimize",
           "decimals": null
         }
       ],
       "source_paths": [
-        ".ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/RUN.md",
-        ".ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/RESULT.json",
-        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1",
-        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/results/all.txt",
-        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/args.yaml",
-        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/bash_exec/bash-9cf7c4a3/terminal.log",
-        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/bash_exec/bash-4cf72434/terminal.log"
+        "experiments/main/query_adaptive_teacher_anchor_arbitration_smoke_r1/RUN.md",
+        "experiments/main/query_adaptive_teacher_anchor_arbitration_smoke_r1/RESULT.json"
       ],
-      "run_id": "shared_gating_pred_variance_repair_ego4d16f_smoke_r1",
-      "selected_outline_ref": null,
+      "run_id": "query_adaptive_teacher_anchor_arbitration_smoke_r1",
+      "selected_outline_ref": "outline-002",
       "evaluation_summary": null,
-      "created_at": "2026-04-17T14:29:12+00:00",
-      "updated_at": "2026-04-17T14:30:10+00:00"
+      "created_at": "2026-04-20T16:06:00+00:00",
+      "updated_at": "2026-04-20T16:18:00+00:00"
     },
     {
-      "item_id": "shared_gating_relation_semchange_delta_smoke_r1",
-      "title": "Shared-gating relation repair on frozen widened bridge surface",
-      "kind": "main_experiment",
+      "item_id": "query_adaptive_broader_retrieval_validation_smoke_r1",
+      "title": "Repaired broader three-bundle validation for the query-adaptive route",
+      "kind": "analysis_result",
       "status": "completed",
       "paper_role": "main_text",
-      "section_id": "main-results",
-      "claim_links": [],
-      "setup": "Frozen widened bounded bridge surface using ego4d_small_bridge_16f (16 frames at 32x32), shared-gating initialization resumed from shared_gating_interface_export_ego4d16f_chunk00_smoke_r1, relation+semantic-change+temporal-delta task config l1_teacher-resnet18-relation-semchange-delta.yaml, dedicated run wrapper experiments/main/scripts/run_shared_gating_relation_repair_smoke.sh.",
-      "result_summary": "The bounded relation repair run completed successfully and produced a full checkpoint, bitstream, decoded outputs, and downstream packet bundle. Upstream aggregate metrics improved teacher consistency relative to blueprint (teacher-mse_avg 0.4888 vs 0.5481) while keeping similar bitrate (bpp_avg 23.9043 vs 23.8984). However, the downstream interface claim did not improve: pred_feat_to_target_feat top1 stayed at 0.0625, pred_delta_to_target_delta top1 regressed from 0.1875 to 0.0625, and the concat feature+delta comparison fell to 0.0 top1. Mean feature cosine improved (0.5972 vs 0.5387) but mean matching margins remained negative across all predicted-to-target comparisons.",
+      "section_id": "outcome-interpretation-and-next-route",
+      "claim_links": [
+        "C1",
+        "C2"
+      ],
+      "setup": "Reused the query-adaptive arbitration rule on a repaired legal three-bundle surface built from the relation-repair packet set, the blueprint-repair packet set, and one recovered chunked 16-sample teacher-packet bundle, while keeping route definitions fixed.",
+      "result_summary": "On the repaired broader surface, query-adaptive keeps the best non-oracle top-1 accuracy at 0.125, while raw-global and temporal-context both sit at 0.10416666666666667. The broader follow-up therefore preserves the headline advantage, but temporal-context still keeps the best mean-match-rank (7.8125) and chunk-top1 accuracy (0.3333333333333333), so the broader claim boundary remains intentionally partial.",
       "key_metrics": [
         {
-          "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
-          "value": 24.0,
+          "metric_id": "query_adaptive_raw_hub_risk_disagreement_teacher_anchor_to_target_feat_top1_accuracy",
+          "value": 0.125,
           "direction": "maximize",
           "decimals": null
         },
         {
-          "metric_id": "local_resnet18_teacher_smoke_loss_value",
-          "value": 0.40666788816452026,
-          "direction": "minimize",
-          "decimals": null
-        },
-        {
-          "metric_id": "tiny_local_teacher_pilot_bpp_avg",
-          "value": 88.2109,
-          "direction": "minimize",
-          "decimals": null
-        },
-        {
-          "metric_id": "tiny_local_teacher_pilot_psnr_avg",
-          "value": 10.8996,
+          "metric_id": "raw_global_bank_to_target_feat_top1_accuracy",
+          "value": 0.10416666666666667,
           "direction": "maximize",
           "decimals": null
         },
         {
-          "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
-          "value": 0.5145,
+          "metric_id": "temporal_context_predicted_chunk_teacher_anchor_to_target_feat_top1_accuracy",
+          "value": 0.10416666666666667,
+          "direction": "maximize",
+          "decimals": null
+        },
+        {
+          "metric_id": "query_adaptive_raw_hub_risk_disagreement_teacher_anchor_to_target_feat_mean_match_rank",
+          "value": 8.479166666666666,
           "direction": "minimize",
           "decimals": null
         },
         {
-          "metric_id": "beauty_teacher_smoke_bpp_avg",
-          "value": 2.091,
+          "metric_id": "temporal_context_predicted_chunk_teacher_anchor_to_target_feat_mean_match_rank",
+          "value": 7.8125,
           "direction": "minimize",
+          "decimals": null
+        },
+        {
+          "metric_id": "query_adaptive_raw_hub_risk_disagreement_teacher_anchor_to_target_feat_chunk_top1_accuracy",
+          "value": 0.25,
+          "direction": "maximize",
+          "decimals": null
+        },
+        {
+          "metric_id": "temporal_context_predicted_chunk_teacher_anchor_to_target_feat_chunk_top1_accuracy",
+          "value": 0.3333333333333333,
+          "direction": "maximize",
           "decimals": null
         }
       ],
       "source_paths": [
-        ".ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1/experiments/main/shared_gating_relation_semchange_delta_smoke_r1/RUN.md",
-        ".ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1/experiments/main/shared_gating_relation_semchange_delta_smoke_r1/RESULT.json",
-        "experiments/main/evals/shared_gating_relation_teacher_loss_smoke_r1/summary.json",
-        "experiments/main/shared_gating_relation_repair_ego4d16f_smoke_r1/results/all.txt",
-        "experiments/main/shared_gating_relation_repair_ego4d16f_smoke_r1/args.yaml",
-        "experiments/main/interface_bundles/shared_gating_relation_repair_teacher_packet_smoke_r1",
-        "experiments/main/evals/shared_gating_relation_repair_teacher_packet_smoke_r1/summary.json"
+        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-748a9357/baselines/local/querybank-teacher-anchor-broader-retrieval-local/verification.md",
+        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-748a9357/baselines/local/querybank-teacher-anchor-broader-retrieval-local/json/metric_contract.json"
       ],
-      "run_id": "shared_gating_relation_semchange_delta_smoke_r1",
-      "selected_outline_ref": null,
-      "evaluation_summary": null,
-      "created_at": "2026-04-17T08:35:56+00:00",
-      "updated_at": "2026-04-17T08:35:56+00:00"
-    },
-    {
-      "item_id": "teacher_anchored_packet_adapter_smoke_r1",
-      "title": "Teacher gallery-anchor packet adapter smoke on the local 4-frame bundle",
-      "kind": "main_experiment",
-      "status": "completed",
-      "paper_role": "main_text",
-      "section_id": "main-results",
-      "claim_links": [],
-      "setup": "Dedicated run branch/worktree: run/teacher_anchored_packet_adapter_smoke_r1. Reused experiments/main/interface_bundles/shared_gating_teacher_packet_smoke_r1 with 4 bounded frames, teacher_type resnet18_imagenet, packet fields pred_feat/target_feat/pred_delta/target_delta, delta_weight=8.0, and anchor_logit_scale=16.0. No upstream retraining or exporter schema change was introduced in this pass.",
-      "result_summary": "Headline packet-interface result: teacher_gallery_anchor_joint_to_target_feat achieved top-1 accuracy 0.75 and mean match rank 1.5 in target_feat space, versus only 0.25 and 2.5 for the direct pred_feat -> target_feat control. The remaining failure case is query 0000 collapsing toward 0001; queries 0001, 0002, and 0003 are correct.",
-      "key_metrics": [
-        {
-          "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
-          "value": 24.0,
-          "direction": "maximize",
-          "decimals": null
-        },
-        {
-          "metric_id": "local_resnet18_teacher_smoke_loss_value",
-          "value": 0.3541456162929535,
-          "direction": "minimize",
-          "decimals": null
-        },
-        {
-          "metric_id": "tiny_local_teacher_pilot_bpp_avg",
-          "value": 88.2266,
-          "direction": "minimize",
-          "decimals": null
-        },
-        {
-          "metric_id": "tiny_local_teacher_pilot_psnr_avg",
-          "value": 10.9012,
-          "direction": "maximize",
-          "decimals": null
-        },
-        {
-          "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
-          "value": 0.5126,
-          "direction": "minimize",
-          "decimals": null
-        },
-        {
-          "metric_id": "beauty_teacher_smoke_bpp_avg",
-          "value": 2.091,
-          "direction": "minimize",
-          "decimals": null
-        }
-      ],
-      "source_paths": [
-        ".ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/RUN.md",
-        ".ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/RESULT.json",
-        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/evals/teacher_anchor_packet_adapter_smoke_r1/summary.json",
-        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/evals/teacher_anchor_packet_adapter_smoke_r1/report.md",
-        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/evals/teacher_anchor_packet_adapter_smoke_r1/teacher_gallery_anchor_weights.csv",
-        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/scripts/run_teacher_anchor_packet_eval.py",
-        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/scripts/run_teacher_anchor_packet_adapter_smoke.sh"
-      ],
-      "run_id": "teacher_anchored_packet_adapter_smoke_r1",
-      "selected_outline_ref": null,
-      "evaluation_summary": null,
-      "created_at": "2026-04-17T15:07:09+00:00",
-      "updated_at": "2026-04-17T15:07:09+00:00"
+      "run_id": "query_adaptive_broader_retrieval_validation_smoke_r1",
+      "selected_outline_ref": "outline-002",
+      "evaluation_summary": "Broader boundary evidence: query-adaptive keeps the headline top-1 edge on a repaired three-bundle surface, but temporal-context remains the stronger ranking-side guardrail.",
+      "created_at": "2026-04-21T11:38:00+00:00",
+      "updated_at": "2026-04-21T11:38:00+00:00"
     },
     {
       "item_id": "AC-01",
-      "title": "Chunked 16-frame QB-Norm Revalidation",
-      "kind": "analysis_slice",
+      "title": "Chunked 16-frame QB-Norm revalidation on the wider existing teacher-packet surface",
+      "kind": "analysis_result",
       "status": "completed",
       "paper_role": "appendix",
       "section_id": "sec_teacher_anchor_adapter",
       "claim_links": [
-        "teacher_anchor_adapter_stability",
-        "querybank_route_validation"
+        "C2"
       ],
-      "setup": "Used the existing chunked 16-frame teacher-packet bundle that had already been exported earlier. No retraining, dataset change, teacher change, or new bundle export was introduced for this slice; the goal was a pure wider-surface robustness check of the current teacher-anchor packet evaluator.",
-      "result_summary": "The wider-surface slice weakened the earlier narrow-smoke retrieval claim. Raw, QB-Norm, and DIS all reached top-1 accuracy 0.0625 on the chunked 16-frame bundle, while CSLS was 0.0. QB-Norm still materially regularized anchor geometry: it reduced max top-1 anchor share from 0.50 to 0.25, increased unique top-1 anchors from 3 to 4, and reduced mean hub weight mass from 0.2109 to 0.1547 versus raw. However, QB-Norm also showed a non-zero 0009/0010/0011 hub-cluster share of 0.25, so the previous interpretation must be downgraded from stable retrieval rescue to partial geometric repair.",
+      "setup": "Reused the existing chunked 16-frame teacher-packet bundle and re-ran the packet evaluator on the wider surface without retraining, dataset changes, or a new bundle export.",
+      "result_summary": "The wider-surface slice did not improve headline retrieval over the raw route: QB-Norm and raw both reached top-1 accuracy 0.0625. QB-Norm still regularized geometry by reducing max top-1 anchor share from 0.50 to 0.25 and mean hub weight mass from 0.2109 to 0.1547, so it is kept as appendix-only robustness evidence that narrows broader stability claims.",
       "key_metrics": [
         {
-          "metric_id": "raw_global_bank_to_target_feat.top1_accuracy",
+          "metric_id": "qb_norm_teacher_anchor_to_target_feat_top1_accuracy",
           "value": 0.0625,
           "direction": "maximize",
           "decimals": null
         },
         {
-          "metric_id": "qb_norm_teacher_anchor_to_target_feat.top1_accuracy",
+          "metric_id": "raw_global_bank_to_target_feat_top1_accuracy",
           "value": 0.0625,
           "direction": "maximize",
           "decimals": null
         },
         {
-          "metric_id": "dis_teacher_anchor_to_target_feat.top1_accuracy",
-          "value": 0.0625,
-          "direction": "maximize",
+          "metric_id": "qb_norm_teacher_anchor_to_target_feat_max_anchor_share",
+          "value": 0.25,
+          "direction": "minimize",
           "decimals": null
         },
         {
-          "metric_id": "csls_teacher_anchor_to_target_feat.top1_accuracy",
-          "value": 0.0,
-          "direction": "maximize",
-          "decimals": null
-        },
-        {
-          "metric_id": "raw_global_bank_to_target_feat.max_top1_anchor_share",
+          "metric_id": "raw_global_bank_to_target_feat_max_anchor_share",
           "value": 0.5,
           "direction": "minimize",
           "decimals": null
         },
         {
-          "metric_id": "qb_norm_teacher_anchor_to_target_feat.max_top1_anchor_share",
-          "value": 0.25,
+          "metric_id": "qb_norm_teacher_anchor_to_target_feat_mean_hub_weight_mass",
+          "value": 0.1547,
+          "direction": "minimize",
+          "decimals": null
+        },
+        {
+          "metric_id": "raw_global_bank_to_target_feat_mean_hub_weight_mass",
+          "value": 0.2109,
           "direction": "minimize",
           "decimals": null
         }
       ],
       "source_paths": [
-        ".ds/worktrees/analysis-analysis-8e2b0428-chunked-16f-qbnorm-revalidation/experiments/analysis/analysis-8e2b0428/chunked_16f_qbnorm_revalidation/RESULT.md",
-        ".ds/worktrees/analysis-analysis-8e2b0428-chunked-16f-qbnorm-revalidation/experiments/analysis/analysis-8e2b0428/chunked_16f_qbnorm_revalidation/RESULT.json",
-        ".ds/worktrees/querybank-teacher-anchor-smoke-r1/experiments/analysis-results/analysis-8e2b0428/chunked_16f_qbnorm_revalidation.md",
-        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/querybank-teacher-anchor-smoke-r1/experiments/analysis/chunked_16f_qbnorm_revalidation/summary.json",
-        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/querybank-teacher-anchor-smoke-r1/experiments/analysis/chunked_16f_qbnorm_revalidation/report.md"
+        "experiments/analysis-results/analysis-8e2b0428/chunked_16f_qbnorm_revalidation.md",
+        "experiments/analysis/chunked_16f_qbnorm_revalidation/report.md",
+        "experiments/analysis/chunked_16f_qbnorm_revalidation/summary.json"
       ],
-      "campaign_id": "analysis-8e2b0428",
+      "run_id": "analysis-8e2b0428:chunked_16f_qbnorm_revalidation",
+      "exp_id": "AC-01",
       "slice_id": "chunked_16f_qbnorm_revalidation",
       "selected_outline_ref": "outline-002",
-      "evaluation_summary": null,
-      "claim_impact": null,
-      "created_at": "2026-04-17T20:57:25+00:00",
-      "updated_at": "2026-04-17T20:57:25+00:00"
+      "evaluation_summary": "Appendix-only robustness evidence: wider-surface QB-Norm partially repairs geometry but does not rescue retrieval.",
+      "created_at": "2026-04-17T14:50:20+00:00",
+      "updated_at": "2026-04-21T10:49:00+00:00"
     }
   ],
-  "updated_at": "2026-04-17T20:57:25+00:00"
+  "updated_at": "2026-04-22T07:35:00+00:00"
 }
