@@ -1,0 +1,94 @@
+{
+  "bundle_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1/experiments/main/interface_bundles/shared_gating_relation_repair_teacher_packet_smoke_r1",
+  "comparison_preset": "all",
+  "consumer_metrics": {
+    "pred_delta_to_target_delta": {
+      "mean_best_nonmatch_similarity": 0.1639883010648191,
+      "mean_margin_vs_best_nonmatch": -0.1369812214979902,
+      "mean_match_rank": 7.3125,
+      "mean_matching_similarity": 0.027007079566828907,
+      "top1_accuracy": 0.0625
+    },
+    "pred_feat_plus_1p0x_delta_concat_to_target_feat_plus_1p0x_delta_concat": {
+      "mean_best_nonmatch_similarity": 0.5997268371284008,
+      "mean_margin_vs_best_nonmatch": -0.021878790110349655,
+      "mean_match_rank": 7.875,
+      "mean_matching_similarity": 0.5778480470180511,
+      "top1_accuracy": 0.0
+    },
+    "pred_feat_plus_1p0x_delta_sum_to_target_feat_plus_1p0x_delta_sum": {
+      "mean_best_nonmatch_similarity": 0.607290543615818,
+      "mean_margin_vs_best_nonmatch": -0.0390498973429203,
+      "mean_match_rank": 8.125,
+      "mean_matching_similarity": 0.5682406462728977,
+      "top1_accuracy": 0.0625
+    },
+    "pred_feat_to_target_feat": {
+      "mean_best_nonmatch_similarity": 0.6191480122506618,
+      "mean_margin_vs_best_nonmatch": -0.02190053090453148,
+      "mean_match_rank": 8.0625,
+      "mean_matching_similarity": 0.5972474813461304,
+      "top1_accuracy": 0.0625
+    },
+    "target_feat_to_target_feat": {
+      "mean_best_nonmatch_similarity": 0.9861368201673031,
+      "mean_margin_vs_best_nonmatch": 0.013863150030374527,
+      "mean_match_rank": 1.0,
+      "mean_matching_similarity": 0.9999999701976776,
+      "top1_accuracy": 1.0
+    }
+  },
+  "delta_weight": 1.0,
+  "frame_count": 16,
+  "mode": "smoke",
+  "output_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1/experiments/main/evals/shared_gating_relation_repair_teacher_packet_smoke_r1",
+  "sample_ids": [
+    "0000",
+    "0001",
+    "0002",
+    "0003",
+    "0004",
+    "0005",
+    "0006",
+    "0007",
+    "0008",
+    "0009",
+    "0010",
+    "0011",
+    "0012",
+    "0013",
+    "0014",
+    "0015"
+  ],
+  "teacher_packet_summary": {
+    "device": "cuda",
+    "feature_dim": 512,
+    "frame_count": 16,
+    "mean_consistency_mse": 0.4867440462112427,
+    "mean_delta_cosine": 0.027007082477211952,
+    "mean_feature_cosine": 0.5972474813461304,
+    "mean_semantic_weight": 0.9999989867210388,
+    "packet_fields": [
+      "pred_feat",
+      "target_feat",
+      "pred_delta",
+      "target_delta"
+    ],
+    "teacher_type": "resnet18_imagenet"
+  },
+  "upstream_aggregate_metrics": {
+    "bpp_avg": 23.9043,
+    "bpp_est_avg": 25.1951,
+    "ent_dec_time_avg": 13.7489,
+    "ent_enc_time_avg": 8.3879,
+    "eval_time_avg": 0.4188,
+    "macs_avg": NaN,
+    "macs_rate_avg": NaN,
+    "params_avg": 9035.0,
+    "params_codec_avg": 42779.0,
+    "psnr_avg": 10.4351,
+    "size": 391648.0,
+    "teacher-mse_avg": 0.4888,
+    "train_time_avg": 6.7552
+  }
+}

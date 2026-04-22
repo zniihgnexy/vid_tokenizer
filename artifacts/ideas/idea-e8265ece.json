@@ -1,0 +1,123 @@
+{
+  "kind": "idea",
+  "schema_version": 1,
+  "artifact_id": "idea-e8265ece",
+  "id": "idea-e8265ece",
+  "quest_id": "002",
+  "created_at": "2026-04-15T10:09:27+00:00",
+  "updated_at": "2026-04-15T10:09:27+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-c5e88710",
+  "head_commit": "d6f1b52026ad7037966282d00ab698ee50faaee4",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-c5e88710",
+  "summary": "Idea `idea-c5e88710` created and promoted to the active research head.",
+  "reason": "A concrete idea was selected for continued research and implementation.",
+  "idea_id": "idea-c5e88710",
+  "lineage_intent": "continue_line",
+  "parent_branch": "idea/002-idea-955ff951",
+  "foundation_ref": {
+    "kind": "idea",
+    "ref": "idea-955ff951",
+    "branch": "idea/002-idea-955ff951",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951",
+    "idea_id": "idea-955ff951",
+    "label": "Idea `idea-955ff951` on `idea/002-idea-955ff951`"
+  },
+  "foundation_reason": "Use the current chunk-aware branch as the foundation because it already contains the failed evaluator, the exact widened smoke outputs, and the direct collapse probe that motivates the next route.",
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710",
+  "worktree_rel_path": ".ds/worktrees/idea-idea-c5e88710",
+  "flow_type": "idea_submission",
+  "protocol_step": "create",
+  "paths": {
+    "idea_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710/memory/ideas/idea-c5e88710/idea.md",
+    "idea_draft_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710/memory/ideas/idea-c5e88710/draft.md",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710"
+  },
+  "details": {
+    "title": "Query-Distinct Packet Bridge After Collapse Evidence",
+    "problem": "The chunk-aware local-burst smoke falsified the main rescue hypothesis: every packet-side chunk-aware bridge metric stayed at four-way chance even though the target-feature sanity route remained perfect. A direct chunk-level cosine probe shows the decisive bottleneck: pred_feat and pred_delta are identical across widened chunk bundles, while target_feat and target_delta still vary. The next line must restore or at least localize query-side chunk discrimination before any further bridge claim is meaningful.",
+    "hypothesis": "The current failure is primarily a query-side representation-collapse problem rather than a chunk-aggregation problem. If chunk discrimination is preserved somewhere before or around the query packet head, one minimal diversity-preserving control should lift the chunk-aware bridge above four-way chance without changing the frozen widened data surface.",
+    "mechanism": "",
+    "method_brief": "Keep the same frozen widened chunk bundles and the current chunk-aware evaluator as diagnostic controls. First localize where chunk discrimination disappears by comparing target fields, exported predicted packets, and any query-side packet head or projection. Only if the collapse localizes to the predicted packet side, add the smallest diversity-preserving control justified by the literature, such as stop-gradient asymmetry, a variance floor, redundancy reduction, or a chunk-level contrastive calibration, then re-evaluate on the same four-chunk bounded surface.",
+    "selection_scores": {
+      "winner": "candidate_a_query_side_packet_collapse_diagnosis",
+      "candidate_b": "direct anti-collapse regularization deferred until localization",
+      "candidate_c": "abandon packet bridge now rejected as premature"
+    },
+    "mechanism_family": "diversity_preserving_packet_bridge",
+    "change_layer": "query_side_packet_head",
+    "source_lens": "local_collapse_evidence_plus_ssl_anti_collapse_literature",
+    "expected_gain": "Either recover chunk-aware packet bridge performance above 0.25 on the same bounded surface, or decisively show that the packet bridge line should be downgraded because query-side collapse already happens before any local bridge fix can act.",
+    "next_target": "implement a collapse-localization package that measures where chunk discrimination disappears and, if it is lost in the query packet head, test one minimal anti-collapse query control on the same frozen widened four-chunk surface",
+    "branch_no": "009",
+    "lineage_intent": "continue_line",
+    "parent_branch": "idea/002-idea-955ff951",
+    "foundation_ref": {
+      "kind": "idea",
+      "ref": "idea-955ff951",
+      "branch": "idea/002-idea-955ff951",
+      "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951",
+      "idea_id": "idea-955ff951",
+      "label": "Idea `idea-955ff951` on `idea/002-idea-955ff951`"
+    },
+    "foundation_reason": "Use the current chunk-aware branch as the foundation because it already contains the failed evaluator, the exact widened smoke outputs, and the direct collapse probe that motivates the next route.",
+    "idea_draft_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710/memory/ideas/idea-c5e88710/draft.md",
+    "evidence_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951/experiments/main/evals/shared_gating_ego4d16f_chunk_aware_packet_smoke_r1/report.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951/experiments/main/evals/shared_gating_ego4d16f_chunk_aware_packet_smoke_r1/summary.json",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951/artifacts/ideas/literature_survey.md"
+    ],
+    "risks": [
+      "The collapse may already exist before packet export, leaving no local query-head fix.",
+      "A tiny-surface anti-collapse control may overfit or create a misleading apparent gain.",
+      "If no query-side surface retains chunk discrimination, the packet line may need a broader route change."
+    ],
+    "submission_mode": "line",
+    "source_candidate_id": null
+  },
+  "guidance_vm": {
+    "current_anchor": "idea",
+    "recommended_skill": "experiment",
+    "recommended_action": "launch_experiment",
+    "summary": "Idea branch is ready. Continue with the next active optimization stage on this durable research node.",
+    "why_now": "The accepted idea already has its durable branch/worktree, so the next leverage point is the configured next stage rather than another route-selection loop.",
+    "complete_when": [
+      "The next configured stage starts from this branch.",
+      "The resulting evidence or decision is written durably."
+    ],
+    "alternative_routes": [
+      {
+        "action": "continue",
+        "label": "Inspect the branch once",
+        "when": "A quick branch sanity check is still needed before running.",
+        "tradeoff": "Adds caution, but should stay short."
+      },
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Analyze first",
+        "when": "The idea package still has unresolved setup ambiguity that needs clarification.",
+        "tradeoff": "Can reduce wasted runs, but is unusual before a first main result."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record_main_experiment(...)",
+        "purpose": "Record the first real main result on this branch when the next stage is experiment-oriented."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "idea",
+    "source_artifact_id": "idea-e8265ece",
+    "related_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710/memory/ideas/idea-c5e88710/idea.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710/memory/ideas/idea-c5e88710/draft.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710"
+    ],
+    "stage_status": "ready"
+  }
+}

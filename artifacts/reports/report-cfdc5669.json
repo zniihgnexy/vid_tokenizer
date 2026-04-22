@@ -1,0 +1,52 @@
+{
+  "kind": "report",
+  "schema_version": 1,
+  "artifact_id": "report-cfdc5669",
+  "id": "report-cfdc5669",
+  "quest_id": "002",
+  "created_at": "2026-04-22T07:54:29+00:00",
+  "updated_at": "2026-04-22T07:54:29+00:00",
+  "source": {
+    "kind": "system",
+    "role": "artifact"
+  },
+  "status": "completed",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "eb64f29ae87bc07f7e305770cf5d1d30cc8b6887",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "report_type": "summary_refresh",
+  "report_id": "report-91e9f705",
+  "summary": "Quest summary refreshed from recent artifacts.",
+  "reason": "Refresh summary after successful paper bundle submission and post-registration route decision into review.",
+  "paths": {
+    "summary_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/SUMMARY.md"
+  },
+  "semantic_key": "report:finalize:summary_refresh:none:7b15521c4379744058970e7fa081b7ee757c30520a5888c6dd5cfe2f220f39b0",
+  "guidance_vm": {
+    "current_anchor": "baseline",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Report saved. Turn it into the next explicit route instead of leaving it as passive context.",
+    "why_now": "A report is most useful when it directly drives the next durable decision.",
+    "complete_when": [
+      "The report informs a route choice or stage transition.",
+      "The next active anchor is clear and durable."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(kind='decision', ...)",
+        "purpose": "Convert the report into a route decision."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "report",
+    "source_artifact_id": "report-cfdc5669",
+    "related_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/SUMMARY.md"
+    ],
+    "stage_status": "ready"
+  }
+}

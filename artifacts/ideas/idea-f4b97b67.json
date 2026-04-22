@@ -1,0 +1,123 @@
+{
+  "kind": "idea",
+  "schema_version": 1,
+  "artifact_id": "idea-f4b97b67",
+  "id": "idea-f4b97b67",
+  "quest_id": "002",
+  "created_at": "2026-04-15T08:16:07+00:00",
+  "updated_at": "2026-04-15T08:16:07+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-e0d17d22",
+  "head_commit": "70c7a83a2f2dec5a6d22f247479b92dedd25994b",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-e0d17d22",
+  "summary": "Idea `idea-e0d17d22` created and promoted to the active research head.",
+  "reason": "Three serious candidates were considered: A) only widen the current delta validation surface, B) promote delta packets into a lightweight frozen-consumer bridge, and C) add a static-context sidecar with gated fusion. B wins because it keeps the incumbent delta-first signal, advances the user-requested pipeline-building goal, and stays feasible with the repo's current assets; A is too conservative as the sole next line, and C adds a new confound before the simpler bridge is tested.",
+  "idea_id": "idea-e0d17d22",
+  "lineage_intent": "continue_line",
+  "parent_branch": "idea/002-idea-6bfed938",
+  "foundation_ref": {
+    "kind": "idea",
+    "ref": "idea-6bfed938",
+    "branch": "idea/002-idea-6bfed938",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-6bfed938",
+    "idea_id": "idea-6bfed938",
+    "label": "Idea `idea-6bfed938` on `idea/002-idea-6bfed938`"
+  },
+  "foundation_reason": "Use the current active head as the foundation because it already isolated the winning temporal-change signal and ruled out plain static packet as the default interface. The clean next move is a child line that changes only the downstream bridge layer.",
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22",
+  "worktree_rel_path": ".ds/worktrees/idea-idea-e0d17d22",
+  "flow_type": "idea_submission",
+  "protocol_step": "create",
+  "paths": {
+    "idea_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/memory/ideas/idea-e0d17d22/idea.md",
+    "idea_draft_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/memory/ideas/idea-e0d17d22/draft.md",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22"
+  },
+  "details": {
+    "title": "Delta-Packet Bridge to Frozen Consumer Space",
+    "problem": "The delta-first packet follow-up stabilized on the frozen 4-frame surface: `delta-only` and `8x delta concat` both reach top-1 0.75 with mean rank 1.25, while reconstructed-video control and plain static packet stay at 0.25 and naive weighted fusion drops to 0.5. The current line still stops at packet-to-packet similarity, so the next child line must convert the validated temporal-change packet into a true downstream consumer-facing interface without assuming a full external foundation-model stack.",
+    "hypothesis": "If the machine-facing signal is concentrated in temporal change, then a lightweight temporal adapter that maps delta-dominant packets into a frozen consumer embedding space will preserve downstream retrieval/probing structure more faithfully than reconstructed video or static-heavy packet fusion under the same frozen upstream contract.",
+    "mechanism": "Freeze the upstream codec and the current packet exporter, keep temporal delta as the primary payload, and add a small consumer-side bridge that reads delta-only or delta-dominant packet sequences and emits consumer-facing embeddings for bounded retrieval or probing. The first experiment package should widen the bounded sample surface while keeping the same comparison contract so adapter gains are not confounded with a changed evaluation surface.",
+    "method_brief": "Build a delta-packet bridge rather than another pure packet-similarity check: widen the bounded surface, compare reconstructed-video control against delta-only and delta-dominant concat bridge variants, and keep static-context sidecar fusion only as a deferred control if the primary bridge stabilizes.",
+    "selection_scores": {
+      "winner": "candidate_b_delta_packet_bridge",
+      "candidate_a": "required robustness sub-check inside the first experiment package",
+      "candidate_c": "deferred because local evidence already shows static-heavy fusion can hurt"
+    },
+    "mechanism_family": "delta_packet_consumer_bridge",
+    "change_layer": "downstream_consumer_bridge",
+    "source_lens": "local_evidence_plus_temporal_motion_literature",
+    "expected_gain": "Move the project from packet similarity into a runnable machine-facing bridge layer, while preserving the local dependency boundary and the current delta-first evidence. This is the smallest credible step toward the user's longer-term foundation-model pipeline goal.",
+    "next_target": "prepare the bounded delta-packet bridge experiment package on a wider surface and compare delta-only, delta-dominant concat, and reconstructed-video control under one frozen consumer space",
+    "branch_no": "006",
+    "lineage_intent": "continue_line",
+    "parent_branch": "idea/002-idea-6bfed938",
+    "foundation_ref": {
+      "kind": "idea",
+      "ref": "idea-6bfed938",
+      "branch": "idea/002-idea-6bfed938",
+      "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-6bfed938",
+      "idea_id": "idea-6bfed938",
+      "label": "Idea `idea-6bfed938` on `idea/002-idea-6bfed938`"
+    },
+    "foundation_reason": "Use the current active head as the foundation because it already isolated the winning temporal-change signal and ruled out plain static packet as the default interface. The clean next move is a child line that changes only the downstream bridge layer.",
+    "idea_draft_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/memory/ideas/idea-e0d17d22/draft.md",
+    "evidence_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404/experiments/main/evals/delta_dominant_teacher_packet_followup_r1/summary.json",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404/artifacts/ideas/literature_survey.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404/memory/ideas/idea-44a0e404/idea.md"
+    ],
+    "risks": [
+      "The current evidence still comes from a tiny 4-frame surface, so the first adapter experiment can overfit unless the bounded surface is widened immediately.",
+      "The repo does not yet contain a reusable large-model dependency path, so the bridge must stay lightweight and local in this round.",
+      "Static context may still matter, but current evidence says adding it too early can reintroduce noise."
+    ],
+    "submission_mode": "line",
+    "source_candidate_id": null
+  },
+  "guidance_vm": {
+    "current_anchor": "idea",
+    "recommended_skill": "experiment",
+    "recommended_action": "launch_experiment",
+    "summary": "Idea branch is ready. Continue with the next active optimization stage on this durable research node.",
+    "why_now": "The accepted idea already has its durable branch/worktree, so the next leverage point is the configured next stage rather than another route-selection loop.",
+    "complete_when": [
+      "The next configured stage starts from this branch.",
+      "The resulting evidence or decision is written durably."
+    ],
+    "alternative_routes": [
+      {
+        "action": "continue",
+        "label": "Inspect the branch once",
+        "when": "A quick branch sanity check is still needed before running.",
+        "tradeoff": "Adds caution, but should stay short."
+      },
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Analyze first",
+        "when": "The idea package still has unresolved setup ambiguity that needs clarification.",
+        "tradeoff": "Can reduce wasted runs, but is unusual before a first main result."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record_main_experiment(...)",
+        "purpose": "Record the first real main result on this branch when the next stage is experiment-oriented."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "idea",
+    "source_artifact_id": "idea-f4b97b67",
+    "related_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/memory/ideas/idea-e0d17d22/idea.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/memory/ideas/idea-e0d17d22/draft.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22"
+    ],
+    "stage_status": "ready"
+  }
+}

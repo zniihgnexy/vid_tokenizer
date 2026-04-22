@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-04-14T14:26:52+00:00",
+  "projections": {
+    "details": {
+      "projection_id": "details.v1",
+      "state": "building",
+      "progress_current": 2,
+      "progress_total": 3,
+      "current_step": "Materializing workflow timeline",
+      "source_signature": "23e81105e43a18fb6410bba9daa56a926a40232ee5dcf2d1e86680de2849cc27",
+      "generated_at": null,
+      "last_success_at": null,
+      "error": null
+    },
+    "canvas": {
+      "projection_id": "canvas.v1",
+      "state": "building",
+      "progress_current": 2,
+      "progress_total": 3,
+      "current_step": "Computing branch canvas",
+      "source_signature": "953f28741954f5e448224d960d59840d54a342a81b774f7de70895f81c073702",
+      "generated_at": null,
+      "last_success_at": null,
+      "error": null
+    },
+    "git_canvas": {
+      "projection_id": "git_canvas.v1",
+      "state": "building",
+      "progress_current": 1,
+      "progress_total": 3,
+      "current_step": "Scanning commit history",
+      "source_signature": "7f73b01ca53dafce2639fe8efc1938ce5517711f105966575a24599a9ddc311e",
+      "generated_at": null,
+      "last_success_at": null,
+      "error": null
+    }
+  }
+}

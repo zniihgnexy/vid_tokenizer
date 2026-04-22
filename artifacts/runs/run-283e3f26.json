@@ -1,0 +1,69 @@
+{
+  "kind": "run",
+  "schema_version": 1,
+  "artifact_id": "run-283e3f26",
+  "id": "run-283e3f26",
+  "quest_id": "002",
+  "created_at": "2026-04-22T08:40:25+00:00",
+  "updated_at": "2026-04-22T08:40:25+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "7810cd30759117aa2ec54a02df27848a93b55d87",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "run_id": "run-298cb03d",
+  "run_kind": "decision",
+  "model": "inherit",
+  "summary": "我先按“本地整理成可人工 review 的 PR 包”这个目标来收口：先读当前 `decision`/`write` 相关约束、拉取 quest 和 paper 的最新状态，再把需要补的文档与代码清单定出来，然后直接在当前目录里落文件。\n我在补全两件关键事：一是把这条线已经沉淀好的论文/实验材料抽成一套可 review 的 PR 叙述，二是确认当前目录里哪些代码和入口还需要“落地化”整理，避免它只像 DeepScientist 的产物。接下来先把现有 paper、计划文档和目录结构对齐。\n状态已经对上了：paper 包本身是 ready 的，所以这一步不是补研究，而是把“可交付状态”重新整理成一份你能直接 review 和继续操作的本地 PR 包。现在我开始精读现有文档和 paper 内容，把需要补写的总览、使用说明、长视频/自定义数据实验指南落出来。\n我已经确认这条 paper 线本身是完整可交付的。现在重点转成“把这些内部研究材料翻译成 repo 视角下可读、可复现、可继续试长视频/自定义数据的一套入口文档”，同时检查现有代码入口够不够直接。\n我已经确认一个关键空缺：当前目录里没有面向 GitHub/repo 使用者的 `README`。也就是说，研究材料是齐的，但“怎么读、怎么跑、怎么往你自己的长视频和数据上扩”这个入口现在还不够友好。下一步我会把这些入口文档补上，并把关键代码/实验位置串成一条清晰主线。\n我现在已经把缺口收敛清楚了：主要不是缺实验，而是缺一套面向 GitHub 使用者的入口层。现有目录里 paper、evidence、review、baseline、实验结果都在，但还缺一个总 README，加上“怎么学习这条线”“怎么复现”“怎么扩到长视频/自定义数据”的操作文档。接下来我会先把这些文档结构定稿，再补必要的入口文件。\n我又确认了一点：当前 repo 里关键实验结果更多是以 `paper` 和 `eval summary` 的形式存在，面向“复现实验”的入口脚本和面向“直接上手”的说明之间还没被串成一条完整使用路径。所以我会在补文档时把“论文证据”和“实际可跑入口”明确分开，免得 review 时读起来很散。\n我已经把文档骨架想清楚了，接下来会直接落文件。结构会是三层：`README` 负责总览和入口，`PR` 文档负责给你人工 review，",
+  "history_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/codex_history/run-298cb03d",
+  "run_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/runs/run-298cb03d",
+  "exit_code": 0,
+  "guidance_vm": {
+    "current_anchor": "experiment",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Main run recorded. Interpret it against baseline before spending more compute.",
+    "why_now": "A run result only changes the quest once its metrics, caveats, and branch value are turned into a durable decision.",
+    "complete_when": [
+      "A report or decision explains the result versus baseline.",
+      "The next route is chosen: analysis, write, branch, or stop."
+    ],
+    "alternative_routes": [
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Launch analysis",
+        "when": "The result is promising but still under-explained.",
+        "tradeoff": "Strengthens understanding, but adds additional runs."
+      },
+      {
+        "action": "write",
+        "label": "Move to writing",
+        "when": "The result is already strong and well-explained enough.",
+        "tradeoff": "Faster paper progress, but less stress-testing."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(kind='report', ...)",
+        "purpose": "Summarize the main run and metric deltas."
+      },
+      {
+        "name": "artifact.record(kind='decision', ...)",
+        "purpose": "Choose the next route based on the result."
+      },
+      {
+        "name": "artifact.create_analysis_campaign(...)",
+        "purpose": "When extra experiments are needed, create them as one-slice or multi-slice child branches from the current result node."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "run",
+    "source_artifact_id": "run-283e3f26",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

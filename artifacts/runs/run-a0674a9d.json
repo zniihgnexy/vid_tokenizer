@@ -1,0 +1,69 @@
+{
+  "kind": "run",
+  "schema_version": 1,
+  "artifact_id": "run-a0674a9d",
+  "id": "run-a0674a9d",
+  "quest_id": "002",
+  "created_at": "2026-04-17T15:24:55+00:00",
+  "updated_at": "2026-04-17T15:24:55+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "failed",
+  "branch": "idea/002-idea-d3d22136",
+  "head_commit": "dac84ac650944136b28621451bd83b3726272a07",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-d3d22136",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-d3d22136",
+  "run_id": "run-970ac843",
+  "run_kind": "idea",
+  "model": "inherit",
+  "summary": "You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at Apr 18th, 2026 3:08 AM.",
+  "history_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/codex_history/run-970ac843",
+  "run_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/runs/run-970ac843",
+  "exit_code": 1,
+  "guidance_vm": {
+    "current_anchor": "experiment",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Main run recorded. Interpret it against baseline before spending more compute.",
+    "why_now": "A run result only changes the quest once its metrics, caveats, and branch value are turned into a durable decision.",
+    "complete_when": [
+      "A report or decision explains the result versus baseline.",
+      "The next route is chosen: analysis, write, branch, or stop."
+    ],
+    "alternative_routes": [
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Launch analysis",
+        "when": "The result is promising but still under-explained.",
+        "tradeoff": "Strengthens understanding, but adds additional runs."
+      },
+      {
+        "action": "write",
+        "label": "Move to writing",
+        "when": "The result is already strong and well-explained enough.",
+        "tradeoff": "Faster paper progress, but less stress-testing."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(kind='report', ...)",
+        "purpose": "Summarize the main run and metric deltas."
+      },
+      {
+        "name": "artifact.record(kind='decision', ...)",
+        "purpose": "Choose the next route based on the result."
+      },
+      {
+        "name": "artifact.create_analysis_campaign(...)",
+        "purpose": "When extra experiments are needed, create them as one-slice or multi-slice child branches from the current result node."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "run",
+    "source_artifact_id": "run-a0674a9d",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

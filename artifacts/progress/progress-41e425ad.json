@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-41e425ad",
+  "id": "progress-41e425ad",
+  "quest_id": "002",
+  "created_at": "2026-04-17T14:26:38+00:00",
+  "updated_at": "2026-04-17T14:26:38+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "run/shared_gating_pred_variance_repair_ego4d16f_smoke_r1",
+  "head_commit": "9fd1919c3a2b8e5a2ff0cca78a03fb3b5fbfd72c",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1",
+  "message": "我已经把这轮结果记录要用的口径对齐好了：既参考了上一条同类型 bounded run 的记录格式，也核过了当前基线合同里这类本地比较允许使用的指标面。接下来我不会再加跑新实验，而是直接把这轮有效结果正式登记进去，然后做后续路线判断。",
+  "summary": "我已经把这轮结果记录要用的口径对齐好了：既参考了上一条同类型 bounded run 的记录格式，也核过了当前基线合同里这类本地比较允许使用的指标面。接下来我不会再加跑新实验，而是直接把这轮有效结果正式登记进去，然后做后续路线判断。",
+  "summary_preview": "我已经把这轮结果记录要用的口径对齐好了：既参考了上一条同类型 bounded run 的记录格式，也核过了当前基线合同里这类本地比较允许使用的指标面。接下来我不会再加跑新实验，而是直接把这轮有效结果正式登记进去，然后做后续路线判断。",
+  "interaction_phase": "ack",
+  "importance": "normal",
+  "attachments": [],
+  "interaction_id": "progress-41e425ad",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": "progress-2d954625",
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-41e425ad",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

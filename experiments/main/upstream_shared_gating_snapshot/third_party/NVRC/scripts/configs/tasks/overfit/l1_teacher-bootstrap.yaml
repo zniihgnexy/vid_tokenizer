@@ -1,0 +1,9 @@
+loss: [1.0, l1]
+metric: [psnr, teacher-mse]
+color_space: RGB
+lamb: 1.0
+enable_log: false
+teacher_enable: true
+teacher_type: mean_pool
+teacher_loss_weight: 0.2
+teacher_detach_target: true

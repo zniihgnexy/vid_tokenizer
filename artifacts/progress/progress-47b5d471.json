@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-47b5d471",
+  "id": "progress-47b5d471",
+  "quest_id": "002",
+  "created_at": "2026-04-17T14:41:40+00:00",
+  "updated_at": "2026-04-17T14:41:40+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "idea/002-idea-76fee64d",
+  "head_commit": "9d96b73da00b2d698f09ffbd95c91df6d60803e3",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-76fee64d",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-76fee64d",
+  "message": "我已经定位到旧 survey 的问题了：它还停在上一条 anti-collapse repair 线上，没有覆盖现在这条“teacher-anchored packet adapter”新假设。接下来我会用一轮很窄的外部文献补齐 retrieval / adapter / distillation 这三个真正相关的邻域，然后把 survey 和计划一起改正。",
+  "summary": "我已经定位到旧 survey 的问题了：它还停在上一条 anti-collapse repair 线上，没有覆盖现在这条“teacher-anchored packet adapter”新假设。接下来我会用一轮很窄的外部文献补齐 retrieval / adapter / distillation 这三个真正相关的邻域，然后把 survey 和计划一起改正。",
+  "summary_preview": "我已经定位到旧 survey 的问题了：它还停在上一条 anti-collapse repair 线上，没有覆盖现在这条“teacher-anchored packet adapter”新假设。接下来我会用一轮很窄的外部文献补齐 retrieval / adapter / distillation 这三个真正相关的邻域，然后把 survey 和计划一起改正。",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "progress-47b5d471",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-47b5d471",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

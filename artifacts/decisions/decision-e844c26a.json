@@ -1,0 +1,53 @@
+{
+  "kind": "decision",
+  "schema_version": 1,
+  "artifact_id": "decision-e844c26a",
+  "id": "decision-e844c26a",
+  "quest_id": "002",
+  "created_at": "2026-04-17T08:15:58+00:00",
+  "updated_at": "2026-04-17T08:15:58+00:00",
+  "source": {
+    "kind": "system",
+    "role": "artifact"
+  },
+  "status": "prepared",
+  "branch": "run/shared_gating_relation_semchange_delta_smoke_r1",
+  "head_commit": "2aa0050445f591c40de5392ee9bde6eb7004c11d",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1",
+  "verdict": "prepared",
+  "action": "prepare_branch",
+  "reason": "Prepared branch `run/shared_gating_relation_semchange_delta_smoke_r1` for the next quest step.",
+  "run_id": "shared_gating_relation_semchange_delta_smoke_r1",
+  "idea_id": "idea-253b77bd",
+  "branch_kind": "run",
+  "parent_branch": "idea/002-idea-253b77bd",
+  "start_point": "idea/002-idea-253b77bd",
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1",
+  "workspace_mode": "run",
+  "semantic_key": "decision:idea:prepare_branch:prepared:24299ff8473154b8ae28b3ddd6111f15cda6ee700e27accc447bdd8a6a34f92b",
+  "guidance_vm": {
+    "current_anchor": "decision",
+    "recommended_skill": "decision",
+    "recommended_action": "prepare_branch",
+    "summary": "A decision was recorded. Follow the chosen route and keep the next outcome durable.",
+    "why_now": "Prepared branch `run/shared_gating_relation_semchange_delta_smoke_r1` for the next quest step.",
+    "complete_when": [
+      "The next stage starts and writes its first durable output.",
+      "Any new ambiguity is converted into another explicit decision."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(...)",
+        "purpose": "Persist the first durable output of the chosen route."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "decision",
+    "source_artifact_id": "decision-e844c26a",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "kind": "milestone",
+  "schema_version": 1,
+  "artifact_id": "milestone-731e5adf",
+  "id": "milestone-731e5adf",
+  "quest_id": "002",
+  "created_at": "2026-04-22T08:39:55+00:00",
+  "updated_at": "2026-04-22T08:39:55+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "completed",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "0446082a5c98776846e7ba62ecbf5fba5bd8a543",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "message": "都搞定啦！我已经把这条线整理成一套本地可人工 review 的 PR 包，而且新增内容集中在 repo-facing 文档层，没有去改动现有实验结论或 paper 证据链。现在你可以直接从总入口、PR 说明、学习路径和长视频/自定义数据操作手册四个入口开始看；下一步如果你要人工 review，这套材料已经足够支撑你按“故事 -> 证据 -> 代码入口 -> 后续扩展”这个顺序往下审。",
+  "summary": "都搞定啦！我已经把这条线整理成一套本地可人工 review 的 PR 包，而且新增内容集中在 repo-facing 文档层，没有去改动现有实验结论或 paper 证据链。现在你可以直接从总入口、PR 说明、学习路径和长视频/自定义数据操作手册四个入口开始看；下一步如果你要人工 review，这套材料已经足够支撑你按“故事 -> 证据 -> 代码入口 -> 后续扩展”这个顺序往下审。",
+  "summary_preview": "都搞定啦！我已经把这条线整理成一套本地可人工 review 的 PR 包，而且新增内容集中在 repo-facing 文档层，没有去改动现有实验结论或 paper 证据链。现在你可以直接从总入口、PR 说明、学习路径和长视频/自定义数据操作手册四个入口开始看；下一步如果你要人工 review，这套材料已经足够支撑你按“故事 -> 证据 -> 代码入口 -> 后续扩展”这个顺序往下审。",
+  "interaction_phase": "ack",
+  "importance": "normal",
+  "attachments": [],
+  "interaction_id": "milestone-731e5adf",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "milestone",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Milestone recorded. Continue from the current anchor and keep the next checkpoint durable.",
+    "why_now": "Milestones should mark meaningful progress, not end the route prematurely.",
+    "complete_when": [
+      "The next substantive output is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.interact(kind='progress', ...)",
+        "purpose": "Send the next checkpoint update across active surfaces."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "milestone",
+    "source_artifact_id": "milestone-731e5adf",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

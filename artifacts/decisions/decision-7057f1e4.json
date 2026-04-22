@@ -1,0 +1,53 @@
+{
+  "kind": "decision",
+  "schema_version": 1,
+  "artifact_id": "decision-7057f1e4",
+  "id": "decision-7057f1e4",
+  "quest_id": "002",
+  "created_at": "2026-04-17T20:50:49+00:00",
+  "updated_at": "2026-04-17T20:50:49+00:00",
+  "source": {
+    "kind": "system",
+    "role": "artifact"
+  },
+  "status": "prepared",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "4857b3cd3261ed8ba5c5914abc5ed74860032779",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "verdict": "prepared",
+  "action": "prepare_branch",
+  "reason": "Prepared branch `paper/run-querybank-teacher-anchor-smoke-r1` for the next quest step.",
+  "run_id": null,
+  "idea_id": "idea-e313b721",
+  "branch_kind": "paper",
+  "parent_branch": "run/querybank_teacher_anchor_smoke_r1",
+  "start_point": "run/querybank_teacher_anchor_smoke_r1",
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_mode": "paper",
+  "semantic_key": "decision:idea:prepare_branch:prepared:bf798398defca9e4ab418f1f1ef7d8a533d2e86c0fc4bfadddec11fcb92722b5",
+  "guidance_vm": {
+    "current_anchor": "decision",
+    "recommended_skill": "decision",
+    "recommended_action": "prepare_branch",
+    "summary": "A decision was recorded. Follow the chosen route and keep the next outcome durable.",
+    "why_now": "Prepared branch `paper/run-querybank-teacher-anchor-smoke-r1` for the next quest step.",
+    "complete_when": [
+      "The next stage starts and writes its first durable output.",
+      "Any new ambiguity is converted into another explicit decision."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(...)",
+        "purpose": "Persist the first durable output of the chosen route."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "decision",
+    "source_artifact_id": "decision-7057f1e4",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

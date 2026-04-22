@@ -1,0 +1,110 @@
+{
+  "kind": "decision",
+  "schema_version": 1,
+  "artifact_id": "decision-41ab5396",
+  "id": "decision-41ab5396",
+  "quest_id": "002",
+  "created_at": "2026-04-15T07:53:59+00:00",
+  "updated_at": "2026-04-15T07:53:59+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi",
+    "run_id": "run-4edf6184"
+  },
+  "status": "pending",
+  "branch": "idea/002-idea-301dcd71",
+  "head_commit": "2ca1b271a60c705696c4ae099cf0b388186bf4ee",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-301dcd71",
+  "stage": "decision",
+  "title": "Shift from plain feature packet to delta-dominant packet after first smoke",
+  "question": "Which packet route should continue after the first teacher-packet smoke on the frozen 4-frame surface?",
+  "verdict": "neutral",
+  "action": "iterate",
+  "reason": "The first packet smoke does not support plain static feature packet as the machine-facing winner, because its retrieval top-1 stays at 0.25, matching the reconstructed-video control. The same smoke does support temporal-change signal as the promising route: delta-only packet retrieval reaches top-1 0.75 with mean rank 1.25, and a heavy delta-dominant concat mix also reaches top-1 0.75. The next justified iteration should therefore treat delta as the primary packet signal rather than continuing to center plain feature embeddings.",
+  "selection": {
+    "candidates": [
+      {
+        "name": "plain_feature_packet",
+        "evidence": "pred_feat_to_target_feat top1=0.25, mean_match_rank=2.5"
+      },
+      {
+        "name": "delta_dominant_packet",
+        "evidence": "pred_delta_to_target_delta top1=0.75, mean_match_rank=1.25"
+      },
+      {
+        "name": "heavy_delta_concat_packet",
+        "evidence": "weight_sweep concat weight=8.0 top1=0.75, mean_match_rank=1.25"
+      }
+    ],
+    "criteria": [
+      "retrieval preservation against the same frozen 4-frame control",
+      "minimal extra complexity beyond the first exporter/evaluator scaffold",
+      "clean continuity with the parent reconstructed-video comparison"
+    ],
+    "winner": "delta_dominant_packet",
+    "why_winner": "It is the smallest route that materially outperforms the reconstructed-video control on the first bounded smoke.",
+    "why_not_alternatives": {
+      "plain_feature_packet": "It fails to improve over the reconstructed-video control.",
+      "heavy_delta_concat_packet": "It matches delta-only performance on this smoke but adds mixing complexity without extra evidence yet."
+    },
+    "main_residual_risk": "The current support is still bounded to a 4-frame smoke surface, so the next step must verify that delta-dominant behavior remains stable under the same comparison contract before scaling."
+  },
+  "evidence_paths": [
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/experiments/main/evals/shared_gating_teacher_packet_smoke_r1/summary.json",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/experiments/main/evals/shared_gating_teacher_packet_smoke_r1/report.md",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/experiments/main/evals/shared_gating_teacher_packet_smoke_r1/weight_sweep.json",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/experiments/main/interface_bundles/shared_gating_teacher_packet_smoke_r1/manifest.json",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/experiments/main/shared_gating_downstream_interface_bootstrap_r1/downstream_eval/summary.json"
+  ],
+  "next_stage": "experiment",
+  "next_action": "Prepare the smallest delta-first packet follow-up package on the same frozen 4-frame surface and reuse the current exporter/evaluator scaffold.",
+  "recommended_skill_reads": [
+    "experiment"
+  ],
+  "comment": "Record the first teacher packet smoke decision and route shift toward a delta-dominant packet interface.",
+  "run_id": "run-4edf6184",
+  "anchor": "idea",
+  "semantic_key": "decision:decision:iterate:neutral:a92f6c9dd832fc61a0848020dcaa7ab0f54c50307c9a0cdaa53f84d84eb3d141",
+  "guidance_vm": {
+    "current_anchor": "decision",
+    "recommended_skill": "idea",
+    "recommended_action": "iterate",
+    "summary": "Decision accepted: use the latest measured result to start the next optimization round.",
+    "why_now": "The first packet smoke does not support plain static feature packet as the machine-facing winner, because its retrieval top-1 stays at 0.25, matching the reconstructed-video control. The same smoke does support temporal-change signal as the promising route: delta-only packet retrieval reaches top-1 0.75 with mean rank 1.25, and a heavy delta-dominant concat mix also reaches top-1 0.75. The next justified iteration should therefore treat delta as the primary packet signal rather than continuing to center plain feature embeddings.",
+    "complete_when": [
+      "The latest main result is summarized durably against baseline.",
+      "A new idea branch is recorded with explicit reasons grounded in the measured result."
+    ],
+    "alternative_routes": [
+      {
+        "action": "branch",
+        "label": "Branch an alternative",
+        "when": "The current result is informative, but a sibling direction may now be stronger.",
+        "tradeoff": "Improves search breadth, but adds another durable branch."
+      },
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Analyze first",
+        "when": "The result is promising but still ambiguous.",
+        "tradeoff": "Improves understanding, but delays the next optimization round."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(kind='report', ...)",
+        "purpose": "Summarize why this result should shape the next optimization round."
+      },
+      {
+        "name": "artifact.submit_idea(mode='create', lineage_intent='continue_line'|'branch_alternative', ...)",
+        "purpose": "Create the next durable idea branch from the measured result."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "decision",
+    "source_artifact_id": "decision-41ab5396",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

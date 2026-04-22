@@ -1,0 +1,315 @@
+{
+  "accessible_surfaces": [
+    "target_feat",
+    "target_delta",
+    "pred_feat",
+    "pred_delta"
+  ],
+  "bundle_dirs": [
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/experiments/main/interface_bundles/shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk00_smoke_r1",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/experiments/main/interface_bundles/shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk01_smoke_r1",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/experiments/main/interface_bundles/shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk02_smoke_r1",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/experiments/main/interface_bundles/shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk03_smoke_r1"
+  ],
+  "chance_top1": 0.25,
+  "chunk_ids": [
+    "shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk00_smoke_r1",
+    "shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk01_smoke_r1",
+    "shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk02_smoke_r1",
+    "shared_gating_ego4d16f_teacher_packet_ego4d_small_bridge_16f_chunk03_smoke_r1"
+  ],
+  "cross_surface_metrics": {
+    "pred_delta_to_target_delta_frame_mean": {
+      "retrieval": {
+        "mean_best_nonmatch_similarity": -0.0008865082636475563,
+        "mean_margin_vs_best_nonmatch": -0.03338799439370632,
+        "mean_match_rank": 2.5,
+        "mean_matching_similarity": -0.03427450265735388,
+        "top1_accuracy": 0.25
+      },
+      "similarity": {
+        "diag_mean": -0.03427450358867645,
+        "offdiag_max": 0.0040451474487781525,
+        "offdiag_mean": -0.034274499863386154,
+        "offdiag_min": -0.08706159889698029
+      }
+    },
+    "pred_delta_to_target_delta_seq_concat": {
+      "retrieval": {
+        "mean_best_nonmatch_similarity": 0.05399729264900088,
+        "mean_margin_vs_best_nonmatch": -0.05219570454210043,
+        "mean_match_rank": 2.5,
+        "mean_matching_similarity": 0.0018015881069004536,
+        "top1_accuracy": 0.25
+      },
+      "similarity": {
+        "diag_mean": 0.0018015876412391663,
+        "offdiag_max": 0.06447231024503708,
+        "offdiag_mean": 0.0018015885725617409,
+        "offdiag_min": -0.05392993614077568
+      }
+    },
+    "pred_delta_to_target_feat_frame_mean": {
+      "retrieval": {
+        "mean_best_nonmatch_similarity": -0.13968494534492493,
+        "mean_margin_vs_best_nonmatch": -0.00742073729634285,
+        "mean_match_rank": 2.5,
+        "mean_matching_similarity": -0.14710568264126778,
+        "top1_accuracy": 0.25
+      },
+      "similarity": {
+        "diag_mean": -0.14710567891597748,
+        "offdiag_max": -0.13929349184036255,
+        "offdiag_mean": -0.14710569381713867,
+        "offdiag_min": -0.15499354898929596
+      }
+    },
+    "pred_delta_to_target_feat_seq_concat": {
+      "retrieval": {
+        "mean_best_nonmatch_similarity": -0.04196332395076752,
+        "mean_margin_vs_best_nonmatch": -0.0060909707099199295,
+        "mean_match_rank": 2.5,
+        "mean_matching_similarity": -0.04805429466068745,
+        "top1_accuracy": 0.25
+      },
+      "similarity": {
+        "diag_mean": -0.0480542927980423,
+        "offdiag_max": -0.04099312424659729,
+        "offdiag_mean": -0.048054296523332596,
+        "offdiag_min": -0.0564686581492424
+      }
+    },
+    "pred_feat_to_target_feat_frame_mean": {
+      "retrieval": {
+        "mean_best_nonmatch_similarity": 0.5980539619922638,
+        "mean_margin_vs_best_nonmatch": -0.0033484846353530884,
+        "mean_match_rank": 2.5,
+        "mean_matching_similarity": 0.5947054773569107,
+        "top1_accuracy": 0.25
+      },
+      "similarity": {
+        "diag_mean": 0.5947054624557495,
+        "offdiag_max": 0.5984057188034058,
+        "offdiag_mean": 0.5947054624557495,
+        "offdiag_min": 0.5910902619361877
+      }
+    },
+    "pred_feat_to_target_feat_seq_concat": {
+      "retrieval": {
+        "mean_best_nonmatch_similarity": 0.5857151299715042,
+        "mean_margin_vs_best_nonmatch": -0.005178987979888916,
+        "mean_match_rank": 2.5,
+        "mean_matching_similarity": 0.5805361419916153,
+        "top1_accuracy": 0.25
+      },
+      "similarity": {
+        "diag_mean": 0.5805361270904541,
+        "offdiag_max": 0.586453378200531,
+        "offdiag_mean": 0.5805361270904541,
+        "offdiag_min": 0.5744894742965698
+      }
+    }
+  },
+  "frame_count_per_chunk": 4,
+  "localization_judgment": {
+    "earliest_accessible_collapse_surface": "exported_predicted_packets_or_earlier",
+    "missing_planned_surfaces": [
+      "query_projection",
+      "query_packet_head"
+    ],
+    "predicted_packet_surface_collapsed": true,
+    "recommended_next_action": "Exported predicted packets are already collapsed while target packets remain discriminative. If deeper query-side projections are inaccessible, treat exported predicted packets as the earliest accessible collapse surface and test at most one minimal repair that acts on the query head or predictor.",
+    "target_surface_discriminative": true
+  },
+  "missing_surfaces": [
+    "query_projection",
+    "query_packet_head"
+  ],
+  "mode": "smoke",
+  "self_surface_metrics": {
+    "pred_delta_to_pred_delta_frame_mean": {
+      "collapsed": true,
+      "retrieval": {
+        "mean_best_nonmatch_similarity": 1.0,
+        "mean_margin_vs_best_nonmatch": 0.0,
+        "mean_match_rank": 2.5,
+        "mean_matching_similarity": 1.0,
+        "top1_accuracy": 0.25
+      },
+      "similarity": {
+        "diag_mean": 1.0,
+        "offdiag_max": 1.0,
+        "offdiag_mean": 1.0,
+        "offdiag_min": 1.0
+      },
+      "variance": {
+        "normalized_max_dimension_variance": 0.0,
+        "normalized_mean_dimension_variance": 0.0,
+        "raw_max_dimension_variance": 0.0,
+        "raw_mean_dimension_variance": 0.0,
+        "raw_mean_l2_norm": 1.0697029829025269
+      }
+    },
+    "pred_delta_to_pred_delta_seq_concat": {
+      "collapsed": true,
+      "retrieval": {
+        "mean_best_nonmatch_similarity": 0.9999998807907104,
+        "mean_margin_vs_best_nonmatch": 0.0,
+        "mean_match_rank": 2.5,
+        "mean_matching_similarity": 0.9999998807907104,
+        "top1_accuracy": 0.25
+      },
+      "similarity": {
+        "diag_mean": 0.9999998807907104,
+        "offdiag_max": 0.9999998807907104,
+        "offdiag_mean": 0.9999999403953552,
+        "offdiag_min": 0.9999998807907104
+      },
+      "variance": {
+        "normalized_max_dimension_variance": 0.0,
+        "normalized_mean_dimension_variance": 0.0,
+        "raw_max_dimension_variance": 0.0,
+        "raw_mean_dimension_variance": 0.0,
+        "raw_mean_l2_norm": 6.801050186157227
+      }
+    },
+    "pred_feat_to_pred_feat_frame_mean": {
+      "collapsed": true,
+      "retrieval": {
+        "mean_best_nonmatch_similarity": 1.0,
+        "mean_margin_vs_best_nonmatch": 0.0,
+        "mean_match_rank": 2.5,
+        "mean_matching_similarity": 1.0,
+        "top1_accuracy": 0.25
+      },
+      "similarity": {
+        "diag_mean": 1.0,
+        "offdiag_max": 1.0,
+        "offdiag_mean": 1.0,
+        "offdiag_min": 1.0
+      },
+      "variance": {
+        "normalized_max_dimension_variance": 0.0,
+        "normalized_mean_dimension_variance": 0.0,
+        "raw_max_dimension_variance": 0.0,
+        "raw_mean_dimension_variance": 0.0,
+        "raw_mean_l2_norm": 12.461008071899414
+      }
+    },
+    "pred_feat_to_pred_feat_seq_concat": {
+      "collapsed": true,
+      "retrieval": {
+        "mean_best_nonmatch_similarity": 0.9999999403953552,
+        "mean_margin_vs_best_nonmatch": 0.0,
+        "mean_match_rank": 2.5,
+        "mean_matching_similarity": 0.9999999403953552,
+        "top1_accuracy": 0.25
+      },
+      "similarity": {
+        "diag_mean": 0.9999999403953552,
+        "offdiag_max": 0.9999999403953552,
+        "offdiag_mean": 0.9999999403953552,
+        "offdiag_min": 0.9999999403953552
+      },
+      "variance": {
+        "normalized_max_dimension_variance": 0.0,
+        "normalized_mean_dimension_variance": 0.0,
+        "raw_max_dimension_variance": 0.0,
+        "raw_mean_dimension_variance": 0.0,
+        "raw_mean_l2_norm": 25.298507690429688
+      }
+    },
+    "target_delta_to_target_delta_frame_mean": {
+      "collapsed": false,
+      "retrieval": {
+        "mean_best_nonmatch_similarity": 0.00989313330501318,
+        "mean_margin_vs_best_nonmatch": 0.9901068368926644,
+        "mean_match_rank": 1.0,
+        "mean_matching_similarity": 0.9999999701976776,
+        "top1_accuracy": 1.0
+      },
+      "similarity": {
+        "diag_mean": 1.0,
+        "offdiag_max": 0.13174989819526672,
+        "offdiag_mean": -0.10998231172561646,
+        "offdiag_min": -0.25572746992111206
+      },
+      "variance": {
+        "normalized_max_dimension_variance": 0.02097194641828537,
+        "normalized_mean_dimension_variance": 0.0016259505646303296,
+        "raw_max_dimension_variance": 0.10978564620018005,
+        "raw_mean_dimension_variance": 0.006540684029459953,
+        "raw_mean_l2_norm": 1.960724949836731
+      }
+    },
+    "target_delta_to_target_delta_seq_concat": {
+      "collapsed": false,
+      "retrieval": {
+        "mean_best_nonmatch_similarity": 0.03546413476578891,
+        "mean_margin_vs_best_nonmatch": 0.9645359099376947,
+        "mean_match_rank": 1.0,
+        "mean_matching_similarity": 1.0000000447034836,
+        "top1_accuracy": 1.0
+      },
+      "similarity": {
+        "diag_mean": 1.0000001192092896,
+        "offdiag_max": 0.05414199084043503,
+        "offdiag_mean": -0.021781912073493004,
+        "offdiag_min": -0.11096113920211792
+      },
+      "variance": {
+        "normalized_max_dimension_variance": 0.006449495442211628,
+        "normalized_mean_dimension_variance": 0.0003741877153515816,
+        "raw_max_dimension_variance": 0.40785476565361023,
+        "raw_mean_dimension_variance": 0.020314034074544907,
+        "raw_mean_l2_norm": 7.2122955322265625
+      }
+    },
+    "target_feat_to_target_feat_frame_mean": {
+      "collapsed": false,
+      "retrieval": {
+        "mean_best_nonmatch_similarity": 0.9717505872249603,
+        "mean_margin_vs_best_nonmatch": 0.028249382972717285,
+        "mean_match_rank": 1.0,
+        "mean_matching_similarity": 0.9999999701976776,
+        "top1_accuracy": 1.0
+      },
+      "similarity": {
+        "diag_mean": 0.9999999403953552,
+        "offdiag_max": 0.9805360436439514,
+        "offdiag_mean": 0.9617595672607422,
+        "offdiag_min": 0.9513429403305054
+      },
+      "variance": {
+        "normalized_max_dimension_variance": 0.0004767627688124776,
+        "normalized_mean_dimension_variance": 5.6016171583905816e-05,
+        "raw_max_dimension_variance": 0.26610055565834045,
+        "raw_mean_dimension_variance": 0.021935030817985535,
+        "raw_mean_l2_norm": 19.328533172607422
+      }
+    },
+    "target_feat_to_target_feat_seq_concat": {
+      "collapsed": false,
+      "retrieval": {
+        "mean_best_nonmatch_similarity": 0.9520253539085388,
+        "mean_margin_vs_best_nonmatch": 0.04797467589378357,
+        "mean_match_rank": 1.0,
+        "mean_matching_similarity": 1.0000000298023224,
+        "top1_accuracy": 1.0
+      },
+      "similarity": {
+        "diag_mean": 1.0,
+        "offdiag_max": 0.9596126675605774,
+        "offdiag_mean": 0.9431809782981873,
+        "offdiag_min": 0.9357911348342896
+      },
+      "variance": {
+        "normalized_max_dimension_variance": 0.00022535031894221902,
+        "normalized_mean_dimension_variance": 2.0807776309084147e-05,
+        "raw_max_dimension_variance": 0.719822347164154,
+        "raw_mean_dimension_variance": 0.032771769911050797,
+        "raw_mean_l2_norm": 39.01421356201172
+      }
+    }
+  }
+}

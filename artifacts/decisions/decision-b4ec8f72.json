@@ -1,0 +1,62 @@
+{
+  "kind": "decision",
+  "schema_version": 1,
+  "artifact_id": "decision-b4ec8f72",
+  "id": "decision-b4ec8f72",
+  "quest_id": "002",
+  "created_at": "2026-04-16T08:39:23+00:00",
+  "updated_at": "2026-04-16T08:39:23+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-c5e88710",
+  "head_commit": "d6f1b52026ad7037966282d00ab698ee50faaee4",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-c5e88710",
+  "verdict": "continue",
+  "action": "activate_branch",
+  "summary": "Activated durable branch `idea/002-idea-c5e88710` as the current workspace.",
+  "reason": "Return to an existing research branch without creating a new lineage node, so follow-up experiments or decisions continue from the correct historical context.",
+  "idea_id": "idea-c5e88710",
+  "run_id": null,
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710",
+  "worktree_rel_path": ".ds/worktrees/idea-idea-c5e88710",
+  "flow_type": "branch_activation",
+  "protocol_step": "activate",
+  "details": {
+    "activate_branch_by": "idea_id",
+    "promote_to_head": true,
+    "worktree_created": false,
+    "next_anchor": "experiment",
+    "workspace_mode": "idea",
+    "latest_main_run_id": null,
+    "branch_kind": "idea",
+    "paper_parent_branch": null
+  },
+  "semantic_key": "decision:idea:activate_branch:continue:9c4b7581c2ae9de3b5eef51942d6638d059ff75aadeb395614a19612265da6a4",
+  "guidance_vm": {
+    "current_anchor": "decision",
+    "recommended_skill": "decision",
+    "recommended_action": "activate_branch",
+    "summary": "A decision was recorded. Follow the chosen route and keep the next outcome durable.",
+    "why_now": "Return to an existing research branch without creating a new lineage node, so follow-up experiments or decisions continue from the correct historical context.",
+    "complete_when": [
+      "The next stage starts and writes its first durable output.",
+      "Any new ambiguity is converted into another explicit decision."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(...)",
+        "purpose": "Persist the first durable output of the chosen route."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "decision",
+    "source_artifact_id": "decision-b4ec8f72",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

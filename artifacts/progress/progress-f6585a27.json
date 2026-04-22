@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-f6585a27",
+  "id": "progress-f6585a27",
+  "quest_id": "002",
+  "created_at": "2026-04-17T13:52:58+00:00",
+  "updated_at": "2026-04-17T13:52:58+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "idea/002-idea-2835dace",
+  "head_commit": "df11f9a7332034ec348f118ce562bba5dd7bc8ac",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-2835dace",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-2835dace",
+  "message": "我刚把一个关键漂移点找出来了：当前活跃分支其实已经切到 query-side anti-collapse 这条新方向，但它自己的计划和状态说明还残留着上一轮 relation 实验准备的内容，所以这条新线的依据还没有完全写实。现在我正在补两块东西：一块是把 relation 负结果、query-side collapse 证据和旧候选路线放到同一个判断面上，另一块是补 anti-collapse 相关文献，确认最适合当前代码路径的是哪类最小修复。接下来我会先把 survey 和控制面同步成一个一致版本，再决定是直接进入实验准备，还是再分出一条更干净的子线。",
+  "summary": "我刚把一个关键漂移点找出来了：当前活跃分支其实已经切到 query-side anti-collapse 这条新方向，但它自己的计划和状态说明还残留着上一轮 relation 实验准备的内容，所以这条新线的依据还没有完全写实。现在我正在补两块东西：一块是把 relation 负结果、query-side collapse 证据和旧候选路线放到同一个判断面上，另一块是补 anti-collapse 相关文献，确认最适合当前代码路径的是哪…",
+  "summary_preview": "我刚把一个关键漂移点找出来了：当前活跃分支其实已经切到 query-side anti-collapse 这条新方向，但它自己的计划和状态说明还残留着上一轮 relation 实验准备的内容，所以这条新线的依据还没有完全写实。现在我正在补两块东西：一块是把 relation 负结果、query-side collapse 证据和旧候选路线放到同一个判断面上，另一块是补 anti-collapse 相关文献，确认最适合当前代码路径的是哪…",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "progress-f6585a27",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": "progress-e51f5d00",
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-f6585a27",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

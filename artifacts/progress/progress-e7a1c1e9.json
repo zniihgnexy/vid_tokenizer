@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-e7a1c1e9",
+  "id": "progress-e7a1c1e9",
+  "quest_id": "002",
+  "created_at": "2026-04-22T08:43:42+00:00",
+  "updated_at": "2026-04-22T08:43:42+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "323984346bbbba7598968ec514387e778e159a99",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "message": "我刚核完一个关键点：当前未提交的改动基本都是运行期临时文件，不是你要保留的那批可 review 内容。接下来我会确认最新可交付版本是否已经在当前分支的最新提交里；如果已经在，我就直接把那个提交点和分支准确告诉你，不会为了凑一次提交把临时噪音塞进去。",
+  "summary": "我刚核完一个关键点：当前未提交的改动基本都是运行期临时文件，不是你要保留的那批可 review 内容。接下来我会确认最新可交付版本是否已经在当前分支的最新提交里；如果已经在，我就直接把那个提交点和分支准确告诉你，不会为了凑一次提交把临时噪音塞进去。",
+  "summary_preview": "我刚核完一个关键点：当前未提交的改动基本都是运行期临时文件，不是你要保留的那批可 review 内容。接下来我会确认最新可交付版本是否已经在当前分支的最新提交里；如果已经在，我就直接把那个提交点和分支准确告诉你，不会为了凑一次提交把临时噪音塞进去。",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "progress-e7a1c1e9",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": "progress-bd54e8cb",
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-e7a1c1e9",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

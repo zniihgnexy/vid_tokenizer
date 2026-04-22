@@ -1,0 +1,94 @@
+{
+  "bundle_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710/experiments/main/interface_bundles/shared_gating_blueprint_repair_teacher_packet_smoke_r1",
+  "comparison_preset": "all",
+  "consumer_metrics": {
+    "pred_delta_to_target_delta": {
+      "mean_best_nonmatch_similarity": 0.1123228115029633,
+      "mean_margin_vs_best_nonmatch": -0.07844492487492971,
+      "mean_match_rank": 6.6875,
+      "mean_matching_similarity": 0.03387788662803359,
+      "top1_accuracy": 0.1875
+    },
+    "pred_feat_plus_1p0x_delta_concat_to_target_feat_plus_1p0x_delta_concat": {
+      "mean_best_nonmatch_similarity": 0.5488206818699837,
+      "mean_margin_vs_best_nonmatch": -0.021545853465795517,
+      "mean_match_rank": 8.1875,
+      "mean_matching_similarity": 0.5272748284041882,
+      "top1_accuracy": 0.0625
+    },
+    "pred_feat_plus_1p0x_delta_sum_to_target_feat_plus_1p0x_delta_sum": {
+      "mean_best_nonmatch_similarity": 0.5623694360256195,
+      "mean_margin_vs_best_nonmatch": -0.04284009896218777,
+      "mean_match_rank": 7.75,
+      "mean_matching_similarity": 0.5195293370634317,
+      "top1_accuracy": 0.0625
+    },
+    "pred_feat_to_target_feat": {
+      "mean_best_nonmatch_similarity": 0.5592333972454071,
+      "mean_margin_vs_best_nonmatch": -0.020492136478424072,
+      "mean_match_rank": 8.25,
+      "mean_matching_similarity": 0.538741260766983,
+      "top1_accuracy": 0.0625
+    },
+    "target_feat_to_target_feat": {
+      "mean_best_nonmatch_similarity": 0.9861396066844463,
+      "mean_margin_vs_best_nonmatch": 0.013860374689102173,
+      "mean_match_rank": 1.0,
+      "mean_matching_similarity": 0.9999999813735485,
+      "top1_accuracy": 1.0
+    }
+  },
+  "delta_weight": 1.0,
+  "frame_count": 16,
+  "mode": "smoke",
+  "output_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710/experiments/main/evals/shared_gating_blueprint_repair_teacher_packet_smoke_r1",
+  "sample_ids": [
+    "0000",
+    "0001",
+    "0002",
+    "0003",
+    "0004",
+    "0005",
+    "0006",
+    "0007",
+    "0008",
+    "0009",
+    "0010",
+    "0011",
+    "0012",
+    "0013",
+    "0014",
+    "0015"
+  ],
+  "teacher_packet_summary": {
+    "device": "cpu",
+    "feature_dim": 512,
+    "frame_count": 16,
+    "mean_consistency_mse": 0.5434431433677673,
+    "mean_delta_cosine": 0.03387787938117981,
+    "mean_feature_cosine": 0.5387412309646606,
+    "mean_semantic_weight": 0.999998927116394,
+    "packet_fields": [
+      "pred_feat",
+      "target_feat",
+      "pred_delta",
+      "target_delta"
+    ],
+    "teacher_type": "resnet18_imagenet"
+  },
+  "upstream_aggregate_metrics": {
+    "bpp_avg": 23.8984,
+    "bpp_est_avg": 25.1982,
+    "ent_dec_time_avg": 13.0295,
+    "ent_enc_time_avg": 8.0019,
+    "eval_time_avg": 0.407,
+    "macs_avg": NaN,
+    "macs_rate_avg": NaN,
+    "params_avg": 9035.0,
+    "params_codec_avg": 42779.0,
+    "psnr_avg": 10.6733,
+    "size": 391552.0,
+    "teacher-mse_avg": 0.5481,
+    "train_time_avg": 5.7957
+  }
+}

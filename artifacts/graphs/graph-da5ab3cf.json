@@ -1,0 +1,56 @@
+{
+  "kind": "graph",
+  "schema_version": 1,
+  "artifact_id": "graph-da5ab3cf",
+  "id": "graph-da5ab3cf",
+  "quest_id": "002",
+  "created_at": "2026-04-22T07:38:36+00:00",
+  "updated_at": "2026-04-22T07:38:36+00:00",
+  "source": {
+    "kind": "daemon"
+  },
+  "status": "generated",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "464fecddf5fd781fd7532cd5de26c16be2ff15ad",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "graph_id": "graph-cf2c61cf",
+  "graph_type": "git_history",
+  "summary": "Quest git graph exported.",
+  "branch_summary": [
+    "main"
+  ],
+  "commit_count": 40,
+  "paths": {
+    "svg": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/graphs/git-graph.svg",
+    "png": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/graphs/git-graph.png",
+    "json": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/graphs/git-graph.json"
+  },
+  "guidance_vm": {
+    "current_anchor": "decision",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Graph export refreshed. Use it to explain the current branch story and choose the next route.",
+    "why_now": "The graph is a visibility aid; it should support a real route choice or handoff rather than stand alone.",
+    "complete_when": [
+      "The graph is referenced in a progress update, report, or decision."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.interact(kind='milestone', ...)",
+        "purpose": "Share the refreshed graph with the active surface."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "graph",
+    "source_artifact_id": "graph-da5ab3cf",
+    "related_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/graphs/git-graph.svg",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/graphs/git-graph.png",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/graphs/git-graph.json"
+    ],
+    "stage_status": "ready"
+  }
+}

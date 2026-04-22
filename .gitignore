@@ -8,4 +8,9 @@ Outputs/
 __pycache__/
 *.pyc
 *.pyo
-
+.ds/*.pid
+.ds/*.sock
+.ds/*.tmp
+.ds/worktrees/
+tmp/
+.pytest_cache/

@@ -1,0 +1,56 @@
+{
+  "batch_size": 16,
+  "bundle_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5/experiments/main/interface_bundles/shared_gating_interface_export_smoke_r1",
+  "consumer_metrics": {
+    "original_to_original": {
+      "mean_best_nonmatch_similarity": 0.9289974570274353,
+      "mean_margin_vs_best_nonmatch": 0.07100243866443634,
+      "mean_match_rank": 1.0,
+      "mean_matching_similarity": 0.9999998956918716,
+      "top1_accuracy": 1.0
+    },
+    "original_to_reconstructed": {
+      "mean_best_nonmatch_similarity": 0.5784548446536064,
+      "mean_margin_vs_best_nonmatch": -0.01892998069524765,
+      "mean_match_rank": 2.25,
+      "mean_matching_similarity": 0.5595248639583588,
+      "top1_accuracy": 0.25
+    },
+    "reconstructed_to_original": {
+      "mean_best_nonmatch_similarity": 0.6244417876005173,
+      "mean_margin_vs_best_nonmatch": -0.06491692364215851,
+      "mean_match_rank": 2.5,
+      "mean_matching_similarity": 0.5595248639583588,
+      "top1_accuracy": 0.25
+    }
+  },
+  "device": "cuda",
+  "frame_count": 4,
+  "mode": "smoke",
+  "model": {
+    "model_name": "resnet18",
+    "weights_name": "IMAGENET1K_V1"
+  },
+  "output_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5/experiments/main/shared_gating_downstream_interface_bootstrap_r1/downstream_eval",
+  "sample_ids": [
+    "0000",
+    "0001",
+    "0002",
+    "0003"
+  ],
+  "upstream_aggregate_metrics": {
+    "bpp_avg": 88.2266,
+    "bpp_est_avg": 93.7417,
+    "ent_dec_time_avg": 14.1911,
+    "ent_enc_time_avg": 8.1581,
+    "eval_time_avg": 0.1108,
+    "macs_avg": 1115712.0,
+    "macs_rate_avg": 67584000.0,
+    "params_avg": 4283.0,
+    "params_codec_avg": 38027.0,
+    "psnr_avg": 10.9012,
+    "size": 361376.0,
+    "teacher-mse_avg": 0.5126,
+    "train_time_avg": 0.2939
+  }
+}

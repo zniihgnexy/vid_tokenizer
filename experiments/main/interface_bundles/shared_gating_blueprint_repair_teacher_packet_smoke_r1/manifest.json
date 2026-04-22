@@ -1,0 +1,377 @@
+{
+  "aggregate_metrics": {
+    "bpp_avg": 23.8984,
+    "bpp_est_avg": 25.1982,
+    "ent_dec_time_avg": 13.0295,
+    "ent_enc_time_avg": 8.0019,
+    "eval_time_avg": 0.407,
+    "macs_avg": NaN,
+    "macs_rate_avg": NaN,
+    "params_avg": 9035.0,
+    "params_codec_avg": 42779.0,
+    "psnr_avg": 10.6733,
+    "size": 391552.0,
+    "teacher-mse_avg": 0.5481,
+    "train_time_avg": 5.7957
+  },
+  "bundle_version": 2,
+  "dataset_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22/tmp/ego4d_bounded_bridge_r1/data/ego4d_small_bridge_16f",
+  "frame_count": 16,
+  "frames": [
+    {
+      "decoded_metrics": {
+        "psnr": 10.6772,
+        "teacher-mse": 0.6173
+      },
+      "eval_metrics": {
+        "psnr": 10.6772,
+        "teacher-mse": 0.6173
+      },
+      "frame_index": 0,
+      "original_relpath": "original/0000.png",
+      "packet_metrics": {
+        "consistency_mse": 0.6117656826972961,
+        "delta_cosine": 0.011928938329219818,
+        "feature_cosine": 0.5182344317436218,
+        "semantic_weight": 1.3963044881820679
+      },
+      "packet_relpath": "packets/0000.pt",
+      "reconstructed_relpath": "reconstructed/0000.png",
+      "sample_id": "0000"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6621,
+        "teacher-mse": 0.6637
+      },
+      "eval_metrics": {
+        "psnr": 10.6621,
+        "teacher-mse": 0.6637
+      },
+      "frame_index": 1,
+      "original_relpath": "original/0001.png",
+      "packet_metrics": {
+        "consistency_mse": 0.6603838801383972,
+        "delta_cosine": 0.011928938329219818,
+        "feature_cosine": 0.5132409930229187,
+        "semantic_weight": 1.3963044881820679
+      },
+      "packet_relpath": "packets/0001.pt",
+      "reconstructed_relpath": "reconstructed/0001.png",
+      "sample_id": "0001"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.7064,
+        "teacher-mse": 0.6135
+      },
+      "eval_metrics": {
+        "psnr": 10.7064,
+        "teacher-mse": 0.6135
+      },
+      "frame_index": 2,
+      "original_relpath": "original/0002.png",
+      "packet_metrics": {
+        "consistency_mse": 0.6129825115203857,
+        "delta_cosine": 0.09403188526630402,
+        "feature_cosine": 0.5358582735061646,
+        "semantic_weight": 1.4110372066497803
+      },
+      "packet_relpath": "packets/0002.pt",
+      "reconstructed_relpath": "reconstructed/0002.png",
+      "sample_id": "0002"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6923,
+        "teacher-mse": 0.5781
+      },
+      "eval_metrics": {
+        "psnr": 10.6923,
+        "teacher-mse": 0.5781
+      },
+      "frame_index": 3,
+      "original_relpath": "original/0003.png",
+      "packet_metrics": {
+        "consistency_mse": 0.5734221339225769,
+        "delta_cosine": 0.03201684728264809,
+        "feature_cosine": 0.5418901443481445,
+        "semantic_weight": 1.1717422008514404
+      },
+      "packet_relpath": "packets/0003.pt",
+      "reconstructed_relpath": "reconstructed/0003.png",
+      "sample_id": "0003"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6709,
+        "teacher-mse": 0.5997
+      },
+      "eval_metrics": {
+        "psnr": 10.6709,
+        "teacher-mse": 0.5997
+      },
+      "frame_index": 4,
+      "original_relpath": "original/0004.png",
+      "packet_metrics": {
+        "consistency_mse": 0.5963795781135559,
+        "delta_cosine": -0.06834441423416138,
+        "feature_cosine": 0.524899959564209,
+        "semantic_weight": 1.0499588251113892
+      },
+      "packet_relpath": "packets/0004.pt",
+      "reconstructed_relpath": "reconstructed/0004.png",
+      "sample_id": "0004"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6125,
+        "teacher-mse": 0.5299
+      },
+      "eval_metrics": {
+        "psnr": 10.6125,
+        "teacher-mse": 0.5299
+      },
+      "frame_index": 5,
+      "original_relpath": "original/0005.png",
+      "packet_metrics": {
+        "consistency_mse": 0.5257397294044495,
+        "delta_cosine": 0.010325741954147816,
+        "feature_cosine": 0.5508831143379211,
+        "semantic_weight": 1.5545731782913208
+      },
+      "packet_relpath": "packets/0005.pt",
+      "reconstructed_relpath": "reconstructed/0005.png",
+      "sample_id": "0005"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6878,
+        "teacher-mse": 0.5097
+      },
+      "eval_metrics": {
+        "psnr": 10.6878,
+        "teacher-mse": 0.5097
+      },
+      "frame_index": 6,
+      "original_relpath": "original/0006.png",
+      "packet_metrics": {
+        "consistency_mse": 0.500445544719696,
+        "delta_cosine": 0.1183650940656662,
+        "feature_cosine": 0.5430248975753784,
+        "semantic_weight": 0.761910080909729
+      },
+      "packet_relpath": "packets/0006.pt",
+      "reconstructed_relpath": "reconstructed/0006.png",
+      "sample_id": "0006"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6765,
+        "teacher-mse": 0.4921
+      },
+      "eval_metrics": {
+        "psnr": 10.6765,
+        "teacher-mse": 0.4921
+      },
+      "frame_index": 7,
+      "original_relpath": "original/0007.png",
+      "packet_metrics": {
+        "consistency_mse": 0.4882163405418396,
+        "delta_cosine": 0.017052287235856056,
+        "feature_cosine": 0.5548851490020752,
+        "semantic_weight": 1.1635398864746094
+      },
+      "packet_relpath": "packets/0007.pt",
+      "reconstructed_relpath": "reconstructed/0007.png",
+      "sample_id": "0007"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6505,
+        "teacher-mse": 0.5329
+      },
+      "eval_metrics": {
+        "psnr": 10.6505,
+        "teacher-mse": 0.5329
+      },
+      "frame_index": 8,
+      "original_relpath": "original/0008.png",
+      "packet_metrics": {
+        "consistency_mse": 0.529003918170929,
+        "delta_cosine": 0.026569688692688942,
+        "feature_cosine": 0.5346415638923645,
+        "semantic_weight": 0.7492927312850952
+      },
+      "packet_relpath": "packets/0008.pt",
+      "reconstructed_relpath": "reconstructed/0008.png",
+      "sample_id": "0008"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6177,
+        "teacher-mse": 0.5422
+      },
+      "eval_metrics": {
+        "psnr": 10.6177,
+        "teacher-mse": 0.5422
+      },
+      "frame_index": 9,
+      "original_relpath": "original/0009.png",
+      "packet_metrics": {
+        "consistency_mse": 0.5366210341453552,
+        "delta_cosine": -0.06826182454824448,
+        "feature_cosine": 0.5292932391166687,
+        "semantic_weight": 0.5263312458992004
+      },
+      "packet_relpath": "packets/0009.pt",
+      "reconstructed_relpath": "reconstructed/0009.png",
+      "sample_id": "0009"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6631,
+        "teacher-mse": 0.5242
+      },
+      "eval_metrics": {
+        "psnr": 10.6631,
+        "teacher-mse": 0.5242
+      },
+      "frame_index": 10,
+      "original_relpath": "original/0010.png",
+      "packet_metrics": {
+        "consistency_mse": 0.5167562961578369,
+        "delta_cosine": 0.16214902698993683,
+        "feature_cosine": 0.5378824472427368,
+        "semantic_weight": 0.651542603969574
+      },
+      "packet_relpath": "packets/0010.pt",
+      "reconstructed_relpath": "reconstructed/0010.png",
+      "sample_id": "0010"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6668,
+        "teacher-mse": 0.4901
+      },
+      "eval_metrics": {
+        "psnr": 10.6668,
+        "teacher-mse": 0.4901
+      },
+      "frame_index": 11,
+      "original_relpath": "original/0011.png",
+      "packet_metrics": {
+        "consistency_mse": 0.48234835267066956,
+        "delta_cosine": 0.14304038882255554,
+        "feature_cosine": 0.5604138970375061,
+        "semantic_weight": 0.7500781416893005
+      },
+      "packet_relpath": "packets/0011.pt",
+      "reconstructed_relpath": "reconstructed/0011.png",
+      "sample_id": "0011"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6982,
+        "teacher-mse": 0.4939
+      },
+      "eval_metrics": {
+        "psnr": 10.6982,
+        "teacher-mse": 0.4939
+      },
+      "frame_index": 12,
+      "original_relpath": "original/0012.png",
+      "packet_metrics": {
+        "consistency_mse": 0.4905186593532562,
+        "delta_cosine": 0.034264497458934784,
+        "feature_cosine": 0.5568649172782898,
+        "semantic_weight": 1.0997744798660278
+      },
+      "packet_relpath": "packets/0012.pt",
+      "reconstructed_relpath": "reconstructed/0012.png",
+      "sample_id": "0012"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6948,
+        "teacher-mse": 0.4926
+      },
+      "eval_metrics": {
+        "psnr": 10.6948,
+        "teacher-mse": 0.4926
+      },
+      "frame_index": 13,
+      "original_relpath": "original/0013.png",
+      "packet_metrics": {
+        "consistency_mse": 0.4910627603530884,
+        "delta_cosine": 0.00668749213218689,
+        "feature_cosine": 0.5434434413909912,
+        "semantic_weight": 0.8772203922271729
+      },
+      "packet_relpath": "packets/0013.pt",
+      "reconstructed_relpath": "reconstructed/0013.png",
+      "sample_id": "0013"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.6573,
+        "teacher-mse": 0.541
+      },
+      "eval_metrics": {
+        "psnr": 10.6573,
+        "teacher-mse": 0.541
+      },
+      "frame_index": 14,
+      "original_relpath": "original/0014.png",
+      "packet_metrics": {
+        "consistency_mse": 0.5364102721214294,
+        "delta_cosine": -0.012344781309366226,
+        "feature_cosine": 0.5361915230751038,
+        "semantic_weight": 0.6517233848571777
+      },
+      "packet_relpath": "packets/0014.pt",
+      "reconstructed_relpath": "reconstructed/0014.png",
+      "sample_id": "0014"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.7385,
+        "teacher-mse": 0.5488
+      },
+      "eval_metrics": {
+        "psnr": 10.7385,
+        "teacher-mse": 0.5488
+      },
+      "frame_index": 15,
+      "original_relpath": "original/0015.png",
+      "packet_metrics": {
+        "consistency_mse": 0.5430338382720947,
+        "delta_cosine": 0.022636324167251587,
+        "feature_cosine": 0.5382118225097656,
+        "semantic_weight": 0.7886490821838379
+      },
+      "packet_relpath": "packets/0015.pt",
+      "reconstructed_relpath": "reconstructed/0015.png",
+      "sample_id": "0015"
+    }
+  ],
+  "interface_type": "teacher_feature_packet",
+  "source_run_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710/experiments/main/shared_gating_blueprint_repair_ego4d16f_smoke_r3",
+  "teacher_packet_summary": {
+    "device": "cpu",
+    "feature_dim": 512,
+    "frame_count": 16,
+    "mean_consistency_mse": 0.5434431433677673,
+    "mean_delta_cosine": 0.03387787938117981,
+    "mean_feature_cosine": 0.5387412309646606,
+    "mean_semantic_weight": 0.999998927116394,
+    "packet_fields": [
+      "pred_feat",
+      "target_feat",
+      "pred_delta",
+      "target_delta"
+    ],
+    "teacher_type": "resnet18_imagenet"
+  },
+  "teacher_utils_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710/experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/teacher_utils.py"
+}

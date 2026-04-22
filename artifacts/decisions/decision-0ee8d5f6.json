@@ -1,0 +1,69 @@
+{
+  "kind": "decision",
+  "schema_version": 1,
+  "artifact_id": "decision-0ee8d5f6",
+  "id": "decision-0ee8d5f6",
+  "quest_id": "002",
+  "created_at": "2026-04-22T07:54:22+00:00",
+  "updated_at": "2026-04-22T07:54:22+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi",
+    "run_id": "run-3beca153"
+  },
+  "status": "completed",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "d93196ee50ea11b0e85c74cd49a2129973fa737d",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "decision_type": "route_choice",
+  "summary": "The active paper line is now durably bundle-submitted after repairing the runtime stage-skill fallback and rerunning paper bundle submission in a fresh runtime Python process. The next justified route is skeptical review and then finalize, not more experiment reruns or more bundle-registration debugging.",
+  "reason": "The paper contract is clean (`bundle_ready` and `finalize_ready`), the former finalize-anchor blocker is cleared, and the remaining risk is claim packaging quality rather than missing core evidence.",
+  "verdict": "continue",
+  "action": "continue",
+  "flow_type": "finalize",
+  "protocol_step": "post_bundle_route",
+  "winner": "review_then_finalize",
+  "alternatives_considered": [
+    "keep debugging the stale artifact MCP process before moving on",
+    "reopen experiments despite an already submitted bundle"
+  ],
+  "not_chosen_reasons": [
+    "A fresh runtime process already cleared the registration blocker durably, so more MCP-process debugging is not on the critical path.",
+    "The current bounded-feasibility paper line already has a submitted bundle and no unresolved paper-contract blockers, so new experiments are not justified before skeptical audit."
+  ],
+  "next_stage": "review",
+  "residual_risk": "The current draft still needs an independent skeptical audit before any quest-completion recommendation.",
+  "recommended_skill_reads": [
+    "review",
+    "finalize"
+  ],
+  "comment": "Record the post-registration route after paper bundle submission succeeded via the patched runtime package.",
+  "run_id": "run-3beca153",
+  "anchor": "baseline",
+  "semantic_key": "decision:baseline:continue:continue:7b15521c4379744058970e7fa081b7ee757c30520a5888c6dd5cfe2f220f39b0",
+  "guidance_vm": {
+    "current_anchor": "decision",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "A decision was recorded. Follow the chosen route and keep the next outcome durable.",
+    "why_now": "The paper contract is clean (`bundle_ready` and `finalize_ready`), the former finalize-anchor blocker is cleared, and the remaining risk is claim packaging quality rather than missing core evidence.",
+    "complete_when": [
+      "The next stage starts and writes its first durable output.",
+      "Any new ambiguity is converted into another explicit decision."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(...)",
+        "purpose": "Persist the first durable output of the chosen route."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "decision",
+    "source_artifact_id": "decision-0ee8d5f6",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

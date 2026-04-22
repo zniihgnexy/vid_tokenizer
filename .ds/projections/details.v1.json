@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "projection_id": "details.v1",
+  "generated_at": "2026-04-14T14:26:52+00:00",
+  "source_signature": "23e81105e43a18fb6410bba9daa56a926a40232ee5dcf2d1e86680de2849cc27",
+  "payload": {
+    "quest_id": "002",
+    "quest_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002",
+    "entries": [
+      {
+        "id": "artifact:report-90b587c9",
+        "kind": "artifact",
+        "title": "report-90b587c9",
+        "summary": "Attached baseline `nvrc-local-source`.",
+        "status": "completed",
+        "reason": "Baseline reuse avoids repeating an already stable reproduction.",
+        "created_at": "2026-04-14T14:26:52+00:00",
+        "paths": [
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source/attachment.yaml",
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source",
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/001/baselines/imported/nvrc-local-source",
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/reports/report-90b587c9.json"
+        ]
+      },
+      {
+        "id": "artifact:baseline-7f208df2",
+        "kind": "artifact",
+        "title": "baseline-7f208df2",
+        "summary": "Baseline `nvrc-local-source` confirmed during quest creation.",
+        "status": "confirmed",
+        "reason": "Baseline gate confirmed.",
+        "created_at": "2026-04-14T14:26:52+00:00",
+        "paths": [
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source",
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source/attachment.yaml",
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source/json/metric_contract.json",
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/baselines/baseline-7f208df2.json"
+        ]
+      },
+      {
+        "id": "artifact:/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/graphs/git-graph.json",
+        "kind": "artifact",
+        "title": "graphs",
+        "summary": "Artifact updated.",
+        "status": null,
+        "reason": null,
+        "created_at": null,
+        "paths": [
+          "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/graphs/git-graph.json"
+        ]
+      }
+    ],
+    "changed_files": [
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/brief.md",
+        "source": "document",
+        "document_id": "brief.md",
+        "writable": true
+      },
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/plan.md",
+        "source": "document",
+        "document_id": "plan.md",
+        "writable": true
+      },
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/status.md",
+        "source": "document",
+        "document_id": "status.md",
+        "writable": true
+      },
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/SUMMARY.md",
+        "source": "document",
+        "document_id": "SUMMARY.md",
+        "writable": true
+      },
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/graphs/git-graph.json",
+        "source": "artifact",
+        "document_id": "path::artifacts/graphs/git-graph.json",
+        "writable": null
+      },
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/reports/report-90b587c9.json",
+        "source": "artifact",
+        "document_id": "path::artifacts/reports/report-90b587c9.json",
+        "writable": null
+      },
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source/attachment.yaml",
+        "source": "artifact_path",
+        "document_id": "path::baselines/imported/nvrc-local-source/attachment.yaml",
+        "writable": null
+      },
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source",
+        "source": "artifact_path",
+        "document_id": "path::baselines/imported/nvrc-local-source",
+        "writable": null
+      },
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/001/baselines/imported/nvrc-local-source",
+        "source": "artifact_path",
+        "document_id": null,
+        "writable": null
+      },
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/artifacts/baselines/baseline-7f208df2.json",
+        "source": "artifact",
+        "document_id": "path::artifacts/baselines/baseline-7f208df2.json",
+        "writable": null
+      },
+      {
+        "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source/json/metric_contract.json",
+        "source": "artifact_path",
+        "document_id": "path::baselines/imported/nvrc-local-source/json/metric_contract.json",
+        "writable": null
+      }
+    ]
+  }
+}

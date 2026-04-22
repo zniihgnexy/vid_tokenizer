@@ -1,0 +1,125 @@
+{
+  "kind": "idea",
+  "schema_version": 1,
+  "artifact_id": "idea-16196dc7",
+  "id": "idea-16196dc7",
+  "quest_id": "002",
+  "created_at": "2026-04-17T19:55:21+00:00",
+  "updated_at": "2026-04-17T19:55:21+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-70dedd18",
+  "head_commit": "e338162f84d9d0ce9d6879488ccb0906e8225d98",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-70dedd18",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-70dedd18",
+  "summary": "Idea `idea-70dedd18` created and promoted to the active research head.",
+  "reason": "This child line wins because the current failure pattern is dominated by hub concentration rather than by complete loss of packet signal. A hubness-calibrated inference-time correction is more principled and more comparable than hard top-k pruning, and much cheaper and cleaner than reopening training-side anti-collapse repair before the retrieval geometry itself is properly tested.",
+  "idea_id": "idea-70dedd18",
+  "lineage_intent": "continue_line",
+  "parent_branch": "idea/002-idea-d3d22136",
+  "foundation_ref": {
+    "kind": "idea",
+    "ref": "idea-d3d22136",
+    "branch": "idea/002-idea-d3d22136",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-d3d22136",
+    "idea_id": "idea-d3d22136",
+    "label": "Idea `idea-d3d22136` on `idea/002-idea-d3d22136`"
+  },
+  "foundation_reason": "The current active sparse/local shortlist line correctly localized the failure to retrieval-time collapse, but it is still too broad. The strongest local evidence and the newly refreshed literature both point to hubness-calibrated score correction as the most defensible next refinement inside the same family.",
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-70dedd18",
+  "worktree_rel_path": ".ds/worktrees/idea-idea-70dedd18",
+  "flow_type": "idea_submission",
+  "protocol_step": "create",
+  "paths": {
+    "idea_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-70dedd18/memory/ideas/idea-70dedd18/idea.md",
+    "idea_draft_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-70dedd18/memory/ideas/idea-70dedd18/draft.md",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-70dedd18"
+  },
+  "details": {
+    "title": "Hubness-Calibrated Teacher-Anchor Packet Interface After Global-Bank Collapse",
+    "problem": "The current teacher-anchor packet interface shows a real but unstable machine-facing signal: it reaches strong retrieval on the bounded 4-frame packet bundle, but on the 16-frame follow-up the global teacher bank collapses many queries onto a few anchors, leaving the interface too hub-dominated to support a scalable downstream handoff claim.",
+    "hypothesis": "If the 16-frame failure is primarily a hubness problem rather than total packet-signal loss, then a hubness-calibrated similarity rule over the existing teacher anchor bank can recover materially better retrieval stability than raw global-bank scoring without reopening training or exporter design.",
+    "mechanism": "Keep the frozen packet bundle and teacher anchor bank, but replace raw global-bank similarity with a density-aware cross-space correction such as locally scaled similarity, Globally Corrected ranking, CSLS-style correction, or Querybank-Normalisation / Dynamic Inverted Softmax style normalization before final retrieval or projection.",
+    "method_brief": "Build a child packet-interface line that keeps the current 16-frame bundle, teacher anchor bank, and evaluation surface fixed, and test one or two hubness-calibrated similarity rules against the current raw global-bank scorer. Hard shortlist pruning is kept only as a secondary control, not the primary mechanism. The goal is to determine whether inference-time calibration alone can rescue interface stability before any training-side repair.",
+    "selection_scores": {
+      "evidence_quality": 5,
+      "feasibility": 5,
+      "comparability": 5,
+      "expected_information_gain": 5,
+      "downstream_usefulness": 4
+    },
+    "mechanism_family": "hubness_calibrated_packet_interface",
+    "change_layer": "retrieval_score_calibration",
+    "source_lens": "local_collapse_evidence_plus_hubness_and_cross_modal_retrieval_literature",
+    "expected_gain": "Improve over the current 16-frame global-bank result (`top1=0.125`) while reducing anchor concentration away from the `0009/0010/0011` hub cluster, and do so without retraining so the packet-interface story stays clean and rerunnable.",
+    "next_target": "run a bounded 16-frame smoke on the existing teacher-anchor packet bundle that compares raw global-bank scoring against at least one hubness-calibrated scoring rule and optionally one hard-shortlist control, then inspect both retrieval metrics and anchor concentration statistics before deciding whether the packet interface is stable enough to widen.",
+    "branch_no": "015",
+    "lineage_intent": "continue_line",
+    "parent_branch": "idea/002-idea-d3d22136",
+    "foundation_ref": {
+      "kind": "idea",
+      "ref": "idea-d3d22136",
+      "branch": "idea/002-idea-d3d22136",
+      "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-d3d22136",
+      "idea_id": "idea-d3d22136",
+      "label": "Idea `idea-d3d22136` on `idea/002-idea-d3d22136`"
+    },
+    "foundation_reason": "The current active sparse/local shortlist line correctly localized the failure to retrieval-time collapse, but it is still too broad. The strongest local evidence and the newly refreshed literature both point to hubness-calibrated score correction as the most defensible next refinement inside the same family.",
+    "idea_draft_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-70dedd18/memory/ideas/idea-70dedd18/draft.md",
+    "evidence_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-d3d22136/artifacts/ideas/literature_survey.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-d3d22136/memory/ideas/idea-d3d22136/idea.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/teacher-anchored-packet-adapter-smoke-r1/experiments/main/teacher_anchored_packet_adapter_smoke_r1/RUN.md"
+    ],
+    "risks": [
+      "Hubness calibration might only reshuffle rankings without materially reducing collapse.",
+      "If so, the correct next move will be query-side geometry repair rather than more re-ranking heuristics.",
+      "There is also a risk that local-density correction works only on the tiny bounded surface and does not transfer to a wider packet bank."
+    ],
+    "submission_mode": "line",
+    "source_candidate_id": null
+  },
+  "guidance_vm": {
+    "current_anchor": "idea",
+    "recommended_skill": "experiment",
+    "recommended_action": "launch_experiment",
+    "summary": "Idea branch is ready. Continue with the next active optimization stage on this durable research node.",
+    "why_now": "The accepted idea already has its durable branch/worktree, so the next leverage point is the configured next stage rather than another route-selection loop.",
+    "complete_when": [
+      "The next configured stage starts from this branch.",
+      "The resulting evidence or decision is written durably."
+    ],
+    "alternative_routes": [
+      {
+        "action": "continue",
+        "label": "Inspect the branch once",
+        "when": "A quick branch sanity check is still needed before running.",
+        "tradeoff": "Adds caution, but should stay short."
+      },
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Analyze first",
+        "when": "The idea package still has unresolved setup ambiguity that needs clarification.",
+        "tradeoff": "Can reduce wasted runs, but is unusual before a first main result."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record_main_experiment(...)",
+        "purpose": "Record the first real main result on this branch when the next stage is experiment-oriented."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "idea",
+    "source_artifact_id": "idea-16196dc7",
+    "related_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-70dedd18/memory/ideas/idea-70dedd18/idea.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-70dedd18/memory/ideas/idea-70dedd18/draft.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-70dedd18"
+    ],
+    "stage_status": "ready"
+  }
+}

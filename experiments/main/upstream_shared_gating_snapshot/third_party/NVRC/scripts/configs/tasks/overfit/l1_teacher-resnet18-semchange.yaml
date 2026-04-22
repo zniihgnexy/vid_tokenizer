@@ -1,0 +1,12 @@
+loss: [1.0, l1]
+metric: [psnr, teacher-mse]
+color_space: RGB
+lamb: 1.0
+enable_log: false
+teacher_enable: true
+teacher_type: resnet18_imagenet
+teacher_loss_weight: 0.2
+teacher_detach_target: true
+teacher_semantic_change_weighting: true
+teacher_semantic_change_floor: 0.25
+teacher_semantic_change_gamma: 1.0

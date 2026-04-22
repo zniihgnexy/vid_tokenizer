@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-3ccc152c",
+  "id": "progress-3ccc152c",
+  "quest_id": "002",
+  "created_at": "2026-04-16T09:24:59+00:00",
+  "updated_at": "2026-04-16T09:24:59+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "idea/002-idea-c5e88710",
+  "head_commit": "816b39e3454f23e1f9fb9348eba3d65b5a2babb7",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-c5e88710",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-c5e88710",
+  "message": "有结果了：修复后的 teacher-packet 导出和单包评测都已经顺利跑完，没有再碰到路径或恢复问题。现在我只差最后一步读取新 summary，并和旧的单包 packet 结果并排比较；接下来就能直接判断 `pred_delta`、`pred_feat`、`target_feat` 这几类指标到底是变好了，还是只是训练链条更完整了。",
+  "summary": "有结果了：修复后的 teacher-packet 导出和单包评测都已经顺利跑完，没有再碰到路径或恢复问题。现在我只差最后一步读取新 summary，并和旧的单包 packet 结果并排比较；接下来就能直接判断 `pred_delta`、`pred_feat`、`target_feat` 这几类指标到底是变好了，还是只是训练链条更完整了。",
+  "summary_preview": "有结果了：修复后的 teacher-packet 导出和单包评测都已经顺利跑完，没有再碰到路径或恢复问题。现在我只差最后一步读取新 summary，并和旧的单包 packet 结果并排比较；接下来就能直接判断 `pred_delta`、`pred_feat`、`target_feat` 这几类指标到底是变好了，还是只是训练链条更完整了。",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "progress-3ccc152c",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": "progress-bae43dee",
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-3ccc152c",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

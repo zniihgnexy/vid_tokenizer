@@ -1,0 +1,16 @@
+(0 0 0),psnr: 10.3913,teacher-mse: 0.5676
+(1 0 0),psnr: 10.3348,teacher-mse: 0.5844
+(2 0 0),psnr: 10.4788,teacher-mse: 0.5325
+(3 0 0),psnr: 10.5095,teacher-mse: 0.5110
+(4 0 0),psnr: 10.4919,teacher-mse: 0.5580
+(5 0 0),psnr: 10.2870,teacher-mse: 0.4800
+(6 0 0),psnr: 10.4114,teacher-mse: 0.4735
+(7 0 0),psnr: 10.5032,teacher-mse: 0.4491
+(8 0 0),psnr: 10.4775,teacher-mse: 0.4941
+(9 0 0),psnr: 10.3581,teacher-mse: 0.4768
+(10 0 0),psnr: 10.4719,teacher-mse: 0.4733
+(11 0 0),psnr: 10.4189,teacher-mse: 0.4398
+(12 0 0),psnr: 10.4703,teacher-mse: 0.4277
+(13 0 0),psnr: 10.4190,teacher-mse: 0.4315
+(14 0 0),psnr: 10.4723,teacher-mse: 0.4640
+(15 0 0),psnr: 10.4661,teacher-mse: 0.4571
