@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "title": "Bounded Query-Adaptive Arbitration over Frozen Teacher-Anchor Packet Bundles",
-  "summary": "Markdown-first bounded feasibility-note bundle refreshed on the active paper line after the repaired broader three-bundle validation and a first negative downstream-consumer bridge smoke. The main text remains anchored on the bounded query-adaptive arbitration smoke, while the broader validation and low-capacity consumer bridge are kept explicitly as claim-boundary notes rather than broadened support.",
+  "summary": "Markdown-first bounded feasibility-note bundle on the active paper line. Main evidence remains the bounded query-adaptive arbitration smoke, with the repaired broader three-bundle validation and the first negative downstream-consumer bridge smoke kept only as claim-boundary notes.",
   "outline_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/selected_outline.json",
   "paper_branch": "paper/run-querybank-teacher-anchor-smoke-r1",
   "source_branch": "run/querybank_teacher_anchor_smoke_r1",
@@ -14,10 +14,10 @@
   "evidence_ledger_path": "paper/evidence_ledger.json",
   "experiment_matrix_path": null,
   "experiment_matrix_json_path": null,
-  "compile_report_path": null,
+  "compile_report_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/build/compile_report.json",
   "pdf_path": null,
   "latex_root_path": null,
-  "baseline_inventory_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/baseline_inventory.json",
+  "baseline_inventory_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/baseline_inventory.json",
   "prepare_open_source": false,
   "open_source_manifest_path": null,
   "open_source_cleanup_plan_path": null,
@@ -32,6 +32,6 @@
     "unresolved_required_items": [],
     "unmapped_completed_items": []
   },
-  "created_at": "2026-04-22T07:35:00+00:00",
-  "updated_at": "2026-04-22T07:35:00+00:00"
+  "created_at": "2026-04-22T07:37:43+00:00",
+  "updated_at": "2026-04-22T07:37:43+00:00"
 }
