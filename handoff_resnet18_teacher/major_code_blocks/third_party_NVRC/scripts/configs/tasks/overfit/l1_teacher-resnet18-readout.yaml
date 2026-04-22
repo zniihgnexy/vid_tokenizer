@@ -1,0 +1,15 @@
+loss: [1.0, l1]
+metric: [psnr, teacher-mse]
+color_space: RGB
+lamb: 1.0
+enable_log: false
+teacher_enable: true
+teacher_type: resnet18_imagenet
+teacher_loss_weight: 0.2
+teacher_detach_target: true
+teacher_function_readout_consistency: true
+teacher_function_readout_weight: 1.0
+teacher_function_readout_bank_size: 4
+teacher_function_readout_hidden_dim: 64
+teacher_function_readout_out_dim: 16
+teacher_function_readout_seed: 0

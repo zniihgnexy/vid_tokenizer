@@ -1,0 +1,9 @@
+type: NVRC
+config:
+  grid_em:
+    em: ar
+    em_dist: gaussian
+    rate_quant: soft-round-noise
+    dist_quant: soft-round-noise
+    quant_mean: true
+    learned_quant: t
