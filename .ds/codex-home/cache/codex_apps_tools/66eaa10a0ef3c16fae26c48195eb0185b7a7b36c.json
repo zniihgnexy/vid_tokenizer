@@ -37,10 +37,6 @@
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
-        },
         "annotations": {
           "readOnlyHint": true,
           "destructiveHint": false,
@@ -85,10 +81,6 @@
           },
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
-        },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -156,10 +148,6 @@
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
-        },
         "annotations": {
           "readOnlyHint": true,
           "destructiveHint": false,
@@ -218,10 +206,6 @@
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
-        },
         "annotations": {
           "readOnlyHint": true,
           "destructiveHint": false,
@@ -279,10 +263,6 @@
           ],
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
-        },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -346,10 +326,6 @@
           ],
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
-        },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -452,10 +428,6 @@
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
-        },
         "annotations": {
           "readOnlyHint": false,
           "destructiveHint": false,
@@ -511,10 +483,6 @@
           ],
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
-        },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -572,10 +540,6 @@
           ],
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
-        },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -770,10 +734,6 @@
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
         },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
-        },
         "annotations": {
           "readOnlyHint": false,
           "destructiveHint": false,
@@ -811,10 +771,6 @@
           "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
           "properties": {}
-        },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
         },
         "annotations": {
           "readOnlyHint": true,
@@ -904,10 +860,6 @@
           ],
           "additionalProperties": false,
           "$schema": "http://json-schema.org/draft-07/schema#"
-        },
-        "outputSchema": {
-          "default": {},
-          "type": "object"
         },
         "annotations": {
           "readOnlyHint": false,
@@ -1770,102 +1722,6 @@
         "title": "add_review_to_pr",
         "description": "Add a review to a GitHub pull request. review is required for REQUEST_CHANGES and COMMENT events.",
         "inputSchema": {
-          "$defs": {
-            "GithubFileComment": {
-              "properties": {
-                "path": {
-                  "description": "Repository path of the file to comment on.",
-                  "title": "Path",
-                  "type": "string"
-                },
-                "position": {
-                  "anyOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ],
-                  "default": null,
-                  "description": "The position in the diff where you want to add a review comment. Note this value is not the same as the line number in the file. The position value equals the number of lines down from the first \"@@\" hunk header in the file you want to add a comment. The line just below the \"@@\" line is position 1, the next line is position 2, and so on. The position in the diff continues to increase through lines of whitespace and additional hunks until the beginning of a new file.",
-                  "title": "Position"
-                },
-                "body": {
-                  "description": "Body text for the review comment.",
-                  "title": "Body",
-                  "type": "string"
-                },
-                "line": {
-                  "anyOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ],
-                  "default": null,
-                  "description": "File line number for line-based review comments.",
-                  "title": "Line"
-                },
-                "side": {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ],
-                  "default": null,
-                  "description": "Diff side for `line`, such as `LEFT` or `RIGHT`.",
-                  "title": "Side"
-                },
-                "start_line": {
-                  "anyOf": [
-                    {
-                      "type": "integer"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ],
-                  "default": null,
-                  "description": "Starting line number for a multi-line review comment range.",
-                  "title": "Start Line"
-                },
-                "start_side": {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ],
-                  "default": null,
-                  "description": "Diff side for `start_line`, such as `LEFT` or `RIGHT`.",
-                  "title": "Start Side"
-                }
-              },
-              "required": [
-                "path",
-                "body"
-              ],
-              "title": "GithubFileComment",
-              "type": "object"
-            },
-            "GithubReviewAction": {
-              "enum": [
-                "COMMENT",
-                "APPROVE",
-                "REQUEST_CHANGES"
-              ],
-              "title": "GithubReviewAction",
-              "type": "string"
-            }
-          },
           "properties": {
             "repo_full_name": {
               "description": "Repository in `owner/name` form, such as `openai/openai`.",
@@ -1892,7 +1748,13 @@
             "action": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubReviewAction"
+                  "enum": [
+                    "COMMENT",
+                    "APPROVE",
+                    "REQUEST_CHANGES"
+                  ],
+                  "title": "GithubReviewAction",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -1903,7 +1765,89 @@
             "file_comments": {
               "description": "Optional inline file comments to include with the review.",
               "items": {
-                "$ref": "#/$defs/GithubFileComment"
+                "properties": {
+                  "path": {
+                    "description": "Repository path of the file to comment on.",
+                    "title": "Path",
+                    "type": "string"
+                  },
+                  "position": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "The position in the diff where you want to add a review comment. Note this value is not the same as the line number in the file. The position value equals the number of lines down from the first \"@@\" hunk header in the file you want to add a comment. The line just below the \"@@\" line is position 1, the next line is position 2, and so on. The position in the diff continues to increase through lines of whitespace and additional hunks until the beginning of a new file.",
+                    "title": "Position"
+                  },
+                  "body": {
+                    "description": "Body text for the review comment.",
+                    "title": "Body",
+                    "type": "string"
+                  },
+                  "line": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "File line number for line-based review comments.",
+                    "title": "Line"
+                  },
+                  "side": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Diff side for `line`, such as `LEFT` or `RIGHT`.",
+                    "title": "Side"
+                  },
+                  "start_line": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Starting line number for a multi-line review comment range.",
+                    "title": "Start Line"
+                  },
+                  "start_side": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "description": "Diff side for `start_line`, such as `LEFT` or `RIGHT`.",
+                    "title": "Start Side"
+                  }
+                },
+                "required": [
+                  "path",
+                  "body"
+                ],
+                "title": "GithubFileComment",
+                "type": "object"
               },
               "title": "File Comments",
               "type": "array"
@@ -8085,25 +8029,6 @@
         "title": "search_commits",
         "description": "Search GitHub commits across one or more repositories.",
         "inputSchema": {
-          "$defs": {
-            "GithubCommitSort": {
-              "enum": [
-                "best-match",
-                "author-date",
-                "committer-date"
-              ],
-              "title": "GithubCommitSort",
-              "type": "string"
-            },
-            "GithubSearchResultOrder": {
-              "enum": [
-                "desc",
-                "asc"
-              ],
-              "title": "GithubSearchResultOrder",
-              "type": "string"
-            }
-          },
           "properties": {
             "query": {
               "description": "Search query string.",
@@ -8151,7 +8076,13 @@
             "sort": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubCommitSort"
+                  "enum": [
+                    "best-match",
+                    "author-date",
+                    "committer-date"
+                  ],
+                  "title": "GithubCommitSort",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -8163,7 +8094,12 @@
             "order": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubSearchResultOrder"
+                  "enum": [
+                    "desc",
+                    "asc"
+                  ],
+                  "title": "GithubSearchResultOrder",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -8441,28 +8377,6 @@
         "title": "search_issues",
         "description": "Search GitHub issues.",
         "inputSchema": {
-          "$defs": {
-            "GithubIssueSort": {
-              "enum": [
-                "best-match",
-                "created",
-                "updated",
-                "comments",
-                "reactions",
-                "interactions"
-              ],
-              "title": "GithubIssueSort",
-              "type": "string"
-            },
-            "GithubSearchResultOrder": {
-              "enum": [
-                "desc",
-                "asc"
-              ],
-              "title": "GithubSearchResultOrder",
-              "type": "string"
-            }
-          },
           "properties": {
             "query": {
               "description": "Search query string.",
@@ -8493,7 +8407,16 @@
             "sort": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubIssueSort"
+                  "enum": [
+                    "best-match",
+                    "created",
+                    "updated",
+                    "comments",
+                    "reactions",
+                    "interactions"
+                  ],
+                  "title": "GithubIssueSort",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -8505,7 +8428,12 @@
             "order": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubSearchResultOrder"
+                  "enum": [
+                    "desc",
+                    "asc"
+                  ],
+                  "title": "GithubSearchResultOrder",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -8584,28 +8512,6 @@
         "title": "search_prs",
         "description": "Search GitHub pull requests.",
         "inputSchema": {
-          "$defs": {
-            "GithubIssueSort": {
-              "enum": [
-                "best-match",
-                "created",
-                "updated",
-                "comments",
-                "reactions",
-                "interactions"
-              ],
-              "title": "GithubIssueSort",
-              "type": "string"
-            },
-            "GithubSearchResultOrder": {
-              "enum": [
-                "desc",
-                "asc"
-              ],
-              "title": "GithubSearchResultOrder",
-              "type": "string"
-            }
-          },
           "properties": {
             "query": {
               "description": "Search query string.",
@@ -8653,7 +8559,16 @@
             "sort": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubIssueSort"
+                  "enum": [
+                    "best-match",
+                    "created",
+                    "updated",
+                    "comments",
+                    "reactions",
+                    "interactions"
+                  ],
+                  "title": "GithubIssueSort",
+                  "type": "string"
                 },
                 {
                   "type": "null"
@@ -8665,7 +8580,12 @@
             "order": {
               "anyOf": [
                 {
-                  "$ref": "#/$defs/GithubSearchResultOrder"
+                  "enum": [
+                    "desc",
+                    "asc"
+                  ],
+                  "title": "GithubSearchResultOrder",
+                  "type": "string"
                 },
                 {
                   "type": "null"

@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-aa8a732b",
+  "id": "progress-aa8a732b",
+  "quest_id": "002",
+  "created_at": "2026-04-22T07:28:52+00:00",
+  "updated_at": "2026-04-22T07:28:52+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "ff9464372daa002d5aada25b0205068b22679abf",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "message": "我先继续核对当前基线状态，确认它是不是已经足够稳定到可以结束这一步。重点会看三件事：现有基线记录是否可信、和主实验的比较口径是否一致、以及现在是否应该切到后续论文整理而不是继续重复基线工作。",
+  "summary": "我先继续核对当前基线状态，确认它是不是已经足够稳定到可以结束这一步。重点会看三件事：现有基线记录是否可信、和主实验的比较口径是否一致、以及现在是否应该切到后续论文整理而不是继续重复基线工作。",
+  "summary_preview": "我先继续核对当前基线状态，确认它是不是已经足够稳定到可以结束这一步。重点会看三件事：现有基线记录是否可信、和主实验的比较口径是否一致、以及现在是否应该切到后续论文整理而不是继续重复基线工作。",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "progress-aa8a732b",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-aa8a732b",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}
