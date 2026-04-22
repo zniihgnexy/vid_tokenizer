@@ -1,0 +1,73 @@
+{
+  "bundle_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/experiments/main/interface_bundles/shared_gating_teacher_packet_smoke_r1",
+  "consumer_metrics": {
+    "pred_delta_to_target_delta": {
+      "mean_best_nonmatch_similarity": 0.016854702960699797,
+      "mean_margin_vs_best_nonmatch": 0.06135101756080985,
+      "mean_match_rank": 1.25,
+      "mean_matching_similarity": 0.07820572052150965,
+      "top1_accuracy": 0.75
+    },
+    "pred_feat_plus_delta_to_target_feat_plus_delta": {
+      "mean_best_nonmatch_similarity": 0.6321716755628586,
+      "mean_margin_vs_best_nonmatch": -0.024291515350341797,
+      "mean_match_rank": 2.0,
+      "mean_matching_similarity": 0.6078801602125168,
+      "top1_accuracy": 0.25
+    },
+    "pred_feat_to_target_feat": {
+      "mean_best_nonmatch_similarity": 0.7489512115716934,
+      "mean_margin_vs_best_nonmatch": -0.06849177181720734,
+      "mean_match_rank": 2.5,
+      "mean_matching_similarity": 0.6804594397544861,
+      "top1_accuracy": 0.25
+    },
+    "target_feat_to_target_feat": {
+      "mean_best_nonmatch_similarity": 0.933774471282959,
+      "mean_margin_vs_best_nonmatch": 0.06622549891471863,
+      "mean_match_rank": 1.0,
+      "mean_matching_similarity": 0.9999999701976776,
+      "top1_accuracy": 1.0
+    }
+  },
+  "frame_count": 4,
+  "mode": "smoke",
+  "output_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/experiments/main/evals/shared_gating_teacher_packet_smoke_r1",
+  "sample_ids": [
+    "0000",
+    "0001",
+    "0002",
+    "0003"
+  ],
+  "teacher_packet_summary": {
+    "device": "cpu",
+    "feature_dim": 512,
+    "frame_count": 4,
+    "mean_consistency_mse": 0.5212242603302002,
+    "mean_delta_cosine": 0.07820572704076767,
+    "mean_feature_cosine": 0.6804594397544861,
+    "mean_semantic_weight": 0.999998927116394,
+    "packet_fields": [
+      "pred_feat",
+      "target_feat",
+      "pred_delta",
+      "target_delta"
+    ],
+    "teacher_type": "resnet18_imagenet"
+  },
+  "upstream_aggregate_metrics": {
+    "bpp_avg": 88.2266,
+    "bpp_est_avg": 93.7417,
+    "ent_dec_time_avg": 14.1911,
+    "ent_enc_time_avg": 8.1581,
+    "eval_time_avg": 0.1108,
+    "macs_avg": 1115712.0,
+    "macs_rate_avg": 67584000.0,
+    "params_avg": 4283.0,
+    "params_codec_avg": 38027.0,
+    "psnr_avg": 10.9012,
+    "size": 361376.0,
+    "teacher-mse_avg": 0.5126,
+    "train_time_avg": 0.2939
+  }
+}

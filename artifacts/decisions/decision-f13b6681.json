@@ -1,0 +1,94 @@
+{
+  "kind": "decision",
+  "schema_version": 1,
+  "artifact_id": "decision-f13b6681",
+  "id": "decision-f13b6681",
+  "quest_id": "002",
+  "created_at": "2026-04-22T07:38:22+00:00",
+  "updated_at": "2026-04-22T07:38:22+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi",
+    "run_id": "run-3beca153"
+  },
+  "status": "completed",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "1df18a371e3ad756f430cb4ce5a3b4f46f33c089",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "verdict": "blocked",
+  "action": "finalize",
+  "summary": "The active paper line is content-complete and bundle-ready, but formal bundle registration remains blocked by the runtime active-anchor error.",
+  "reason": "After reconstructing the current paper line to `bundle_ready + finalize_ready`, a fresh `artifact.submit_paper_bundle(...)` call still failed with `Unsupported active anchor `finalize`. Allowed values: .`. The blocker is therefore operational rather than scientific or writing-related.",
+  "flow_type": "finalize_blocker",
+  "protocol_step": "finalize",
+  "details": {
+    "paper_line_ref": "paper-run-querybank-teacher-anchor-smoke-r1-outline-002-run",
+    "paper_branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+    "paper_contract_health": {
+      "contract_ok": true,
+      "writing_ready": true,
+      "finalize_ready": true,
+      "delivery_state": "bundle_ready",
+      "bundle_status": "present"
+    },
+    "failed_operation": "artifact.submit_paper_bundle",
+    "error_message": "Unsupported active anchor `finalize`. Allowed values: .",
+    "recommended_next_action": "preserve the repaired bundle as fixed and retry formal registration only after the runtime anchor bug is repaired",
+    "reopen_condition": "A runtime fix allows submit_paper_bundle to accept the active finalize anchor again.",
+    "next_anchor": "finalize"
+  },
+  "evidence_paths": [
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/paper_bundle_manifest.json",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/paper_line_state.json",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/draft.md",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/claim_evidence_map.json",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/evidence_ledger.json"
+  ],
+  "comment": "Record the current finalize-stage blocker after a fresh submit_paper_bundle attempt on the repaired active paper line.",
+  "run_id": "run-3beca153",
+  "anchor": "baseline",
+  "semantic_key": "decision:baseline:finalize:blocked:c14206d37e754e6197319d18fb022a2f1403c5ecf4d0cdfe544f30b1320edfc4",
+  "guidance_vm": {
+    "current_anchor": "decision",
+    "recommended_skill": "finalize",
+    "recommended_action": "finalize",
+    "summary": "Decision accepted: consolidate the quest and record the final stopping state.",
+    "why_now": "After reconstructing the current paper line to `bundle_ready + finalize_ready`, a fresh `artifact.submit_paper_bundle(...)` call still failed with `Unsupported active anchor `finalize`. Allowed values: .`. The blocker is therefore operational rather than scientific or writing-related.",
+    "complete_when": [
+      "A final report is written.",
+      "A final decision records stop/archive/continue-later with reasons.",
+      "The Git graph is refreshed for handoff."
+    ],
+    "alternative_routes": [
+      {
+        "action": "write",
+        "label": "Refine writing first",
+        "when": "The paper bundle still needs drafting or proofing.",
+        "tradeoff": "Improves packaging, but delays closure."
+      },
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Run one last analysis",
+        "when": "A decisive robustness gap remains.",
+        "tradeoff": "Improves confidence, but expands scope."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(kind='report', ...)",
+        "purpose": "Write the final quest report."
+      },
+      {
+        "name": "artifact.render_git_graph()",
+        "purpose": "Refresh the durable graph export."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "decision",
+    "source_artifact_id": "decision-f13b6681",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

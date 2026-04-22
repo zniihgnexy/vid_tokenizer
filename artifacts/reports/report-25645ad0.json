@@ -1,0 +1,78 @@
+{
+  "kind": "report",
+  "schema_version": 1,
+  "artifact_id": "report-25645ad0",
+  "id": "report-25645ad0",
+  "quest_id": "002",
+  "created_at": "2026-04-22T07:51:12+00:00",
+  "updated_at": "2026-04-22T07:51:12+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "6ef184afec5f8ef5802157a6bb6a637adc845053",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "report_type": "paper_bundle",
+  "summary": "Markdown-first bounded feasibility-note bundle on the active paper line. Main evidence remains the bounded query-adaptive arbitration smoke, with the repaired broader three-bundle validation and the first negative downstream-consumer bridge smoke kept only as claim-boundary notes.",
+  "reason": "Paper drafting outputs were consolidated into a durable bundle manifest.",
+  "flow_type": "paper_bundle",
+  "protocol_step": "submit",
+  "paths": {
+    "paper_bundle_manifest_json": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/paper_bundle_manifest.json",
+    "outline_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/selected_outline.json",
+    "draft_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/draft.md",
+    "pdf_path": null,
+    "evidence_ledger_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/paper/evidence_ledger.json",
+    "baseline_inventory_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/baseline_inventory.json",
+    "open_source_manifest_path": null
+  },
+  "details": {
+    "title": "Bounded Query-Adaptive Arbitration over Frozen Teacher-Anchor Packet Bundles",
+    "selected_outline_ref": "outline-002",
+    "ready_section_count": 2,
+    "section_count": 6,
+    "ledger_item_count": 3,
+    "paper_line_id": "paper-run-querybank-teacher-anchor-smoke-r1-outline-002-run",
+    "baseline_inventory_count": 0,
+    "open_source_status": null,
+    "paper_branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+    "source_branch": "run/querybank_teacher_anchor_smoke_r1",
+    "source_run_id": null,
+    "prepare_open_source": false
+  },
+  "semantic_key": "report:finalize:paper_bundle:submit:7b15521c4379744058970e7fa081b7ee757c30520a5888c6dd5cfe2f220f39b0",
+  "guidance_vm": {
+    "current_anchor": "baseline",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Report saved. Turn it into the next explicit route instead of leaving it as passive context.",
+    "why_now": "A report is most useful when it directly drives the next durable decision.",
+    "complete_when": [
+      "The report informs a route choice or stage transition.",
+      "The next active anchor is clear and durable."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(kind='decision', ...)",
+        "purpose": "Convert the report into a route decision."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "report",
+    "source_artifact_id": "report-25645ad0",
+    "related_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/paper_bundle_manifest.json",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/selected_outline.json",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/draft.md",
+      "None",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/paper/evidence_ledger.json",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/baseline_inventory.json",
+      "None"
+    ],
+    "stage_status": "ready"
+  }
+}

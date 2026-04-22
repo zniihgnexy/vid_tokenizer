@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-331d3f0a",
+  "id": "progress-331d3f0a",
+  "quest_id": "002",
+  "created_at": "2026-04-15T08:56:08+00:00",
+  "updated_at": "2026-04-15T08:56:08+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "idea/002-idea-e0d17d22",
+  "head_commit": "2f06b29232134a188192f6025271ddfac800bceb",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-e0d17d22",
+  "message": "我这边继续把新找到的 16 帧受控视频样本接回冻结上游。现在重点是把启动路径收紧成一个最小可复跑方案：先确认配置覆盖逻辑，再决定是直接复用现有命令，还是补一个很薄的包装层。",
+  "summary": "我这边继续把新找到的 16 帧受控视频样本接回冻结上游。现在重点是把启动路径收紧成一个最小可复跑方案：先确认配置覆盖逻辑，再决定是直接复用现有命令，还是补一个很薄的包装层。",
+  "summary_preview": "我这边继续把新找到的 16 帧受控视频样本接回冻结上游。现在重点是把启动路径收紧成一个最小可复跑方案：先确认配置覆盖逻辑，再决定是直接复用现有命令，还是补一个很薄的包装层。",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "progress-331d3f0a",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-331d3f0a",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

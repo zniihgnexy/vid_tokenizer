@@ -1,0 +1,69 @@
+{
+  "kind": "run",
+  "schema_version": 1,
+  "artifact_id": "run-634cd1d6",
+  "id": "run-634cd1d6",
+  "quest_id": "002",
+  "created_at": "2026-04-22T08:45:28+00:00",
+  "updated_at": "2026-04-22T08:45:28+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "d0432ce408ea5dba6a6778e56989c30f3984abfa",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "run_id": "run-15592faa",
+  "run_kind": "finalize",
+  "model": "inherit",
+  "summary": "我先把当前工作区的改动和分支状态核一下，然后直接做一次正式提交。提交完我会把提交落在哪个分支、对应的 commit 位置都明确告诉你。\n我已经确认现在就在 `paper/run-querybank-teacher-anchor-smoke-r1` 这条分支上，接下来会把“该提交的内容”和运行期临时文件分开，避免把 sqlite/wal 这类噪音一起塞进提交里。然后我会做一次干净提交，并把具体 commit 位置回给你。\n我在继续收窄提交范围。现在要确认哪些是你要保留的版本内容，哪些只是运行时噪音；这一步核清以后我就直接落 commit。\n我刚核完一个关键点：工作区里目前未提交的改动基本都是运行期文件，不是你刚刚要我整理的那批可 review 内容。也就是说，我现在要先确认“最新可交付版本”是不是已经在当前分支的最新提交里；如果是，我就直接把那个提交点精确告诉你，不会为了凑一次提交把临时文件硬塞进去。\n我已经确认：你要的那套 README/PR 说明/学习路径/长视频指南，其实已经被写进当前分支的历史里了，不在现在这批未提交噪音文件里。为了给你一个干净可用的交付点，我再补一个明确的“提交锚点”，然后把分支名和 commit 一次性给你。\n我这边准备直接补一个“提交锚点” commit 了。这样不会把那些临时 sqlite / 日志文件带进去，同时你也能拿到一个明确的、可直接引用的提交点。\n提交锚点已经打上了。现在我去取最终的 commit SHA，并顺手再确认一下这次提交没有把运行期临时文件带进去。\n都搞定啦。当前版本我已经在本地 git 里落了一个干净的提交锚点，没有把运行时临时文件一起带进去。\n\n1. 分支：`paper/run-querybank-teacher-anchor-smoke-r1`\n2. 最新提交：`d0432ce`  \n   提交信息：`paper: mark local review snapshot ready`\n3. 你前面要的 README / PR 说明 / 学习路径 / 长视频指南，在同一条分支历史里，对应提交是 `7810cd3`\n\n补充一句：这次是本地提交，还没有推到远端；我故意把 `.sqlite`、`.wal`、progress 日志这些运行期噪音留在未提交状态了。如果你要，我下一步可以直接继续帮你推远端或者开 PR。",
+  "history_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/codex_history/run-15592faa",
+  "run_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/runs/run-15592faa",
+  "exit_code": 0,
+  "guidance_vm": {
+    "current_anchor": "experiment",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Main run recorded. Interpret it against baseline before spending more compute.",
+    "why_now": "A run result only changes the quest once its metrics, caveats, and branch value are turned into a durable decision.",
+    "complete_when": [
+      "A report or decision explains the result versus baseline.",
+      "The next route is chosen: analysis, write, branch, or stop."
+    ],
+    "alternative_routes": [
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Launch analysis",
+        "when": "The result is promising but still under-explained.",
+        "tradeoff": "Strengthens understanding, but adds additional runs."
+      },
+      {
+        "action": "write",
+        "label": "Move to writing",
+        "when": "The result is already strong and well-explained enough.",
+        "tradeoff": "Faster paper progress, but less stress-testing."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(kind='report', ...)",
+        "purpose": "Summarize the main run and metric deltas."
+      },
+      {
+        "name": "artifact.record(kind='decision', ...)",
+        "purpose": "Choose the next route based on the result."
+      },
+      {
+        "name": "artifact.create_analysis_campaign(...)",
+        "purpose": "When extra experiments are needed, create them as one-slice or multi-slice child branches from the current result node."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "run",
+    "source_artifact_id": "run-634cd1d6",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

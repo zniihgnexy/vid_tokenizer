@@ -1,0 +1,852 @@
+Model info:
+NVRC(
+  (model): HiNeRV(
+    (base_encoding): BaseEncoding(
+      (enc): BaseEncodingImpV2(
+        out_size=(4, 8, 8), out_channels=16, paddings=[0, 2, 2], grid_sizes=[(4, 8, 8, 2), (4, 8, 8, 4)] align_corners=False
+        (proj_0): FuncConv2D(in_channels=2, out_channels=16, kernel_size=[3, 3], stride=1, padding=same, dilation=1, groups=1, bias=True)
+        (proj_1): FuncConv2D(in_channels=4, out_channels=16, kernel_size=[3, 3], stride=1, padding=same, dilation=1, groups=1, bias=True)
+      )
+    )
+    (decoder): Decoder(
+      (upsamplers): ModuleList(
+        (0-1): 2 x Upsample(
+          scale=(1, 2, 2), type=trilinear
+          (norm): FuncLayerNorm(normalized_shape=(16,), eps=1e-06, elementwise_affine=False, bias=True)
+          (act): Identity()
+          (layer): FastTrilinearInterpolation(method=matmul-th-w, align_corners=False)
+        )
+      )
+      (hi_encodings): ModuleList(
+        (0): HierarchicalEncoding(
+          out_channels=16, grid_level=1, grid_sizes=[(4, 1, 1, 1, 2, 2, 2)], grid_stride=(1, 2, 2)
+          (linear): FuncLinear(in_features=2, out_features=16, bias=True)
+        )
+        (1): HierarchicalEncoding(
+          out_channels=16, grid_level=1, grid_sizes=[(4, 1, 1, 1, 2, 2, 1)], grid_stride=(1, 2, 2)
+          (linear): FuncLinear(in_features=1, out_features=16, bias=True)
+        )
+      )
+      (blocks): ModuleList(
+        (0): ModuleList(
+          (0): FuncConvNeXtBlock(
+            in_features=16, out_features=16, use_shortcut=True
+            (dconv): FuncConv2D(in_channels=16, out_channels=16, kernel_size=(3, 3), stride=1, padding=same, dilation=1, groups=16, bias=False)
+            (norm): FuncLayerNorm(normalized_shape=(16,), eps=1e-06, elementwise_affine=False, bias=True)
+            (fc1): FuncLinear(in_features=16, out_features=32, bias=False)
+            (act): GELU(approximate='none')
+            (fc2): FuncLinear(in_features=32, out_features=16, bias=False)
+          )
+        )
+        (1): ModuleList(
+          (0): FuncConvNeXtBlock(
+            in_features=16, out_features=8, use_shortcut=True
+            (dconv): FuncConv2D(in_channels=16, out_channels=16, kernel_size=(3, 3), stride=1, padding=same, dilation=1, groups=16, bias=False)
+            (norm): FuncLayerNorm(normalized_shape=(16,), eps=1e-06, elementwise_affine=False, bias=True)
+            (fc1): FuncLinear(in_features=16, out_features=16, bias=False)
+            (act): GELU(approximate='none')
+            (fc2): FuncLinear(in_features=16, out_features=8, bias=False)
+          )
+        )
+      )
+      (heads): ModuleList(
+        (0): None
+        (1): FuncLinearBlock(
+          in_features=8, out_features=3, use_shortcut=False
+          (linear): FuncLinear(in_features=8, out_features=3, bias=True)
+          (norm): FuncIdentity()
+          (act): Sigmoid()
+        )
+      )
+    )
+  )
+  (param_model): ParamModel(
+    (params): ParameterDict(
+        (base_encoding_enc__grids_0): Parameter containing: [torch.cuda.FloatTensor of size 4x8x8x2 (cuda:0)]
+        (base_encoding_enc__grids_1): Parameter containing: [torch.cuda.FloatTensor of size 4x8x8x4 (cuda:0)]
+        (base_encoding_enc_proj_0__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc_proj_0__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x2x3x3 (cuda:0)]
+        (base_encoding_enc_proj_1__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc_proj_1__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x4x3x3 (cuda:0)]
+        (decoder_blocks_0_0_dconv__bias): Object of type: NoneType
+        (decoder_blocks_0_0_dconv__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x1x3x3 (cuda:0)]
+        (decoder_blocks_0_0_fc1__bias): Object of type: NoneType
+        (decoder_blocks_0_0_fc1__weight): Parameter containing: [torch.cuda.FloatTensor of size 32x16 (cuda:0)]
+        (decoder_blocks_0_0_fc2__bias): Object of type: NoneType
+        (decoder_blocks_0_0_fc2__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x32 (cuda:0)]
+        (decoder_blocks_0_0_norm__bias): Object of type: NoneType
+        (decoder_blocks_0_0_norm__weight): Object of type: NoneType
+        (decoder_blocks_1_0_dconv__bias): Object of type: NoneType
+        (decoder_blocks_1_0_dconv__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x1x3x3 (cuda:0)]
+        (decoder_blocks_1_0_fc1__bias): Object of type: NoneType
+        (decoder_blocks_1_0_fc1__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x16 (cuda:0)]
+        (decoder_blocks_1_0_fc2__bias): Object of type: NoneType
+        (decoder_blocks_1_0_fc2__weight): Parameter containing: [torch.cuda.FloatTensor of size 8x16 (cuda:0)]
+        (decoder_blocks_1_0_norm__bias): Object of type: NoneType
+        (decoder_blocks_1_0_norm__weight): Object of type: NoneType
+        (decoder_heads_1_linear__bias): Parameter containing: [torch.cuda.FloatTensor of size 3 (cuda:0)]
+        (decoder_heads_1_linear__weight): Parameter containing: [torch.cuda.FloatTensor of size 3x8 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0): Parameter containing: [torch.cuda.FloatTensor of size 4x1x1x1x2x2x2 (cuda:0)]
+        (decoder_hi_encodings_0_linear__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x2 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0): Parameter containing: [torch.cuda.FloatTensor of size 4x1x1x1x2x2x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x1 (cuda:0)]
+        (decoder_upsamplers_0_norm__bias): Object of type: NoneType
+        (decoder_upsamplers_0_norm__weight): Object of type: NoneType
+        (decoder_upsamplers_1_norm__bias): Object of type: NoneType
+        (decoder_upsamplers_1_norm__weight): Object of type: NoneType
+    )
+  )
+  (grid_em): ARGridEntropyModel(
+    use_quant_mean=True, learned_quant=True, learned_em=False, blk_size=[16, 8, 8], kernel_size=5, channels=8, depth=3, norm=layernorm, bias=True, act=gelu, depthwise=True
+    (dist_model): GaussianConditional(
+      (inner_module): InnerGaussianConditional(
+        (likelihood_lower_bound): LowerBound()
+        (lower_bound_scale): LowerBound()
+      )
+    )
+    (rate_quantizer): SoftRoundingQuantizer(use_noise=True)
+    (dist_quantizer): SoftRoundingQuantizer(use_noise=True)
+    (base_encoding_enc__grids_0_layers): ModuleList(
+      (0): FuncMaskedConv3d(in_channels=2, out_channels=16, kernel_size=(5, 5, 5), stride=1, padding=same, dilation=1, groups=2, bias=True)
+      (1): GELU(approximate='none')
+      (2): FuncLayerNorm(normalized_shape=(16,), eps=1e-06, elementwise_affine=True, bias=True)
+      (3): FuncMaskedConv3d(in_channels=16, out_channels=16, kernel_size=(5, 5, 5), stride=1, padding=same, dilation=1, groups=2, bias=True)
+      (4): GELU(approximate='none')
+      (5): FuncLayerNorm(normalized_shape=(16,), eps=1e-06, elementwise_affine=True, bias=True)
+      (6): FuncMaskedConv3d(in_channels=16, out_channels=4, kernel_size=(5, 5, 5), stride=1, padding=same, dilation=1, groups=2, bias=True)
+    )
+    (base_encoding_enc__grids_1_layers): ModuleList(
+      (0): FuncMaskedConv3d(in_channels=4, out_channels=32, kernel_size=(5, 5, 5), stride=1, padding=same, dilation=1, groups=4, bias=True)
+      (1): GELU(approximate='none')
+      (2): FuncLayerNorm(normalized_shape=(32,), eps=1e-06, elementwise_affine=True, bias=True)
+      (3): FuncMaskedConv3d(in_channels=32, out_channels=32, kernel_size=(5, 5, 5), stride=1, padding=same, dilation=1, groups=4, bias=True)
+      (4): GELU(approximate='none')
+      (5): FuncLayerNorm(normalized_shape=(32,), eps=1e-06, elementwise_affine=True, bias=True)
+      (6): FuncMaskedConv3d(in_channels=32, out_channels=8, kernel_size=(5, 5, 5), stride=1, padding=same, dilation=1, groups=4, bias=True)
+    )
+  )
+  (grid_em_param_model): ParamModel(
+    (params): ParameterDict(
+        (base_encoding_enc__grids_0_layers_0__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_0__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x1x62 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__weight): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x8x63 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__weight): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__bias): Parameter containing: [torch.cuda.FloatTensor of size 4 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__weight): Parameter containing: [torch.cuda.FloatTensor of size 4x8x63 (cuda:0)]
+        (base_encoding_enc__grids_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1x2 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__bias): Parameter containing: [torch.cuda.FloatTensor of size 32 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__weight): Parameter containing: [torch.cuda.FloatTensor of size 32x1x62 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__bias): Parameter containing: [torch.cuda.FloatTensor of size 32 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__weight): Parameter containing: [torch.cuda.FloatTensor of size 32 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__bias): Parameter containing: [torch.cuda.FloatTensor of size 32 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__weight): Parameter containing: [torch.cuda.FloatTensor of size 32x8x63 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__bias): Parameter containing: [torch.cuda.FloatTensor of size 32 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__weight): Parameter containing: [torch.cuda.FloatTensor of size 32 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__bias): Parameter containing: [torch.cuda.FloatTensor of size 8 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__weight): Parameter containing: [torch.cuda.FloatTensor of size 8x8x63 (cuda:0)]
+        (base_encoding_enc__grids_1_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1x4 (cuda:0)]
+    )
+  )
+  (weight_em): DoubleAxisEntropyModel(
+    use_quant_mean=True, learned_quant=True, learned_em=True
+    (dist_model): GaussianConditional(
+      (inner_module): InnerGaussianConditional(
+        (likelihood_lower_bound): LowerBound()
+        (lower_bound_scale): LowerBound()
+      )
+    )
+    (rate_quantizer): SoftRoundingQuantizer(use_noise=True)
+    (dist_quantizer): SoftRoundingQuantizer(use_noise=True)
+  )
+  (weight_em_param_model): ParamModel(
+    (params): ParameterDict(
+        (base_encoding_enc_proj_0__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+    )
+  )
+  (grid_meta_em): EntropyModel(
+    use_quant_mean=True, learned_quant=True, learned_em=True
+    (dist_model): GaussianConditional(
+      (inner_module): InnerGaussianConditional(
+        (likelihood_lower_bound): LowerBound()
+        (lower_bound_scale): LowerBound()
+      )
+    )
+    (rate_quantizer): SoftRoundingQuantizer(use_noise=True)
+    (dist_quantizer): SoftRoundingQuantizer(use_noise=True)
+  )
+  (grid_meta_em_param_model): ParamModel(
+    (params): ParameterDict(
+        (base_encoding_enc__grids_0_layers_0__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_0__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_0__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_0__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_0__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_0__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_log_step_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_log_step_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_log_step_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_log_step_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_log_step_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_log_step_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+    )
+  )
+  (weight_meta_em): EntropyModel(
+    use_quant_mean=True, learned_quant=True, learned_em=True
+    (dist_model): GaussianConditional(
+      (inner_module): InnerGaussianConditional(
+        (likelihood_lower_bound): LowerBound()
+        (lower_bound_scale): LowerBound()
+      )
+    )
+    (rate_quantizer): SoftRoundingQuantizer(use_noise=True)
+    (dist_quantizer): SoftRoundingQuantizer(use_noise=True)
+  )
+  (weight_meta_em_param_model): ParamModel(
+    (params): ParameterDict(
+        (base_encoding_enc_proj_0__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+    )
+  )
+  (meta_em): FullPrecisionModel()
+)
+Full model info:
+NVRC(
+  (model): HiNeRV(
+    (base_encoding): BaseEncoding(
+      (enc): BaseEncodingImpV2(
+        out_size=(4, 8, 8), out_channels=16, paddings=[0, 2, 2], grid_sizes=[(4, 8, 8, 2), (4, 8, 8, 4)] align_corners=False
+        (proj_0): FuncConv2D(in_channels=2, out_channels=16, kernel_size=[3, 3], stride=1, padding=same, dilation=1, groups=1, bias=True)
+        (proj_1): FuncConv2D(in_channels=4, out_channels=16, kernel_size=[3, 3], stride=1, padding=same, dilation=1, groups=1, bias=True)
+      )
+    )
+    (decoder): Decoder(
+      (upsamplers): ModuleList(
+        (0-1): 2 x Upsample(
+          scale=(1, 2, 2), type=trilinear
+          (norm): FuncLayerNorm(normalized_shape=(16,), eps=1e-06, elementwise_affine=False, bias=True)
+          (act): Identity()
+          (layer): FastTrilinearInterpolation(method=matmul-th-w, align_corners=False)
+        )
+      )
+      (hi_encodings): ModuleList(
+        (0): HierarchicalEncoding(
+          out_channels=16, grid_level=1, grid_sizes=[(4, 1, 1, 1, 2, 2, 2)], grid_stride=(1, 2, 2)
+          (linear): FuncLinear(in_features=2, out_features=16, bias=True)
+        )
+        (1): HierarchicalEncoding(
+          out_channels=16, grid_level=1, grid_sizes=[(4, 1, 1, 1, 2, 2, 1)], grid_stride=(1, 2, 2)
+          (linear): FuncLinear(in_features=1, out_features=16, bias=True)
+        )
+      )
+      (blocks): ModuleList(
+        (0): ModuleList(
+          (0): FuncConvNeXtBlock(
+            in_features=16, out_features=16, use_shortcut=True
+            (dconv): FuncConv2D(in_channels=16, out_channels=16, kernel_size=(3, 3), stride=1, padding=same, dilation=1, groups=16, bias=False)
+            (norm): FuncLayerNorm(normalized_shape=(16,), eps=1e-06, elementwise_affine=False, bias=True)
+            (fc1): FuncLinear(in_features=16, out_features=32, bias=False)
+            (act): GELU(approximate='none')
+            (fc2): FuncLinear(in_features=32, out_features=16, bias=False)
+          )
+        )
+        (1): ModuleList(
+          (0): FuncConvNeXtBlock(
+            in_features=16, out_features=8, use_shortcut=True
+            (dconv): FuncConv2D(in_channels=16, out_channels=16, kernel_size=(3, 3), stride=1, padding=same, dilation=1, groups=16, bias=False)
+            (norm): FuncLayerNorm(normalized_shape=(16,), eps=1e-06, elementwise_affine=False, bias=True)
+            (fc1): FuncLinear(in_features=16, out_features=16, bias=False)
+            (act): GELU(approximate='none')
+            (fc2): FuncLinear(in_features=16, out_features=8, bias=False)
+          )
+        )
+      )
+      (heads): ModuleList(
+        (0): None
+        (1): FuncLinearBlock(
+          in_features=8, out_features=3, use_shortcut=False
+          (linear): FuncLinear(in_features=8, out_features=3, bias=True)
+          (norm): FuncIdentity()
+          (act): Sigmoid()
+        )
+      )
+    )
+  )
+  (param_model): ParamModel(
+    (params): ParameterDict(
+        (base_encoding_enc__grids_0): Parameter containing: [torch.cuda.FloatTensor of size 4x8x8x2 (cuda:0)]
+        (base_encoding_enc__grids_1): Parameter containing: [torch.cuda.FloatTensor of size 4x8x8x4 (cuda:0)]
+        (base_encoding_enc_proj_0__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc_proj_0__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x2x3x3 (cuda:0)]
+        (base_encoding_enc_proj_1__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc_proj_1__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x4x3x3 (cuda:0)]
+        (decoder_blocks_0_0_dconv__bias): Object of type: NoneType
+        (decoder_blocks_0_0_dconv__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x1x3x3 (cuda:0)]
+        (decoder_blocks_0_0_fc1__bias): Object of type: NoneType
+        (decoder_blocks_0_0_fc1__weight): Parameter containing: [torch.cuda.FloatTensor of size 32x16 (cuda:0)]
+        (decoder_blocks_0_0_fc2__bias): Object of type: NoneType
+        (decoder_blocks_0_0_fc2__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x32 (cuda:0)]
+        (decoder_blocks_0_0_norm__bias): Object of type: NoneType
+        (decoder_blocks_0_0_norm__weight): Object of type: NoneType
+        (decoder_blocks_1_0_dconv__bias): Object of type: NoneType
+        (decoder_blocks_1_0_dconv__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x1x3x3 (cuda:0)]
+        (decoder_blocks_1_0_fc1__bias): Object of type: NoneType
+        (decoder_blocks_1_0_fc1__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x16 (cuda:0)]
+        (decoder_blocks_1_0_fc2__bias): Object of type: NoneType
+        (decoder_blocks_1_0_fc2__weight): Parameter containing: [torch.cuda.FloatTensor of size 8x16 (cuda:0)]
+        (decoder_blocks_1_0_norm__bias): Object of type: NoneType
+        (decoder_blocks_1_0_norm__weight): Object of type: NoneType
+        (decoder_heads_1_linear__bias): Parameter containing: [torch.cuda.FloatTensor of size 3 (cuda:0)]
+        (decoder_heads_1_linear__weight): Parameter containing: [torch.cuda.FloatTensor of size 3x8 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0): Parameter containing: [torch.cuda.FloatTensor of size 4x1x1x1x2x2x2 (cuda:0)]
+        (decoder_hi_encodings_0_linear__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x2 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0): Parameter containing: [torch.cuda.FloatTensor of size 4x1x1x1x2x2x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x1 (cuda:0)]
+        (decoder_upsamplers_0_norm__bias): Object of type: NoneType
+        (decoder_upsamplers_0_norm__weight): Object of type: NoneType
+        (decoder_upsamplers_1_norm__bias): Object of type: NoneType
+        (decoder_upsamplers_1_norm__weight): Object of type: NoneType
+    )
+  )
+  (grid_em): ARGridEntropyModel(
+    use_quant_mean=True, learned_quant=True, learned_em=False, blk_size=[16, 8, 8], kernel_size=5, channels=8, depth=3, norm=layernorm, bias=True, act=gelu, depthwise=True
+    (dist_model): GaussianConditional(
+      (inner_module): InnerGaussianConditional(
+        (likelihood_lower_bound): LowerBound()
+        (lower_bound_scale): LowerBound()
+      )
+    )
+    (rate_quantizer): SoftRoundingQuantizer(use_noise=True)
+    (dist_quantizer): SoftRoundingQuantizer(use_noise=True)
+    (base_encoding_enc__grids_0_layers): ModuleList(
+      (0): FuncMaskedConv3d(in_channels=2, out_channels=16, kernel_size=(5, 5, 5), stride=1, padding=same, dilation=1, groups=2, bias=True)
+      (1): GELU(approximate='none')
+      (2): FuncLayerNorm(normalized_shape=(16,), eps=1e-06, elementwise_affine=True, bias=True)
+      (3): FuncMaskedConv3d(in_channels=16, out_channels=16, kernel_size=(5, 5, 5), stride=1, padding=same, dilation=1, groups=2, bias=True)
+      (4): GELU(approximate='none')
+      (5): FuncLayerNorm(normalized_shape=(16,), eps=1e-06, elementwise_affine=True, bias=True)
+      (6): FuncMaskedConv3d(in_channels=16, out_channels=4, kernel_size=(5, 5, 5), stride=1, padding=same, dilation=1, groups=2, bias=True)
+    )
+    (base_encoding_enc__grids_1_layers): ModuleList(
+      (0): FuncMaskedConv3d(in_channels=4, out_channels=32, kernel_size=(5, 5, 5), stride=1, padding=same, dilation=1, groups=4, bias=True)
+      (1): GELU(approximate='none')
+      (2): FuncLayerNorm(normalized_shape=(32,), eps=1e-06, elementwise_affine=True, bias=True)
+      (3): FuncMaskedConv3d(in_channels=32, out_channels=32, kernel_size=(5, 5, 5), stride=1, padding=same, dilation=1, groups=4, bias=True)
+      (4): GELU(approximate='none')
+      (5): FuncLayerNorm(normalized_shape=(32,), eps=1e-06, elementwise_affine=True, bias=True)
+      (6): FuncMaskedConv3d(in_channels=32, out_channels=8, kernel_size=(5, 5, 5), stride=1, padding=same, dilation=1, groups=4, bias=True)
+    )
+  )
+  (grid_em_param_model): ParamModel(
+    (params): ParameterDict(
+        (base_encoding_enc__grids_0_layers_0__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_0__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x1x62 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__weight): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__weight): Parameter containing: [torch.cuda.FloatTensor of size 16x8x63 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__bias): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__weight): Parameter containing: [torch.cuda.FloatTensor of size 16 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__bias): Parameter containing: [torch.cuda.FloatTensor of size 4 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__weight): Parameter containing: [torch.cuda.FloatTensor of size 4x8x63 (cuda:0)]
+        (base_encoding_enc__grids_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1x2 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__bias): Parameter containing: [torch.cuda.FloatTensor of size 32 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__weight): Parameter containing: [torch.cuda.FloatTensor of size 32x1x62 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__bias): Parameter containing: [torch.cuda.FloatTensor of size 32 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__weight): Parameter containing: [torch.cuda.FloatTensor of size 32 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__bias): Parameter containing: [torch.cuda.FloatTensor of size 32 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__weight): Parameter containing: [torch.cuda.FloatTensor of size 32x8x63 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__bias): Parameter containing: [torch.cuda.FloatTensor of size 32 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__weight): Parameter containing: [torch.cuda.FloatTensor of size 32 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__bias): Parameter containing: [torch.cuda.FloatTensor of size 8 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__weight): Parameter containing: [torch.cuda.FloatTensor of size 8x8x63 (cuda:0)]
+        (base_encoding_enc__grids_1_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1x4 (cuda:0)]
+    )
+  )
+  (weight_em): DoubleAxisEntropyModel(
+    use_quant_mean=True, learned_quant=True, learned_em=True
+    (dist_model): GaussianConditional(
+      (inner_module): InnerGaussianConditional(
+        (likelihood_lower_bound): LowerBound()
+        (lower_bound_scale): LowerBound()
+      )
+    )
+    (rate_quantizer): SoftRoundingQuantizer(use_noise=True)
+    (dist_quantizer): SoftRoundingQuantizer(use_noise=True)
+  )
+  (weight_em_param_model): ParamModel(
+    (params): ParameterDict(
+        (base_encoding_enc_proj_0__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_scales_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_step_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_means_0): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+    )
+  )
+  (grid_meta_em): EntropyModel(
+    use_quant_mean=True, learned_quant=True, learned_em=True
+    (dist_model): GaussianConditional(
+      (inner_module): InnerGaussianConditional(
+        (likelihood_lower_bound): LowerBound()
+        (lower_bound_scale): LowerBound()
+      )
+    )
+    (rate_quantizer): SoftRoundingQuantizer(use_noise=True)
+    (dist_quantizer): SoftRoundingQuantizer(use_noise=True)
+  )
+  (grid_meta_em_param_model): ParamModel(
+    (params): ParameterDict(
+        (base_encoding_enc__grids_0_layers_0__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_0__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_0__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_0__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_0__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_0__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_2__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_3__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_5__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_layers_6__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_log_step_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_log_step_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_0_log_step_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_0__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_2__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_3__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_5__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__bias_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__bias_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__bias_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__weight_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__weight_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_layers_6__weight_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_log_step_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_log_step_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc__grids_1_log_step_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+    )
+  )
+  (weight_meta_em): EntropyModel(
+    use_quant_mean=True, learned_quant=True, learned_em=True
+    (dist_model): GaussianConditional(
+      (inner_module): InnerGaussianConditional(
+        (likelihood_lower_bound): LowerBound()
+        (lower_bound_scale): LowerBound()
+      )
+    )
+    (rate_quantizer): SoftRoundingQuantizer(use_noise=True)
+    (dist_quantizer): SoftRoundingQuantizer(use_noise=True)
+  )
+  (weight_meta_em_param_model): ParamModel(
+    (params): ParameterDict(
+        (base_encoding_enc_proj_0__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_0__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (base_encoding_enc_proj_1__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_dconv__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc1__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_0_0_fc2__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_dconv__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc1__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_blocks_1_0_fc2__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_heads_1_linear__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0__grids_0_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_0_linear__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1__grids_0_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_scales_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_scales_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_scales_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_step_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_step_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_log_step_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_means_0_log_scales): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_means_0_log_step): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+        (decoder_hi_encodings_1_linear__weight_means_0_means): Parameter containing: [torch.cuda.FloatTensor of size 1x1 (cuda:0)]
+    )
+  )
+  (meta_em): FullPrecisionModel()
+)
+Parameters: 0.00M
+Parameters (w/ codec): 0.04M
+MACs: nanG
+MACs (Rate): nanG

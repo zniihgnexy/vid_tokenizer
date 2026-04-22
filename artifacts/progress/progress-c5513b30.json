@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-c5513b30",
+  "id": "progress-c5513b30",
+  "quest_id": "002",
+  "created_at": "2026-04-15T08:09:00+00:00",
+  "updated_at": "2026-04-15T08:09:00+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "idea/002-idea-44a0e404",
+  "head_commit": "588d8a1313b9250d90ec47e821bf2c5d9f131c78",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-44a0e404",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-44a0e404",
+  "message": "我已经把旧 survey 和活动分支证据对上了，发现一个关键偏差：总文档还停在 plain feature packet 的叙事，但最新结果其实已经把胜者收紧成 delta-first。接下来我会补一轮针对 temporal-change / motion-centric machine interface 的文献对照，把候选方向压成少数几个真选项，然后直接提交新的正式子线。",
+  "summary": "我已经把旧 survey 和活动分支证据对上了，发现一个关键偏差：总文档还停在 plain feature packet 的叙事，但最新结果其实已经把胜者收紧成 delta-first。接下来我会补一轮针对 temporal-change / motion-centric machine interface 的文献对照，把候选方向压成少数几个真选项，然后直接提交新的正式子线。",
+  "summary_preview": "我已经把旧 survey 和活动分支证据对上了，发现一个关键偏差：总文档还停在 plain feature packet 的叙事，但最新结果其实已经把胜者收紧成 delta-first。接下来我会补一轮针对 temporal-change / motion-centric machine interface 的文献对照，把候选方向压成少数几个真选项，然后直接提交新的正式子线。",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "progress-c5513b30",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-c5513b30",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

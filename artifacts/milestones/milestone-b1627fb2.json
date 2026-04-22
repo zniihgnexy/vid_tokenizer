@@ -1,0 +1,56 @@
+{
+  "kind": "milestone",
+  "schema_version": 1,
+  "artifact_id": "milestone-b1627fb2",
+  "id": "milestone-b1627fb2",
+  "quest_id": "002",
+  "created_at": "2026-04-15T09:14:26+00:00",
+  "updated_at": "2026-04-15T09:14:26+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-e0d17d22",
+  "head_commit": "2f06b29232134a188192f6025271ddfac800bceb",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-e0d17d22",
+  "message": "有结果了：这条 widened surface 路线已经真正跑通了，不是只找到素材，而是已经在冻结 checkpoint 合同下完成了四个 `4` 帧 chunk 的上游 export smoke。关键判断现在很清楚：直接把模型时间维拉到 `16` 会触发 shape mismatch，但把 `16` 帧表面拆成四个独立 `4` 帧块后，四块都能稳定复跑，`bpp_avg` 仍然固定在 `88.2266`，而 `psnr_avg` 分别在大约 `8.053` 到 `8.113` 之间；这说明“扩大验证面”这件事已经从阻塞变成了可执行资产。接下来我会把这四块结果收成一个更干净的汇总，并继续推进跨块的 reconstructed / teacher packet 聚合，看看能不能把下游 bridge 评估也扩到完整 `16` 帧面上。",
+  "summary": "有结果了：这条 widened surface 路线已经真正跑通了，不是只找到素材，而是已经在冻结 checkpoint 合同下完成了四个 `4` 帧 chunk 的上游 export smoke。关键判断现在很清楚：直接把模型时间维拉到 `16` 会触发 shape mismatch，但把 `16` 帧表面拆成四个独立 `4` 帧块后，四块都能稳定复跑，`bpp_avg` 仍然固定在 `88.2266`，而 `psnr_avg` 分…",
+  "summary_preview": "有结果了：这条 widened surface 路线已经真正跑通了，不是只找到素材，而是已经在冻结 checkpoint 合同下完成了四个 `4` 帧 chunk 的上游 export smoke。关键判断现在很清楚：直接把模型时间维拉到 `16` 会触发 shape mismatch，但把 `16` 帧表面拆成四个独立 `4` 帧块后，四块都能稳定复跑，`bpp_avg` 仍然固定在 `88.2266`，而 `psnr_avg` 分…",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "milestone-b1627fb2",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": "progress-03175094",
+  "guidance_vm": {
+    "current_anchor": "milestone",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Milestone recorded. Continue from the current anchor and keep the next checkpoint durable.",
+    "why_now": "Milestones should mark meaningful progress, not end the route prematurely.",
+    "complete_when": [
+      "The next substantive output is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.interact(kind='progress', ...)",
+        "purpose": "Send the next checkpoint update across active surfaces."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "milestone",
+    "source_artifact_id": "milestone-b1627fb2",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

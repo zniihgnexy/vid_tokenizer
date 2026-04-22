@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-89a43742",
+  "id": "progress-89a43742",
+  "quest_id": "002",
+  "created_at": "2026-04-22T08:35:23+00:00",
+  "updated_at": "2026-04-22T08:35:23+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "0446082a5c98776846e7ba62ecbf5fba5bd8a543",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "message": "我已经把缺口收敛清楚了：当前这条线的研究材料和证据链是完整的，但当前目录里缺少一层面向 GitHub 使用者的入口组织。接下来我会直接在本地补三类文档：总 README、可人工 review 的 PR 说明，以及后续复现/长视频/自定义数据集扩展手册，把论文材料和可跑入口串成一条清晰主线。",
+  "summary": "我已经把缺口收敛清楚了：当前这条线的研究材料和证据链是完整的，但当前目录里缺少一层面向 GitHub 使用者的入口组织。接下来我会直接在本地补三类文档：总 README、可人工 review 的 PR 说明，以及后续复现/长视频/自定义数据集扩展手册，把论文材料和可跑入口串成一条清晰主线。",
+  "summary_preview": "我已经把缺口收敛清楚了：当前这条线的研究材料和证据链是完整的，但当前目录里缺少一层面向 GitHub 使用者的入口组织。接下来我会直接在本地补三类文档：总 README、可人工 review 的 PR 说明，以及后续复现/长视频/自定义数据集扩展手册，把论文材料和可跑入口串成一条清晰主线。",
+  "interaction_phase": "ack",
+  "importance": "normal",
+  "attachments": [],
+  "interaction_id": "progress-89a43742",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-89a43742",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

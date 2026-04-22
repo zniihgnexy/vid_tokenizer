@@ -1,0 +1,1271 @@
+{
+  "schema_version": 1,
+  "result_kind": "main_experiment",
+  "quest_id": "002",
+  "run_id": "shared_gating_pred_variance_repair_ego4d16f_smoke_r1",
+  "title": "Shared-gating predicted variance-floor repair on frozen widened bridge surface",
+  "status": "completed",
+  "verdict": "mixed",
+  "idea_id": "idea-2835dace",
+  "branch": "run/shared_gating_pred_variance_repair_ego4d16f_smoke_r1",
+  "parent_branch": "idea/002-idea-2835dace",
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1",
+  "head_commit": "c25bad05350a55103e56761700299e9d0b130e2e",
+  "baseline_ref": {
+    "baseline_id": "nvrc-local-source",
+    "variant_id": "tiny-local-teacher-pilot-r3",
+    "metric_contract_json_rel_path": "baselines/imported/nvrc-local-source/json/metric_contract.json",
+    "metric_contract": {
+      "paper_facing_comparison": {
+        "dataset": "UVG",
+        "split": "Random Access",
+        "comparator": "VVC VTM (RA)",
+        "metric": "PSNR",
+        "note": "This is the paper-facing comparison surface reported by NVRC."
+      },
+      "local_smoke_reference": {
+        "dataset": "tiny_local_synthetic",
+        "frames": 4,
+        "resolution": [
+          32,
+          32
+        ],
+        "note": "This is a bounded current-machine feasibility surface and is not paper-comparable to UVG."
+      },
+      "contract_id": "nvrc-local-source-baseline-v1",
+      "primary_metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+      "metrics": [
+        {
+          "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+          "label": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+          "unit": "percent",
+          "direction": "maximize",
+          "description": "Paper-facing headline coding-gain metric reported by NVRC on UVG under the random-access PSNR setting.",
+          "derivation": "Taken from the NVRC abstract as the reported average coding gain over VVC VTM (RA) on UVG measured in PSNR.",
+          "source_ref": "paper_abstract_2409.07414",
+          "origin_path": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr.value",
+          "required": true,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "local_resnet18_teacher_smoke_loss_value",
+          "label": "local_resnet18_teacher_smoke_loss_value",
+          "unit": "loss",
+          "direction": "minimize",
+          "description": "Current-machine feasibility smoke metric for the repaired real-teacher path.",
+          "derivation": "Read directly from the bounded resnet18_imagenet smoke run after wiring the teacher branch into the local NVRC tree.",
+          "source_ref": "current_quest_bash-8a2573d8",
+          "origin_path": "local_resnet18_teacher_smoke_loss_value.value",
+          "required": true,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "tiny_local_teacher_pilot_bpp_avg",
+          "label": "tiny_local_teacher_pilot_bpp_avg",
+          "unit": "bpp",
+          "direction": "minimize",
+          "description": "Average bits-per-pixel from the bounded tiny-local main-entry pilot with the repaired teacher path.",
+          "derivation": "Parsed from the completed tiny-local pilot result summary produced by main_nvrc.py after training, encoding, decoding, and re-evaluation.",
+          "source_ref": "current_quest_results_teacher_tiny_local_pilot_r3",
+          "origin_path": "tiny_local_teacher_pilot_bpp_avg.value",
+          "required": true,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "tiny_local_teacher_pilot_psnr_avg",
+          "label": "tiny_local_teacher_pilot_psnr_avg",
+          "unit": "dB",
+          "direction": "maximize",
+          "description": "Average reconstruction PSNR from the bounded tiny-local main-entry pilot.",
+          "derivation": "Parsed from the completed tiny-local pilot result summary emitted by the repaired local NVRC main entry.",
+          "source_ref": "current_quest_results_teacher_tiny_local_pilot_r3",
+          "origin_path": "tiny_local_teacher_pilot_psnr_avg.value",
+          "required": true,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
+          "label": "tiny_local_teacher_pilot_teacher_mse_avg",
+          "unit": "mse",
+          "direction": "minimize",
+          "description": "Average teacher-consistency MSE from the bounded tiny-local main-entry pilot.",
+          "derivation": "Parsed from the completed tiny-local pilot result summary after the repaired teacher loss path was exercised end to end.",
+          "source_ref": "current_quest_results_teacher_tiny_local_pilot_r3",
+          "origin_path": "tiny_local_teacher_pilot_teacher_mse_avg.value",
+          "required": true,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "beauty_teacher_smoke_bpp_avg",
+          "label": "beauty_teacher_smoke_bpp_avg",
+          "unit": "bpp",
+          "direction": "minimize",
+          "description": "Historical local teacher-enabled Beauty smoke average bits-per-pixel preserved from the exported quest state.",
+          "derivation": "Recovered from the prior exported run snapshot for the completed Beauty teacher tiny smoke retry3 record.",
+          "source_ref": "exported_run_snapshot_beauty_teacher_tiny_smoke_retry3_mpsfb",
+          "origin_path": "beauty_teacher_smoke_bpp_avg.value",
+          "required": true,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "beauty_teacher_smoke_psnr_avg",
+          "label": "beauty_teacher_smoke_psnr_avg",
+          "unit": "dB",
+          "direction": "maximize",
+          "description": "Historical local teacher-enabled Beauty smoke average PSNR preserved from the exported quest state.",
+          "derivation": "Recovered from the prior exported run snapshot for the completed Beauty teacher tiny smoke retry3 record.",
+          "source_ref": "exported_run_snapshot_beauty_teacher_tiny_smoke_retry3_mpsfb",
+          "origin_path": "beauty_teacher_smoke_psnr_avg.value",
+          "required": true,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "beauty_teacher_smoke_teacher_mse_avg",
+          "label": "beauty_teacher_smoke_teacher_mse_avg",
+          "unit": "mse",
+          "direction": "minimize",
+          "description": "Historical local teacher-enabled Beauty smoke average teacher-consistency MSE preserved from the exported quest state.",
+          "derivation": "Recovered from the prior exported run snapshot for the completed Beauty teacher tiny smoke retry3 record.",
+          "source_ref": "exported_run_snapshot_beauty_teacher_tiny_smoke_retry3_mpsfb",
+          "origin_path": "beauty_teacher_smoke_teacher_mse_avg.value",
+          "required": true,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "beauty_no_teacher_partial_teacher_mse",
+          "label": "beauty_no_teacher_partial_teacher_mse",
+          "unit": "mse",
+          "direction": "minimize",
+          "description": "Historical partial no-teacher comparator teacher-MSE checkpoint kept only as contextual reference.",
+          "derivation": "Recovered from the first recorded finite checkpoint at step 144/576 in the exported no-teacher Beauty smoke snapshot.",
+          "source_ref": "exported_run_snapshot_beauty_no_teacher_tiny_smoke_r1_mpsfb",
+          "origin_path": "beauty_no_teacher_partial_teacher_mse.value",
+          "required": true,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "bpp_avg",
+          "label": "bpp_avg",
+          "direction": "maximize",
+          "unit": null,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "psnr_avg",
+          "label": "psnr_avg",
+          "direction": "maximize",
+          "unit": null,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "teacher_mse_avg",
+          "label": "teacher_mse_avg",
+          "direction": "maximize",
+          "unit": null,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "bounded_bridge_bpp_avg",
+          "label": "bounded_bridge_bpp_avg",
+          "direction": "maximize",
+          "unit": null,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "bounded_bridge_psnr_avg",
+          "label": "bounded_bridge_psnr_avg",
+          "direction": "maximize",
+          "unit": null,
+          "decimals": null,
+          "chart_group": "default"
+        },
+        {
+          "metric_id": "bounded_bridge_teacher_mse_avg",
+          "label": "bounded_bridge_teacher_mse_avg",
+          "direction": "maximize",
+          "unit": null,
+          "decimals": null,
+          "chart_group": "default"
+        }
+      ],
+      "contract_name": "nvrc-local-source-baseline-v1-plus-bounded-bridge",
+      "comparability_note": "Preserves the canonical baseline metrics while adding bounded-bridge local metrics for this run-specific comparison surface."
+    },
+    "metric_lines": [
+      {
+        "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+        "label": "nvrc-local-source:tiny-local-teacher-pilot-r3",
+        "baseline_id": "nvrc-local-source",
+        "variant_id": "tiny-local-teacher-pilot-r3",
+        "selected": true,
+        "value": 24.0,
+        "raw_value": 24.0
+      },
+      {
+        "metric_id": "local_resnet18_teacher_smoke_loss_value",
+        "label": "nvrc-local-source:tiny-local-teacher-pilot-r3",
+        "baseline_id": "nvrc-local-source",
+        "variant_id": "tiny-local-teacher-pilot-r3",
+        "selected": true,
+        "value": 0.3541456162929535,
+        "raw_value": 0.3541456162929535
+      },
+      {
+        "metric_id": "tiny_local_teacher_pilot_bpp_avg",
+        "label": "nvrc-local-source:tiny-local-teacher-pilot-r3",
+        "baseline_id": "nvrc-local-source",
+        "variant_id": "tiny-local-teacher-pilot-r3",
+        "selected": true,
+        "value": 88.2109,
+        "raw_value": 88.2109
+      },
+      {
+        "metric_id": "tiny_local_teacher_pilot_psnr_avg",
+        "label": "nvrc-local-source:tiny-local-teacher-pilot-r3",
+        "baseline_id": "nvrc-local-source",
+        "variant_id": "tiny-local-teacher-pilot-r3",
+        "selected": true,
+        "value": 10.8996,
+        "raw_value": 10.8996
+      },
+      {
+        "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
+        "label": "nvrc-local-source:tiny-local-teacher-pilot-r3",
+        "baseline_id": "nvrc-local-source",
+        "variant_id": "tiny-local-teacher-pilot-r3",
+        "selected": true,
+        "value": 0.5145,
+        "raw_value": 0.5145
+      },
+      {
+        "metric_id": "beauty_teacher_smoke_bpp_avg",
+        "label": "nvrc-local-source:tiny-local-teacher-pilot-r3",
+        "baseline_id": "nvrc-local-source",
+        "variant_id": "tiny-local-teacher-pilot-r3",
+        "selected": true,
+        "value": 2.091,
+        "raw_value": 2.091
+      },
+      {
+        "metric_id": "beauty_teacher_smoke_psnr_avg",
+        "label": "nvrc-local-source:tiny-local-teacher-pilot-r3",
+        "baseline_id": "nvrc-local-source",
+        "variant_id": "tiny-local-teacher-pilot-r3",
+        "selected": true,
+        "value": 14.9552,
+        "raw_value": 14.9552
+      },
+      {
+        "metric_id": "beauty_teacher_smoke_teacher_mse_avg",
+        "label": "nvrc-local-source:tiny-local-teacher-pilot-r3",
+        "baseline_id": "nvrc-local-source",
+        "variant_id": "tiny-local-teacher-pilot-r3",
+        "selected": true,
+        "value": 0.0363,
+        "raw_value": 0.0363
+      },
+      {
+        "metric_id": "beauty_no_teacher_partial_teacher_mse",
+        "label": "nvrc-local-source:tiny-local-teacher-pilot-r3",
+        "baseline_id": "nvrc-local-source",
+        "variant_id": "tiny-local-teacher-pilot-r3",
+        "selected": true,
+        "value": 0.0472,
+        "raw_value": 0.0472
+      }
+    ]
+  },
+  "run_context": {
+    "dataset_scope": "bounded local bridge subset ego4d_small_bridge_16f with 16 frames at 32x32 resolution; same frozen widened bridge surface used for the relation-repair comparison.",
+    "config_paths": [
+      "experiments/main/scripts/run_shared_gating_variance_repair_smoke.sh",
+      "experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/scripts/configs/tasks/overfit/l1_teacher-resnet18-variance-semchange-delta.yaml"
+    ],
+    "notes": [
+      "Treat this as the first valid bounded evidence point for the predicted-side variance-floor line, not as a paper-facing win.",
+      "The archived first attempt remains useful only as debugging evidence because the configured regularizer never became active there.",
+      "Canonical baseline metrics are carried through in the record to preserve the accepted comparison contract; the run-specific bounded-bridge metrics are the newly measured evidence for this branch."
+    ]
+  },
+  "hypothesis": "A minimal predicted-feature variance-floor regularizer on the same frozen widened bridge surface can improve bounded teacher-consistency without changing the external packet export/evaluation surface.",
+  "setup": "Dedicated run branch/worktree on the active idea line. Resume root: shared_gating_interface_export_ego4d16f_chunk00_smoke_r1. Task config keeps semantic-change weighting and temporal-delta consistency enabled, turns on predicted-feature variance floor with weight=1.0 and margin=0.1, and keeps predicted-delta variance floor off. The external packet export/eval surface stays fixed to the same bounded ego4d_small_bridge_16f bridge subset.",
+  "execution": "First bounded run on this branch exposed a real plumbing bug: the new variance-floor fields were present in args.yaml but were not forwarded through create_overfit_task(...), so the effective pred_variance_weight stayed at 0.0 in both train and eval logs. That invalid first output was archived, the missing passthrough was fixed in tasks.py, syntax was rechecked, and the corrected bounded run was relaunched and completed successfully under bash session bash-9cf7c4a3.",
+  "results_summary": "{\"output_dir\":\"/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1\",\"archived_invalid_attempt_reason\":\"missing create_overfit_task passthrough kept pred_variance_weight at 0.0\",\"corrected_run_session\":\"bash-9cf7c4a3\",\"archived_invalid_run_session\":\"bash-4cf72434\"}",
+  "conclusion": "The minimal predicted-side variance-floor repair is now validated as an effective live regularizer in the real bounded main-run path, but its first measured trade-off is mixed rather than clearly positive. It is good enough to support route judgment, but not good enough to claim that this repair family already improves the bridge end to end.",
+  "metrics_summary": {
+    "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr": 24.0,
+    "local_resnet18_teacher_smoke_loss_value": 0.3541456162929535,
+    "tiny_local_teacher_pilot_bpp_avg": 88.2109,
+    "tiny_local_teacher_pilot_psnr_avg": 10.8996,
+    "tiny_local_teacher_pilot_teacher_mse_avg": 0.5145,
+    "beauty_teacher_smoke_bpp_avg": 2.091,
+    "beauty_teacher_smoke_psnr_avg": 14.9552,
+    "beauty_teacher_smoke_teacher_mse_avg": 0.0363,
+    "beauty_no_teacher_partial_teacher_mse": 0.0472,
+    "bpp_avg": 23.9277,
+    "psnr_avg": 10.4509,
+    "teacher_mse_avg": 0.4821,
+    "bounded_bridge_bpp_avg": 23.9277,
+    "bounded_bridge_psnr_avg": 10.4509,
+    "bounded_bridge_teacher_mse_avg": 0.4821
+  },
+  "metric_rows": [
+    {
+      "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+      "value": 24.0,
+      "direction": "maximize",
+      "numeric_value": 24.0
+    },
+    {
+      "metric_id": "local_resnet18_teacher_smoke_loss_value",
+      "value": 0.3541456162929535,
+      "direction": "minimize",
+      "numeric_value": 0.3541456162929535
+    },
+    {
+      "metric_id": "tiny_local_teacher_pilot_bpp_avg",
+      "value": 88.2109,
+      "direction": "minimize",
+      "numeric_value": 88.2109
+    },
+    {
+      "metric_id": "tiny_local_teacher_pilot_psnr_avg",
+      "value": 10.8996,
+      "direction": "maximize",
+      "numeric_value": 10.8996
+    },
+    {
+      "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
+      "value": 0.5145,
+      "direction": "minimize",
+      "numeric_value": 0.5145
+    },
+    {
+      "metric_id": "beauty_teacher_smoke_bpp_avg",
+      "value": 2.091,
+      "direction": "minimize",
+      "numeric_value": 2.091
+    },
+    {
+      "metric_id": "beauty_teacher_smoke_psnr_avg",
+      "value": 14.9552,
+      "direction": "maximize",
+      "numeric_value": 14.9552
+    },
+    {
+      "metric_id": "beauty_teacher_smoke_teacher_mse_avg",
+      "value": 0.0363,
+      "direction": "minimize",
+      "numeric_value": 0.0363
+    },
+    {
+      "metric_id": "beauty_no_teacher_partial_teacher_mse",
+      "value": 0.0472,
+      "direction": "minimize",
+      "numeric_value": 0.0472
+    },
+    {
+      "metric_id": "bpp_avg",
+      "value": 23.9277,
+      "direction": "minimize",
+      "numeric_value": 23.9277
+    },
+    {
+      "metric_id": "psnr_avg",
+      "value": 10.4509,
+      "direction": "maximize",
+      "numeric_value": 10.4509
+    },
+    {
+      "metric_id": "teacher_mse_avg",
+      "value": 0.4821,
+      "direction": "minimize",
+      "numeric_value": 0.4821
+    },
+    {
+      "metric_id": "bounded_bridge_bpp_avg",
+      "value": 23.9277,
+      "direction": "minimize",
+      "numeric_value": 23.9277
+    },
+    {
+      "metric_id": "bounded_bridge_psnr_avg",
+      "value": 10.4509,
+      "direction": "maximize",
+      "numeric_value": 10.4509
+    },
+    {
+      "metric_id": "bounded_bridge_teacher_mse_avg",
+      "value": 0.4821,
+      "direction": "minimize",
+      "numeric_value": 0.4821
+    }
+  ],
+  "metric_contract": {
+    "paper_facing_comparison": {
+      "dataset": "UVG",
+      "split": "Random Access",
+      "comparator": "VVC VTM (RA)",
+      "metric": "PSNR",
+      "note": "This is the paper-facing comparison surface reported by NVRC."
+    },
+    "local_smoke_reference": {
+      "dataset": "tiny_local_synthetic",
+      "frames": 4,
+      "resolution": [
+        32,
+        32
+      ],
+      "note": "This is a bounded current-machine feasibility surface and is not paper-comparable to UVG."
+    },
+    "contract_id": "nvrc-local-source-baseline-v1",
+    "primary_metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+    "metrics": [
+      {
+        "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+        "label": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+        "unit": "percent",
+        "direction": "maximize",
+        "description": "Paper-facing headline coding-gain metric reported by NVRC on UVG under the random-access PSNR setting.",
+        "derivation": "Taken from the NVRC abstract as the reported average coding gain over VVC VTM (RA) on UVG measured in PSNR.",
+        "source_ref": "paper_abstract_2409.07414",
+        "origin_path": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "local_resnet18_teacher_smoke_loss_value",
+        "label": "local_resnet18_teacher_smoke_loss_value",
+        "unit": "loss",
+        "direction": "minimize",
+        "description": "Current-machine feasibility smoke metric for the repaired real-teacher path.",
+        "derivation": "Read directly from the bounded resnet18_imagenet smoke run after wiring the teacher branch into the local NVRC tree.",
+        "source_ref": "current_quest_bash-8a2573d8",
+        "origin_path": "local_resnet18_teacher_smoke_loss_value.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "tiny_local_teacher_pilot_bpp_avg",
+        "label": "tiny_local_teacher_pilot_bpp_avg",
+        "unit": "bpp",
+        "direction": "minimize",
+        "description": "Average bits-per-pixel from the bounded tiny-local main-entry pilot with the repaired teacher path.",
+        "derivation": "Parsed from the completed tiny-local pilot result summary produced by main_nvrc.py after training, encoding, decoding, and re-evaluation.",
+        "source_ref": "current_quest_results_teacher_tiny_local_pilot_r3",
+        "origin_path": "tiny_local_teacher_pilot_bpp_avg.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "tiny_local_teacher_pilot_psnr_avg",
+        "label": "tiny_local_teacher_pilot_psnr_avg",
+        "unit": "dB",
+        "direction": "maximize",
+        "description": "Average reconstruction PSNR from the bounded tiny-local main-entry pilot.",
+        "derivation": "Parsed from the completed tiny-local pilot result summary emitted by the repaired local NVRC main entry.",
+        "source_ref": "current_quest_results_teacher_tiny_local_pilot_r3",
+        "origin_path": "tiny_local_teacher_pilot_psnr_avg.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
+        "label": "tiny_local_teacher_pilot_teacher_mse_avg",
+        "unit": "mse",
+        "direction": "minimize",
+        "description": "Average teacher-consistency MSE from the bounded tiny-local main-entry pilot.",
+        "derivation": "Parsed from the completed tiny-local pilot result summary after the repaired teacher loss path was exercised end to end.",
+        "source_ref": "current_quest_results_teacher_tiny_local_pilot_r3",
+        "origin_path": "tiny_local_teacher_pilot_teacher_mse_avg.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "beauty_teacher_smoke_bpp_avg",
+        "label": "beauty_teacher_smoke_bpp_avg",
+        "unit": "bpp",
+        "direction": "minimize",
+        "description": "Historical local teacher-enabled Beauty smoke average bits-per-pixel preserved from the exported quest state.",
+        "derivation": "Recovered from the prior exported run snapshot for the completed Beauty teacher tiny smoke retry3 record.",
+        "source_ref": "exported_run_snapshot_beauty_teacher_tiny_smoke_retry3_mpsfb",
+        "origin_path": "beauty_teacher_smoke_bpp_avg.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "beauty_teacher_smoke_psnr_avg",
+        "label": "beauty_teacher_smoke_psnr_avg",
+        "unit": "dB",
+        "direction": "maximize",
+        "description": "Historical local teacher-enabled Beauty smoke average PSNR preserved from the exported quest state.",
+        "derivation": "Recovered from the prior exported run snapshot for the completed Beauty teacher tiny smoke retry3 record.",
+        "source_ref": "exported_run_snapshot_beauty_teacher_tiny_smoke_retry3_mpsfb",
+        "origin_path": "beauty_teacher_smoke_psnr_avg.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "beauty_teacher_smoke_teacher_mse_avg",
+        "label": "beauty_teacher_smoke_teacher_mse_avg",
+        "unit": "mse",
+        "direction": "minimize",
+        "description": "Historical local teacher-enabled Beauty smoke average teacher-consistency MSE preserved from the exported quest state.",
+        "derivation": "Recovered from the prior exported run snapshot for the completed Beauty teacher tiny smoke retry3 record.",
+        "source_ref": "exported_run_snapshot_beauty_teacher_tiny_smoke_retry3_mpsfb",
+        "origin_path": "beauty_teacher_smoke_teacher_mse_avg.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "beauty_no_teacher_partial_teacher_mse",
+        "label": "beauty_no_teacher_partial_teacher_mse",
+        "unit": "mse",
+        "direction": "minimize",
+        "description": "Historical partial no-teacher comparator teacher-MSE checkpoint kept only as contextual reference.",
+        "derivation": "Recovered from the first recorded finite checkpoint at step 144/576 in the exported no-teacher Beauty smoke snapshot.",
+        "source_ref": "exported_run_snapshot_beauty_no_teacher_tiny_smoke_r1_mpsfb",
+        "origin_path": "beauty_no_teacher_partial_teacher_mse.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "bpp_avg",
+        "label": "bpp_avg",
+        "direction": "maximize",
+        "unit": null,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "psnr_avg",
+        "label": "psnr_avg",
+        "direction": "maximize",
+        "unit": null,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "teacher_mse_avg",
+        "label": "teacher_mse_avg",
+        "direction": "maximize",
+        "unit": null,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "bounded_bridge_bpp_avg",
+        "label": "bounded_bridge_bpp_avg",
+        "direction": "maximize",
+        "unit": null,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "bounded_bridge_psnr_avg",
+        "label": "bounded_bridge_psnr_avg",
+        "direction": "maximize",
+        "unit": null,
+        "decimals": null,
+        "chart_group": "default"
+      },
+      {
+        "metric_id": "bounded_bridge_teacher_mse_avg",
+        "label": "bounded_bridge_teacher_mse_avg",
+        "direction": "maximize",
+        "unit": null,
+        "decimals": null,
+        "chart_group": "default"
+      }
+    ],
+    "contract_name": "nvrc-local-source-baseline-v1-plus-bounded-bridge",
+    "comparability_note": "Preserves the canonical baseline metrics while adding bounded-bridge local metrics for this run-specific comparison surface."
+  },
+  "baseline_comparisons": {
+    "primary_metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+    "items": [
+      {
+        "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+        "label": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+        "direction": "maximize",
+        "unit": "percent",
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 24.0,
+        "baseline_value": 24.0,
+        "run_numeric": 24.0,
+        "baseline_numeric": 24.0,
+        "delta": 0.0,
+        "relative_delta": 0.0,
+        "better": false
+      },
+      {
+        "metric_id": "local_resnet18_teacher_smoke_loss_value",
+        "label": "local_resnet18_teacher_smoke_loss_value",
+        "direction": "minimize",
+        "unit": "loss",
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 0.3541456162929535,
+        "baseline_value": 0.3541456162929535,
+        "run_numeric": 0.3541456162929535,
+        "baseline_numeric": 0.3541456162929535,
+        "delta": 0.0,
+        "relative_delta": 0.0,
+        "better": false
+      },
+      {
+        "metric_id": "tiny_local_teacher_pilot_bpp_avg",
+        "label": "tiny_local_teacher_pilot_bpp_avg",
+        "direction": "minimize",
+        "unit": "bpp",
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 88.2109,
+        "baseline_value": 88.2109,
+        "run_numeric": 88.2109,
+        "baseline_numeric": 88.2109,
+        "delta": 0.0,
+        "relative_delta": 0.0,
+        "better": false
+      },
+      {
+        "metric_id": "tiny_local_teacher_pilot_psnr_avg",
+        "label": "tiny_local_teacher_pilot_psnr_avg",
+        "direction": "maximize",
+        "unit": "dB",
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 10.8996,
+        "baseline_value": 10.8996,
+        "run_numeric": 10.8996,
+        "baseline_numeric": 10.8996,
+        "delta": 0.0,
+        "relative_delta": 0.0,
+        "better": false
+      },
+      {
+        "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
+        "label": "tiny_local_teacher_pilot_teacher_mse_avg",
+        "direction": "minimize",
+        "unit": "mse",
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 0.5145,
+        "baseline_value": 0.5145,
+        "run_numeric": 0.5145,
+        "baseline_numeric": 0.5145,
+        "delta": 0.0,
+        "relative_delta": 0.0,
+        "better": false
+      },
+      {
+        "metric_id": "beauty_teacher_smoke_bpp_avg",
+        "label": "beauty_teacher_smoke_bpp_avg",
+        "direction": "minimize",
+        "unit": "bpp",
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 2.091,
+        "baseline_value": 2.091,
+        "run_numeric": 2.091,
+        "baseline_numeric": 2.091,
+        "delta": 0.0,
+        "relative_delta": 0.0,
+        "better": false
+      },
+      {
+        "metric_id": "beauty_teacher_smoke_psnr_avg",
+        "label": "beauty_teacher_smoke_psnr_avg",
+        "direction": "maximize",
+        "unit": "dB",
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 14.9552,
+        "baseline_value": 14.9552,
+        "run_numeric": 14.9552,
+        "baseline_numeric": 14.9552,
+        "delta": 0.0,
+        "relative_delta": 0.0,
+        "better": false
+      },
+      {
+        "metric_id": "beauty_teacher_smoke_teacher_mse_avg",
+        "label": "beauty_teacher_smoke_teacher_mse_avg",
+        "direction": "minimize",
+        "unit": "mse",
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 0.0363,
+        "baseline_value": 0.0363,
+        "run_numeric": 0.0363,
+        "baseline_numeric": 0.0363,
+        "delta": 0.0,
+        "relative_delta": 0.0,
+        "better": false
+      },
+      {
+        "metric_id": "beauty_no_teacher_partial_teacher_mse",
+        "label": "beauty_no_teacher_partial_teacher_mse",
+        "direction": "minimize",
+        "unit": "mse",
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 0.0472,
+        "baseline_value": 0.0472,
+        "run_numeric": 0.0472,
+        "baseline_numeric": 0.0472,
+        "delta": 0.0,
+        "relative_delta": 0.0,
+        "better": false
+      },
+      {
+        "metric_id": "bpp_avg",
+        "label": "bpp_avg",
+        "direction": "minimize",
+        "unit": null,
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 23.9277,
+        "baseline_value": null,
+        "run_numeric": 23.9277,
+        "baseline_numeric": null,
+        "delta": null,
+        "relative_delta": null,
+        "better": null
+      },
+      {
+        "metric_id": "psnr_avg",
+        "label": "psnr_avg",
+        "direction": "maximize",
+        "unit": null,
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 10.4509,
+        "baseline_value": null,
+        "run_numeric": 10.4509,
+        "baseline_numeric": null,
+        "delta": null,
+        "relative_delta": null,
+        "better": null
+      },
+      {
+        "metric_id": "teacher_mse_avg",
+        "label": "teacher_mse_avg",
+        "direction": "minimize",
+        "unit": null,
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 0.4821,
+        "baseline_value": null,
+        "run_numeric": 0.4821,
+        "baseline_numeric": null,
+        "delta": null,
+        "relative_delta": null,
+        "better": null
+      },
+      {
+        "metric_id": "bounded_bridge_bpp_avg",
+        "label": "bounded_bridge_bpp_avg",
+        "direction": "minimize",
+        "unit": null,
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 23.9277,
+        "baseline_value": null,
+        "run_numeric": 23.9277,
+        "baseline_numeric": null,
+        "delta": null,
+        "relative_delta": null,
+        "better": null
+      },
+      {
+        "metric_id": "bounded_bridge_psnr_avg",
+        "label": "bounded_bridge_psnr_avg",
+        "direction": "maximize",
+        "unit": null,
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 10.4509,
+        "baseline_value": null,
+        "run_numeric": 10.4509,
+        "baseline_numeric": null,
+        "delta": null,
+        "relative_delta": null,
+        "better": null
+      },
+      {
+        "metric_id": "bounded_bridge_teacher_mse_avg",
+        "label": "bounded_bridge_teacher_mse_avg",
+        "direction": "minimize",
+        "unit": null,
+        "decimals": null,
+        "chart_group": "default",
+        "run_value": 0.4821,
+        "baseline_value": null,
+        "run_numeric": 0.4821,
+        "baseline_numeric": null,
+        "delta": null,
+        "relative_delta": null,
+        "better": null
+      }
+    ],
+    "summary": {
+      "comparable_metric_ids": [
+        "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+        "local_resnet18_teacher_smoke_loss_value",
+        "tiny_local_teacher_pilot_bpp_avg",
+        "tiny_local_teacher_pilot_psnr_avg",
+        "tiny_local_teacher_pilot_teacher_mse_avg",
+        "beauty_teacher_smoke_bpp_avg",
+        "beauty_teacher_smoke_psnr_avg",
+        "beauty_teacher_smoke_teacher_mse_avg",
+        "beauty_no_teacher_partial_teacher_mse"
+      ],
+      "improved_metric_ids": [],
+      "regressed_metric_ids": [
+        "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+        "local_resnet18_teacher_smoke_loss_value",
+        "tiny_local_teacher_pilot_bpp_avg",
+        "tiny_local_teacher_pilot_psnr_avg",
+        "tiny_local_teacher_pilot_teacher_mse_avg",
+        "beauty_teacher_smoke_bpp_avg",
+        "beauty_teacher_smoke_psnr_avg",
+        "beauty_teacher_smoke_teacher_mse_avg",
+        "beauty_no_teacher_partial_teacher_mse"
+      ]
+    }
+  },
+  "progress_eval": {
+    "primary_metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+    "direction": "maximize",
+    "run_value": 24.0,
+    "baseline_value": 24.0,
+    "delta_vs_baseline": 0.0,
+    "relative_delta_vs_baseline": 0.0,
+    "previous_best_value": 24.0,
+    "delta_vs_previous_best": 0.0,
+    "beats_baseline": false,
+    "improved_over_previous_best": false,
+    "breakthrough": false,
+    "breakthrough_level": "none",
+    "reason": "No verified breakthrough over the active baseline or previous best."
+  },
+  "evaluation_summary": null,
+  "delivery_policy": {
+    "need_research_paper": true,
+    "recommended_next_route": "revise_idea",
+    "reason": "Research paper mode is enabled, but the current run does not beat the baseline clearly enough. Revise the direction or strengthen the method before writing.",
+    "startup_contract": {
+      "schema_version": 4,
+      "workspace_mode": "autonomous",
+      "user_language": "en",
+      "need_research_paper": true,
+      "research_intensity": "balanced",
+      "decision_policy": "autonomous",
+      "launch_mode": "standard",
+      "standard_profile": "canonical_research_graph",
+      "custom_profile": "freeform",
+      "review_followup_policy": "audit_only",
+      "baseline_execution_policy": "auto",
+      "manuscript_edit_mode": "none",
+      "scope": "baseline_plus_direction",
+      "baseline_mode": "existing",
+      "resource_policy": "balanced",
+      "time_budget_hours": 24,
+      "git_strategy": "semantic_head_plus_controlled_integration",
+      "runtime_constraints": "",
+      "objectives": [
+        "find a link between the current comression layer and build the large model layers to make the whole pipelien runnable and prove the feasibilty. see if you can use a model as example and form a full version of experiment version of the whole design and get a first version of result batch for me to see what the output can be and whether this direction is worth doing.",
+        "make the major innovation to be more focused on the pipeline building, focus on the output result but it can be trade-off a bit innovation level by the pipeline building.",
+        "build a full vversion of Github repo with code and can be rerun locally and shared through the github link"
+      ],
+      "baseline_urls": [],
+      "paper_urls": [],
+      "entry_state_summary": "",
+      "review_summary": "",
+      "review_materials": [],
+      "custom_brief": "",
+      "project_display": {
+        "template": "experiment",
+        "accent_color": "sage"
+      }
+    }
+  },
+  "startup_contract": {
+    "schema_version": 4,
+    "workspace_mode": "autonomous",
+    "user_language": "en",
+    "need_research_paper": true,
+    "research_intensity": "balanced",
+    "decision_policy": "autonomous",
+    "launch_mode": "standard",
+    "standard_profile": "canonical_research_graph",
+    "custom_profile": "freeform",
+    "review_followup_policy": "audit_only",
+    "baseline_execution_policy": "auto",
+    "manuscript_edit_mode": "none",
+    "scope": "baseline_plus_direction",
+    "baseline_mode": "existing",
+    "resource_policy": "balanced",
+    "time_budget_hours": 24,
+    "git_strategy": "semantic_head_plus_controlled_integration",
+    "runtime_constraints": "",
+    "objectives": [
+      "find a link between the current comression layer and build the large model layers to make the whole pipelien runnable and prove the feasibilty. see if you can use a model as example and form a full version of experiment version of the whole design and get a first version of result batch for me to see what the output can be and whether this direction is worth doing.",
+      "make the major innovation to be more focused on the pipeline building, focus on the output result but it can be trade-off a bit innovation level by the pipeline building.",
+      "build a full vversion of Github repo with code and can be rerun locally and shared through the github link"
+    ],
+    "baseline_urls": [],
+    "paper_urls": [],
+    "entry_state_summary": "",
+    "review_summary": "",
+    "review_materials": [],
+    "custom_brief": "",
+    "project_display": {
+      "template": "experiment",
+      "accent_color": "sage"
+    }
+  },
+  "evidence_paths": [
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/results/all.txt",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/args.yaml",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/bash_exec/bash-9cf7c4a3/terminal.log",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/bash_exec/bash-4cf72434/terminal.log"
+  ],
+  "files_changed": [
+    "experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/tasks.py",
+    "experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/main_utils.py",
+    "experiments/main/upstream_shared_gating_snapshot/tools/smoke_teacher_loss.py",
+    "experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/scripts/configs/tasks/overfit/l1_teacher-resnet18-variance-semchange-delta.yaml",
+    "experiments/main/scripts/run_shared_gating_variance_repair_smoke.sh",
+    "PLAN.md",
+    "CHECKLIST.md",
+    "status.md"
+  ],
+  "run_md_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/RUN.md",
+  "metric_validation": {
+    "baseline_metric_ids": [
+      "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+      "local_resnet18_teacher_smoke_loss_value",
+      "tiny_local_teacher_pilot_bpp_avg",
+      "tiny_local_teacher_pilot_psnr_avg",
+      "tiny_local_teacher_pilot_teacher_mse_avg",
+      "beauty_teacher_smoke_bpp_avg",
+      "beauty_teacher_smoke_psnr_avg",
+      "beauty_teacher_smoke_teacher_mse_avg",
+      "beauty_no_teacher_partial_teacher_mse"
+    ],
+    "baseline_metric_details": [
+      {
+        "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+        "label": "UVG BD-rate reduction vs VTM RA (PSNR)",
+        "unit": "percent",
+        "direction": "maximize",
+        "description": "Paper-facing headline coding-gain metric reported by NVRC on UVG under the random-access PSNR setting.",
+        "derivation": "Taken from the NVRC abstract as the reported average coding gain over VVC VTM (RA) on UVG measured in PSNR.",
+        "source_ref": "paper_abstract_2409.07414",
+        "origin_path": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default",
+        "baseline_value": 24.0
+      },
+      {
+        "metric_id": "local_resnet18_teacher_smoke_loss_value",
+        "label": "Local resnet18 teacher smoke loss",
+        "unit": "loss",
+        "direction": "minimize",
+        "description": "Current-machine feasibility smoke metric for the repaired real-teacher path.",
+        "derivation": "Read directly from the bounded resnet18_imagenet smoke run after wiring the teacher branch into the local NVRC tree.",
+        "source_ref": "current_quest_bash-8a2573d8",
+        "origin_path": "local_resnet18_teacher_smoke_loss_value.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default",
+        "baseline_value": 0.3541456162929535
+      },
+      {
+        "metric_id": "tiny_local_teacher_pilot_bpp_avg",
+        "label": "Tiny-local teacher pilot average bpp",
+        "unit": "bpp",
+        "direction": "minimize",
+        "description": "Average bits-per-pixel from the bounded tiny-local main-entry pilot with the repaired teacher path.",
+        "derivation": "Parsed from the completed tiny-local pilot result summary produced by main_nvrc.py after training, encoding, decoding, and re-evaluation.",
+        "source_ref": "current_quest_results_teacher_tiny_local_pilot_r3",
+        "origin_path": "tiny_local_teacher_pilot_bpp_avg.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default",
+        "baseline_value": 88.2109
+      },
+      {
+        "metric_id": "tiny_local_teacher_pilot_psnr_avg",
+        "label": "Tiny-local teacher pilot average PSNR",
+        "unit": "dB",
+        "direction": "maximize",
+        "description": "Average reconstruction PSNR from the bounded tiny-local main-entry pilot.",
+        "derivation": "Parsed from the completed tiny-local pilot result summary emitted by the repaired local NVRC main entry.",
+        "source_ref": "current_quest_results_teacher_tiny_local_pilot_r3",
+        "origin_path": "tiny_local_teacher_pilot_psnr_avg.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default",
+        "baseline_value": 10.8996
+      },
+      {
+        "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
+        "label": "Tiny-local teacher pilot average teacher MSE",
+        "unit": "mse",
+        "direction": "minimize",
+        "description": "Average teacher-consistency MSE from the bounded tiny-local main-entry pilot.",
+        "derivation": "Parsed from the completed tiny-local pilot result summary after the repaired teacher loss path was exercised end to end.",
+        "source_ref": "current_quest_results_teacher_tiny_local_pilot_r3",
+        "origin_path": "tiny_local_teacher_pilot_teacher_mse_avg.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default",
+        "baseline_value": 0.5145
+      },
+      {
+        "metric_id": "beauty_teacher_smoke_bpp_avg",
+        "label": "Historical Beauty teacher smoke average bpp",
+        "unit": "bpp",
+        "direction": "minimize",
+        "description": "Historical local teacher-enabled Beauty smoke average bits-per-pixel preserved from the exported quest state.",
+        "derivation": "Recovered from the prior exported run snapshot for the completed Beauty teacher tiny smoke retry3 record.",
+        "source_ref": "exported_run_snapshot_beauty_teacher_tiny_smoke_retry3_mpsfb",
+        "origin_path": "beauty_teacher_smoke_bpp_avg.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default",
+        "baseline_value": 2.091
+      },
+      {
+        "metric_id": "beauty_teacher_smoke_psnr_avg",
+        "label": "Historical Beauty teacher smoke average PSNR",
+        "unit": "dB",
+        "direction": "maximize",
+        "description": "Historical local teacher-enabled Beauty smoke average PSNR preserved from the exported quest state.",
+        "derivation": "Recovered from the prior exported run snapshot for the completed Beauty teacher tiny smoke retry3 record.",
+        "source_ref": "exported_run_snapshot_beauty_teacher_tiny_smoke_retry3_mpsfb",
+        "origin_path": "beauty_teacher_smoke_psnr_avg.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default",
+        "baseline_value": 14.9552
+      },
+      {
+        "metric_id": "beauty_teacher_smoke_teacher_mse_avg",
+        "label": "Historical Beauty teacher smoke average teacher MSE",
+        "unit": "mse",
+        "direction": "minimize",
+        "description": "Historical local teacher-enabled Beauty smoke average teacher-consistency MSE preserved from the exported quest state.",
+        "derivation": "Recovered from the prior exported run snapshot for the completed Beauty teacher tiny smoke retry3 record.",
+        "source_ref": "exported_run_snapshot_beauty_teacher_tiny_smoke_retry3_mpsfb",
+        "origin_path": "beauty_teacher_smoke_teacher_mse_avg.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default",
+        "baseline_value": 0.0363
+      },
+      {
+        "metric_id": "beauty_no_teacher_partial_teacher_mse",
+        "label": "Historical Beauty no-teacher partial teacher MSE",
+        "unit": "mse",
+        "direction": "minimize",
+        "description": "Historical partial no-teacher comparator teacher-MSE checkpoint kept only as contextual reference.",
+        "derivation": "Recovered from the first recorded finite checkpoint at step 144/576 in the exported no-teacher Beauty smoke snapshot.",
+        "source_ref": "exported_run_snapshot_beauty_no_teacher_tiny_smoke_r1_mpsfb",
+        "origin_path": "beauty_no_teacher_partial_teacher_mse.value",
+        "required": true,
+        "decimals": null,
+        "chart_group": "default",
+        "baseline_value": 0.0472
+      }
+    ],
+    "extra_metric_ids": [
+      "bpp_avg",
+      "psnr_avg",
+      "teacher_mse_avg",
+      "bounded_bridge_bpp_avg",
+      "bounded_bridge_psnr_avg",
+      "bounded_bridge_teacher_mse_avg"
+    ]
+  },
+  "connector_metric_charts": [
+    {
+      "metric_id": "uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr",
+      "label": "UVG BD Rate Reduction PCT VS VTM RA Psnr",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/uvg-bd-rate-reduction-pct-vs-vtm-ra-psnr-timeline.png",
+      "baseline_value": 24.0,
+      "latest_value": 24.0,
+      "point_count": 3,
+      "direction": "maximize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "local_resnet18_teacher_smoke_loss_value",
+      "label": "Local Resnet18 Teacher Smoke Loss Value",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/local-resnet18-teacher-smoke-loss-value-timeline.png",
+      "baseline_value": 0.3541456162929535,
+      "latest_value": 0.3541456162929535,
+      "point_count": 3,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "tiny_local_teacher_pilot_bpp_avg",
+      "label": "Tiny Local Teacher Pilot BPP AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/tiny-local-teacher-pilot-bpp-avg-timeline.png",
+      "baseline_value": 88.2109,
+      "latest_value": 88.2109,
+      "point_count": 3,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "tiny_local_teacher_pilot_psnr_avg",
+      "label": "Tiny Local Teacher Pilot Psnr AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/tiny-local-teacher-pilot-psnr-avg-timeline.png",
+      "baseline_value": 10.8996,
+      "latest_value": 10.8996,
+      "point_count": 3,
+      "direction": "maximize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "tiny_local_teacher_pilot_teacher_mse_avg",
+      "label": "Tiny Local Teacher Pilot Teacher MSE AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/tiny-local-teacher-pilot-teacher-mse-avg-timeline.png",
+      "baseline_value": 0.5145,
+      "latest_value": 0.5145,
+      "point_count": 3,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "beauty_teacher_smoke_bpp_avg",
+      "label": "Beauty Teacher Smoke BPP AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/beauty-teacher-smoke-bpp-avg-timeline.png",
+      "baseline_value": 2.091,
+      "latest_value": 2.091,
+      "point_count": 3,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "beauty_teacher_smoke_psnr_avg",
+      "label": "Beauty Teacher Smoke Psnr AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/beauty-teacher-smoke-psnr-avg-timeline.png",
+      "baseline_value": 14.9552,
+      "latest_value": 14.9552,
+      "point_count": 3,
+      "direction": "maximize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "beauty_teacher_smoke_teacher_mse_avg",
+      "label": "Beauty Teacher Smoke Teacher MSE AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/beauty-teacher-smoke-teacher-mse-avg-timeline.png",
+      "baseline_value": 0.0363,
+      "latest_value": 0.0363,
+      "point_count": 3,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "beauty_no_teacher_partial_teacher_mse",
+      "label": "Beauty NO Teacher Partial Teacher MSE",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/beauty-no-teacher-partial-teacher-mse-timeline.png",
+      "baseline_value": 0.0472,
+      "latest_value": 0.0472,
+      "point_count": 3,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "bpp_avg",
+      "label": "BPP AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/bpp-avg-timeline.png",
+      "baseline_value": null,
+      "latest_value": 23.9277,
+      "point_count": 2,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "psnr_avg",
+      "label": "Psnr AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/psnr-avg-timeline.png",
+      "baseline_value": null,
+      "latest_value": 10.4509,
+      "point_count": 2,
+      "direction": "maximize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "teacher_mse_avg",
+      "label": "Teacher MSE AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/teacher-mse-avg-timeline.png",
+      "baseline_value": null,
+      "latest_value": 0.4821,
+      "point_count": 2,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "bounded_bridge_bpp_avg",
+      "label": "Bounded Bridge BPP AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/bounded-bridge-bpp-avg-timeline.png",
+      "baseline_value": null,
+      "latest_value": 23.9277,
+      "point_count": 1,
+      "direction": "minimize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "bounded_bridge_psnr_avg",
+      "label": "Bounded Bridge Psnr AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/bounded-bridge-psnr-avg-timeline.png",
+      "baseline_value": null,
+      "latest_value": 10.4509,
+      "point_count": 1,
+      "direction": "maximize",
+      "style": "branded"
+    },
+    {
+      "metric_id": "bounded_bridge_teacher_mse_avg",
+      "label": "Bounded Bridge Teacher MSE AVG",
+      "path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1/experiments/main/shared_gating_pred_variance_repair_ego4d16f_smoke_r1/connector-charts/bounded-bridge-teacher-mse-avg-timeline.png",
+      "baseline_value": null,
+      "latest_value": 0.4821,
+      "point_count": 1,
+      "direction": "minimize",
+      "style": "branded"
+    }
+  ]
+}

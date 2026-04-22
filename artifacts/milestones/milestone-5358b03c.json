@@ -1,0 +1,56 @@
+{
+  "kind": "milestone",
+  "schema_version": 1,
+  "artifact_id": "milestone-5358b03c",
+  "id": "milestone-5358b03c",
+  "quest_id": "002",
+  "created_at": "2026-04-15T08:33:57+00:00",
+  "updated_at": "2026-04-15T08:33:57+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-e0d17d22",
+  "head_commit": "5c2fa9bb376a7aac15fb9f3931883f3e901e6a19",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e0d17d22",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-e0d17d22",
+  "message": "有结果了：这轮 bridge smoke 已经正式收成当前 active 子线里的可复跑结果。当前判断也更干净了：`direct delta` 在 frozen consumer 空间里把 top-1 从 `0.25` 抬到 `0.50`，但 learned ridge bridge 在现有 `4` 帧验证面上直接掉到 `0.00`。这说明现在能保留的主张是“delta 信号本身有桥接潜力”，还不能说“学习型 bridge 已经成立”；接下来我会先补一个更宽一点但仍然有界的样本面，再决定 learned bridge 要不要继续保留。",
+  "summary": "有结果了：这轮 bridge smoke 已经正式收成当前 active 子线里的可复跑结果。当前判断也更干净了：`direct delta` 在 frozen consumer 空间里把 top-1 从 `0.25` 抬到 `0.50`，但 learned ridge bridge 在现有 `4` 帧验证面上直接掉到 `0.00`。这说明现在能保留的主张是“delta 信号本身有桥接潜力”，还不能说“学习型 bridge 已经成立”…",
+  "summary_preview": "有结果了：这轮 bridge smoke 已经正式收成当前 active 子线里的可复跑结果。当前判断也更干净了：`direct delta` 在 frozen consumer 空间里把 top-1 从 `0.25` 抬到 `0.50`，但 learned ridge bridge 在现有 `4` 帧验证面上直接掉到 `0.00`。这说明现在能保留的主张是“delta 信号本身有桥接潜力”，还不能说“学习型 bridge 已经成立”…",
+  "interaction_phase": "ack",
+  "importance": "medium",
+  "attachments": [],
+  "interaction_id": "milestone-5358b03c",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "milestone",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Milestone recorded. Continue from the current anchor and keep the next checkpoint durable.",
+    "why_now": "Milestones should mark meaningful progress, not end the route prematurely.",
+    "complete_when": [
+      "The next substantive output is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.interact(kind='progress', ...)",
+        "purpose": "Send the next checkpoint update across active surfaces."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "milestone",
+    "source_artifact_id": "milestone-5358b03c",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

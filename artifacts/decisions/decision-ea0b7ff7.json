@@ -1,0 +1,91 @@
+{
+  "kind": "decision",
+  "schema_version": 1,
+  "artifact_id": "decision-ea0b7ff7",
+  "id": "decision-ea0b7ff7",
+  "quest_id": "002",
+  "created_at": "2026-04-17T14:03:28+00:00",
+  "updated_at": "2026-04-17T14:03:28+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi",
+    "run_id": "run-84e343aa"
+  },
+  "status": "pending",
+  "branch": "idea/002-idea-2835dace",
+  "head_commit": "df11f9a7332034ec348f118ce562bba5dd7bc8ac",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-2835dace",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-2835dace",
+  "decision_type": "idea_selection",
+  "title": "Keep query-side anti-collapse branch and move to bounded predicted-side repair",
+  "summary": "The current active idea branch stays selected after a fresh literature and code-path sweep. The relation repair is now treated as a completed negative result, and the next bounded route should be a predicted-side anti-collapse repair on the same frozen widened packet surface, with variance-floor regularization preferred over another teacher-side repair or immediate interface redesign.",
+  "verdict": "good",
+  "action": "launch_experiment",
+  "reason": "Two measured teacher-side repair families already failed, the target branch is already fixed and asymmetric, and the current code path exposes predicted packet tensors that are a direct fit for explicit variance control.",
+  "idea_id": "idea-2835dace",
+  "selected_option": "candidate_a_variance_floor_first_on_accessible_predicted_packet_surfaces",
+  "alternatives": [
+    {
+      "name": "candidate_b_decorrelation_or_redundancy_reduction_followup",
+      "reason_not_selected": "Broader objective change and less interpretable than the smallest variance-first repair."
+    },
+    {
+      "name": "candidate_c_return_to_interface_redesign",
+      "reason_not_selected": "Direct predicted-side collapse evidence is still too strong to skip one bounded predicted-side repair."
+    }
+  ],
+  "strongest_support": "Two measured teacher-side repair families already failed, the target branch is already fixed and asymmetric, and the current code path exposes predicted packet tensors that are a direct fit for explicit variance control.",
+  "main_residual_risk": "The true bottleneck may lie earlier than the currently accessible packet tensors, so even a clean predicted-side repair may only produce a clearer negative result.",
+  "evidence_paths": [
+    "artifacts/idea/literature_survey.md",
+    "experiments/main/evals/shared_gating_query_collapse_localization_smoke_r1/report.md",
+    "experiments/main/evals/shared_gating_query_collapse_localization_smoke_r1/summary.json",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1/experiments/main/shared_gating_relation_semchange_delta_smoke_r1/RESULT.json"
+  ],
+  "recommended_next_stage": "experiment",
+  "recommended_skill_reads": [
+    "experiment"
+  ],
+  "implementation_note": "artifact.submit_idea(mode=revise) still fails in the current runtime with an unsupported active-anchor error, so the refreshed route was preserved through branch files plus this decision artifact.",
+  "comment": "Record the refreshed idea-route judgment durably after submit_idea revise hit the known anchor bug",
+  "run_id": "run-84e343aa",
+  "anchor": "idea",
+  "semantic_key": "decision:idea:launch_experiment:good:6dc49c08284fcd723a3ef975338d90b0191d8ea681679779389af053d2038b2b",
+  "guidance_vm": {
+    "current_anchor": "decision",
+    "recommended_skill": "experiment",
+    "recommended_action": "launch_experiment",
+    "summary": "Decision accepted: launch the main experiment on the selected route.",
+    "why_now": "Two measured teacher-side repair families already failed, the target branch is already fixed and asymmetric, and the current code path exposes predicted packet tensors that are a direct fit for explicit variance control.",
+    "complete_when": [
+      "The main run is executed and stored as a run artifact.",
+      "Key metrics versus baseline are written durably."
+    ],
+    "alternative_routes": [
+      {
+        "action": "continue",
+        "label": "Use the active branch",
+        "when": "The accepted idea already owns an isolated branch/worktree.",
+        "tradeoff": "Keeps the normal path simple, but assumes the idea branch is in good shape."
+      },
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Analyze first",
+        "when": "The setup still has unresolved confounders.",
+        "tradeoff": "Reduces implementation waste, but delays primary evidence."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record_main_experiment(...)",
+        "purpose": "Persist the main experiment outcome on the active idea branch."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "decision",
+    "source_artifact_id": "decision-ea0b7ff7",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

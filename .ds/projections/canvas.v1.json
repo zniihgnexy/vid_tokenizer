@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "projection_id": "canvas.v1",
+  "generated_at": "2026-04-14T14:26:52+00:00",
+  "source_signature": "2268c7435fd1a80d76c7f95697547cf7edb33abae6113117d0800c8f01e5e8a5",
+  "payload": {
+    "quest_id": "002",
+    "default_ref": "main",
+    "current_ref": "main",
+    "head": "393f472db826e72f91f02f77f519b1e78057c1be",
+    "nodes": [
+      {
+        "ref": "main",
+        "label": "main",
+        "branch_kind": "quest",
+        "tier": "major",
+        "mode": "ideas",
+        "parent_ref": null,
+        "compare_base": "main",
+        "current": true,
+        "head": "393f472db826e72f91f02f77f519b1e78057c1be",
+        "updated_at": "2026-04-14T22:26:52+08:00",
+        "subject": "quest: initialize 002",
+        "commit_count": 1,
+        "ahead": 0,
+        "behind": 0,
+        "run_id": null,
+        "run_kind": null,
+        "idea_id": null,
+        "paper_line_id": null,
+        "paper_line_branch": null,
+        "selected_outline_ref": null,
+        "source_branch": null,
+        "source_run_id": null,
+        "source_idea_id": null,
+        "parent_branch_recorded": null,
+        "worktree_root": null,
+        "latest_metric": null,
+        "latest_summary": "Attached baseline `nvrc-local-source`.",
+        "latest_result": null,
+        "breakthrough": false,
+        "breakthrough_level": null,
+        "recent_artifacts": [
+          {
+            "artifact_id": null,
+            "kind": null,
+            "summary": null,
+            "reason": null,
+            "updated_at": null,
+            "status": null
+          },
+          {
+            "artifact_id": "report-90b587c9",
+            "kind": "report",
+            "summary": "Attached baseline `nvrc-local-source`.",
+            "reason": "Baseline reuse avoids repeating an already stable reproduction.",
+            "updated_at": "2026-04-14T14:26:52+00:00",
+            "status": "completed"
+          }
+        ]
+      }
+    ],
+    "edges": [],
+    "views": {
+      "ideas": [
+        "main"
+      ],
+      "analysis": [
+        "main"
+      ]
+    }
+  }
+}

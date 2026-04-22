@@ -1,0 +1,56 @@
+{
+  "kind": "milestone",
+  "schema_version": 1,
+  "artifact_id": "milestone-3c184e03",
+  "id": "milestone-3c184e03",
+  "quest_id": "002",
+  "created_at": "2026-04-17T14:50:54+00:00",
+  "updated_at": "2026-04-17T14:50:54+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-76fee64d",
+  "head_commit": "9d96b73da00b2d698f09ffbd95c91df6d60803e3",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-76fee64d",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-76fee64d",
+  "message": "有结果了：这条新 idea 现在已经正式收敛成一个最小、可执行的实验包了。结论是继续复用现有 teacher-feature packet bundle，不再重做 bundle 格式；下一步只新增一个不泄漏目标信息的 teacher-anchored adapter 比较，并用它和现有 direct packet control、naive ridge bridge 在同一组 tiny-local 样本上正面对比。这个方向之所以胜出，是因为旧证据已经表明 direct packet 信号虽弱但存在，而 naive bridge 更弱，说明缺口更像“adapter 不够对”而不是“bundle 根本不行”；主要风险是如果 teacher-anchored adapter 仍然失败，那就该升级为更深的 interface redesign，而不是再做局部 loss 调参。下一步我会按这份收敛结果切到 experiment，先把 bounded smoke 的 adapter 定义和执行入口补齐。",
+  "summary": "有结果了：这条新 idea 现在已经正式收敛成一个最小、可执行的实验包了。结论是继续复用现有 teacher-feature packet bundle，不再重做 bundle 格式；下一步只新增一个不泄漏目标信息的 teacher-anchored adapter 比较，并用它和现有 direct packet control、naive ridge bridge 在同一组 tiny-local 样本上正面对比。这个方向之所以胜出，…",
+  "summary_preview": "有结果了：这条新 idea 现在已经正式收敛成一个最小、可执行的实验包了。结论是继续复用现有 teacher-feature packet bundle，不再重做 bundle 格式；下一步只新增一个不泄漏目标信息的 teacher-anchored adapter 比较，并用它和现有 direct packet control、naive ridge bridge 在同一组 tiny-local 样本上正面对比。这个方向之所以胜出，…",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "milestone-3c184e03",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "milestone",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Milestone recorded. Continue from the current anchor and keep the next checkpoint durable.",
+    "why_now": "Milestones should mark meaningful progress, not end the route prematurely.",
+    "complete_when": [
+      "The next substantive output is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.interact(kind='progress', ...)",
+        "purpose": "Send the next checkpoint update across active surfaces."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "milestone",
+    "source_artifact_id": "milestone-3c184e03",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

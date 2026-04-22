@@ -1,0 +1,112 @@
+{
+  "kind": "idea",
+  "schema_version": 1,
+  "artifact_id": "idea-f94564fc",
+  "id": "idea-f94564fc",
+  "quest_id": "002",
+  "created_at": "2026-04-15T09:35:06+00:00",
+  "updated_at": "2026-04-15T09:35:06+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-955ff951",
+  "head_commit": "799039d48731777687fe943fdd4f50ce196214cc",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-955ff951",
+  "summary": "Idea `idea-955ff951` created and promoted to the active research head.",
+  "reason": "Global widened results regress to near chance, but per-chunk delta signal remains partially alive, so a structured local-burst reformulation is more justified than either stopping or claiming success.",
+  "idea_id": "idea-955ff951",
+  "lineage_intent": "continue_line",
+  "parent_branch": "idea-e0d17d22",
+  "foundation_ref": {
+    "kind": "branch",
+    "ref": "idea-e0d17d22",
+    "branch": "idea-e0d17d22",
+    "worktree_root": null,
+    "label": "Branch `idea-e0d17d22`"
+  },
+  "foundation_reason": null,
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951",
+  "worktree_rel_path": ".ds/worktrees/idea-idea-955ff951",
+  "flow_type": "idea_submission",
+  "protocol_step": "create",
+  "paths": {
+    "idea_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951/memory/ideas/idea-955ff951/idea.md",
+    "idea_draft_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951/memory/ideas/idea-955ff951/draft.md",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951"
+  },
+  "details": {
+    "title": "Chunk-Aware Local-Burst Packet Interface",
+    "problem": "The widened 16-frame flat retrieval surface collapses to near chance even though some 4-frame chunks still preserve delta-first signal.",
+    "hypothesis": "Preserving burst grouping and local position in the downstream packet interface will retain the surviving local signal better than flat clip-level retrieval.",
+    "mechanism": "Represent each frozen 4-frame chunk as a first-class packet group and evaluate chunk-aware matching before clip-level aggregation.",
+    "method_brief": "Keep the same frozen chunked export, but replace flat global matching with a chunk-aware bundle and consumer.",
+    "selection_scores": null,
+    "mechanism_family": "chunk-aware packet interface",
+    "change_layer": null,
+    "source_lens": null,
+    "expected_gain": "Turns the current mixed widened result into a more defensible interface question instead of forcing an unsupported flat retrieval claim.",
+    "next_target": "implement a chunk-aware bundle/evaluator with explicit burst grouping and local frame order.",
+    "branch_no": "008",
+    "lineage_intent": "continue_line",
+    "parent_branch": "idea-e0d17d22",
+    "foundation_ref": {
+      "kind": "branch",
+      "ref": "idea-e0d17d22",
+      "branch": "idea-e0d17d22",
+      "worktree_root": null,
+      "label": "Branch `idea-e0d17d22`"
+    },
+    "foundation_reason": null,
+    "idea_draft_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951/memory/ideas/idea-955ff951/draft.md",
+    "evidence_paths": [],
+    "risks": [
+      "The remaining signal may be too burst-specific.",
+      "Chunk-aware packaging may improve interpretation without improving usefulness."
+    ],
+    "submission_mode": "line",
+    "source_candidate_id": null
+  },
+  "guidance_vm": {
+    "current_anchor": "idea",
+    "recommended_skill": "experiment",
+    "recommended_action": "launch_experiment",
+    "summary": "Idea branch is ready. Continue with the next active optimization stage on this durable research node.",
+    "why_now": "The accepted idea already has its durable branch/worktree, so the next leverage point is the configured next stage rather than another route-selection loop.",
+    "complete_when": [
+      "The next configured stage starts from this branch.",
+      "The resulting evidence or decision is written durably."
+    ],
+    "alternative_routes": [
+      {
+        "action": "continue",
+        "label": "Inspect the branch once",
+        "when": "A quick branch sanity check is still needed before running.",
+        "tradeoff": "Adds caution, but should stay short."
+      },
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Analyze first",
+        "when": "The idea package still has unresolved setup ambiguity that needs clarification.",
+        "tradeoff": "Can reduce wasted runs, but is unusual before a first main result."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record_main_experiment(...)",
+        "purpose": "Record the first real main result on this branch when the next stage is experiment-oriented."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "idea",
+    "source_artifact_id": "idea-f94564fc",
+    "related_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951/memory/ideas/idea-955ff951/idea.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951/memory/ideas/idea-955ff951/draft.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-955ff951"
+    ],
+    "stage_status": "ready"
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "kind": "decision",
+  "schema_version": 1,
+  "artifact_id": "decision-29493edc",
+  "id": "decision-29493edc",
+  "quest_id": "002",
+  "created_at": "2026-04-22T07:32:24+00:00",
+  "updated_at": "2026-04-22T07:32:24+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi",
+    "run_id": "run-3beca153"
+  },
+  "status": "completed",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "ff9464372daa002d5aada25b0205068b22679abf",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "verdict": "good",
+  "action": "write",
+  "summary": "Baseline reuse is already durably complete, so the current bottleneck is paper-line package repair rather than more baseline work.",
+  "reason": "The confirmed imported baseline `nvrc-local-source` is already active, the baseline gate is `confirmed`, and the current paper line reports `writing_ready=true`. The remaining gap is packaging consistency: the active paper branch is missing several bundle-support files and its evidence ledger lags behind the current draft boundary.",
+  "flow_type": "stage_handoff",
+  "protocol_step": "handoff",
+  "details": {
+    "from_anchor": "baseline",
+    "to_anchor": "write",
+    "baseline_id": "nvrc-local-source",
+    "paper_line_ref": "paper-run-querybank-teacher-anchor-smoke-r1-outline-002-run",
+    "paper_recommended_action": "prepare_bundle",
+    "missing_assets": [
+      "paper_bundle_manifest",
+      "claim_evidence_map",
+      "baseline_inventory",
+      "related_work_map",
+      "references_bib",
+      "proofing_notes",
+      "review_notes"
+    ],
+    "consistency_gaps": [
+      "current evidence ledger is older than the current draft and writing plan",
+      "current paper line lacks the support files that exist in the older bundle-ready paper line"
+    ],
+    "next_anchor": "write",
+    "workspace_mode": "paper"
+  },
+  "evidence_paths": [
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/baselines/imported/nvrc-local-source/json/metric_contract.json",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/draft.md",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1/paper/evidence_ledger.md",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-query-adaptive-teacher-anchor-arbitration-smoke-r1/paper/paper_bundle_manifest.json",
+    "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/status.md"
+  ],
+  "comment": "Record the route decision that baseline work is complete and the quest should continue with paper-line repair/write work.",
+  "run_id": "run-3beca153",
+  "anchor": "baseline",
+  "semantic_key": "decision:baseline:write:good:61ad6fee0c3c49523adaa9ea6eac0620184a67cb148387ad99752d83b9656238",
+  "guidance_vm": {
+    "current_anchor": "decision",
+    "recommended_skill": "write",
+    "recommended_action": "write",
+    "summary": "Decision accepted: shift from experiments into evidence-backed writing.",
+    "why_now": "The confirmed imported baseline `nvrc-local-source` is already active, the baseline gate is `confirmed`, and the current paper line reports `writing_ready=true`. The remaining gap is packaging consistency: the active paper branch is missing several bundle-support files and its evidence ledger lags behind the current draft boundary.",
+    "complete_when": [
+      "A writing report or draft artifact exists.",
+      "Major claims are tied to baseline and run artifacts.",
+      "Any remaining evidence gap is converted into a new durable decision."
+    ],
+    "alternative_routes": [
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Do more analysis",
+        "when": "Important robustness questions remain open.",
+        "tradeoff": "Strengthens confidence, but delays drafting."
+      },
+      {
+        "action": "finalize",
+        "label": "Finalize early",
+        "when": "You only need a concise report rather than a full paper package.",
+        "tradeoff": "Faster closure, but less complete writing output."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(kind='report', ...)",
+        "purpose": "Persist outline, draft readiness, or review summaries."
+      },
+      {
+        "name": "artifact.record(kind='decision', ...)",
+        "purpose": "Route back if writing reveals missing evidence."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "decision",
+    "source_artifact_id": "decision-29493edc",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

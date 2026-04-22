@@ -1,0 +1,13 @@
+epochs: 1
+eval_epochs: 1
+warmup_epochs: 0
+rate_steps: 1
+log_epochs: 1
+opt: adam
+lr: 1e-3
+warmup_lr: 1e-5
+min_lr: 1e-4
+max_norm: 1.0
+weight_decay: 1e-6
+weight_decay_scaling: false
+auto_lr_scaling: false

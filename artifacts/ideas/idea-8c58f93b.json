@@ -1,0 +1,114 @@
+{
+  "kind": "idea",
+  "schema_version": 1,
+  "artifact_id": "idea-8c58f93b",
+  "id": "idea-8c58f93b",
+  "quest_id": "002",
+  "created_at": "2026-04-14T15:19:21+00:00",
+  "updated_at": "2026-04-14T15:19:21+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-301dcd71",
+  "head_commit": "6e001e98fb7af12c1195713d78478c7c59750632",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-301dcd71",
+  "summary": "Idea `idea-301dcd71` created and promoted to the active research head.",
+  "reason": "Current evidence favors branching within the same downstream-pipeline story rather than reopening upstream codec selection or directly scaling the weak reconstructed-video interface.",
+  "idea_id": "idea-301dcd71",
+  "lineage_intent": "continue_line",
+  "parent_branch": "idea/002-idea-3ed587d5",
+  "foundation_ref": {
+    "kind": "idea",
+    "ref": "idea-3ed587d5",
+    "branch": "idea/002-idea-3ed587d5",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5",
+    "idea_id": "idea-3ed587d5",
+    "label": "Idea `idea-3ed587d5` on `idea/002-idea-3ed587d5`"
+  },
+  "foundation_reason": "The current line already proved the pipeline skeleton and bundle export path, but it also exposed a concrete bottleneck: reconstructed-video delivery is too lossy for the first frozen resnet18 consumer. A child line should preserve the validated export contract while changing only the machine-facing interface layer.",
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71",
+  "worktree_rel_path": ".ds/worktrees/idea-idea-301dcd71",
+  "flow_type": "idea_submission",
+  "protocol_step": "create",
+  "paths": {
+    "idea_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/memory/ideas/idea-301dcd71/idea.md",
+    "idea_draft_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/memory/ideas/idea-301dcd71/draft.md",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71"
+  },
+  "details": {
+    "title": "Teacher-Feature Packet Interface After Reconstructed-Video Bottleneck",
+    "problem": "The frozen upstream module and export bundle are now validated, but reconstructed-video delivery collapses on the first frozen downstream consumer, so the next step must preserve machine-usable structure more directly than decoded frames alone.",
+    "hypothesis": "If the downstream interface exports teacher/tokenizer feature packets instead of relying only on reconstructed frames, a frozen downstream consumer should preserve identity-level retrieval structure better while keeping the pipeline machine-facing and rerunnable.",
+    "mechanism": "",
+    "method_brief": "Keep the same frozen upstream module, sample ids, and bounded tiny-local surface. Extend the bundle contract with teacher/tokenizer-side feature packets or semantic packets, then evaluate original-side versus packet-side machine use with the same frozen downstream comparison shape. Treat the current reconstructed-video result as a bounded baseline for the new interface rather than scaling it directly to a heavier multimodal stack.",
+    "selection_scores": null,
+    "mechanism_family": "teacher_feature_packet_interface",
+    "change_layer": null,
+    "source_lens": null,
+    "expected_gain": "Improve downstream retrieval preservation over the reconstructed-video control while keeping the pipeline machine-facing and compatible with later larger-model integration.",
+    "next_target": "experiment",
+    "branch_no": "003",
+    "lineage_intent": "continue_line",
+    "parent_branch": "idea/002-idea-3ed587d5",
+    "foundation_ref": {
+      "kind": "idea",
+      "ref": "idea-3ed587d5",
+      "branch": "idea/002-idea-3ed587d5",
+      "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5",
+      "idea_id": "idea-3ed587d5",
+      "label": "Idea `idea-3ed587d5` on `idea/002-idea-3ed587d5`"
+    },
+    "foundation_reason": "The current line already proved the pipeline skeleton and bundle export path, but it also exposed a concrete bottleneck: reconstructed-video delivery is too lossy for the first frozen resnet18 consumer. A child line should preserve the validated export contract while changing only the machine-facing interface layer.",
+    "idea_draft_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/memory/ideas/idea-301dcd71/draft.md",
+    "evidence_paths": [],
+    "risks": [
+      "Feature export may require new hook points and clean metadata alignment.",
+      "A packet-side consumer can drift too close to the upstream teacher objective if the evaluation surface is not kept independent enough."
+    ],
+    "submission_mode": "line",
+    "source_candidate_id": null
+  },
+  "guidance_vm": {
+    "current_anchor": "idea",
+    "recommended_skill": "experiment",
+    "recommended_action": "launch_experiment",
+    "summary": "Idea branch is ready. Continue with the next active optimization stage on this durable research node.",
+    "why_now": "The accepted idea already has its durable branch/worktree, so the next leverage point is the configured next stage rather than another route-selection loop.",
+    "complete_when": [
+      "The next configured stage starts from this branch.",
+      "The resulting evidence or decision is written durably."
+    ],
+    "alternative_routes": [
+      {
+        "action": "continue",
+        "label": "Inspect the branch once",
+        "when": "A quick branch sanity check is still needed before running.",
+        "tradeoff": "Adds caution, but should stay short."
+      },
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Analyze first",
+        "when": "The idea package still has unresolved setup ambiguity that needs clarification.",
+        "tradeoff": "Can reduce wasted runs, but is unusual before a first main result."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record_main_experiment(...)",
+        "purpose": "Record the first real main result on this branch when the next stage is experiment-oriented."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "idea",
+    "source_artifact_id": "idea-8c58f93b",
+    "related_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/memory/ideas/idea-301dcd71/idea.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/memory/ideas/idea-301dcd71/draft.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71"
+    ],
+    "stage_status": "ready"
+  }
+}

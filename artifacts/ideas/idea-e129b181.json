@@ -1,0 +1,122 @@
+{
+  "kind": "idea",
+  "schema_version": 1,
+  "artifact_id": "idea-e129b181",
+  "id": "idea-e129b181",
+  "quest_id": "002",
+  "created_at": "2026-04-17T08:39:24+00:00",
+  "updated_at": "2026-04-17T08:39:24+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-2835dace",
+  "head_commit": "df11f9a7332034ec348f118ce562bba5dd7bc8ac",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-2835dace",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-2835dace",
+  "summary": "Idea `idea-2835dace` created and promoted to the active research head.",
+  "reason": "Use branch_alternative because the relation line should remain as a completed negative test, while the next idea should be a sibling route from the same earlier foundation rather than a child that keeps committing to teacher-side repair.",
+  "idea_id": "idea-2835dace",
+  "lineage_intent": "branch_alternative",
+  "parent_branch": "run/shared_gating_relation_semchange_delta_smoke_r1",
+  "foundation_ref": {
+    "kind": "run",
+    "ref": "shared_gating_relation_semchange_delta_smoke_r1",
+    "branch": "run/shared_gating_relation_semchange_delta_smoke_r1",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1",
+    "run_id": "shared_gating_relation_semchange_delta_smoke_r1",
+    "label": "Run `shared_gating_relation_semchange_delta_smoke_r1` on `run/shared_gating_relation_semchange_delta_smoke_r1`"
+  },
+  "foundation_reason": null,
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-2835dace",
+  "worktree_rel_path": ".ds/worktrees/idea-idea-2835dace",
+  "flow_type": "idea_submission",
+  "protocol_step": "create",
+  "paths": {
+    "idea_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-2835dace/memory/ideas/idea-2835dace/idea.md",
+    "idea_draft_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-2835dace/memory/ideas/idea-2835dace/draft.md",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-2835dace"
+  },
+  "details": {
+    "title": "Query-Side Anti-Collapse Packet Repair After Relation Failure",
+    "problem": "The relation-consistency repair became a second negative result on the same frozen widened bridge surface. Target packets remain perfectly discriminative, but both blueprint and relation repairs fail to recover predicted-to-target packet alignment, which suggests the remaining bottleneck is now more likely at the predicted packet or query-side head than in another nearby teacher-side auxiliary loss.",
+    "hypothesis": "If the current bridge fails because query-side packet representations collapse before or during the predicted packet head, then a minimal query-side anti-collapse intervention or explicit query-head localization on the same frozen surface will recover more predicted-to-target discrimination than another teacher-side regularizer.",
+    "mechanism": "Directly target the predicted packet or query-side head where discrimination is likely being lost, instead of adding another teacher-side relational auxiliary.",
+    "method_brief": "Branch away from the failed relation repair line and return to the query-side bottleneck directly. Keep the same frozen widened bridge surface, packet exporter, and packet evaluator as controls. First expose or localize query-side packet-head / projection representations and then test one minimal anti-collapse repair, such as stop-gradient asymmetry, a variance floor, or a lightweight redundancy-reduction control, before re-evaluating on the exact same bounded packet interface.",
+    "selection_scores": {
+      "winner": "candidate_a_query_side_anti_collapse_branch",
+      "candidate_b": "more_teacher_loss_repairs",
+      "candidate_c": "return_to_chunk_aware_packaging",
+      "why_winner": "Relation adds a second negative result against teacher-side repair while the decisive evidence still points to lost predicted-side discrimination.",
+      "why_not_b": "Another nearby teacher auxiliary would repeat a route already weakened by two measured failures.",
+      "why_not_c": "Chunk-aware packaging alone no longer dominates because later widened evidence suggests the more direct bottleneck is query-side discrimination."
+    },
+    "mechanism_family": "query_side_anti_collapse_packet_bridge",
+    "change_layer": "query_side_packet_head",
+    "source_lens": "relation_negative_result_plus_query_collapse_evidence",
+    "expected_gain": "",
+    "next_target": "implement one bounded query-side localization-plus-repair package on the same frozen widened bridge surface and compare predicted-to-target packet metrics directly against both the downgraded blueprint run and the negative relation run.",
+    "branch_no": "012",
+    "lineage_intent": "branch_alternative",
+    "parent_branch": "run/shared_gating_relation_semchange_delta_smoke_r1",
+    "foundation_ref": {
+      "kind": "run",
+      "ref": "shared_gating_relation_semchange_delta_smoke_r1",
+      "branch": "run/shared_gating_relation_semchange_delta_smoke_r1",
+      "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-relation-semchange-delta-smoke-r1",
+      "run_id": "shared_gating_relation_semchange_delta_smoke_r1",
+      "label": "Run `shared_gating_relation_semchange_delta_smoke_r1` on `run/shared_gating_relation_semchange_delta_smoke_r1`"
+    },
+    "foundation_reason": null,
+    "idea_draft_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-2835dace/memory/ideas/idea-2835dace/draft.md",
+    "evidence_paths": [],
+    "risks": [
+      "The bottleneck may lie earlier than the explicit query head, so a minimal anti-collapse control could improve variance diagnostics without restoring packet alignment.",
+      "The best next step may still turn out to be deeper interface restructuring rather than any local query-side repair.",
+      "Exposing extra query-side tensors may require modest exporter changes before the repair itself can be tested cleanly."
+    ],
+    "submission_mode": "line",
+    "source_candidate_id": null
+  },
+  "guidance_vm": {
+    "current_anchor": "idea",
+    "recommended_skill": "experiment",
+    "recommended_action": "launch_experiment",
+    "summary": "Idea branch is ready. Continue with the next active optimization stage on this durable research node.",
+    "why_now": "The accepted idea already has its durable branch/worktree, so the next leverage point is the configured next stage rather than another route-selection loop.",
+    "complete_when": [
+      "The next configured stage starts from this branch.",
+      "The resulting evidence or decision is written durably."
+    ],
+    "alternative_routes": [
+      {
+        "action": "continue",
+        "label": "Inspect the branch once",
+        "when": "A quick branch sanity check is still needed before running.",
+        "tradeoff": "Adds caution, but should stay short."
+      },
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Analyze first",
+        "when": "The idea package still has unresolved setup ambiguity that needs clarification.",
+        "tradeoff": "Can reduce wasted runs, but is unusual before a first main result."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record_main_experiment(...)",
+        "purpose": "Record the first real main result on this branch when the next stage is experiment-oriented."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "idea",
+    "source_artifact_id": "idea-e129b181",
+    "related_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-2835dace/memory/ideas/idea-2835dace/idea.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-2835dace/memory/ideas/idea-2835dace/draft.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-2835dace"
+    ],
+    "stage_status": "ready"
+  }
+}

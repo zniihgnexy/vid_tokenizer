@@ -1,0 +1,65 @@
+{
+  "run": "teacher-loss-smoke",
+  "teacher_type": "resnet18_imagenet",
+  "semantic_blueprint": true,
+  "relation_consistency": false,
+  "relation_mode": "cosine",
+  "relation_weight": 1.0,
+  "temporal_delta_consistency": true,
+  "temporal_delta_weight": 1.0,
+  "temporal_delta_semantic_gating": true,
+  "semantic_change_weighting": true,
+  "function_readout_consistency": false,
+  "function_readout_weight": 1.0,
+  "function_readout_seeds": [],
+  "loss_value": 1.8824245929718018,
+  "feature_shape": [
+    2,
+    4,
+    512
+  ],
+  "teacher_mse_shape": [
+    2,
+    4
+  ],
+  "psnr_shape": [
+    2,
+    4
+  ],
+  "semantic_blueprint_rank": 4,
+  "semantic_blueprint_basis_shape": [
+    2,
+    4,
+    512
+  ],
+  "semantic_blueprint_target_shape": [
+    2,
+    4,
+    4
+  ],
+  "semantic_blueprint_pred_shape": [
+    2,
+    4,
+    4
+  ],
+  "semantic_weight_shape": [
+    2,
+    4
+  ],
+  "semantic_weight_min": 0.8393325209617615,
+  "semantic_weight_max": 1.146104097366333,
+  "semantic_weight_mean": 0.9999990463256836,
+  "semantic_weight_gamma": 1.0,
+  "temporal_delta_shape": [
+    2,
+    4,
+    512
+  ],
+  "temporal_delta_target_shape": [
+    2,
+    4,
+    512
+  ],
+  "temporal_delta_abs_mean": 0.2116096019744873,
+  "temporal_delta_target_abs_mean": 0.22333446145057678
+}

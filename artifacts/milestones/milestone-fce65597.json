@@ -1,0 +1,56 @@
+{
+  "kind": "milestone",
+  "schema_version": 1,
+  "artifact_id": "milestone-fce65597",
+  "id": "milestone-fce65597",
+  "quest_id": "002",
+  "created_at": "2026-04-22T07:40:37+00:00",
+  "updated_at": "2026-04-22T07:40:37+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "completed",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "31d5f3faf8db26c4349b1ad95161d5f62b5dd0bb",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "message": "有结果了：当前这条 paper 线已经被我修到内容完整、`bundle_ready + finalize_ready` 的状态，支持性的草稿、证据台账、claim map、proofing、review 和 bundle manifest 都已经对齐。现在唯一剩下的不是研究问题，而是运行时登记故障：正式 `submit_paper_bundle` 仍会报 `Unsupported active anchor 'finalize'`。所以当前最诚实的结论是，这个 quest 已经有一份可交付论文包，但外层系统还不能把它正式登记出去；一旦这个 anchor 问题修好，就应该直接重试登记，而不是回头重做实验或改写结论。",
+  "summary": "有结果了：当前这条 paper 线已经被我修到内容完整、`bundle_ready + finalize_ready` 的状态，支持性的草稿、证据台账、claim map、proofing、review 和 bundle manifest 都已经对齐。现在唯一剩下的不是研究问题，而是运行时登记故障：正式 `submit_paper_bundle` 仍会报 `Unsupported active anchor 'finalize'`。所…",
+  "summary_preview": "有结果了：当前这条 paper 线已经被我修到内容完整、`bundle_ready + finalize_ready` 的状态，支持性的草稿、证据台账、claim map、proofing、review 和 bundle manifest 都已经对齐。现在唯一剩下的不是研究问题，而是运行时登记故障：正式 `submit_paper_bundle` 仍会报 `Unsupported active anchor 'finalize'`。所…",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "milestone-fce65597",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": "progress-e56ba809",
+  "guidance_vm": {
+    "current_anchor": "milestone",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Milestone recorded. Continue from the current anchor and keep the next checkpoint durable.",
+    "why_now": "Milestones should mark meaningful progress, not end the route prematurely.",
+    "complete_when": [
+      "The next substantive output is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.interact(kind='progress', ...)",
+        "purpose": "Send the next checkpoint update across active surfaces."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "milestone",
+    "source_artifact_id": "milestone-fce65597",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

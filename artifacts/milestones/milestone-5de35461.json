@@ -1,0 +1,56 @@
+{
+  "kind": "milestone",
+  "schema_version": 1,
+  "artifact_id": "milestone-5de35461",
+  "id": "milestone-5de35461",
+  "quest_id": "002",
+  "created_at": "2026-04-17T20:41:04+00:00",
+  "updated_at": "2026-04-17T20:41:04+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "completed",
+  "branch": "run/querybank_teacher_anchor_smoke_r1",
+  "head_commit": "b4d7d871c99cbd8d208ee29a97ecb6f6d59b3760",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/querybank-teacher-anchor-smoke-r1",
+  "message": "有结果了：这轮 `querybank teacher-anchor` 的 bounded smoke 已经一次跑通，而且方向是正向的。最关键的结论是，`QB-Norm` 把 top-1 retrieval 从 `0.25` 提到 `0.375`，`DIS` 也到了 `0.3125`，同时最大 anchor 集中度从 `0.50` 压到 `0.3125`；这说明当前瓶颈至少有一部分确实是 inference-time hubness，而不是只能靠重新训练来救。下一步我会先把这轮结果正式记成实验记录，再立刻做一次路线判断：是先扩一层验证稳不稳，还是把它作为更完整 machine-facing interface 的新起点继续往下接。",
+  "summary": "有结果了：这轮 `querybank teacher-anchor` 的 bounded smoke 已经一次跑通，而且方向是正向的。最关键的结论是，`QB-Norm` 把 top-1 retrieval 从 `0.25` 提到 `0.375`，`DIS` 也到了 `0.3125`，同时最大 anchor 集中度从 `0.50` 压到 `0.3125`；这说明当前瓶颈至少有一部分确实是 inference-time hubness，而…",
+  "summary_preview": "有结果了：这轮 `querybank teacher-anchor` 的 bounded smoke 已经一次跑通，而且方向是正向的。最关键的结论是，`QB-Norm` 把 top-1 retrieval 从 `0.25` 提到 `0.375`，`DIS` 也到了 `0.3125`，同时最大 anchor 集中度从 `0.50` 压到 `0.3125`；这说明当前瓶颈至少有一部分确实是 inference-time hubness，而…",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "milestone-5de35461",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "milestone",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Milestone recorded. Continue from the current anchor and keep the next checkpoint durable.",
+    "why_now": "Milestones should mark meaningful progress, not end the route prematurely.",
+    "complete_when": [
+      "The next substantive output is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.interact(kind='progress', ...)",
+        "purpose": "Send the next checkpoint update across active surfaces."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "milestone",
+    "source_artifact_id": "milestone-5de35461",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

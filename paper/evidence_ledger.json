@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "selected_outline_ref": "outline-002",
+  "items": [
+    {
+      "item_id": "query_adaptive_teacher_anchor_arbitration_smoke_r1",
+      "title": "Query-adaptive teacher-anchor arbitration smoke on the widened multibundle surface",
+      "kind": "main_experiment",
+      "status": "completed",
+      "paper_role": "main_text",
+      "section_id": "bounded-packet-adapter-evaluation",
+      "claim_links": [
+        "C1",
+        "C2"
+      ],
+      "setup": "Reused the frozen widened two-bundle teacher-anchor packet interface and compared the new query-adaptive arbitration rule against the same raw-global and temporal predicted-chunk parent routes on the same bounded local surface.",
+      "result_summary": "Positive bounded retrieval signal on the widened teacher-anchor surface: query-adaptive arbitration raised top1_accuracy to 0.15625 from 0.125 for raw-global and 0.09375 for temporal-context, matched the best-of-two oracle top1, and cut hub-cluster share from 0.59375 to 0.28125.",
+      "key_metrics": [
+        {
+          "metric_id": "query_adaptive_raw_hub_risk_disagreement_teacher_anchor_to_target_feat_top1_accuracy",
+          "value": 0.15625,
+          "direction": "maximize",
+          "decimals": null
+        },
+        {
+          "metric_id": "raw_global_bank_to_target_feat_top1_accuracy",
+          "value": 0.125,
+          "direction": "maximize",
+          "decimals": null
+        },
+        {
+          "metric_id": "temporal_context_predicted_chunk_teacher_anchor_to_target_feat_top1_accuracy",
+          "value": 0.09375,
+          "direction": "maximize",
+          "decimals": null
+        },
+        {
+          "metric_id": "query_adaptive_raw_hub_risk_disagreement_teacher_anchor_to_target_feat_hub_cluster_share_0009_0010_0011",
+          "value": 0.28125,
+          "direction": "minimize",
+          "decimals": null
+        },
+        {
+          "metric_id": "raw_global_bank_to_target_feat_hub_cluster_share_0009_0010_0011",
+          "value": 0.59375,
+          "direction": "minimize",
+          "decimals": null
+        }
+      ],
+      "source_paths": [
+        "experiments/main/query_adaptive_teacher_anchor_arbitration_smoke_r1/RUN.md",
+        "experiments/main/query_adaptive_teacher_anchor_arbitration_smoke_r1/RESULT.json"
+      ],
+      "run_id": "query_adaptive_teacher_anchor_arbitration_smoke_r1",
+      "selected_outline_ref": "outline-002",
+      "evaluation_summary": null,
+      "created_at": "2026-04-20T16:06:00+00:00",
+      "updated_at": "2026-04-20T16:18:00+00:00"
+    },
+    {
+      "item_id": "query_adaptive_broader_retrieval_validation_smoke_r1",
+      "title": "Repaired broader three-bundle validation for the query-adaptive route",
+      "kind": "analysis_result",
+      "status": "completed",
+      "paper_role": "main_text",
+      "section_id": "outcome-interpretation-and-next-route",
+      "claim_links": [
+        "C1",
+        "C2"
+      ],
+      "setup": "Reused the query-adaptive arbitration rule on a repaired legal three-bundle surface built from the relation-repair packet set, the blueprint-repair packet set, and one recovered chunked 16-sample teacher-packet bundle, while keeping route definitions fixed.",
+      "result_summary": "On the repaired broader surface, query-adaptive keeps the best non-oracle top-1 accuracy at 0.125, while raw-global and temporal-context both sit at 0.10416666666666667. The broader follow-up therefore preserves the headline advantage, but temporal-context still keeps the best mean-match-rank (7.8125) and chunk-top1 accuracy (0.3333333333333333), so the broader claim boundary remains intentionally partial.",
+      "key_metrics": [
+        {
+          "metric_id": "query_adaptive_raw_hub_risk_disagreement_teacher_anchor_to_target_feat_top1_accuracy",
+          "value": 0.125,
+          "direction": "maximize",
+          "decimals": null
+        },
+        {
+          "metric_id": "raw_global_bank_to_target_feat_top1_accuracy",
+          "value": 0.10416666666666667,
+          "direction": "maximize",
+          "decimals": null
+        },
+        {
+          "metric_id": "temporal_context_predicted_chunk_teacher_anchor_to_target_feat_top1_accuracy",
+          "value": 0.10416666666666667,
+          "direction": "maximize",
+          "decimals": null
+        },
+        {
+          "metric_id": "query_adaptive_raw_hub_risk_disagreement_teacher_anchor_to_target_feat_mean_match_rank",
+          "value": 8.479166666666666,
+          "direction": "minimize",
+          "decimals": null
+        },
+        {
+          "metric_id": "temporal_context_predicted_chunk_teacher_anchor_to_target_feat_mean_match_rank",
+          "value": 7.8125,
+          "direction": "minimize",
+          "decimals": null
+        },
+        {
+          "metric_id": "query_adaptive_raw_hub_risk_disagreement_teacher_anchor_to_target_feat_chunk_top1_accuracy",
+          "value": 0.25,
+          "direction": "maximize",
+          "decimals": null
+        },
+        {
+          "metric_id": "temporal_context_predicted_chunk_teacher_anchor_to_target_feat_chunk_top1_accuracy",
+          "value": 0.3333333333333333,
+          "direction": "maximize",
+          "decimals": null
+        }
+      ],
+      "source_paths": [
+        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-748a9357/baselines/local/querybank-teacher-anchor-broader-retrieval-local/verification.md",
+        "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-748a9357/baselines/local/querybank-teacher-anchor-broader-retrieval-local/json/metric_contract.json"
+      ],
+      "run_id": "query_adaptive_broader_retrieval_validation_smoke_r1",
+      "selected_outline_ref": "outline-002",
+      "evaluation_summary": "Broader boundary evidence: query-adaptive keeps the headline top-1 edge on a repaired three-bundle surface, but temporal-context remains the stronger ranking-side guardrail.",
+      "created_at": "2026-04-21T11:38:00+00:00",
+      "updated_at": "2026-04-21T11:38:00+00:00"
+    },
+    {
+      "item_id": "AC-01",
+      "title": "Chunked 16-frame QB-Norm revalidation on the wider existing teacher-packet surface",
+      "kind": "analysis_result",
+      "status": "completed",
+      "paper_role": "appendix",
+      "section_id": "sec_teacher_anchor_adapter",
+      "claim_links": [
+        "C2"
+      ],
+      "setup": "Reused the existing chunked 16-frame teacher-packet bundle and re-ran the packet evaluator on the wider surface without retraining, dataset changes, or a new bundle export.",
+      "result_summary": "The wider-surface slice did not improve headline retrieval over the raw route: QB-Norm and raw both reached top-1 accuracy 0.0625. QB-Norm still regularized geometry by reducing max top-1 anchor share from 0.50 to 0.25 and mean hub weight mass from 0.2109 to 0.1547, so it is kept as appendix-only robustness evidence that narrows broader stability claims.",
+      "key_metrics": [
+        {
+          "metric_id": "qb_norm_teacher_anchor_to_target_feat_top1_accuracy",
+          "value": 0.0625,
+          "direction": "maximize",
+          "decimals": null
+        },
+        {
+          "metric_id": "raw_global_bank_to_target_feat_top1_accuracy",
+          "value": 0.0625,
+          "direction": "maximize",
+          "decimals": null
+        },
+        {
+          "metric_id": "qb_norm_teacher_anchor_to_target_feat_max_anchor_share",
+          "value": 0.25,
+          "direction": "minimize",
+          "decimals": null
+        },
+        {
+          "metric_id": "raw_global_bank_to_target_feat_max_anchor_share",
+          "value": 0.5,
+          "direction": "minimize",
+          "decimals": null
+        },
+        {
+          "metric_id": "qb_norm_teacher_anchor_to_target_feat_mean_hub_weight_mass",
+          "value": 0.1547,
+          "direction": "minimize",
+          "decimals": null
+        },
+        {
+          "metric_id": "raw_global_bank_to_target_feat_mean_hub_weight_mass",
+          "value": 0.2109,
+          "direction": "minimize",
+          "decimals": null
+        }
+      ],
+      "source_paths": [
+        "experiments/analysis-results/analysis-8e2b0428/chunked_16f_qbnorm_revalidation.md",
+        "experiments/analysis/chunked_16f_qbnorm_revalidation/report.md",
+        "experiments/analysis/chunked_16f_qbnorm_revalidation/summary.json"
+      ],
+      "run_id": "analysis-8e2b0428:chunked_16f_qbnorm_revalidation",
+      "exp_id": "AC-01",
+      "slice_id": "chunked_16f_qbnorm_revalidation",
+      "selected_outline_ref": "outline-002",
+      "evaluation_summary": "Appendix-only robustness evidence: wider-surface QB-Norm partially repairs geometry but does not rescue retrieval.",
+      "created_at": "2026-04-17T14:50:20+00:00",
+      "updated_at": "2026-04-21T10:49:00+00:00"
+    }
+  ],
+  "updated_at": "2026-04-22T07:35:00+00:00"
+}

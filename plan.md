@@ -1,0 +1,11 @@
+# Plan
+- [x] Reuse the confirmed `nvrc-local-source` baseline contract instead of rebuilding the old upstream line.
+- [x] Preserve the downstream pipeline skeleton and stop treating reconstructed video as the preferred machine-facing handoff.
+- [x] Diagnose the widened `16`-frame teacher-packet failure as retrieval-time hub collapse rather than total packet-signal loss.
+- [x] Refresh the related-work and idea slate around hubness-calibrated post-hoc retrieval correction.
+- [x] Submit the child idea line `Querybank-Normalized Teacher-Anchor Packet Interface After Hubness Diagnosis`.
+- [ ] Rewrite the quest and workspace experiment-control documents so they all point at the same `QB-Norm / DIS / CSLS` comparison surface.
+- [ ] Prepare a dedicated `run/querybank_teacher_anchor_smoke_r1` branch/worktree for the bounded `16`-frame smoke.
+- [ ] Extend the existing teacher-anchor evaluator so one rerunnable smoke can compare raw global-bank scoring, QB-Norm, Dynamic Inverted Softmax, and CSLS-style local scaling on the frozen `16`-frame packet bundles.
+- [ ] Export retrieval rows plus anchor-concentration diagnostics for the four reused `16`-frame chunk bundles.
+- [ ] Record the measured result durably and choose the next route: keep single-bank normalization, escalate to dual-bank normalization, or return to query-side geometry repair.

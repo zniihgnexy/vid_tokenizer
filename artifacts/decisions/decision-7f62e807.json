@@ -1,0 +1,62 @@
+{
+  "kind": "decision",
+  "schema_version": 1,
+  "artifact_id": "decision-7f62e807",
+  "id": "decision-7f62e807",
+  "quest_id": "002",
+  "created_at": "2026-04-15T07:36:33+00:00",
+  "updated_at": "2026-04-15T07:36:33+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi",
+    "run_id": "run-4edf6184"
+  },
+  "status": "pending",
+  "branch": "idea/002-idea-301dcd71",
+  "head_commit": "9597a976e693c4f2a96a5c46dfed062d41c456af",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-301dcd71",
+  "decision_type": "route_handoff",
+  "stage": "idea",
+  "verdict": "continue",
+  "action": "continue",
+  "reason": "The teacher-feature-packet child line is already durably selected in idea-301dcd71 and its local PLAN/CHECKLIST are aligned to experiment prep. The remaining issue is stale quest-level plan/status wording from the parent reconstructed-video route, so the correct next move is document sync followed by experiment preparation on the child line.",
+  "summary": "Idea-stage route selection is complete for the current round; sync stale quest docs, then continue with experiment prep on the teacher-feature-packet child line.",
+  "winner": "teacher_feature_packet_interface on idea-301dcd71",
+  "alternatives_considered": [
+    "continue reconstructed-video scaling",
+    "reopen upstream codec ranking",
+    "jump straight to larger VLM/LLM integration"
+  ],
+  "residual_risk": "Teacher/tokenizer packet export may require nontrivial hook and alignment work before a trustworthy smoke run exists.",
+  "next_recommended_skill": "experiment",
+  "next_recommended_action": "Sync quest-level docs to the child line, then inspect export hook points and implement the first packet export smoke path.",
+  "comment": "Record explicit idea-to-experiment handoff after verifying current child idea state",
+  "run_id": "run-4edf6184",
+  "anchor": "idea",
+  "semantic_key": "decision:idea:continue:continue:a92f6c9dd832fc61a0848020dcaa7ab0f54c50307c9a0cdaa53f84d84eb3d141",
+  "guidance_vm": {
+    "current_anchor": "decision",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "A decision was recorded. Follow the chosen route and keep the next outcome durable.",
+    "why_now": "The teacher-feature-packet child line is already durably selected in idea-301dcd71 and its local PLAN/CHECKLIST are aligned to experiment prep. The remaining issue is stale quest-level plan/status wording from the parent reconstructed-video route, so the correct next move is document sync followed by experiment preparation on the child line.",
+    "complete_when": [
+      "The next stage starts and writes its first durable output.",
+      "Any new ambiguity is converted into another explicit decision."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(...)",
+        "purpose": "Persist the first durable output of the chosen route."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "decision",
+    "source_artifact_id": "decision-7f62e807",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

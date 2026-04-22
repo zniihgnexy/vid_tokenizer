@@ -1,0 +1,56 @@
+{
+  "kind": "milestone",
+  "schema_version": 1,
+  "artifact_id": "milestone-d65f6927",
+  "id": "milestone-d65f6927",
+  "quest_id": "002",
+  "created_at": "2026-04-17T20:12:35+00:00",
+  "updated_at": "2026-04-17T20:12:35+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-e313b721",
+  "head_commit": "aefd2e174be75539cdfc2882a944f9d224fa3bf4",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-e313b721",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-e313b721",
+  "message": "有结果了：新的 querybank-normalized child line 已经用手动兜底方案真正落成，而且已经有独立提交，不再依赖那个会误判 anchor 的 `submit_idea` 路径。这条新线把上一层泛泛的 hubness 修正收紧成了一个更具体、也更容易直接实验的选择：先在同一个 16-frame teacher-anchor packet surface 上做 Querybank Normalisation / Dynamic Inverted Softmax，并把 CSLS 保留成强控制；如果这一步仍然压不住 `0009/0010/0011` 这几个 hub，再升级到 dual-bank normalization 或回到 query-side geometry repair。接下来最合理的下一步已经很明确了：直接从这条新 child line 进入 experiment，做一轮 bounded smoke，把 raw global-bank、QB-Norm/DIS 和 CSLS 三者放到同一个对比面上。",
+  "summary": "有结果了：新的 querybank-normalized child line 已经用手动兜底方案真正落成，而且已经有独立提交，不再依赖那个会误判 anchor 的 `submit_idea` 路径。这条新线把上一层泛泛的 hubness 修正收紧成了一个更具体、也更容易直接实验的选择：先在同一个 16-frame teacher-anchor packet surface 上做 Querybank Normalisation / D…",
+  "summary_preview": "有结果了：新的 querybank-normalized child line 已经用手动兜底方案真正落成，而且已经有独立提交，不再依赖那个会误判 anchor 的 `submit_idea` 路径。这条新线把上一层泛泛的 hubness 修正收紧成了一个更具体、也更容易直接实验的选择：先在同一个 16-frame teacher-anchor packet surface 上做 Querybank Normalisation / D…",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "milestone-d65f6927",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "milestone",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Milestone recorded. Continue from the current anchor and keep the next checkpoint durable.",
+    "why_now": "Milestones should mark meaningful progress, not end the route prematurely.",
+    "complete_when": [
+      "The next substantive output is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.interact(kind='progress', ...)",
+        "purpose": "Send the next checkpoint update across active surfaces."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "milestone",
+    "source_artifact_id": "milestone-d65f6927",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

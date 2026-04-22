@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-fbad439c",
+  "id": "progress-fbad439c",
+  "quest_id": "002",
+  "created_at": "2026-04-17T14:45:53+00:00",
+  "updated_at": "2026-04-17T14:45:53+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "idea/002-idea-76fee64d",
+  "head_commit": "9d96b73da00b2d698f09ffbd95c91df6d60803e3",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-76fee64d",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-76fee64d",
+  "message": "我已经把证据面收拢到一个可执行判断上了：旧 packet 结果不是“完全没有桥”，而是“现有 bridge 过弱、而且没有 teacher-anchored 这一层的比较项”。我现在直接改控制文件和文献综述，把这条线正式收敛成“复用现有 bundle，新增 teacher-anchored adapter 比较”的最小实验包。",
+  "summary": "我已经把证据面收拢到一个可执行判断上了：旧 packet 结果不是“完全没有桥”，而是“现有 bridge 过弱、而且没有 teacher-anchored 这一层的比较项”。我现在直接改控制文件和文献综述，把这条线正式收敛成“复用现有 bundle，新增 teacher-anchored adapter 比较”的最小实验包。",
+  "summary_preview": "我已经把证据面收拢到一个可执行判断上了：旧 packet 结果不是“完全没有桥”，而是“现有 bridge 过弱、而且没有 teacher-anchored 这一层的比较项”。我现在直接改控制文件和文献综述，把这条线正式收敛成“复用现有 bundle，新增 teacher-anchored adapter 比较”的最小实验包。",
+  "interaction_phase": "ack",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "progress-fbad439c",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-fbad439c",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

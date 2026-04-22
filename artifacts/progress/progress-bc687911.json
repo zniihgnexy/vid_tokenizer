@@ -1,0 +1,51 @@
+{
+  "kind": "progress",
+  "schema_version": 1,
+  "artifact_id": "progress-bc687911",
+  "id": "progress-bc687911",
+  "quest_id": "002",
+  "created_at": "2026-04-22T07:50:33+00:00",
+  "updated_at": "2026-04-22T07:50:33+00:00",
+  "source": {
+    "kind": "agent",
+    "role": "pi"
+  },
+  "status": "active",
+  "branch": "paper/run-querybank-teacher-anchor-smoke-r1",
+  "head_commit": "6ef184afec5f8ef5802157a6bb6a637adc845053",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/paper-paper-run-querybank-teacher-anchor-smoke-r1",
+  "message": "我已经把补丁打到真正被服务加载的那份 Python 包上了，而且新开的 Python 进程里已经能正常识别标准阶段列表，不再是空集。现在剩下的唯一问题是：当前 `artifact` 常驻进程还在跑旧内存代码。接下来我会优先找最稳妥的方式让正式登记动作走到新代码上，要么重载这层服务，要么直接用同一套运行时库在新进程里完成这次登记。",
+  "summary": "我已经把补丁打到真正被服务加载的那份 Python 包上了，而且新开的 Python 进程里已经能正常识别标准阶段列表，不再是空集。现在剩下的唯一问题是：当前 `artifact` 常驻进程还在跑旧内存代码。接下来我会优先找最稳妥的方式让正式登记动作走到新代码上，要么重载这层服务，要么直接用同一套运行时库在新进程里完成这次登记。",
+  "summary_preview": "我已经把补丁打到真正被服务加载的那份 Python 包上了，而且新开的 Python 进程里已经能正常识别标准阶段列表，不再是空集。现在剩下的唯一问题是：当前 `artifact` 常驻进程还在跑旧内存代码。接下来我会优先找最稳妥的方式让正式登记动作走到新代码上，要么重载这层服务，要么直接用同一套运行时库在新进程里完成这次登记。",
+  "interaction_phase": "progress",
+  "importance": "info",
+  "attachments": [],
+  "interaction_id": "progress-bc687911",
+  "expects_reply": false,
+  "reply_mode": "threaded",
+  "options": [],
+  "surface_actions": [],
+  "connector_hints": {},
+  "allow_free_text": true,
+  "reply_schema": {},
+  "reply_to_interaction_id": null,
+  "guidance_vm": {
+    "current_anchor": "progress",
+    "recommended_skill": "decision",
+    "recommended_action": "continue",
+    "summary": "Artifact recorded. Continue from the latest durable quest state.",
+    "why_now": "The new durable state should immediately inform the next small, auditable step.",
+    "complete_when": [
+      "The next substantive result is written durably."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "progress",
+    "source_artifact_id": "progress-bc687911",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

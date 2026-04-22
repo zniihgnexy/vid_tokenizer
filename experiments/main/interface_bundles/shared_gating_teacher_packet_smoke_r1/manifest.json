@@ -1,0 +1,125 @@
+{
+  "aggregate_metrics": {
+    "bpp_avg": 88.2266,
+    "bpp_est_avg": 93.7417,
+    "ent_dec_time_avg": 14.1911,
+    "ent_enc_time_avg": 8.1581,
+    "eval_time_avg": 0.1108,
+    "macs_avg": 1115712.0,
+    "macs_rate_avg": 67584000.0,
+    "params_avg": 4283.0,
+    "params_codec_avg": 38027.0,
+    "psnr_avg": 10.9012,
+    "size": 361376.0,
+    "teacher-mse_avg": 0.5126,
+    "train_time_avg": 0.2939
+  },
+  "bundle_version": 2,
+  "dataset_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/001/tmp/teacher-tiny-run-v1/data/tiny_video",
+  "frame_count": 4,
+  "frames": [
+    {
+      "decoded_metrics": {
+        "psnr": 11.5433,
+        "teacher-mse": 0.203
+      },
+      "eval_metrics": {
+        "psnr": 11.5433,
+        "teacher-mse": 0.203
+      },
+      "frame_index": 0,
+      "original_relpath": "original/0000.png",
+      "packet_metrics": {
+        "consistency_mse": 0.20854339003562927,
+        "delta_cosine": -0.012751736678183079,
+        "feature_cosine": 0.7957229018211365,
+        "semantic_weight": 1.2063803672790527
+      },
+      "packet_relpath": "packets/0000.pt",
+      "reconstructed_relpath": "reconstructed/0000.png",
+      "sample_id": "0000"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 11.2481,
+        "teacher-mse": 0.4219
+      },
+      "eval_metrics": {
+        "psnr": 11.2481,
+        "teacher-mse": 0.4219
+      },
+      "frame_index": 1,
+      "original_relpath": "original/0001.png",
+      "packet_metrics": {
+        "consistency_mse": 0.42999568581581116,
+        "delta_cosine": -0.012751736678183079,
+        "feature_cosine": 0.6814969778060913,
+        "semantic_weight": 1.2063803672790527
+      },
+      "packet_relpath": "packets/0001.pt",
+      "reconstructed_relpath": "reconstructed/0001.png",
+      "sample_id": "0001"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.607,
+        "teacher-mse": 0.6328
+      },
+      "eval_metrics": {
+        "psnr": 10.607,
+        "teacher-mse": 0.6328
+      },
+      "frame_index": 2,
+      "original_relpath": "original/0002.png",
+      "packet_metrics": {
+        "consistency_mse": 0.6429604887962341,
+        "delta_cosine": 0.15307286381721497,
+        "feature_cosine": 0.6026960611343384,
+        "semantic_weight": 0.8729856610298157
+      },
+      "packet_relpath": "packets/0002.pt",
+      "reconstructed_relpath": "reconstructed/0002.png",
+      "sample_id": "0002"
+    },
+    {
+      "decoded_metrics": {
+        "psnr": 10.2064,
+        "teacher-mse": 0.7924
+      },
+      "eval_metrics": {
+        "psnr": 10.2064,
+        "teacher-mse": 0.7924
+      },
+      "frame_index": 3,
+      "original_relpath": "original/0003.png",
+      "packet_metrics": {
+        "consistency_mse": 0.803397536277771,
+        "delta_cosine": 0.18525351583957672,
+        "feature_cosine": 0.6419216990470886,
+        "semantic_weight": 0.7142493724822998
+      },
+      "packet_relpath": "packets/0003.pt",
+      "reconstructed_relpath": "reconstructed/0003.png",
+      "sample_id": "0003"
+    }
+  ],
+  "interface_type": "teacher_feature_packet",
+  "source_run_dir": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/experiments/main/shared_gating_interface_export_smoke_r1",
+  "teacher_packet_summary": {
+    "device": "cpu",
+    "feature_dim": 512,
+    "frame_count": 4,
+    "mean_consistency_mse": 0.5212242603302002,
+    "mean_delta_cosine": 0.07820572704076767,
+    "mean_feature_cosine": 0.6804594397544861,
+    "mean_semantic_weight": 0.999998927116394,
+    "packet_fields": [
+      "pred_feat",
+      "target_feat",
+      "pred_delta",
+      "target_delta"
+    ],
+    "teacher_type": "resnet18_imagenet"
+  },
+  "teacher_utils_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-301dcd71/experiments/main/upstream_shared_gating_snapshot/third_party/NVRC/teacher_utils.py"
+}

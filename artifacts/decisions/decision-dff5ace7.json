@@ -1,0 +1,62 @@
+{
+  "kind": "decision",
+  "schema_version": 1,
+  "artifact_id": "decision-dff5ace7",
+  "id": "decision-dff5ace7",
+  "quest_id": "002",
+  "created_at": "2026-04-17T14:24:21+00:00",
+  "updated_at": "2026-04-17T14:24:21+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "run/shared_gating_pred_variance_repair_ego4d16f_smoke_r1",
+  "head_commit": "9fd1919c3a2b8e5a2ff0cca78a03fb3b5fbfd72c",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1",
+  "workspace_rel_path": ".ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1",
+  "verdict": "continue",
+  "action": "activate_branch",
+  "summary": "Activated durable branch `run/shared_gating_pred_variance_repair_ego4d16f_smoke_r1` as the current workspace.",
+  "reason": "Return to an existing research branch without creating a new lineage node, so follow-up experiments or decisions continue from the correct historical context.",
+  "idea_id": "idea-2835dace",
+  "run_id": null,
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1",
+  "worktree_rel_path": ".ds/worktrees/shared-gating-pred-variance-repair-ego4d16f-smoke-r1",
+  "flow_type": "branch_activation",
+  "protocol_step": "activate",
+  "details": {
+    "activate_branch_by": "branch",
+    "promote_to_head": false,
+    "worktree_created": false,
+    "next_anchor": "experiment",
+    "workspace_mode": "run",
+    "latest_main_run_id": null,
+    "branch_kind": "run",
+    "paper_parent_branch": null
+  },
+  "semantic_key": "decision:idea:activate_branch:continue:6dc49c08284fcd723a3ef975338d90b0191d8ea681679779389af053d2038b2b",
+  "guidance_vm": {
+    "current_anchor": "decision",
+    "recommended_skill": "decision",
+    "recommended_action": "activate_branch",
+    "summary": "A decision was recorded. Follow the chosen route and keep the next outcome durable.",
+    "why_now": "Return to an existing research branch without creating a new lineage node, so follow-up experiments or decisions continue from the correct historical context.",
+    "complete_when": [
+      "The next stage starts and writes its first durable output.",
+      "Any new ambiguity is converted into another explicit decision."
+    ],
+    "alternative_routes": [],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record(...)",
+        "purpose": "Persist the first durable output of the chosen route."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "decision",
+    "source_artifact_id": "decision-dff5ace7",
+    "related_paths": [],
+    "stage_status": "ready"
+  }
+}

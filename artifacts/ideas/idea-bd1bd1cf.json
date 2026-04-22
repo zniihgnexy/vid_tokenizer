@@ -1,0 +1,120 @@
+{
+  "kind": "idea",
+  "schema_version": 1,
+  "artifact_id": "idea-bd1bd1cf",
+  "id": "idea-bd1bd1cf",
+  "quest_id": "002",
+  "created_at": "2026-04-14T14:40:36+00:00",
+  "updated_at": "2026-04-14T14:40:36+00:00",
+  "source": {
+    "kind": "agent"
+  },
+  "status": "completed",
+  "branch": "idea/002-idea-3ed587d5",
+  "head_commit": "03883789639618b901fb47bf20f7ed8e68d1cc49",
+  "workspace_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5",
+  "workspace_rel_path": ".ds/worktrees/idea-idea-3ed587d5",
+  "summary": "Idea `idea-3ed587d5` created and promoted to the active research head.",
+  "reason": "Serious candidates were: A) reconstructed video plus aligned metadata with a frozen downstream consumer, B) tokenizer/teacher feature packet with a lightweight transfer head, and C) direct semantic-packet to VLM/LLM demo. A wins because it preserves the frozen-upstream contract, gives the least confounded first experiment, and matches the current asset bundle. B is more machine-native but currently lacks maintained export hooks and would add too much new plumbing in round one. C is attractive as a demo but too ambiguous for the first scientific checkpoint because failures would be hard to attribute across compression, interface, and prompting.",
+  "idea_id": "idea-3ed587d5",
+  "lineage_intent": "continue_line",
+  "parent_branch": "idea/002-idea-9948c3dd",
+  "foundation_ref": {
+    "kind": "idea",
+    "ref": "idea-9948c3dd",
+    "branch": "idea/002-idea-9948c3dd",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-9948c3dd",
+    "idea_id": "idea-9948c3dd",
+    "label": "Idea `idea-9948c3dd` on `idea/002-idea-9948c3dd`"
+  },
+  "foundation_reason": "The user frames the next step as a new quest rather than an extension of the old compression question. Within the current runtime, the clean equivalent is to open a new durable line from the confirmed upstream asset instead of revising the old variant-ranking question in place.",
+  "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5",
+  "worktree_rel_path": ".ds/worktrees/idea-idea-3ed587d5",
+  "flow_type": "idea_submission",
+  "protocol_step": "create",
+  "paths": {
+    "idea_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5/memory/ideas/idea-3ed587d5/idea.md",
+    "idea_draft_md": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5/memory/ideas/idea-3ed587d5/draft.md",
+    "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5"
+  },
+  "details": {
+    "title": "From Machine-Oriented Video Compression to a Usable Downstream Pipeline",
+    "problem": "The current quest validates a machine-oriented compression/tokenizer line and teacher-consistency feasibility, but it still lacks a stable machine-facing downstream interface and an end-to-end downstream evaluation surface.",
+    "hypothesis": "If the inherited upstream compression line is frozen and exported first as reconstructed clips plus aligned metadata, then a frozen egocentric downstream consumer can retain enough utility relative to original video to justify further feature-packet or larger-model integration.",
+    "mechanism": "Freeze the inherited checkpoint/config/data subset, define a first export schema around reconstructed video and aligned metadata, compare original-vs-reconstructed downstream utility with one frozen retrieval or classification consumer, and only then extend toward feature packets or larger multimodal interfaces.",
+    "method_brief": "Candidate A wins this round: do not reopen upstream codec-line ranking. Instead, treat the current compression module as a frozen upstream asset, package a machine-facing interface, and run one minimal downstream task with a frozen consumer model. Start from reconstructed video plus aligned metadata because it is the least confounded and most compatible with the current asset bundle; defer feature-packet transfer and direct VLM/LLM semantic-packet demos to later rounds.",
+    "selection_scores": null,
+    "mechanism_family": "machine_facing_downstream_interface",
+    "change_layer": null,
+    "source_lens": null,
+    "expected_gain": "This route should deliver the first runnable end-to-end pipeline, the first result batch on original-vs-reconstructed downstream utility, and a cleaner decision surface for whether a more machine-native feature-packet or larger-model interface is worth pursuing next.",
+    "next_target": "experiment",
+    "branch_no": "002",
+    "lineage_intent": "continue_line",
+    "parent_branch": "idea/002-idea-9948c3dd",
+    "foundation_ref": {
+      "kind": "idea",
+      "ref": "idea-9948c3dd",
+      "branch": "idea/002-idea-9948c3dd",
+      "worktree_root": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-9948c3dd",
+      "idea_id": "idea-9948c3dd",
+      "label": "Idea `idea-9948c3dd` on `idea/002-idea-9948c3dd`"
+    },
+    "foundation_reason": "The user frames the next step as a new quest rather than an extension of the old compression question. Within the current runtime, the clean equivalent is to open a new durable line from the confirmed upstream asset instead of revising the old variant-ranking question in place.",
+    "idea_draft_path": "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5/memory/ideas/idea-3ed587d5/draft.md",
+    "evidence_paths": [
+      "artifacts/ideas/literature_survey.md",
+      "baselines/imported/nvrc-local-source/json/metric_contract.json",
+      "baselines/imported/nvrc-local-source/verification.md",
+      "memory/knowledge/active-user-requirements.md"
+    ],
+    "risks": [
+      "The first-stage novelty is more about interface and pipeline value than a new compression algorithm.",
+      "The imported baseline package does not yet expose maintained downstream-task hooks.",
+      "The feature-packet route remains higher risk until the basic pipeline is stable."
+    ],
+    "submission_mode": "line",
+    "source_candidate_id": null
+  },
+  "guidance_vm": {
+    "current_anchor": "idea",
+    "recommended_skill": "experiment",
+    "recommended_action": "launch_experiment",
+    "summary": "Idea branch is ready. Continue with the next active optimization stage on this durable research node.",
+    "why_now": "The accepted idea already has its durable branch/worktree, so the next leverage point is the configured next stage rather than another route-selection loop.",
+    "complete_when": [
+      "The next configured stage starts from this branch.",
+      "The resulting evidence or decision is written durably."
+    ],
+    "alternative_routes": [
+      {
+        "action": "continue",
+        "label": "Inspect the branch once",
+        "when": "A quick branch sanity check is still needed before running.",
+        "tradeoff": "Adds caution, but should stay short."
+      },
+      {
+        "action": "launch_analysis_campaign",
+        "label": "Analyze first",
+        "when": "The idea package still has unresolved setup ambiguity that needs clarification.",
+        "tradeoff": "Can reduce wasted runs, but is unusual before a first main result."
+      }
+    ],
+    "suggested_artifact_calls": [
+      {
+        "name": "artifact.record_main_experiment(...)",
+        "purpose": "Record the first real main result on this branch when the next stage is experiment-oriented."
+      }
+    ],
+    "requires_user_decision": false,
+    "pending_interaction_id": null,
+    "source_artifact_kind": "idea",
+    "source_artifact_id": "idea-bd1bd1cf",
+    "related_paths": [
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5/memory/ideas/idea-3ed587d5/idea.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5/memory/ideas/idea-3ed587d5/draft.md",
+      "/home/xinyizheng/vid_tokenizer/DeepScientist/quests/002/.ds/worktrees/idea-idea-3ed587d5"
+    ],
+    "stage_status": "ready"
+  }
+}
