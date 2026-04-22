@@ -1,12 +1,13 @@
 # Status
-Current stage: `finalize_active_paper_line_blocked_on_bundle_registration`
+Current stage: `finalize_active_paper_line_bundle_submitted`
 Current judgment:
-- The active paper line is now `bundle_ready / finalize_ready`.
+- The active paper line is now `bundle_ready / finalize_ready`, and the paper
+  bundle has been durably submitted on the active paper branch.
 - The baseline gate remains formally confirmed and is no longer the bottleneck.
 - Scientific state:
   the selected outline, evidence ledger, claim-evidence map, proofing pass,
-  review pass, and bundle manifest are aligned on the active paper line, and
-  the paper contract has no unresolved required items.
+  review materials, and bundle manifest are aligned on the active paper line,
+  and the paper contract has no unresolved required items.
 - Supported claim:
   query-adaptive arbitration improves bounded widened-surface headline
   `top1_accuracy` on the frozen teacher-anchor packet surface used by the
@@ -20,14 +21,12 @@ Current judgment:
   teacher-anchor baseline; the appendix wider-surface QB-Norm result only
   repairs geometry; and the first low-capacity downstream-consumer bridge
   smoke stays negative, so broader consumer transfer remains future work.
-- Operational blocker:
-  a fresh `artifact.submit_paper_bundle(...)` attempt still fails with
-  `Unsupported active anchor `finalize`. Allowed values: .`, so formal bundle
-  registration is blocked by runtime state rather than missing evidence or
-  missing writing.
+- Operational repair note:
+  the old `Unsupported active anchor `finalize`` registration failure was
+  resolved by patching the runtime stage-skill fallback and rerunning bundle
+  submission through a fresh runtime Python process.
 - Next recommended action:
-  keep the repaired paper bundle fixed, preserve the current claim boundary,
-  and retry formal bundle registration only after the runtime anchor issue is
-  repaired.
+  run the final skeptical review / closure pass on this submitted paper bundle
+  and keep the current claim boundary fixed unless new evidence appears.
 - Quest completion is not yet approved:
   do not call quest completion until the user explicitly approves it.
