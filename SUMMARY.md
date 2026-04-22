@@ -1,10 +1,10 @@
 # Quest Summary
 
-- Updated at: 2026-04-22T07:38:31+00:00
+- Updated at: 2026-04-22T07:54:29+00:00
 - Branch: `paper/run-querybank-teacher-anchor-smoke-r1`
-- Head: `9a9c5b3b86972afa22f672fdec80a5b31a052955`
+- Head: `eb64f29ae87bc07f7e305770cf5d1d30cc8b6887`
 
-- Refresh reason: Current paper line was repaired to bundle-ready state, but formal bundle registration remains blocked by the runtime finalize-anchor error.
+- Refresh reason: Refresh summary after successful paper bundle submission and post-registration route decision into review.
 
 ## Recent runs
 - `shared_gating_pred_variance_repair_ego4d16f_smoke_r1`: Main experiment `shared_gating_pred_variance_repair_ego4d16f_smoke_r1` recorded on `run/shared_gating_pred_variance_repair_ego4d16f_smoke_r1`. uvg_bd_rate_reduction_pct_vs_vtm_ra_psnr=24 vs baseline 24 (Δ 0)
