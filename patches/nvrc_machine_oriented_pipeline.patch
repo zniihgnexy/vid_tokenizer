@@ -1,0 +1,1373 @@
+From 8ed16bbbd5962648f53f4128057c102f9b0713ed Mon Sep 17 00:00:00 2001
+From: Xiniyi_Zheng <wf24018@bristol.ac.uk>
+Date: Thu, 23 Apr 2026 20:23:07 +0800
+Subject: [PATCH] add machine-oriented teacher pipeline wiring
+
+---
+ compress_models/__init__.py                   |   2 +-
+ losses.py                                     |   8 +-
+ main_nvrc.py                                  |   6 +-
+ main_utils.py                                 | 132 +++++--
+ models/__init__.py                            |   2 +-
+ .../configs/data/video/png/tiny_local.yaml    |   5 +
+ .../nvrc/compress_models/nvrc_tiny_s1.yaml    |  43 +++
+ .../configs/nvrc/models/teacher_tiny_32.yaml  |  26 ++
+ scripts/configs/nvrc/overfit/tiny-1e.yaml     |  13 +
+ .../tasks/overfit/l1_teacher-bootstrap.yaml   |   9 +
+ .../l1_teacher-dinov2-semchange-delta.yaml    |  14 +
+ ...teacher-dinov2-shared-semchange-delta.yaml |  15 +
+ .../l1_teacher-resnet18-blueprint.yaml        |  11 +
+ .../l1_teacher-resnet18-bootstrap.yaml        |   9 +
+ .../l1_teacher-resnet18-delta-w05.yaml        |  11 +
+ .../overfit/l1_teacher-resnet18-delta.yaml    |  11 +
+ .../overfit/l1_teacher-resnet18-readout.yaml  |  15 +
+ .../overfit/l1_teacher-resnet18-relation.yaml |  12 +
+ .../l1_teacher-resnet18-semchange-delta.yaml  |  14 +
+ .../l1_teacher-resnet18-semchange-gamma2.yaml |  12 +
+ .../l1_teacher-resnet18-semchange.yaml        |  12 +
+ ...acher-resnet18-shared-semchange-delta.yaml |  15 +
+ tasks.py                                      | 187 +++++++++-
+ teacher_utils.py                              | 327 ++++++++++++++++++
+ utils.py                                      |  41 ++-
+ 25 files changed, 904 insertions(+), 48 deletions(-)
+ create mode 100644 scripts/configs/data/video/png/tiny_local.yaml
+ create mode 100644 scripts/configs/nvrc/compress_models/nvrc_tiny_s1.yaml
+ create mode 100644 scripts/configs/nvrc/models/teacher_tiny_32.yaml
+ create mode 100644 scripts/configs/nvrc/overfit/tiny-1e.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-bootstrap.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-dinov2-semchange-delta.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-dinov2-shared-semchange-delta.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-bootstrap.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-delta-w05.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-delta.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-readout.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-relation.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-delta.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-gamma2.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange.yaml
+ create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-shared-semchange-delta.yaml
+ create mode 100644 teacher_utils.py
+
+diff --git a/compress_models/__init__.py b/compress_models/__init__.py
+index def1dc0..a616429 100644
+--- a/compress_models/__init__.py
++++ b/compress_models/__init__.py
+@@ -5,4 +5,4 @@ def create_compress_model(logger, model, cfgs):
+     if cfgs['type'] == 'NVRC':
+         return nvrc.build_compress_model(logger, model, cfgs['config'])
+     else:
+-        raise ValueError(f'Unknown compress model type: {cfgs['type']}')
+\ No newline at end of file
++        raise ValueError(f"Unknown compress model type: {cfgs['type']}")
+diff --git a/losses.py b/losses.py
+index f9cefdf..eea197f 100644
+--- a/losses.py
++++ b/losses.py
+@@ -3,6 +3,7 @@ Losses
+ """
+ from utils import *
+ import pytorch_msssim
++from teacher_utils import FrozenTeacherAdapter
+ 
+ 
+ def check_shape(x, y):
+@@ -208,7 +209,7 @@ def compute_loss(name, x, y):
+     return loss
+ 
+ 
+-def compute_metric(name, x, y):
++def compute_metric(name, x, y, teacher_adapter=None):
+     assert x.ndim == 5 and y.ndim == 5, 'inputs are expected to have 5D ([N, C, T, H, W])'
+     x, y = x.float(), y.float()
+ 
+@@ -236,7 +237,10 @@ def compute_metric(name, x, y):
+         metric = ms_ssim_y(x, y)
+     elif name == 'ms-ssim-y-5x5':
+         metric = ms_ssim_y(x, y, win_size=5)
++    elif name == 'teacher-mse':
++        assert isinstance(teacher_adapter, FrozenTeacherAdapter), 'teacher-mse requires a teacher adapter'
++        metric = teacher_adapter.consistency_map(x, y)
+     else:
+         raise ValueError
+     assert metric.ndim == 2, 'metric is expected to have 2D ([N, T])'
+-    return metric
+\ No newline at end of file
++    return metric
+diff --git a/main_nvrc.py b/main_nvrc.py
+index effffd3..4fa1717 100644
+--- a/main_nvrc.py
++++ b/main_nvrc.py
+@@ -145,7 +145,7 @@ def main():
+ 
+         intra_bs = model.compress(intra_bs)
+         intra_bs_len = len(intra_bs)
+-        bs += intra_bs_len.to_bytes(4) + intra_bs
++        bs += intra_bs_len.to_bytes(4, byteorder='big') + intra_bs
+         write_bitstream(output_dir, f'bitstream', bs)
+         write_bitstream(output_dir, f'{intra_idx:04d}', intra_bs)
+ 
+@@ -160,7 +160,7 @@ def main():
+         # Decompress bitstream and evaluate
+         logger.info(f'Decoding model weights from bitstream.')
+         start_dec_time = time.time()
+-        
++
+         intra_bs = read_bitstream(output_dir, f'{intra_idx:04d}')
+         intra_bs = model.decompress(intra_bs)
+ 
+@@ -225,4 +225,4 @@ def main():
+ 
+ 
+ if __name__ == '__main__':
+-    main()
+\ No newline at end of file
++    main()
+diff --git a/main_utils.py b/main_utils.py
+index facf716..0a8dff5 100644
+--- a/main_utils.py
++++ b/main_utils.py
+@@ -20,7 +20,8 @@ dynamo.config.verbose = True
+ dynamo.config.cache_size_limit = 24
+ dynamo.config.compiled_autograd = True
+ 
+-deepspeed.utils.logger.setLevel('WARNING')
++if deepspeed is not None:
++    deepspeed.utils.logger.setLevel('WARNING')
+ 
+ 
+ @dataclass
+@@ -128,6 +129,28 @@ class OverfitTaskConfig:
+     color_space: str = 'RGB'
+     lamb: float = 1.0
+     enable_log: bool = False
++    teacher_enable: bool = False
++    teacher_type: str = 'mean_pool'
++    teacher_loss_weight: float = 0.0
++    teacher_detach_target: bool = True
++    teacher_semantic_blueprint: bool = False
++    teacher_semantic_blueprint_rank: int = 16
++    teacher_relation_consistency: bool = False
++    teacher_relation_mode: str = 'cosine'
++    teacher_relation_weight: float = 1.0
++    teacher_temporal_delta_consistency: bool = False
++    teacher_temporal_delta_weight: float = 1.0
++    teacher_temporal_delta_semantic_gating: bool = False
++    teacher_semantic_change_weighting: bool = False
++    teacher_semantic_change_floor: float = 0.25
++    teacher_semantic_change_gamma: float = 1.0
++    teacher_function_readout_consistency: bool = False
++    teacher_function_readout_weight: float = 1.0
++    teacher_function_readout_bank_size: int = 4
++    teacher_function_readout_hidden_dim: int = 64
++    teacher_function_readout_out_dim: int = 16
++    teacher_function_readout_seed: int = 0
++    teacher_function_readout_seeds: str = ''
+ 
+ 
+ def parse_args():
+@@ -140,7 +163,7 @@ def parse_args():
+     group.add_argument('--eval-data-config', type=str, default=None,
+                        help='path to evaluation data config')
+     group.add_argument('--train-task-config', type=str, default='scripts/configs/tasks/overfit/l1_ms-ssim.yaml',
+-                       help='path to training task config')  
++                       help='path to training task config')
+     group.add_argument('--eval-task-config', type=str, default=None,
+                        help='path to evaluation task config')
+     group.add_argument('--compress-model-config', type=str, default='scripts/configs/nvrc/compress_models/nvrc.yaml',
+@@ -169,6 +192,47 @@ def parse_args():
+     group.add_argument('--eval-enable-log', type=str_to_bool, default=None, help='Enable logging for evaluation')
+     group.add_argument('--color-space', type=str, default=None, help='Color space for training')
+     group.add_argument('--lamb', type=float, nargs='+', default=None, help='Lambda for training')
++    group.add_argument('--teacher-enable', type=str_to_bool, default=None, help='Enable teacher consistency path')
++    group.add_argument('--teacher-type', type=str, default=None, help='Teacher adapter type')
++    group.add_argument('--teacher-loss-weight', type=float, default=None, help='Teacher consistency weight')
++    group.add_argument('--teacher-detach-target', type=str_to_bool, default=None,
++                       help='Detach teacher target features')
++    group.add_argument('--teacher-semantic-blueprint', type=str_to_bool, default=None,
++                       help='Enable frozen semantic-blueprint supervision for teacher consistency')
++    group.add_argument('--teacher-semantic-blueprint-rank', type=int, default=None,
++                       help='Low-rank dimension for the frozen semantic blueprint target')
++    group.add_argument('--teacher-relation-consistency', type=str_to_bool, default=None,
++                       help='Enable relation-preserving supervision for teacher consistency')
++    group.add_argument('--teacher-relation-mode', type=str, default=None,
++                       help='Relation mode for teacher consistency (e.g. cosine, l2)')
++    group.add_argument('--teacher-relation-weight', type=float, default=None,
++                       help='Relative auxiliary weight for relation consistency')
++    group.add_argument('--teacher-temporal-delta-consistency', type=str_to_bool, default=None,
++                       help='Enable temporal-delta supervision for teacher consistency')
++    group.add_argument('--teacher-temporal-delta-weight', type=float, default=None,
++                       help='Relative auxiliary weight for temporal-delta consistency')
++    group.add_argument('--teacher-temporal-delta-semantic-gating', type=str_to_bool, default=None,
++                       help='Reuse semantic-change weights on temporal-delta consistency')
++    group.add_argument('--teacher-semantic-change-weighting', type=str_to_bool, default=None,
++                       help='Enable semantic-change weighting for teacher consistency')
++    group.add_argument('--teacher-semantic-change-floor', type=float, default=None,
++                       help='Minimum normalized floor for semantic-change weights')
++    group.add_argument('--teacher-semantic-change-gamma', type=float, default=None,
++                       help='Power-law gain for semantic-change weights')
++    group.add_argument('--teacher-function-readout-consistency', type=str_to_bool, default=None,
++                       help='Enable frozen nonlinear readout-bank supervision for teacher consistency')
++    group.add_argument('--teacher-function-readout-weight', type=float, default=None,
++                       help='Relative auxiliary weight for function-readout consistency')
++    group.add_argument('--teacher-function-readout-bank-size', type=int, default=None,
++                       help='Number of frozen readout heads used by function-readout consistency')
++    group.add_argument('--teacher-function-readout-hidden-dim', type=int, default=None,
++                       help='Hidden dimension of each frozen readout head')
++    group.add_argument('--teacher-function-readout-out-dim', type=int, default=None,
++                       help='Output dimension of each frozen readout head')
++    group.add_argument('--teacher-function-readout-seed', type=int, default=None,
++                       help='Seed used to build the frozen function-readout bank')
++    group.add_argument('--teacher-function-readout-seeds', type=str, default=None,
++                       help='Comma-separated fixed seed list for multi-seed function-readout banks')
+ 
+     group.add_argument('--use-epochs', type=str_to_bool, default=None, help='Epoch or iteration for training')
+     group.add_argument('--epochs', type=int, default=None, help='Number of epochs for training')
+@@ -269,6 +333,20 @@ def parse_args():
+             assert hasattr(args.train_task, k), f'The {k} should be in the task config'
+             setattr(args.train_task, k, getattr(args_raw, k))
+             setattr(args.eval_task, k, getattr(args_raw, k))
++    for k in ['teacher_enable', 'teacher_type', 'teacher_loss_weight', 'teacher_detach_target',
++              'teacher_semantic_blueprint', 'teacher_semantic_blueprint_rank',
++              'teacher_relation_consistency', 'teacher_relation_mode', 'teacher_relation_weight',
++             'teacher_temporal_delta_consistency', 'teacher_temporal_delta_weight',
++             'teacher_temporal_delta_semantic_gating',
++             'teacher_semantic_change_weighting', 'teacher_semantic_change_floor',
++             'teacher_semantic_change_gamma', 'teacher_function_readout_consistency',
++              'teacher_function_readout_weight', 'teacher_function_readout_bank_size',
++              'teacher_function_readout_hidden_dim', 'teacher_function_readout_out_dim',
++              'teacher_function_readout_seed', 'teacher_function_readout_seeds']:
++        if getattr(args_raw, k) is not None:
++            assert hasattr(args.train_task, k), f'The {k} should be in the task config'
++            setattr(args.train_task, k, getattr(args_raw, k))
++            setattr(args.eval_task, k, getattr(args_raw, k))
+ 
+     # Train config
+     for k in ['use_epochs', 'epochs', 'warmup_epochs',
+@@ -316,7 +394,7 @@ def profile_model(logger, model, loader, task, get_macs=True):
+ 
+     with torch.no_grad():
+         inputs, _ = task.parse_batch(next(iter(loader)))
+-    
++
+         # Compute number of parameters
+         num_params = sum(v.numel() for v in model.model.parameters()) + sum(v.numel() for v in model.param_model.parameters())
+         num_params_codec = sum(v.numel() for v in model.parameters())
+@@ -333,19 +411,25 @@ def profile_model(logger, model, loader, task, get_macs=True):
+             # Compute MACs
+             _profile_model = _ProfilingModel(model)
+             _profile_model.eval()
+-            _, num_macs, _ = deepspeed.profiling.flops_profiler.get_model_profile(model=_profile_model,
+-                                                                                  args=[inputs, True, False],
+-                                                                                  print_profile=False,
+-                                                                                  detailed=False,
+-                                                                                  warm_up=1, as_string=False)
+-            _, num_macs_rate, _ = deepspeed.profiling.flops_profiler.get_model_profile(model=_profile_model,
+-                                                                                       args=[inputs, False, True],
+-                                                                                       print_profile=False,
+-                                                                                       detailed=False,
+-                                                                                       warm_up=1, as_string=False)
+-            num_macs /= inputs['rel_batch_size']
+-            logger.info(f'MACs: {num_macs / 10 ** 9 :.2f}G')
+-            logger.info(f'MACs (Rate): {num_macs_rate / 10 ** 9 :.2f}G')
++            if deepspeed is None:
++                logger.info(
++                    "MAC profiling skipped because optional dependency 'deepspeed' is not installed."
++                )
++                num_macs, num_macs_rate = np.nan, np.nan
++            else:
++                _, num_macs, _ = deepspeed.profiling.flops_profiler.get_model_profile(model=_profile_model,
++                                                                                      args=[inputs, True, False],
++                                                                                      print_profile=False,
++                                                                                      detailed=False,
++                                                                                      warm_up=1, as_string=False)
++                _, num_macs_rate, _ = deepspeed.profiling.flops_profiler.get_model_profile(model=_profile_model,
++                                                                                           args=[inputs, False, True],
++                                                                                           print_profile=False,
++                                                                                           detailed=False,
++                                                                                           warm_up=1, as_string=False)
++                num_macs /= inputs['rel_batch_size']
++                logger.info(f'MACs: {num_macs / 10 ** 9 :.2f}G')
++                logger.info(f'MACs (Rate): {num_macs_rate / 10 ** 9 :.2f}G')
+         else:
+             num_macs, num_macs_rate = np.nan, np.nan
+         return num_params, num_params_codec, num_macs, num_macs_rate
+@@ -455,7 +539,7 @@ def train_epoch(output_dir, name, epoch, args, logger, accelerator, model, loade
+                            ((i + 1) // (args.grad_accum * rate_steps))
+             # Logging loss & metrics
+             log_msg = f'Train' +  f' - Epoch {epoch} [{i + 1}/{len(loader)}]'
+-            log_msg = log_msg + f'    lr: {optimizer.param_groups[0]['lr']:.2e}'
++            log_msg = log_msg + f"    lr: {optimizer.param_groups[0]['lr']:.2e}"
+             log_msg = log_msg + f'    img/s: {samples / (time.time() - start_time):.2f}'
+             log_msg = log_msg + f'    loss: {reduced_loss + reduced_rate_loss:.4f}'
+             log_msg = log_msg + f'    r_loss: {reduced_rate_loss:.4f}'
+@@ -522,7 +606,7 @@ def eval_epoch(output_dir, name, epoch_or_str, args, logger, accelerator, model,
+         # Accumulate loss and metrics
+         accum_loss = mean_loss.detach() if accum_loss is None else accum_loss + mean_loss.detach()
+         accum_metrices = {k: mean_metrics[k].mean() \
+-                             if accum_metrices is None else accum_metrices[k] + mean_metrics[k].mean() 
++                             if accum_metrices is None else accum_metrices[k] + mean_metrics[k].mean()
+                           for k in mean_metrics}
+         if (i + 1) % rate_steps == 0:
+             accum_rate_loss = rate_loss.detach() if accum_rate_loss is None else accum_rate_loss + rate_loss.detach()
+@@ -560,7 +644,7 @@ def eval_epoch(output_dir, name, epoch_or_str, args, logger, accelerator, model,
+     return reduced_loss + reduced_rate_loss, {'bpp': reduced_rate, **reduced_metrics}
+ 
+ 
+-def do_eval(args, epoch, num_epochs): 
++def do_eval(args, epoch, num_epochs):
+     return (epoch + 1) % args.eval_epochs == 0 or (epoch + 1) == num_epochs
+ 
+ 
+@@ -637,7 +721,7 @@ def create_encoding_decoding_videos(output_dir, args, logger, training=True, inp
+         video_out.set_padding(padding)
+         video_out.set_patch_size(patch_size)
+ 
+-    logger.info(f'{'Train' if training else 'Eval'} video settings:')
++    logger.info(f"{'Train' if training else 'Eval'} video settings:")
+     logger.info(f'     Video size: {video_in.get_video_size()}    Patch size: {video_in.get_patch_size()}')
+     logger.info(f'     Padding: {padding}')
+ 
+@@ -663,7 +747,7 @@ def create_overfit_loader(args, logger,  accelerator, dataset, start_frame=-1, n
+     else:
+         subset = dataset
+ 
+-    # Assert that the dataset is in frame mode & the batch size is 
++    # Assert that the dataset is in frame mode & the batch size is
+ 
+     # Create loader
+     loader_kwargs = {
+@@ -687,11 +771,11 @@ def create_overfit_task(*args,**kwargs):
+ 
+ def create_codec(output_dir, name, args, logger, accelerator, loader, task):
+     # INR Model
+-    logger.info(f'Create model: {args.model['type']}')
++    logger.info(f"Create model: {args.model['type']}")
+     model = models.create_model(args.model, logger, task.parse_batch(next(iter(loader)))[0])
+ 
+     # Codec
+-    logger.info(f'Create compression model: {args.compress_model['type']}')
++    logger.info(f"Create compression model: {args.compress_model['type']}")
+     compress_model = compress_models.create_compress_model(logger, model, cfgs=args.compress_model)
+     return compress_model
+ 
+@@ -835,4 +919,4 @@ def write_results_eval(output_dir, name, epoch_or_iter, args, logger, accelerato
+             with open(os.path.join(output_dir, 'results', f'{name}.txt'), 'w') as f:
+                 f.write(','.join(keys) + '\n')
+                 for i in range(len(values)):
+-                    f.write(','.join([str(metrics[i][k]) for k in metrics[0].keys()]) + '\n')
+\ No newline at end of file
++                    f.write(','.join([str(metrics[i][k]) for k in metrics[0].keys()]) + '\n')
+diff --git a/models/__init__.py b/models/__init__.py
+index 36e0542..95079d6 100644
+--- a/models/__init__.py
++++ b/models/__init__.py
+@@ -5,4 +5,4 @@ def create_model(args, logger, input):
+     if args['type'] == 'HiNeRV':
+         return hinerv.build_model(args['config'], logger, input)
+     else:
+-        raise ValueError(f'Unknown model type: {args['type']}')
+\ No newline at end of file
++        raise ValueError(f"Unknown model type: {args['type']}")
+diff --git a/scripts/configs/data/video/png/tiny_local.yaml b/scripts/configs/data/video/png/tiny_local.yaml
+new file mode 100644
+index 0000000..1c854d4
+--- /dev/null
++++ b/scripts/configs/data/video/png/tiny_local.yaml
+@@ -0,0 +1,5 @@
++dataset_dir: tmp/teacher-tiny-run-v1/data
++dataset: tiny_video
++video_size: [4, 32, 32]
++patch_size: [1, 32, 32]
++fmt: png
+diff --git a/scripts/configs/nvrc/compress_models/nvrc_tiny_s1.yaml b/scripts/configs/nvrc/compress_models/nvrc_tiny_s1.yaml
+new file mode 100644
+index 0000000..88f5176
+--- /dev/null
++++ b/scripts/configs/nvrc/compress_models/nvrc_tiny_s1.yaml
+@@ -0,0 +1,43 @@
++type: NVRC
++config:
++  grid_em:
++    em: ar
++    em_dist: gaussian
++    rate_quant: soft-round-noise
++    dist_quant: soft-round-noise
++    quant_mean: true
++    learned_quant: true
++    learned_em: true
++    blk_size: [16, 8, 8]
++    channels: 8
++    depth: 3
++    kernel_size: 5
++    depthwise: true
++  weight_em:
++    em: d-axis
++    em_dist: gaussian
++    rate_quant: soft-round-noise
++    dist_quant: soft-round-noise
++    quant_mean: true
++    learned_quant: true
++    learned_em: true
++  grid_meta_em:
++    em: em
++    em_dist: gaussian
++    rate_quant: soft-round-noise
++    dist_quant: soft-round-noise
++    quant_mean: true
++    learned_quant: true
++    learned_em: true
++  weight_meta_em:
++    em: em
++    em_dist: gaussian
++    rate_quant: soft-round-noise
++    dist_quant: soft-round-noise
++    quant_mean: true
++    learned_quant: true
++    learned_em: true
++  optimize:
++    optimize_rate: true
++    soft_round_temp: [0.5, 0.3]
++    kum_noise: [2., 1.]
+diff --git a/scripts/configs/nvrc/models/teacher_tiny_32.yaml b/scripts/configs/nvrc/models/teacher_tiny_32.yaml
+new file mode 100644
+index 0000000..d11840c
+--- /dev/null
++++ b/scripts/configs/nvrc/models/teacher_tiny_32.yaml
+@@ -0,0 +1,26 @@
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 2]
++    base_grid_level: 2
++    base_grid_level_scale: [1., 1., 1., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [16, 8]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff --git a/scripts/configs/nvrc/overfit/tiny-1e.yaml b/scripts/configs/nvrc/overfit/tiny-1e.yaml
+new file mode 100644
+index 0000000..a9b69bb
+--- /dev/null
++++ b/scripts/configs/nvrc/overfit/tiny-1e.yaml
+@@ -0,0 +1,13 @@
++epochs: 1
++eval_epochs: 1
++warmup_epochs: 0
++rate_steps: 1
++log_epochs: 1
++opt: adam
++lr: 1e-3
++warmup_lr: 1e-5
++min_lr: 1e-4
++max_norm: 1.0
++weight_decay: 1e-6
++weight_decay_scaling: false
++auto_lr_scaling: false
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-bootstrap.yaml b/scripts/configs/tasks/overfit/l1_teacher-bootstrap.yaml
+new file mode 100644
+index 0000000..fb49d9d
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-bootstrap.yaml
+@@ -0,0 +1,9 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: mean_pool
++teacher_loss_weight: 0.2
++teacher_detach_target: true
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-dinov2-semchange-delta.yaml b/scripts/configs/tasks/overfit/l1_teacher-dinov2-semchange-delta.yaml
+new file mode 100644
+index 0000000..8f2f1c2
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-dinov2-semchange-delta.yaml
+@@ -0,0 +1,14 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: dinov2_vits14_reg
++teacher_loss_weight: 0.2
++teacher_detach_target: true
++teacher_temporal_delta_consistency: true
++teacher_temporal_delta_weight: 1.0
++teacher_semantic_change_weighting: true
++teacher_semantic_change_floor: 0.25
++teacher_semantic_change_gamma: 1.0
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-dinov2-shared-semchange-delta.yaml b/scripts/configs/tasks/overfit/l1_teacher-dinov2-shared-semchange-delta.yaml
+new file mode 100644
+index 0000000..972e911
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-dinov2-shared-semchange-delta.yaml
+@@ -0,0 +1,15 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: dinov2_vits14_reg
++teacher_loss_weight: 0.2
++teacher_detach_target: true
++teacher_temporal_delta_consistency: true
++teacher_temporal_delta_weight: 1.0
++teacher_temporal_delta_semantic_gating: true
++teacher_semantic_change_weighting: true
++teacher_semantic_change_floor: 0.25
++teacher_semantic_change_gamma: 1.0
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint.yaml
+new file mode 100644
+index 0000000..5b561d0
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint.yaml
+@@ -0,0 +1,11 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 0.002
++enable_log: true
++teacher_enable: true
++teacher_type: resnet18_imagenet
++teacher_loss_weight: 0.2
++teacher_detach_target: true
++teacher_semantic_blueprint: true
++teacher_semantic_blueprint_rank: 16
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-bootstrap.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-bootstrap.yaml
+new file mode 100644
+index 0000000..21fd504
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-bootstrap.yaml
+@@ -0,0 +1,9 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: resnet18_imagenet
++teacher_loss_weight: 0.2
++teacher_detach_target: true
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta-w05.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta-w05.yaml
+new file mode 100644
+index 0000000..2830a42
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta-w05.yaml
+@@ -0,0 +1,11 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: resnet18_imagenet
++teacher_loss_weight: 0.2
++teacher_detach_target: true
++teacher_temporal_delta_consistency: true
++teacher_temporal_delta_weight: 0.5
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta.yaml
+new file mode 100644
+index 0000000..eff6a2f
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta.yaml
+@@ -0,0 +1,11 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: resnet18_imagenet
++teacher_loss_weight: 0.2
++teacher_detach_target: true
++teacher_temporal_delta_consistency: true
++teacher_temporal_delta_weight: 1.0
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-readout.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-readout.yaml
+new file mode 100644
+index 0000000..6e90664
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-readout.yaml
+@@ -0,0 +1,15 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: resnet18_imagenet
++teacher_loss_weight: 0.2
++teacher_detach_target: true
++teacher_function_readout_consistency: true
++teacher_function_readout_weight: 1.0
++teacher_function_readout_bank_size: 4
++teacher_function_readout_hidden_dim: 64
++teacher_function_readout_out_dim: 16
++teacher_function_readout_seed: 0
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation.yaml
+new file mode 100644
+index 0000000..5a5f1cd
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation.yaml
+@@ -0,0 +1,12 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 0.002
++enable_log: true
++teacher_enable: true
++teacher_type: resnet18_imagenet
++teacher_loss_weight: 0.2
++teacher_detach_target: true
++teacher_relation_consistency: true
++teacher_relation_mode: cosine
++teacher_relation_weight: 1.0
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-delta.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-delta.yaml
+new file mode 100644
+index 0000000..99fe1be
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-delta.yaml
+@@ -0,0 +1,14 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: resnet18_imagenet
++teacher_loss_weight: 0.2
++teacher_detach_target: true
++teacher_temporal_delta_consistency: true
++teacher_temporal_delta_weight: 1.0
++teacher_semantic_change_weighting: true
++teacher_semantic_change_floor: 0.25
++teacher_semantic_change_gamma: 1.0
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-gamma2.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-gamma2.yaml
+new file mode 100644
+index 0000000..89fe189
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-gamma2.yaml
+@@ -0,0 +1,12 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: resnet18_imagenet
++teacher_loss_weight: 0.2
++teacher_detach_target: true
++teacher_semantic_change_weighting: true
++teacher_semantic_change_floor: 0.25
++teacher_semantic_change_gamma: 2.0
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange.yaml
+new file mode 100644
+index 0000000..15a2f1a
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange.yaml
+@@ -0,0 +1,12 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: resnet18_imagenet
++teacher_loss_weight: 0.2
++teacher_detach_target: true
++teacher_semantic_change_weighting: true
++teacher_semantic_change_floor: 0.25
++teacher_semantic_change_gamma: 1.0
+diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-shared-semchange-delta.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-shared-semchange-delta.yaml
+new file mode 100644
+index 0000000..59da007
+--- /dev/null
++++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-shared-semchange-delta.yaml
+@@ -0,0 +1,15 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: resnet18_imagenet
++teacher_loss_weight: 0.2
++teacher_detach_target: true
++teacher_temporal_delta_consistency: true
++teacher_temporal_delta_weight: 1.0
++teacher_temporal_delta_semantic_gating: true
++teacher_semantic_change_weighting: true
++teacher_semantic_change_floor: 0.25
++teacher_semantic_change_gamma: 1.0
+diff --git a/tasks.py b/tasks.py
+index 98b1b8f..1031d50 100644
+--- a/tasks.py
++++ b/tasks.py
+@@ -1,12 +1,44 @@
+ from utils import *
+ from io_utils import *
+ from losses import *
++from teacher_utils import build_teacher_adapter
++
++
++def _parse_int_list(value):
++    if value is None:
++        return tuple()
++    if isinstance(value, str):
++        items = [item.strip() for item in value.split(',') if item.strip()]
++        return tuple(int(item) for item in items)
++    if isinstance(value, (list, tuple)):
++        return tuple(int(item) for item in value)
++    return (int(value),)
+ 
+ 
+ class OverfitTask:
+     def __init__(self, logger, video, loss_cfg, metric_cfg, lamb,
+                  channel_scale=None, channel_shift=None,
+-                 enable_log=True, training=True, device=None):
++                 enable_log=True, training=True, device=None,
++                 teacher_enable=False, teacher_type='mean_pool',
++                 teacher_loss_weight=0.0, teacher_detach_target=True,
++                 teacher_semantic_blueprint=False,
++                 teacher_semantic_blueprint_rank=16,
++                 teacher_relation_consistency=False,
++                 teacher_relation_mode='cosine',
++                 teacher_relation_weight=1.0,
++                 teacher_temporal_delta_consistency=False,
++                 teacher_temporal_delta_weight=1.0,
++                 teacher_temporal_delta_semantic_gating=False,
++                 teacher_semantic_change_weighting=False,
++                 teacher_semantic_change_floor=0.25,
++                 teacher_semantic_change_gamma=1.0,
++                 teacher_function_readout_consistency=False,
++                 teacher_function_readout_weight=1.0,
++                 teacher_function_readout_bank_size=4,
++                 teacher_function_readout_hidden_dim=64,
++                 teacher_function_readout_out_dim=16,
++                 teacher_function_readout_seed=0,
++                 teacher_function_readout_seeds=''):
+         self.logger = logger
+         self.video = video
+         self.channels = self.video.get_num_channels()
+@@ -23,9 +55,43 @@ class OverfitTask:
+         self.training = training
+         self.device = device
+         self.metrics_buffer = {}
+-
+-        assert isinstance(lamb, (list, tuple)) and len(lamb) == 1, 'lamb should be a list/tuple with a single value'
+-        self.lamb = torch.tensor(sorted(lamb), dtype=torch.float32, device=self.device)
++        self.teacher_enable = teacher_enable
++        self.teacher_type = teacher_type
++        self.teacher_loss_weight = float(teacher_loss_weight)
++        self.teacher_detach_target = teacher_detach_target
++        self.teacher_semantic_blueprint = teacher_semantic_blueprint
++        self.teacher_semantic_blueprint_rank = int(teacher_semantic_blueprint_rank)
++        self.teacher_relation_consistency = teacher_relation_consistency
++        self.teacher_relation_mode = teacher_relation_mode
++        self.teacher_relation_weight = float(teacher_relation_weight)
++        self.teacher_temporal_delta_consistency = teacher_temporal_delta_consistency
++        self.teacher_temporal_delta_weight = float(teacher_temporal_delta_weight)
++        self.teacher_temporal_delta_semantic_gating = teacher_temporal_delta_semantic_gating
++        self.teacher_semantic_change_weighting = teacher_semantic_change_weighting
++        self.teacher_semantic_change_floor = float(teacher_semantic_change_floor)
++        self.teacher_semantic_change_gamma = float(teacher_semantic_change_gamma)
++        self.teacher_function_readout_consistency = teacher_function_readout_consistency
++        self.teacher_function_readout_weight = float(teacher_function_readout_weight)
++        self.teacher_function_readout_bank_size = int(teacher_function_readout_bank_size)
++        self.teacher_function_readout_hidden_dim = int(teacher_function_readout_hidden_dim)
++        self.teacher_function_readout_out_dim = int(teacher_function_readout_out_dim)
++        self.teacher_function_readout_seed = int(teacher_function_readout_seed)
++        self.teacher_function_readout_seeds = _parse_int_list(teacher_function_readout_seeds)
++        self.teacher_adapter = build_teacher_adapter(
++            enable=self.teacher_enable,
++            teacher_type=self.teacher_type,
++            detach_target=self.teacher_detach_target,
++        )
++        if self.teacher_adapter is not None and self.device is not None:
++            self.teacher_adapter = self.teacher_adapter.to(self.device)
++
++        if isinstance(lamb, (int, float)):
++            lamb_values = [float(lamb)]
++        else:
++            assert isinstance(lamb, (list, tuple)) and len(lamb) == 1, \
++                'lamb should be a scalar or a list/tuple with a single value'
++            lamb_values = [float(v) for v in lamb]
++        self.lamb = torch.tensor(sorted(lamb_values), dtype=torch.float32, device=self.device)
+ 
+         logger.info(f'OverfitTask:')
+         logger.info(f'     Root: {self.video.get_path()}')
+@@ -33,6 +99,29 @@ class OverfitTask:
+         logger.info(f'     Losses: {self.loss_cfg}    Metrics: {self.metric_cfg}')
+         logger.info(f'     Lamb: {self.lamb.tolist()}')
+         logger.info(f'     Enable log: {self.enable_log}')
++        if self.teacher_enable:
++            logger.info(
++                f'     Teacher: enabled={self.teacher_enable} type={self.teacher_type} '
++                f'weight={self.teacher_loss_weight:.4f} detach_target={self.teacher_detach_target} '
++                f'semantic_blueprint={self.teacher_semantic_blueprint} '
++                f'semantic_blueprint_rank={self.teacher_semantic_blueprint_rank} '
++                f'relation_consistency={self.teacher_relation_consistency} '
++                f'relation_mode={self.teacher_relation_mode} '
++                f'relation_weight={self.teacher_relation_weight:.4f} '
++                f'temporal_delta_consistency={self.teacher_temporal_delta_consistency} '
++                f'temporal_delta_weight={self.teacher_temporal_delta_weight:.4f} '
++                f'temporal_delta_semantic_gating={self.teacher_temporal_delta_semantic_gating} '
++                f'semantic_change_weighting={self.teacher_semantic_change_weighting} '
++                f'semantic_change_floor={self.teacher_semantic_change_floor:.4f} '
++                f'semantic_change_gamma={self.teacher_semantic_change_gamma:.4f} '
++                f'function_readout_consistency={self.teacher_function_readout_consistency} '
++                f'function_readout_weight={self.teacher_function_readout_weight:.4f} '
++                f'function_readout_bank_size={self.teacher_function_readout_bank_size} '
++                f'function_readout_hidden_dim={self.teacher_function_readout_hidden_dim} '
++                f'function_readout_out_dim={self.teacher_function_readout_out_dim} '
++                f'function_readout_seed={self.teacher_function_readout_seed} '
++                f'function_readout_seeds={list(self.teacher_function_readout_seeds) if self.teacher_function_readout_seeds else []}'
++            )
+ 
+     def get_metrics(self):
+         return self.metric_cfg
+@@ -95,6 +184,67 @@ class OverfitTask:
+             weight = float(self.loss_cfg[i * 2])
+             loss_type = self.loss_cfg[i * 2 + 1]
+             loss += weight * lamb * compute_loss(loss_type, x, y).mean()
++        if self.teacher_adapter is not None and self.teacher_loss_weight > 0:
++            pred_feat, target_feat = self.teacher_adapter.consistency_features(x, y)
++            loss_pred_feat = pred_feat
++            loss_target_feat = target_feat
++            teacher_weights = None
++
++            if self.teacher_semantic_blueprint:
++                loss_pred_feat, loss_target_feat, _ = self.teacher_adapter.blueprint_consistency_features(
++                    pred_feat=pred_feat,
++                    target_feat=target_feat,
++                    rank=self.teacher_semantic_blueprint_rank,
++                )
++
++            teacher_consistency = F.mse_loss(loss_pred_feat, loss_target_feat, reduction='none').mean(dim=2)
++            if self.teacher_semantic_change_weighting:
++                teacher_weights = self.teacher_adapter.semantic_change_weights(
++                    floor=self.teacher_semantic_change_floor,
++                    gamma=self.teacher_semantic_change_gamma,
++                    target_feat=target_feat,
++                )
++                teacher_consistency = teacher_consistency * teacher_weights
++            loss += self.teacher_loss_weight * lamb * teacher_consistency.mean()
++            if self.teacher_function_readout_consistency:
++                pred_readout, target_readout = self.teacher_adapter.function_readout_consistency_features(
++                    pred_feat=pred_feat,
++                    target_feat=target_feat,
++                    bank_size=self.teacher_function_readout_bank_size,
++                    hidden_dim=self.teacher_function_readout_hidden_dim,
++                    out_dim=self.teacher_function_readout_out_dim,
++                    seed=self.teacher_function_readout_seed,
++                    seeds=self.teacher_function_readout_seeds,
++                )
++                function_readout_consistency = F.mse_loss(pred_readout, target_readout, reduction='none')
++                function_readout_consistency = function_readout_consistency.mean(dim=3).mean(dim=2)
++                loss += (
++                    self.teacher_loss_weight
++                    * self.teacher_function_readout_weight
++                    * lamb
++                    * function_readout_consistency.mean()
++                )
++            if self.teacher_relation_consistency:
++                pred_rel, target_rel = self.teacher_adapter.relation_consistency_features(
++                    pred_feat=pred_feat,
++                    target_feat=target_feat,
++                    mode=self.teacher_relation_mode,
++                )
++                relation_consistency = F.mse_loss(pred_rel, target_rel, reduction='none').mean(dim=(1, 2))
++                loss += self.teacher_loss_weight * self.teacher_relation_weight * lamb * relation_consistency.mean()
++            if self.teacher_temporal_delta_consistency:
++                pred_delta, target_delta = self.teacher_adapter.temporal_delta_consistency_features(
++                    pred_feat=pred_feat,
++                    target_feat=target_feat,
++                )
++                temporal_delta_consistency = F.mse_loss(pred_delta, target_delta, reduction='none').mean(dim=2)
++                if (
++                    self.teacher_temporal_delta_semantic_gating
++                    and self.teacher_semantic_change_weighting
++                    and teacher_weights is not None
++                ):
++                    temporal_delta_consistency = temporal_delta_consistency * teacher_weights
++                loss += self.teacher_loss_weight * self.teacher_temporal_delta_weight * lamb * temporal_delta_consistency.mean()
+         return loss
+ 
+     def compute_r_loss(self, r):
+@@ -104,10 +254,10 @@ class OverfitTask:
+         metrics = {}
+         with torch.no_grad():
+             for metric_type in self.metric_cfg:
+-                metrics[metric_type] = compute_metric(metric_type, x, y)
++                metrics[metric_type] = compute_metric(metric_type, x, y, teacher_adapter=self.teacher_adapter)
+         return metrics
+ 
+-    def d_step(self, model, batch):   
++    def d_step(self, model, batch):
+         inputs, target = self.parse_batch(batch)
+         output = model(inputs, compute_outputs=True, compute_rates=False)
+         output = self.parse_output(output)
+@@ -180,5 +330,26 @@ def create_overfit_task(args, logger, video, channel_scale=None, channel_shift=N
+ 
+     task = OverfitTask(logger, video, loss_cfg=config.loss, metric_cfg=config.metric,
+                        lamb=config.lamb, channel_scale=channel_scale, channel_shift=channel_shift,
+-                       enable_log=config.enable_log, training=training, device=device)
+-    return task
+\ No newline at end of file
++                       enable_log=config.enable_log, training=training, device=device,
++                       teacher_enable=config.teacher_enable, teacher_type=config.teacher_type,
++                       teacher_loss_weight=config.teacher_loss_weight,
++                       teacher_detach_target=config.teacher_detach_target,
++                       teacher_semantic_blueprint=config.teacher_semantic_blueprint,
++                       teacher_semantic_blueprint_rank=config.teacher_semantic_blueprint_rank,
++                       teacher_relation_consistency=config.teacher_relation_consistency,
++                       teacher_relation_mode=config.teacher_relation_mode,
++                       teacher_relation_weight=config.teacher_relation_weight,
++                       teacher_temporal_delta_consistency=config.teacher_temporal_delta_consistency,
++                       teacher_temporal_delta_weight=config.teacher_temporal_delta_weight,
++                       teacher_temporal_delta_semantic_gating=config.teacher_temporal_delta_semantic_gating,
++                       teacher_semantic_change_weighting=config.teacher_semantic_change_weighting,
++                       teacher_semantic_change_floor=config.teacher_semantic_change_floor,
++                       teacher_semantic_change_gamma=config.teacher_semantic_change_gamma,
++                       teacher_function_readout_consistency=config.teacher_function_readout_consistency,
++                       teacher_function_readout_weight=config.teacher_function_readout_weight,
++                       teacher_function_readout_bank_size=config.teacher_function_readout_bank_size,
++                       teacher_function_readout_hidden_dim=config.teacher_function_readout_hidden_dim,
++                       teacher_function_readout_out_dim=config.teacher_function_readout_out_dim,
++                       teacher_function_readout_seed=config.teacher_function_readout_seed,
++                       teacher_function_readout_seeds=config.teacher_function_readout_seeds)
++    return task
+diff --git a/teacher_utils.py b/teacher_utils.py
+new file mode 100644
+index 0000000..bd89eff
+--- /dev/null
++++ b/teacher_utils.py
+@@ -0,0 +1,327 @@
++from pathlib import Path
++
++import torch
++import torch.nn as nn
++import torch.nn.functional as F
++
++
++_DINOV2_REPO = Path.home() / ".cache" / "torch" / "hub" / "facebookresearch_dinov2_main"
++_DINOV2_CHECKPOINT_DIR = Path.home() / ".cache" / "torch" / "hub" / "checkpoints"
++_DINOV2_CHECKPOINTS = {
++    "dinov2_vits14_reg": "dinov2_vits14_reg4_pretrain.pth",
++    "dinov2_vitb14_reg": "dinov2_vitb14_reg4_pretrain.pth",
++}
++
++
++def _load_local_dinov2_backbone(model_name):
++    if model_name not in _DINOV2_CHECKPOINTS:
++        raise ValueError(f"Unsupported local DINOv2 teacher_type: {model_name}")
++    if not _DINOV2_REPO.exists():
++        raise FileNotFoundError(
++            f"Expected local DINOv2 hub repo at {_DINOV2_REPO}, but it was not found."
++        )
++
++    checkpoint_path = _DINOV2_CHECKPOINT_DIR / _DINOV2_CHECKPOINTS[model_name]
++    if not checkpoint_path.exists():
++        raise FileNotFoundError(
++            f"Expected cached DINOv2 checkpoint at {checkpoint_path}, but it was not found."
++        )
++
++    backbone = torch.hub.load(str(_DINOV2_REPO), model_name, source="local", pretrained=True)
++    backbone.eval()
++    for param in backbone.parameters():
++        param.requires_grad = False
++    return backbone
++
++
++class FrozenTeacherAdapter(nn.Module):
++    def __init__(self, teacher_type='mean_pool', detach_target=True):
++        super().__init__()
++        self.teacher_type = teacher_type
++        self.detach_target = detach_target
++        self._function_readout_cache = {}
++
++        if self.teacher_type == 'mean_pool':
++            self.backbone = None
++        elif self.teacher_type == 'resnet18_imagenet':
++            from torchvision.models import ResNet18_Weights, resnet18
++
++            backbone = resnet18(weights=ResNet18_Weights.DEFAULT)
++            backbone.fc = nn.Identity()
++            backbone.eval()
++            for param in backbone.parameters():
++                param.requires_grad = False
++
++            self.backbone = backbone
++            self._register_imagenet_norm_buffers()
++        elif self.teacher_type in _DINOV2_CHECKPOINTS:
++            self.backbone = _load_local_dinov2_backbone(self.teacher_type)
++            self._register_imagenet_norm_buffers()
++        else:
++            raise ValueError(f'Unknown teacher_type: {self.teacher_type}')
++
++    def _register_imagenet_norm_buffers(self):
++        self.register_buffer(
++            'norm_mean',
++            torch.tensor([0.485, 0.456, 0.406], dtype=torch.float32).view(1, 3, 1, 1),
++        )
++        self.register_buffer(
++            'norm_std',
++            torch.tensor([0.229, 0.224, 0.225], dtype=torch.float32).view(1, 3, 1, 1),
++        )
++
++    def extract_features(self, x):
++        assert x.ndim == 5, 'inputs are expected to have 5D ([N, C, T, H, W])'
++        if self.teacher_type == 'mean_pool':
++            return x.float().mean(dim=(3, 4)).permute(0, 2, 1).contiguous()
++        if self.teacher_type == 'resnet18_imagenet':
++            return self._extract_resnet18_features(x)
++        if self.teacher_type in _DINOV2_CHECKPOINTS:
++            return self._extract_dinov2_features(x)
++        raise ValueError(f'Unknown teacher_type: {self.teacher_type}')
++
++    def target_features(self, target):
++        if self.detach_target:
++            with torch.no_grad():
++                return self.extract_features(target)
++        return self.extract_features(target)
++
++    def consistency_features(self, pred, target):
++        pred_feat = self.extract_features(pred)
++        target_feat = self.target_features(target)
++        return pred_feat, target_feat
++
++    def temporal_deltas(self, features):
++        n, t, _ = features.shape
++        if t <= 1:
++            return torch.zeros_like(features)
++
++        deltas = features[:, 1:] - features[:, :-1]
++        return torch.cat([deltas[:, :1], deltas], dim=1)
++
++    def temporal_delta_consistency_features(self, pred=None, target=None, pred_feat=None, target_feat=None):
++        if pred_feat is None or target_feat is None:
++            pred_feat, target_feat = self.consistency_features(pred, target)
++        pred_delta = self.temporal_deltas(pred_feat)
++        target_delta = self.temporal_deltas(target_feat)
++        return pred_delta, target_delta
++
++    def relation_matrix(self, features, mode='cosine', eps=1e-6):
++        if mode == 'cosine':
++            normalized = F.normalize(features, dim=2, eps=eps)
++            return torch.matmul(normalized, normalized.transpose(1, 2))
++        if mode == 'l2':
++            distances = torch.cdist(features, features, p=2)
++            scale = distances.mean(dim=(1, 2), keepdim=True).clamp_min(eps)
++            return distances / scale
++        raise ValueError(f'Unknown relation mode: {mode}')
++
++    def relation_consistency_features(self, pred=None, target=None, mode='cosine', pred_feat=None, target_feat=None):
++        if pred_feat is None or target_feat is None:
++            pred_feat, target_feat = self.consistency_features(pred, target)
++        pred_rel = self.relation_matrix(pred_feat, mode=mode)
++        target_rel = self.relation_matrix(target_feat, mode=mode)
++        return pred_rel, target_rel
++
++    def fit_semantic_blueprint(self, target=None, rank=16, target_feat=None):
++        if target_feat is None:
++            assert target is not None, 'target or target_feat must be provided'
++            target_feat = self.target_features(target)
++
++        target_feat = target_feat.detach()
++        _, t, f = target_feat.shape
++        rank = max(int(rank), 1)
++        rank = min(rank, max(min(t, f), 1))
++
++        center = target_feat.mean(dim=1, keepdim=True)
++        centered = target_feat - center
++        _, _, vh = torch.linalg.svd(centered, full_matrices=False)
++        basis = vh[:, :rank, :].contiguous()
++        target_blueprint = torch.matmul(centered, basis.transpose(1, 2))
++
++        return {
++            'center': center,
++            'basis': basis,
++            'rank': rank,
++            'target_blueprint': target_blueprint,
++        }
++
++    def project_semantic_blueprint(self, features, blueprint):
++        center = blueprint['center'].to(features.device)
++        basis = blueprint['basis'].to(features.device)
++        centered = features - center
++        return torch.matmul(centered, basis.transpose(1, 2))
++
++    def blueprint_consistency_features(self, pred=None, target=None, rank=16, pred_feat=None, target_feat=None):
++        if pred_feat is None or target_feat is None:
++            pred_feat, target_feat = self.consistency_features(pred, target)
++
++        blueprint = self.fit_semantic_blueprint(target_feat=target_feat, rank=rank)
++        pred_blueprint = self.project_semantic_blueprint(pred_feat, blueprint)
++        target_blueprint = blueprint['target_blueprint']
++        return pred_blueprint, target_blueprint, blueprint
++
++    def _function_readout_bank_params(self, feature_dim, bank_size, hidden_dim, out_dim, seed, device, dtype):
++        key = (
++            int(feature_dim),
++            int(bank_size),
++            int(hidden_dim),
++            int(out_dim),
++            int(seed),
++            str(device),
++            str(dtype),
++        )
++        if key not in self._function_readout_cache:
++            generator = torch.Generator(device='cpu')
++            generator.manual_seed(int(seed))
++
++            w1 = torch.randn(bank_size, feature_dim, hidden_dim, generator=generator, dtype=torch.float32)
++            b1 = 0.05 * torch.randn(bank_size, hidden_dim, generator=generator, dtype=torch.float32)
++            w2 = torch.randn(bank_size, hidden_dim, out_dim, generator=generator, dtype=torch.float32)
++            b2 = 0.05 * torch.randn(bank_size, out_dim, generator=generator, dtype=torch.float32)
++
++            w1 = F.normalize(w1, dim=1)
++            w2 = F.normalize(w2, dim=1)
++
++            self._function_readout_cache[key] = tuple(
++                tensor.to(device=device, dtype=dtype) for tensor in (w1, b1, w2, b2)
++            )
++        return self._function_readout_cache[key]
++
++    def _apply_function_readout_bank(self, features, bank_size=4, hidden_dim=64, out_dim=16, seed=0):
++        bank_size = max(int(bank_size), 1)
++        hidden_dim = max(int(hidden_dim), 1)
++        out_dim = max(int(out_dim), 1)
++
++        features = F.layer_norm(features, (features.shape[-1],))
++        w1, b1, w2, b2 = self._function_readout_bank_params(
++            feature_dim=features.shape[-1],
++            bank_size=bank_size,
++            hidden_dim=hidden_dim,
++            out_dim=out_dim,
++            seed=seed,
++            device=features.device,
++            dtype=features.dtype,
++        )
++        hidden = torch.einsum('ntf,bfh->ntbh', features, w1) + b1.view(1, 1, bank_size, hidden_dim)
++        hidden = F.gelu(hidden)
++        return torch.einsum('ntbh,bho->ntbo', hidden, w2) + b2.view(1, 1, bank_size, out_dim)
++
++    def function_readout_consistency_features(
++        self,
++        pred=None,
++        target=None,
++        bank_size=4,
++        hidden_dim=64,
++        out_dim=16,
++        seed=0,
++        seeds=None,
++        pred_feat=None,
++        target_feat=None,
++    ):
++        if pred_feat is None or target_feat is None:
++            pred_feat, target_feat = self.consistency_features(pred, target)
++
++        if isinstance(seeds, str):
++            seeds = [int(item.strip()) for item in seeds.split(',') if item.strip()]
++        elif seeds is not None:
++            seeds = [int(item) for item in seeds]
++        else:
++            seeds = []
++
++        if seeds:
++            pred_readout = torch.cat([
++                self._apply_function_readout_bank(
++                    pred_feat,
++                    bank_size=bank_size,
++                    hidden_dim=hidden_dim,
++                    out_dim=out_dim,
++                    seed=current_seed,
++                )
++                for current_seed in seeds
++            ], dim=2)
++            target_readout = torch.cat([
++                self._apply_function_readout_bank(
++                    target_feat,
++                    bank_size=bank_size,
++                    hidden_dim=hidden_dim,
++                    out_dim=out_dim,
++                    seed=current_seed,
++                )
++                for current_seed in seeds
++            ], dim=2)
++        else:
++            pred_readout = self._apply_function_readout_bank(
++                pred_feat,
++                bank_size=bank_size,
++                hidden_dim=hidden_dim,
++                out_dim=out_dim,
++                seed=seed,
++            )
++            target_readout = self._apply_function_readout_bank(
++                target_feat,
++                bank_size=bank_size,
++                hidden_dim=hidden_dim,
++                out_dim=out_dim,
++                seed=seed,
++            )
++        return pred_readout, target_readout
++
++    def _prepare_imagenet_frames(self, x, teacher_label):
++        assert x.shape[1] == 3, f'{teacher_label} expects RGB inputs'
++        n, c, t, h, w = x.shape
++        frames = x.float().permute(0, 2, 1, 3, 4).reshape(n * t, c, h, w)
++        frames = frames.clamp(0.0, 1.0)
++        frames = F.interpolate(frames, size=(224, 224), mode='bilinear', align_corners=False)
++
++        self.backbone.to(frames.device)
++        self.backbone.eval()
++
++        norm_mean = self.norm_mean.to(frames.device)
++        norm_std = self.norm_std.to(frames.device)
++        frames = (frames - norm_mean) / norm_std
++        return n, t, frames
++
++    def _extract_resnet18_features(self, x):
++        n, t, frames = self._prepare_imagenet_frames(x, 'resnet18_imagenet')
++        features = self.backbone(frames)
++        return features.view(n, t, -1).contiguous()
++
++    def _extract_dinov2_features(self, x):
++        n, t, frames = self._prepare_imagenet_frames(x, self.teacher_type)
++        features = self.backbone(frames)
++        return features.view(n, t, -1).contiguous()
++
++    def consistency_map(self, pred, target, pred_feat=None, target_feat=None):
++        if pred_feat is None or target_feat is None:
++            pred_feat, target_feat = self.consistency_features(pred, target)
++        return F.mse_loss(pred_feat, target_feat, reduction='none').mean(dim=2)
++
++    def semantic_change_weights(self, target=None, floor=0.25, gamma=1.0, eps=1e-6, target_feat=None):
++        if target_feat is None:
++            assert target is not None, 'target or target_feat must be provided'
++            target_feat = self.target_features(target)
++
++        n, t, _ = target_feat.shape
++        if t <= 1:
++            return torch.ones((n, t), dtype=target_feat.dtype, device=target_feat.device)
++
++        deltas = F.mse_loss(target_feat[:, 1:], target_feat[:, :-1], reduction='none').mean(dim=2)
++        deltas = torch.cat([deltas[:, :1], deltas], dim=1).clamp_min(eps)
++        weights = deltas / (deltas.mean(dim=1, keepdim=True) + eps)
++
++        gamma = max(float(gamma), 0.0)
++        if gamma != 1.0:
++            weights = weights.clamp_min(eps).pow(gamma)
++
++        floor = min(max(float(floor), 0.0), 1.0)
++        if floor > 0.0:
++            weights = floor + (1.0 - floor) * weights
++
++        return weights / (weights.mean(dim=1, keepdim=True) + eps)
++
++
++def build_teacher_adapter(enable=False, teacher_type='mean_pool', detach_target=True):
++    if not enable:
++        return None
++    return FrozenTeacherAdapter(teacher_type=teacher_type, detach_target=detach_target)
+diff --git a/utils.py b/utils.py
+index 03df9a2..85080de 100644
+--- a/utils.py
++++ b/utils.py
+@@ -25,11 +25,21 @@ import torch._dynamo as dynamo
+ 
+ import torchvision
+ import compressai
+-import deepspeed
+-
+-import timm
+-from timm.optim import create_optimizer_v2, optimizer_kwargs
+-from timm.scheduler import create_scheduler_v2, scheduler_kwargs
++try:
++    import deepspeed
++except ImportError:
++    deepspeed = None
++
++try:
++    import timm
++    from timm.optim import create_optimizer_v2, optimizer_kwargs
++    from timm.scheduler import create_scheduler_v2, scheduler_kwargs
++except ImportError:
++    timm = None
++    create_optimizer_v2 = None
++    optimizer_kwargs = None
++    create_scheduler_v2 = None
++    scheduler_kwargs = None
+ 
+ import accelerate
+ 
+@@ -78,6 +88,14 @@ def extract_parameters(*model_dicts):
+     return params
+ 
+ 
++def _require_optional_dependency(dependency, package_name, feature_name):
++    if dependency is None:
++        raise ImportError(
++            f"{feature_name} requires optional dependency '{package_name}', "
++            f"but it is not installed in the current environment."
++        )
++
++
+ """
+ Accerlator & logger
+ """
+@@ -134,7 +152,7 @@ def get_optimizer_scheduler(args, logger, accelerator, model_or_params, loader,
+     args = copy.deepcopy(args)
+ 
+     # This is to match the accelerator option 'step_scheduler_with_optimizer=True'
+-    args.sched_on_updates = True 
++    args.sched_on_updates = True
+     updates_per_epoch = len(loader)
+ 
+     # Convert to number of epochs
+@@ -191,9 +209,14 @@ def get_optimizer_scheduler(args, logger, accelerator, model_or_params, loader,
+         gp_v_no_wd = groups[gp_k + '_no_wd']
+         groups_list.append(gp_v)
+         groups_list.append(gp_v_no_wd)
+-        logger.info(f'     Key - {gp_k}  Lr scale - {gp_v['lr_scale']}  Weight decay - {gp_v['weight_decay']}  Num of params - {len(gp_v['params'])}')
+-        logger.info(f'     Key - {gp_k} (No weight decay)  Lr scale - {gp_v_no_wd['lr_scale']}  Weight decay - {gp_v_no_wd['weight_decay']}  Num of params - {len(gp_v_no_wd['params'])}')
++        logger.info(
++            f"     Key - {gp_k}  Lr scale - {gp_v['lr_scale']}  Weight decay - {gp_v['weight_decay']}  Num of params - {len(gp_v['params'])}"
++        )
++        logger.info(
++            f"     Key - {gp_k} (No weight decay)  Lr scale - {gp_v_no_wd['lr_scale']}  Weight decay - {gp_v_no_wd['weight_decay']}  Num of params - {len(gp_v_no_wd['params'])}"
++        )
+ 
++    _require_optional_dependency(timm, 'timm', 'Optimizer and scheduler creation')
+     optimizer = create_optimizer_v2(groups_list, **optimizer_kwargs(args))
+     scheduler, _ = create_scheduler_v2(optimizer, **scheduler_kwargs(args), updates_per_epoch=updates_per_epoch)
+     return optimizer, scheduler
+@@ -256,4 +279,4 @@ def concate_outputs(src, dst, dataset_name, keep_path=False):
+             os.system(f'cat {video_src} >> {video_dst}')
+         # Remove the source
+         if not keep_path:
+-            os.system(f'rm -r {video_src}')
+\ No newline at end of file
++            os.system(f'rm -r {video_src}')
+-- 
+2.34.1
+
