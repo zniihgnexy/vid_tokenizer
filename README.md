@@ -1,108 +1,223 @@
-# vid_tokenizer with foundation model
+# vid_tokenizer: Machine-Oriented Video Compression Toolkit
 
-这是当前这条主线的本地可 review 版本。它把一条已经完成到论文交付就绪状态的研究线，重新整理成一个更像正常 GitHub 仓库的入口：
+This repository collects the current machine-oriented video compression work in
+two reviewable layers:
 
-- 你可以先看清楚这条线在 big picture 里解决什么问题
-- 你可以沿着真实存在的代码、实验结果和 paper 证据往下读
-- 你也可以从这里继续做复现、长视频测试，或者替换成你自己的数据集
+1. An existing paper/evidence line for machine-facing packet evaluation.
+2. This PR's project-style NVRC pipeline wrapper for teacher/tokenizer-aware
+   compression experiments.
 
-当前这条线的核心结论很克制：
+The shared idea is not ordinary human-viewing compression. The goal is to keep
+compressed egocentric video useful for downstream machine understanding.
 
-- 上游 machine-oriented compression / packet pipeline 已经能稳定导出可用接口
-- 在冻结 packet surface 不变的前提下，`query-adaptive arbitration` 能在一个 bounded widened teacher-anchor retrieval surface 上，把 headline `top1_accuracy` 提到 `0.15625`
-- 这说明 frozen packet surface 里确实还有 downstream-recoverable structure
-- 但这还不是“广义 machine-facing adapter 已经完成”的结论，长视频、更大 consumer、你自己的数据还属于下一阶段工作
+## Current Repository Context
 
-## 这份仓库里最重要的内容
+The existing `main` line already contains a bounded paper-ready package around a
+query-adaptive teacher-anchor retrieval surface:
 
-- `paper/draft.md`
-  当前 manuscript 主体，适合先快速理解“这条线到底证明了什么”
-- `paper/claim_evidence_map.json`
-  每个 claim 对应哪些证据，适合 review 时核对有没有 overclaim
-- `paper/evidence_ledger.json`
-  当前 paper 线真正引用了哪些实验/分析结果
-- `paper/review/review.md`
-  独立审稿式 review，总结这条线目前最可信的说法和边界
-- `baselines/imported/nvrc-local-source/verification.md`
-  基线验证记录，说明这条线是建立在哪个可复用 baseline 上
-- `experiments/main/scripts/`
-  关键入口脚本，负责 export interface、packet eval、frozen consumer eval、delta bridge eval
-- `experiments/main/evals/`
-  已经跑出来的主要评估结果
-- `experiments/main/interface_bundles/`
-  已经导出的 interface bundle，可直接拿来观察 packet/original/reconstructed 数据
+- Upstream machine-oriented compression / packet interfaces can be exported.
+- With a frozen packet surface, query-adaptive arbitration reaches headline
+  `top1_accuracy = 0.15625` on the bounded teacher-anchor retrieval surface.
+- This supports the claim that frozen packet outputs still contain
+  downstream-recoverable structure.
+- It does not yet prove a universal machine-facing adapter for long videos,
+  larger consumers, or arbitrary custom datasets.
 
-## 建议的阅读顺序
+The new pipeline package in this PR adds a cleaner project entrypoint for the
+NVRC-style codec side:
 
-1. `PR_LOCAL_REVIEW.md`
-   先看这次本地 PR 想交什么、为什么值得 review。
-2. `paper/draft.md`
-   看方法、结果、边界。
-3. `paper/review/review.md`
-   看目前最可能被质疑的点和已经收住的边界。
-4. `docs/LEARNING_PATH.md`
-   按代码和数据资产往下追，理解 repo 结构。
-5. `docs/LONG_VIDEO_CUSTOM_DATA_GUIDE.md`
-   如果你要继续动手，这里是下一步操作手册。
+- `x -> NVRC-style compression -> x_hat`
+- `x -> teacher/tokenizer -> y`
+- `x_hat -> teacher/tokenizer -> y_hat`
+- training signal: keep `y_hat` close to `y` while preserving the codec/rate
+  contract.
 
-## Repo 结构速览
+## Quick Start: Small Demo
+
+The small demo requires no GPU and does not train NVRC. It creates two synthetic
+result folders and compares them with the same parser and ranking rule used for
+real runs.
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e ".[dev]"
+
+python -m machine_codec_pipeline list-profiles
+python -m machine_codec_pipeline demo --output-root runs/readme_demo
+python -m machine_codec_pipeline compare \
+  runs/readme_demo/bootstrap_demo \
+  runs/readme_demo/shared_semchange_delta_demo
+```
+
+Expected demo files:
+
+```text
+runs/readme_demo/bootstrap_demo/results/all.txt
+runs/readme_demo/bootstrap_demo/pipeline_summary.json
+runs/readme_demo/shared_semchange_delta_demo/results/all.txt
+runs/readme_demo/shared_semchange_delta_demo/pipeline_summary.json
+runs/readme_demo/demo_compare.json
+```
+
+The comparison sorts by lower `teacher-mse_avg`, then higher `psnr_avg`, then
+lower `bpp_avg`.
+
+## Project Layout
 
 ```text
 .
-├── baselines/
-│   └── imported/nvrc-local-source/        # 当前确认过的 baseline 及验证记录
-├── experiments/
-│   └── main/
-│       ├── scripts/                       # 真正可复用的实验入口脚本
-│       ├── interface_bundles/             # 已导出的 machine-facing bundle
-│       └── evals/                         # 各条线的评估输出
-├── paper/
-│   ├── draft.md                           # 当前 manuscript
-│   ├── claim_evidence_map.json            # claim -> evidence 映射
-│   ├── evidence_ledger.json               # paper 使用的证据总账
-│   ├── review/                            # skeptical review 与 revision log
-│   └── proofing/                          # proofing 记录
-├── docs/
-│   ├── LEARNING_PATH.md                   # 如何学习和观察当前已有内容
-│   └── LONG_VIDEO_CUSTOM_DATA_GUIDE.md    # 如何继续跑更长视频和自己的数据
-└── PR_LOCAL_REVIEW.md                     # 本地 GitHub PR 说明
+├── src/machine_codec_pipeline/            # Packaged CLI and orchestration code
+├── tools/run_machine_codec_pipeline.py    # Backward-compatible wrapper script
+├── docs/machine_codec_pipeline.md         # Full NVRC pipeline link graph
+├── patches/nvrc_machine_oriented_pipeline.patch
+│                                           # NVRC-side teacher-aware codec patch
+├── third_party/NVRC/                      # NVRC codec submodule
+├── tests/                                 # Lightweight package tests
+├── paper/                                 # Existing paper bundle and evidence
+├── experiments/main/                      # Existing experiment scripts/results
+├── baselines/                             # Confirmed baseline records
+└── PR_LOCAL_REVIEW.md                     # Existing paper-line PR notes
 ```
 
-## 现在这条线最值得看的几个结果
+## Pipeline Modules
 
-- 主结果：
-  `paper/draft.md` 第 4 节，以及 `paper/evidence_ledger.json` 里的 `query_adaptive_teacher_anchor_arbitration_smoke_r1`
-- 更宽一点但仍然保守的补充验证：
-  `paper/evidence_ledger.json` 里的 `query_adaptive_broader_retrieval_validation_smoke_r1`
-- 明确的负结果边界：
-  `paper/draft.md` 第 5 节里关于 downstream-consumer bridge smoke 的说明
+1. Codec backbone
+   `third_party/NVRC/main_nvrc.py` runs the train, encode, decode, and evaluate
+   loop for the INR/NVRC codec.
 
-## 快速复现入口
+2. Teacher/tokenizer supervision
+   The NVRC patch adds `teacher_utils.py` plus teacher-aware task and loss
+   wiring so reconstructed video can be supervised through frozen teacher
+   features.
 
-当前最直接的 bounded smoke 入口是：
+3. Profile registry
+   `src/machine_codec_pipeline/profiles.py` maps experiment names such as
+   `bootstrap`, `semchange_delta`, and `shared_semchange_delta` to concrete
+   NVRC task configs and smoke-test arguments.
+
+4. Launcher and bookkeeping
+   `src/machine_codec_pipeline/cli.py` provides one command surface for smoke
+   checks, bounded runs, comparisons, and the small local demo.
+
+5. Output contract
+   Full runs write native NVRC outputs plus `pipeline_summary.json`, which
+   records the selected profile, command, experiment directory, and parsed
+   aggregate metrics.
+
+## NVRC Patch Note
+
+The outer Python package and small demo work without modifying NVRC. For full
+teacher-aware codec training, apply the included NVRC patch first:
+
+```bash
+cd third_party/NVRC
+git am ../../patches/nvrc_machine_oriented_pipeline.patch
+```
+
+The patch adds the frozen-teacher adapter, teacher-aware losses/tasks, tiny
+local configs, and the `shared_semchange_delta` profile used by the bounded
+research run. It is included as a patch because the upstream NVRC submodule
+remote requires separate push credentials. Once an accessible NVRC branch exists,
+the patch can be replaced by a normal submodule pointer update.
+
+## Smoke Check A Real Profile
+
+Use this before a full experiment to verify the teacher/tokenizer command path:
+
+```bash
+python -m machine_codec_pipeline smoke \
+  --profile shared_semchange_delta \
+  --dry-run
+```
+
+Remove `--dry-run` when the NVRC environment is installed and the teacher smoke
+script can run locally.
+
+The old script path remains valid:
+
+```bash
+python tools/run_machine_codec_pipeline.py smoke \
+  --profile shared_semchange_delta \
+  --dry-run
+```
+
+## Run A Bounded NVRC Pilot
+
+Start with `--dry-run` to inspect the exact NVRC command before spending
+compute:
+
+```bash
+python -m machine_codec_pipeline run \
+  --profile shared_semchange_delta \
+  --exp-name shared_semchange_delta_tiny_local_r1 \
+  --dataset-dir /abs/path/to/data \
+  --dataset tiny_video \
+  --video-size 4 32 32 \
+  --patch-size 1 32 32 \
+  --epochs 1 \
+  --warmup-epochs 0 \
+  --eval-epochs 1 \
+  --rate-steps 1 \
+  --workers 0 \
+  --dry-run
+```
+
+When `--dry-run` is removed, the launcher delegates to:
+
+```text
+third_party/NVRC/main_nvrc.py
+```
+
+and expects NVRC to write:
+
+```text
+runs/<exp-name>/results/all.txt
+```
+
+After that, the launcher writes:
+
+```text
+runs/<exp-name>/pipeline_summary.json
+```
+
+## Compare Real Runs
+
+```bash
+python -m machine_codec_pipeline compare \
+  runs/bootstrap_tiny_local \
+  runs/shared_semchange_delta_tiny_local
+```
+
+Each argument can be either an experiment directory containing
+`results/all.txt` or a direct path to a result file.
+
+## Existing Paper-Line Reading Order
+
+For the existing paper/evidence package on `main`, use this order:
+
+1. `PR_LOCAL_REVIEW.md`
+   Explains what the current local PR/evidence line is meant to deliver.
+2. `paper/draft.md`
+   Manuscript body with method, results, and scoped limitations.
+3. `paper/review/review.md`
+   Skeptical review of the current claims and boundaries.
+4. `docs/LEARNING_PATH.md`
+   Walkthrough of the existing code and data assets.
+5. `docs/LONG_VIDEO_CUSTOM_DATA_GUIDE.md`
+   Operational guide for longer videos and custom data.
+
+The most direct bounded smoke entry for that existing line is:
 
 ```bash
 ./experiments/main/scripts/run_querybank_teacher_anchor_smoke.sh
 ```
 
-它会默认读取已有的 collapse-localization summary，然后调用：
+## Current Research Boundary
 
-```bash
-python experiments/main/scripts/run_teacher_anchor_packet_eval.py
-```
-
-如果你只是想先理解当前已有 bundle 和下游 consumer 的关系，建议按下面顺序试：
-
-1. 观察已有 interface bundle
-2. 跑 frozen consumer eval
-3. 再跑 delta-packet bridge eval
-
-具体步骤见 `docs/LONG_VIDEO_CUSTOM_DATA_GUIDE.md`。
-
-## 当前状态
-
-- baseline：已确认
-- paper line：bundle ready
-- manuscript：可人工 review
-- 当前最合理的下一步：不是继续补“有没有结果”，而是把这条线 review 清楚，然后决定是否继续做更长视频 / 更大 consumer / 自定义数据集扩展
-
+The new NVRC pipeline package validates orchestration, demo execution, result
+parsing, and command construction. The current bounded research evidence
+supports the local/proxy teacher-MSE trend for `shared_semchange_delta`, but it
+should not yet be described as a fully validated real-egocentric codec or a
+universal one-shot compression model. Full egocentric, UVG, or MCL validation
+remains the next research step.
