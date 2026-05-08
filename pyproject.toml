@@ -11,7 +11,9 @@ requires-python = ">=3.10"
 authors = [
   { name = "vid_tokenizer contributors" }
 ]
-dependencies = []
+dependencies = [
+  "pillow"
+]
 
 [project.optional-dependencies]
 dev = [

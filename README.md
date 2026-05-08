@@ -1,158 +1,210 @@
-# vid_tokenizer: Machine-Oriented Video Compression Toolkit
+# vid_tokenizer
 
-This repository collects the current machine-oriented video compression work in
-two reviewable layers:
+`vid_tokenizer` is a machine-oriented video compression project built around an
+NVRC-style codec pipeline. The repository is organized as a GitHub-style
+engineering repo: active code and user-facing docs stay at the top level,
+historical notes and process material are archived under `arxiv/`.
 
-1. An existing paper/evidence line for machine-facing packet evaluation.
-2. This PR's project-style NVRC pipeline wrapper for teacher/tokenizer-aware
-   compression experiments.
+The current packaged pipeline covers four things:
 
-The shared idea is not ordinary human-viewing compression. The goal is to keep
-compressed egocentric video useful for downstream machine understanding.
+1. turn one raw video into a PNG-frame dataset
+2. run one bounded or chunked NVRC experiment profile
+3. collect structured run summaries under a consistent output contract
+4. compare original vs reconstructed video with an OpenAI vision model
 
-## Current Repository Context
+## Repository Guide
 
-The existing `main` line already contains a bounded paper-ready package around a
-query-adaptive teacher-anchor retrieval surface:
+- `src/machine_codec_pipeline/`
+  Main Python package and CLI.
+- `docs/`
+  User-facing setup, structure, and pipeline docs.
+- `outputs/`
+  Canonical output area for demos, run artifacts, and tracked examples.
+- `patches/nvrc_machine_oriented_pipeline.patch`
+  NVRC-side teacher-aware patch.
+- `third_party/NVRC/`
+  NVRC submodule.
+- `arxiv/legacy_notes/`
+  Archived Markdown notes, handoffs, and old process material.
 
-- Upstream machine-oriented compression / packet interfaces can be exported.
-- With a frozen packet surface, query-adaptive arbitration reaches headline
-  `top1_accuracy = 0.15625` on the bounded teacher-anchor retrieval surface.
-- This supports the claim that frozen packet outputs still contain
-  downstream-recoverable structure.
-- It does not yet prove a universal machine-facing adapter for long videos,
-  larger consumers, or arbitrary custom datasets.
+The fastest follow-up docs are:
 
-The new pipeline package in this PR adds a cleaner project entrypoint for the
-NVRC-style codec side:
+1. `docs/PROJECT_STRUCTURE.md`
+2. `docs/machine_codec_pipeline.md`
+3. `docs/LONG_VIDEO_CUSTOM_DATA_GUIDE.md`
 
-- `x -> NVRC-style compression -> x_hat`
-- `x -> teacher/tokenizer -> y`
-- `x_hat -> teacher/tokenizer -> y_hat`
-- training signal: keep `y_hat` close to `y` while preserving the codec/rate
-  contract.
+## Environment Setup
 
-## Quick Start: Small Demo
+### 1. Clone with submodules
 
-The small demo requires no GPU and does not train NVRC. It creates two synthetic
-result folders and compares them with the same parser and ranking rule used for
-real runs.
+```bash
+git clone --recursive <your-repo-url>
+cd vid_tokenizer
+```
+
+If you already cloned the repo without submodules:
+
+```bash
+git submodule update --init --recursive
+```
+
+### 2. Create a Python environment
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
+python -m pip install --upgrade pip
 python -m pip install -e ".[dev]"
-
-python -m machine_codec_pipeline list-profiles
-python -m machine_codec_pipeline demo --output-root runs/readme_demo
-python -m machine_codec_pipeline compare \
-  runs/readme_demo/bootstrap_demo \
-  runs/readme_demo/shared_semchange_delta_demo
 ```
 
-Expected demo files:
+The packaged CLI depends on `pillow`. Real NVRC runs also need the NVRC-side
+runtime stack such as `torch`, `torchvision`, `pyyaml`, and `accelerate`.
 
-```text
-runs/readme_demo/bootstrap_demo/results/all.txt
-runs/readme_demo/bootstrap_demo/pipeline_summary.json
-runs/readme_demo/shared_semchange_delta_demo/results/all.txt
-runs/readme_demo/shared_semchange_delta_demo/pipeline_summary.json
-runs/readme_demo/demo_compare.json
+### 3. Install `ffmpeg`
+
+`prepare-video` and the OpenAI report helpers rely on `ffmpeg`.
+
+Quick check:
+
+```bash
+ffmpeg -version
 ```
 
-The comparison sorts by lower `teacher-mse_avg`, then higher `psnr_avg`, then
-lower `bpp_avg`.
+### 4. Apply the NVRC patch before real codec runs
 
-## Project Layout
-
-```text
-.
-├── src/machine_codec_pipeline/            # Packaged CLI and orchestration code
-├── tools/run_machine_codec_pipeline.py    # Backward-compatible wrapper script
-├── docs/machine_codec_pipeline.md         # Full NVRC pipeline link graph
-├── patches/nvrc_machine_oriented_pipeline.patch
-│                                           # NVRC-side teacher-aware codec patch
-├── third_party/NVRC/                      # NVRC codec submodule
-├── tests/                                 # Lightweight package tests
-├── paper/                                 # Existing paper bundle and evidence
-├── experiments/main/                      # Existing experiment scripts/results
-├── baselines/                             # Confirmed baseline records
-└── PR_LOCAL_REVIEW.md                     # Existing paper-line PR notes
-```
-
-## Pipeline Modules
-
-1. Codec backbone
-   `third_party/NVRC/main_nvrc.py` runs the train, encode, decode, and evaluate
-   loop for the INR/NVRC codec.
-
-2. Teacher/tokenizer supervision
-   The NVRC patch adds `teacher_utils.py` plus teacher-aware task and loss
-   wiring so reconstructed video can be supervised through frozen teacher
-   features.
-
-3. Profile registry
-   `src/machine_codec_pipeline/profiles.py` maps experiment names such as
-   `bootstrap`, `semchange_delta`, and `shared_semchange_delta` to concrete
-   NVRC task configs and smoke-test arguments.
-
-4. Launcher and bookkeeping
-   `src/machine_codec_pipeline/cli.py` provides one command surface for smoke
-   checks, bounded runs, comparisons, and the small local demo.
-
-5. Output contract
-   Full runs write native NVRC outputs plus `pipeline_summary.json`, which
-   records the selected profile, command, experiment directory, and parsed
-   aggregate metrics.
-
-## NVRC Patch Note
-
-The outer Python package and small demo work without modifying NVRC. For full
-teacher-aware codec training, apply the included NVRC patch first:
+The outer Python package works without modifying NVRC, but teacher-aware codec
+training and the current experiment profiles expect the bundled NVRC patch:
 
 ```bash
 cd third_party/NVRC
 git am ../../patches/nvrc_machine_oriented_pipeline.patch
+cd ../..
 ```
 
-The patch adds the frozen-teacher adapter, teacher-aware losses/tasks, tiny
-local configs, and the `shared_semchange_delta` profile used by the bounded
-research run. It is included as a patch because the upstream NVRC submodule
-remote requires separate push credentials. Once an accessible NVRC branch exists,
-the patch can be replaced by a normal submodule pointer update.
+### 5. Configure the OpenAI key
 
-## Smoke Check A Real Profile
-
-Use this before a full experiment to verify the teacher/tokenizer command path:
+Create a local `.env` file from the example:
 
 ```bash
-python -m machine_codec_pipeline smoke \
-  --profile shared_semchange_delta \
-  --dry-run
+cp .env.example .env
 ```
 
-Remove `--dry-run` when the NVRC environment is installed and the teacher smoke
-script can run locally.
-
-The old script path remains valid:
+Then set:
 
 ```bash
-python tools/run_machine_codec_pipeline.py smoke \
-  --profile shared_semchange_delta \
-  --dry-run
+OPENAI_API_KEY=your_key_here
 ```
 
-## Run A Bounded NVRC Pilot
+The OpenAI comparison commands first read `OPENAI_API_KEY` from the process
+environment, then fall back to the repo-local `.env`.
 
-Start with `--dry-run` to inspect the exact NVRC command before spending
-compute:
+## Quick Command Index
+
+After `pip install -e .`, you can use either form:
 
 ```bash
-python -m machine_codec_pipeline run \
+machine-codec --help
+python -m machine_codec_pipeline --help
+```
+
+Main commands:
+
+- `machine-codec list-profiles`
+- `machine-codec demo`
+- `machine-codec prepare-video`
+- `machine-codec run`
+- `machine-codec run-chunked`
+- `machine-codec compare`
+- `machine-codec video-qa-report`
+- `machine-codec video-qa-chunked-report`
+
+## Canonical Output Layout
+
+The repository now treats `outputs/` as the main project output surface.
+
+```text
+outputs/
+├── demo/            # tiny local demo outputs
+├── examples/        # lightweight tracked example artifacts
+├── runs/            # full local run artifacts (ignored by Git)
+└── video_windows/   # extracted PNG windows and chunk indices
+```
+
+Tracked examples live under `outputs/examples/` and should stay lightweight:
+contact sheets, compact summaries, and human-readable reports. Full chunk-level
+run artifacts belong under `outputs/runs/` and extracted frame windows under
+`outputs/video_windows/`; both are ignored by Git.
+
+The current curated real-video example is:
+
+- `outputs/examples/ego4d_real_full_video_openai/`
+
+It keeps the OpenAI QA report, both contact sheets, compact public metrics, and
+raw model answers, while the much heavier chunk-level codec artifacts stay in
+the local-only run area.
+
+## Quick Smoke Demo
+
+This path does not train NVRC. It creates two tiny synthetic result folders and
+checks that the comparison layer is working.
+
+```bash
+machine-codec list-profiles
+machine-codec demo --output-root outputs/demo/readme_demo
+machine-codec compare \
+  outputs/demo/readme_demo/bootstrap_demo \
+  outputs/demo/readme_demo/shared_semchange_delta_demo
+```
+
+Expected files:
+
+```text
+outputs/demo/readme_demo/bootstrap_demo/results/all.txt
+outputs/demo/readme_demo/bootstrap_demo/pipeline_summary.json
+outputs/demo/readme_demo/shared_semchange_delta_demo/results/all.txt
+outputs/demo/readme_demo/shared_semchange_delta_demo/pipeline_summary.json
+outputs/demo/readme_demo/demo_compare.json
+```
+
+## End-to-End Pipeline For One Real Video
+
+### Step 1. Extract a bounded or full-video window
+
+Example: extract a 64-frame window from one video and also create chunked frame
+datasets.
+
+```bash
+machine-codec prepare-video \
+  --video-path /abs/path/to/ego4d_video.mp4 \
+  --output-dir outputs/video_windows/ego4d_64f \
+  --start-frame 0 \
+  --num-frames 64 \
+  --width 32 \
+  --height 32 \
+  --chunk-size 16 \
+  --chunk-output-root outputs/video_windows/ego4d_64f_chunks \
+  --overwrite
+```
+
+Expected artifacts:
+
+```text
+outputs/video_windows/ego4d_64f/extraction_manifest.json
+outputs/video_windows/ego4d_64f/prepare_video_summary.json
+outputs/video_windows/ego4d_64f_chunks/ego4d_64f_chunk00/
+outputs/video_windows/ego4d_64f_chunks/ego4d_64f_chunk_index.json
+```
+
+### Step 2. Run the codec pipeline on the extracted data
+
+For one bounded dataset:
+
+```bash
+machine-codec run \
   --profile shared_semchange_delta \
-  --exp-name shared_semchange_delta_tiny_local_r1 \
-  --dataset-dir /abs/path/to/data \
-  --dataset tiny_video \
+  --exp-name ego4d_64f_shared_semchange_delta \
+  --dataset-dir outputs/video_windows \
+  --dataset ego4d_64f \
   --video-size 4 32 32 \
   --patch-size 1 32 32 \
   --epochs 1 \
@@ -160,64 +212,172 @@ python -m machine_codec_pipeline run \
   --eval-epochs 1 \
   --rate-steps 1 \
   --workers 0 \
-  --dry-run
+  --output-root outputs/runs
 ```
 
-When `--dry-run` is removed, the launcher delegates to:
-
-```text
-third_party/NVRC/main_nvrc.py
-```
-
-and expects NVRC to write:
-
-```text
-runs/<exp-name>/results/all.txt
-```
-
-After that, the launcher writes:
-
-```text
-runs/<exp-name>/pipeline_summary.json
-```
-
-## Compare Real Runs
+For a longer or full video that has already been chunked:
 
 ```bash
-python -m machine_codec_pipeline compare \
-  runs/bootstrap_tiny_local \
-  runs/shared_semchange_delta_tiny_local
+machine-codec run-chunked \
+  --profile shared_semchange_delta \
+  --chunk-index outputs/video_windows/ego4d_64f_chunks/ego4d_64f_chunk_index.json \
+  --exp-name-prefix ego4d_64f_shared_semchange_delta \
+  --output-root outputs/runs \
+  --epochs 1 \
+  --warmup-epochs 0 \
+  --eval-epochs 1 \
+  --rate-steps 1 \
+  --workers 0 \
+  --eval-enable-log
 ```
 
-Each argument can be either an experiment directory containing
-`results/all.txt` or a direct path to a result file.
+Notes:
 
-## Existing Paper-Line Reading Order
+- `--eval-enable-log` is important when you later want to build reconstructed
+  contact sheets for downstream QA.
+- `run-chunked` can infer `video-size` and `patch-size` from chunk manifests
+  created by `prepare-video`.
 
-For the existing paper/evidence package on `main`, use this order:
+### Step 3. Run the downstream OpenAI comparison
 
-1. `PR_LOCAL_REVIEW.md`
-   Explains what the current local PR/evidence line is meant to deliver.
-2. `paper/draft.md`
-   Manuscript body with method, results, and scoped limitations.
-3. `paper/review/review.md`
-   Skeptical review of the current claims and boundaries.
-4. `docs/LEARNING_PATH.md`
-   Walkthrough of the existing code and data assets.
-5. `docs/LONG_VIDEO_CUSTOM_DATA_GUIDE.md`
-   Operational guide for longer videos and custom data.
-
-The most direct bounded smoke entry for that existing line is:
+Once the chunked summary JSON exists, run the original-vs-reconstructed QA
+comparison:
 
 ```bash
-./experiments/main/scripts/run_querybank_teacher_anchor_smoke.sh
+machine-codec video-qa-chunked-report \
+  --chunked-summary outputs/runs/ego4d_64f_shared_semchange_delta_chunked_summary.json \
+  --model gpt-4.1-mini \
+  --question "Taking into account all the actions performed by c, what can you deduce about the primary objective and focus within the video content?" \
+  --option "C is cooking." \
+  --option "C is doing laundry." \
+  --option "C is cleaning the kitchen." \
+  --option "C is cleaning dishes." \
+  --option "C is cleaning the bathroom." \
+  --answer-index 3 \
+  --sample-count 12 \
+  --output-dir outputs/runs/ego4d_64f_openai_qa
 ```
 
-## Current Research Boundary
+Expected files:
 
-The new NVRC pipeline package validates orchestration, demo execution, result
-parsing, and command construction. The current bounded research evidence
-supports the local/proxy teacher-MSE trend for `shared_semchange_delta`, but it
-should not yet be described as a fully validated real-egocentric codec or a
-universal one-shot compression model. Full egocentric, UVG, or MCL validation
-remains the next research step.
+```text
+outputs/runs/ego4d_64f_openai_qa/original_contact_sheet.png
+outputs/runs/ego4d_64f_openai_qa/reconstructed_contact_sheet.png
+outputs/runs/ego4d_64f_openai_qa/original_response.json
+outputs/runs/ego4d_64f_openai_qa/reconstructed_response.json
+outputs/runs/ego4d_64f_openai_qa/summary.json
+outputs/runs/ego4d_64f_openai_qa/report.md
+```
+
+If `--output-dir` is omitted, the command writes into a default
+`downstream_llm/openai-<model>` folder next to the source report or chunked
+summary parent directory.
+
+## How To Change The LLM Model
+
+The current implementation exposes OpenAI as the packaged downstream example.
+
+### Change only the model name
+
+Use `--model`:
+
+```bash
+machine-codec video-qa-chunked-report \
+  --chunked-summary outputs/runs/your_summary.json \
+  --model gpt-4.1 \
+  --question "..." \
+  --option "A" \
+  --option "B" \
+  --answer-index 0
+```
+
+The same applies to `video-qa-report`.
+
+### Change the provider implementation
+
+Right now `--provider` is intentionally restricted to `openai`. If you want to
+plug in Gemini or another VLM/LLM provider, the main integration points are:
+
+- `src/machine_codec_pipeline/video_qa.py`
+- `src/machine_codec_pipeline/cli.py`
+
+That is where provider selection, request formatting, and response parsing are
+currently defined.
+
+## How To Change The Dataset Or Video Path
+
+The pipeline is now designed around a few explicit path knobs:
+
+### Use a different raw video
+
+Change `--video-path` on `prepare-video`:
+
+```bash
+machine-codec prepare-video \
+  --video-path /abs/path/to/another_video.mp4 \
+  --output-dir outputs/video_windows/another_video_64f \
+  --num-frames 64
+```
+
+### Use a different extracted PNG dataset
+
+For bounded runs, change:
+
+- `--dataset-dir`
+- `--dataset`
+
+Example:
+
+```bash
+machine-codec run \
+  --profile shared_semchange_delta \
+  --exp-name custom_dataset_run \
+  --dataset-dir /abs/path/to/png_datasets \
+  --dataset my_dataset_name
+```
+
+### Use a different chunked dataset
+
+For longer videos, change `--chunk-index`:
+
+```bash
+machine-codec run-chunked \
+  --profile shared_semchange_delta \
+  --chunk-index /abs/path/to/my_chunk_index.json \
+  --exp-name-prefix my_video_profile \
+  --output-root outputs/runs
+```
+
+### Move outputs somewhere else
+
+Every major stage accepts an explicit output path:
+
+- `prepare-video --output-dir`
+- `prepare-video --chunk-output-root`
+- `run --output-root`
+- `run-chunked --output-root`
+- `video-qa-report --output-dir`
+- `video-qa-chunked-report --output-dir`
+
+## Included Example Outputs
+
+The repository keeps a tracked example bundle under `outputs/examples/` so the
+current pipeline has a concrete reference artifact inside the code repo itself.
+
+Use it as:
+
+- a layout reference
+- a sanity check for expected summary/report files
+- a quick way to inspect what one OpenAI comparison bundle looks like
+
+## Historical Material
+
+Older root Markdown files, handoff notes, and process-heavy documentation are
+preserved under:
+
+```text
+arxiv/legacy_notes/
+```
+
+That archive is for history and reference, not for the main day-to-day project
+entry surface.

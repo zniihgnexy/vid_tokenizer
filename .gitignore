@@ -2,6 +2,17 @@
 Datasets/
 DeepScientist/
 Outputs/
+.env
+.venv/
+runs/
+outputs/runs/
+outputs/video_windows/
+outputs/examples/**/bitstreams/
+outputs/examples/**/checkpoints/
+outputs/examples/**/outputs/
+outputs/examples/**/rank_0/
+outputs/examples/**/results/
+outputs/examples/**/tmp/
 
 # Common local noise
 .DS_Store

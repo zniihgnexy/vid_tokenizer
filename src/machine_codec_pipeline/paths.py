@@ -39,4 +39,4 @@ def smoke_script(repo_root: Path) -> Path:
 
 
 def default_output_root(repo_root: Path) -> Path:
-    return repo_root / "runs"
+    return repo_root / "outputs" / "runs"
