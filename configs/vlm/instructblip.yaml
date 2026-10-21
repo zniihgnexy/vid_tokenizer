@@ -1,0 +1,7 @@
+# InstructBLIP-vicuna-7b backbone config.
+backbone: instructblip
+model_path: /mnt/nas/xinyizheng/instructblip-vicuna-7b
+device: cuda
+input_size: 224          # EVA-CLIP ViT-g input
+align_layer: 20          # of 39 EVA-CLIP layers (mid, ~12/24 ratio of InternVL)
+smoke_image: /mnt/nas/xinyizheng/InternVL2_5-8B/examples/image1.jpg

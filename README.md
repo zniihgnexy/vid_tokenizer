@@ -1,383 +1,81 @@
-# vid_tokenizer
+# Machine-oriented video coding for frozen VLMs
 
-`vid_tokenizer` is a machine-oriented video compression project built around an
-NVRC-style codec pipeline. The repository is organized as a GitHub-style
-engineering repo: active code and user-facing docs stay at the top level,
-historical notes and process material are archived under `arxiv/`.
+Code for a per-video implicit neural representation (INR) video codec whose decoded output is
+consumed by a **frozen** vision-language model (VLM) instead of a human viewer. The codec
+(HiNeRV / NVRC) is trained per video with a rate–distortion loss whose distortion term is measured
+in the VLM's own feature space, so the bits are spent on what the downstream model actually uses.
 
-The current packaged pipeline covers four things:
+The main configuration evaluated in the paper:
 
-1. turn one raw video into a PNG-frame dataset
-2. run one bounded or chunked NVRC experiment profile
-3. collect structured run summaries under a consistent output contract
-4. compare original vs reconstructed video with an OpenAI vision model
+| Component | Setting |
+|---|---|
+| Receiver | InternVL2.5-8B, frozen (InternVL3.5-8B as a second receiver) |
+| Codec | NVRC / HiNeRV, one model per video, 30 epochs |
+| Receiver-side adapter | one *universal* adapter per backbone, frozen, not charged to the bitstream |
+| Per-video side information | 2 KB FiLM delta on the adapter, **counted in the bitstream** |
+| Alignment target | joint layer-12 + layer-24 features of the frozen vision encoder |
+| Rate tag in result files | `cap_r1_<rung>_n1224_dfilm` |
 
-## Repository Guide
+Evaluation is multiple-choice video QA (EgoSchema, Video-MME long/motion subset, LongVideoBench)
+compared at equal bits per pixel against HEVC, VVC, DCVC-RT, image ICM codecs and compressed
+feature caches.
 
-- `src/machine_codec_pipeline/`
-  Main Python package and CLI.
-- `docs/`
-  User-facing setup, structure, and pipeline docs.
-- `outputs/`
-  Canonical output area for demos, run artifacts, and tracked examples.
-- `patches/nvrc_machine_oriented_pipeline.patch`
-  NVRC-side teacher-aware patch.
-- `third_party/NVRC/`
-  NVRC submodule.
-- `arxiv/legacy_notes/`
-  Archived Markdown notes, handoffs, and old process material.
-
-The fastest follow-up docs are:
-
-1. `docs/PROJECT_STRUCTURE.md`
-2. `docs/machine_codec_pipeline.md`
-3. `docs/LONG_VIDEO_CUSTOM_DATA_GUIDE.md`
-
-## Environment Setup
-
-### 1. Clone with submodules
-
-```bash
-git clone --recursive <your-repo-url>
-cd vid_tokenizer
-```
-
-If you already cloned the repo without submodules:
-
-```bash
-git submodule update --init --recursive
-```
-
-### 2. Create a Python environment
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
-```
-
-The packaged CLI depends on `pillow`. Real NVRC runs also need the NVRC-side
-runtime stack such as `torch`, `torchvision`, `pyyaml`, and `accelerate`.
-
-### 3. Install `ffmpeg`
-
-`prepare-video` and the OpenAI report helpers rely on `ffmpeg`.
-
-Quick check:
-
-```bash
-ffmpeg -version
-```
-
-### 4. Apply the NVRC patch before real codec runs
-
-The outer Python package works without modifying NVRC, but teacher-aware codec
-training and the current experiment profiles expect the bundled NVRC patch:
-
-```bash
-cd third_party/NVRC
-git am ../../patches/nvrc_machine_oriented_pipeline.patch
-cd ../..
-```
-
-### 5. Configure the OpenAI key
-
-Create a local `.env` file from the example:
-
-```bash
-cp .env.example .env
-```
-
-Then set:
-
-```bash
-OPENAI_API_KEY=your_key_here
-```
-
-The OpenAI comparison commands first read `OPENAI_API_KEY` from the process
-environment, then fall back to the repo-local `.env`.
-
-## Quick Command Index
-
-After `pip install -e .`, you can use either form:
-
-```bash
-machine-codec --help
-python -m machine_codec_pipeline --help
-```
-
-Main commands:
-
-- `machine-codec list-profiles`
-- `machine-codec demo`
-- `machine-codec prepare-video`
-- `machine-codec run`
-- `machine-codec run-chunked`
-- `machine-codec compare`
-- `machine-codec video-qa-report`
-- `machine-codec video-qa-chunked-report`
-
-## Canonical Output Layout
-
-The repository now treats `outputs/` as the main project output surface.
+## Repository layout
 
 ```text
-outputs/
-├── demo/            # tiny local demo outputs
-├── examples/        # lightweight tracked example artifacts
-├── runs/            # full local run artifacts (ignored by Git)
-└── video_windows/   # extracted PNG windows and chunk indices
+src/machine_codec_pipeline/   Python package: data, VLM backends, QA evaluation, feature-cache codecs
+configs/                      dataset definitions (frames, sampling, QA fields) and VLM specs
+third_party/NVRC/             upstream NVRC, pinned submodule (unmodified)
+patches/                      our changes to NVRC as one patch (alignment losses, adapter, FiLM delta)
+scripts/units/                atomic GPU jobs: train one codec, evaluate one video, one baseline point
+scripts/experiments/          one script per paper experiment; writes jobs into the queue
+scripts/queue_runner.py       GPU job queue for a shared multi-GPU server
+scripts/ops/                  read-only health/status helpers for the cluster
+tools/                        harvest, statistics and paper-table generation (CPU only)
+tests/                        unit tests (pytest)
+docs/                         architecture, reproduction guide, cluster notes
 ```
 
-Tracked examples live under `outputs/examples/` and should stay lightweight:
-contact sheets, compact summaries, and human-readable reports. Full chunk-level
-run artifacts belong under `outputs/runs/` and extracted frame windows under
-`outputs/video_windows/`; both are ignored by Git.
+Run artifacts (`outputs/`, `logs/`, `queue/`), datasets and model weights are not tracked.
 
-The current curated real-video example is:
-
-- `outputs/examples/ego4d_real_full_video_openai/`
-
-It keeps the OpenAI QA report, both contact sheets, compact public metrics, and
-raw model answers, while the much heavier chunk-level codec artifacts stay in
-the local-only run area.
-
-## Quick Smoke Demo
-
-This path does not train NVRC. It creates two tiny synthetic result folders and
-checks that the comparison layer is working.
+## Setup
 
 ```bash
-machine-codec list-profiles
-machine-codec demo --output-root outputs/demo/readme_demo
-machine-codec compare \
-  outputs/demo/readme_demo/bootstrap_demo \
-  outputs/demo/readme_demo/shared_semchange_delta_demo
+git clone --recurse-submodules <this repo> && cd vid_tokenizer
+bash scripts/setup_nvrc.sh              # init the NVRC submodule and apply patches/
+conda create -n nvrc python=3.13 && conda activate nvrc   # >=3.10 works; tests run on 3.13
+pip install torch torchvision           # match your CUDA version
+pip install -e ".[nvrc,dev]"
+# upstream codec dependencies: see third_party/NVRC/install_env.sh
+cp .env.example .env                    # only needed for the optional OpenAI QA path
+pytest                                  # 40 tests, CPU only
 ```
 
-Expected files:
+External tools used by baselines: `ffmpeg` with libx265 (HEVC), vvenc/vvdec (VVC, built under
+`third_party/baselines/`), and the DCVC-RT / CompressAI / UG-ICM checkpoints. See
+[docs/CLUSTER.md](docs/CLUSTER.md).
 
-```text
-outputs/demo/readme_demo/bootstrap_demo/results/all.txt
-outputs/demo/readme_demo/bootstrap_demo/pipeline_summary.json
-outputs/demo/readme_demo/shared_semchange_delta_demo/results/all.txt
-outputs/demo/readme_demo/shared_semchange_delta_demo/pipeline_summary.json
-outputs/demo/readme_demo/demo_compare.json
-```
+## Where to start
 
-## End-to-End Pipeline For One Real Video
+| You want to | Read |
+|---|---|
+| Understand how the pieces fit together | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+| Re-run an experiment or regenerate a paper table | [docs/REPRODUCE.md](docs/REPRODUCE.md) |
+| Run jobs on the shared GPU server | [docs/CLUSTER.md](docs/CLUSTER.md) |
+| Know what each script / tool does | [scripts/README.md](scripts/README.md), [tools/README.md](tools/README.md) |
+| See what we changed inside NVRC | [patches/README.md](patches/README.md) |
 
-### Step 1. Extract a bounded or full-video window
-
-Example: extract a 64-frame window from one video and also create chunked frame
-datasets.
+## Minimal example: one video, end to end
 
 ```bash
-machine-codec prepare-video \
-  --video-path /abs/path/to/ego4d_video.mp4 \
-  --output-dir outputs/video_windows/ego4d_64f \
-  --start-frame 0 \
-  --num-frames 64 \
-  --width 32 \
-  --height 32 \
-  --chunk-size 16 \
-  --chunk-output-root outputs/video_windows/ego4d_64f_chunks \
-  --overwrite
+export PYTHONPATH=src DATASET=egoschema OUT_ROOT=outputs/demo RESULTS_CSV=outputs/demo/results.csv
+export INTERNVL_MODEL_PATH=/path/to/InternVL2_5-8B NVRC_FROZEN_ADAPTER=/path/to/universal_adapter.pt
+export NVRC_ADAPTER_DELTA=film RATE_SUFFIX=_dfilm
+python tools/egoschema_prep.py --n 5                      # build a 5-video QA manifest
+U=<video_idx from outputs/datasets/egoschema/manifest.jsonl>
+bash scripts/units/train_codec.sh     --uuid $U --rate cap --capacity r1 --teacher-layer 1224 --gpu 0
+bash scripts/units/eval_downstream.sh --uuid $U --rate cap --capacity r1 --loss-variant n1224 --gpu 0
+bash scripts/units/eval_oracle.sh     --uuid $U --gpu 0   # uncompressed-frames reference
+bash scripts/units/baseline_pixel.sh  --uuid $U --crf 33 --gpu 0
+cat outputs/demo/results.csv
 ```
-
-Expected artifacts:
-
-```text
-outputs/video_windows/ego4d_64f/extraction_manifest.json
-outputs/video_windows/ego4d_64f/prepare_video_summary.json
-outputs/video_windows/ego4d_64f_chunks/ego4d_64f_chunk00/
-outputs/video_windows/ego4d_64f_chunks/ego4d_64f_chunk_index.json
-```
-
-### Step 2. Run the codec pipeline on the extracted data
-
-For one bounded dataset:
-
-```bash
-machine-codec run \
-  --profile shared_semchange_delta \
-  --exp-name ego4d_64f_shared_semchange_delta \
-  --dataset-dir outputs/video_windows \
-  --dataset ego4d_64f \
-  --video-size 4 32 32 \
-  --patch-size 1 32 32 \
-  --epochs 1 \
-  --warmup-epochs 0 \
-  --eval-epochs 1 \
-  --rate-steps 1 \
-  --workers 0 \
-  --output-root outputs/runs
-```
-
-For a longer or full video that has already been chunked:
-
-```bash
-machine-codec run-chunked \
-  --profile shared_semchange_delta \
-  --chunk-index outputs/video_windows/ego4d_64f_chunks/ego4d_64f_chunk_index.json \
-  --exp-name-prefix ego4d_64f_shared_semchange_delta \
-  --output-root outputs/runs \
-  --epochs 1 \
-  --warmup-epochs 0 \
-  --eval-epochs 1 \
-  --rate-steps 1 \
-  --workers 0 \
-  --eval-enable-log
-```
-
-Notes:
-
-- `--eval-enable-log` is important when you later want to build reconstructed
-  contact sheets for downstream QA.
-- `run-chunked` can infer `video-size` and `patch-size` from chunk manifests
-  created by `prepare-video`.
-
-### Step 3. Run the downstream OpenAI comparison
-
-Once the chunked summary JSON exists, run the original-vs-reconstructed QA
-comparison:
-
-```bash
-machine-codec video-qa-chunked-report \
-  --chunked-summary outputs/runs/ego4d_64f_shared_semchange_delta_chunked_summary.json \
-  --model gpt-4.1-mini \
-  --question "Taking into account all the actions performed by c, what can you deduce about the primary objective and focus within the video content?" \
-  --option "C is cooking." \
-  --option "C is doing laundry." \
-  --option "C is cleaning the kitchen." \
-  --option "C is cleaning dishes." \
-  --option "C is cleaning the bathroom." \
-  --answer-index 3 \
-  --sample-count 12 \
-  --output-dir outputs/runs/ego4d_64f_openai_qa
-```
-
-Expected files:
-
-```text
-outputs/runs/ego4d_64f_openai_qa/original_contact_sheet.png
-outputs/runs/ego4d_64f_openai_qa/reconstructed_contact_sheet.png
-outputs/runs/ego4d_64f_openai_qa/original_response.json
-outputs/runs/ego4d_64f_openai_qa/reconstructed_response.json
-outputs/runs/ego4d_64f_openai_qa/summary.json
-outputs/runs/ego4d_64f_openai_qa/report.md
-```
-
-If `--output-dir` is omitted, the command writes into a default
-`downstream_llm/openai-<model>` folder next to the source report or chunked
-summary parent directory.
-
-## How To Change The LLM Model
-
-The current implementation exposes OpenAI as the packaged downstream example.
-
-### Change only the model name
-
-Use `--model`:
-
-```bash
-machine-codec video-qa-chunked-report \
-  --chunked-summary outputs/runs/your_summary.json \
-  --model gpt-4.1 \
-  --question "..." \
-  --option "A" \
-  --option "B" \
-  --answer-index 0
-```
-
-The same applies to `video-qa-report`.
-
-### Change the provider implementation
-
-Right now `--provider` is intentionally restricted to `openai`. If you want to
-plug in Gemini or another VLM/LLM provider, the main integration points are:
-
-- `src/machine_codec_pipeline/video_qa.py`
-- `src/machine_codec_pipeline/cli.py`
-
-That is where provider selection, request formatting, and response parsing are
-currently defined.
-
-## How To Change The Dataset Or Video Path
-
-The pipeline is now designed around a few explicit path knobs:
-
-### Use a different raw video
-
-Change `--video-path` on `prepare-video`:
-
-```bash
-machine-codec prepare-video \
-  --video-path /abs/path/to/another_video.mp4 \
-  --output-dir outputs/video_windows/another_video_64f \
-  --num-frames 64
-```
-
-### Use a different extracted PNG dataset
-
-For bounded runs, change:
-
-- `--dataset-dir`
-- `--dataset`
-
-Example:
-
-```bash
-machine-codec run \
-  --profile shared_semchange_delta \
-  --exp-name custom_dataset_run \
-  --dataset-dir /abs/path/to/png_datasets \
-  --dataset my_dataset_name
-```
-
-### Use a different chunked dataset
-
-For longer videos, change `--chunk-index`:
-
-```bash
-machine-codec run-chunked \
-  --profile shared_semchange_delta \
-  --chunk-index /abs/path/to/my_chunk_index.json \
-  --exp-name-prefix my_video_profile \
-  --output-root outputs/runs
-```
-
-### Move outputs somewhere else
-
-Every major stage accepts an explicit output path:
-
-- `prepare-video --output-dir`
-- `prepare-video --chunk-output-root`
-- `run --output-root`
-- `run-chunked --output-root`
-- `video-qa-report --output-dir`
-- `video-qa-chunked-report --output-dir`
-
-## Included Example Outputs
-
-The repository keeps a tracked example bundle under `outputs/examples/` so the
-current pipeline has a concrete reference artifact inside the code repo itself.
-
-Use it as:
-
-- a layout reference
-- a sanity check for expected summary/report files
-- a quick way to inspect what one OpenAI comparison bundle looks like
-
-## Historical Material
-
-Older root Markdown files, handoff notes, and process-heavy documentation are
-preserved under:
-
-```text
-arxiv/legacy_notes/
-```
-
-That archive is for history and reference, not for the main day-to-day project
-entry surface.

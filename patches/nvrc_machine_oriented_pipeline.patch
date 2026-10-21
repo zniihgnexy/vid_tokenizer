@@ -1,70 +1,371 @@
-From 8ed16bbbd5962648f53f4128057c102f9b0713ed Mon Sep 17 00:00:00 2001
-From: Xiniyi_Zheng <wf24018@bristol.ac.uk>
-Date: Thu, 23 Apr 2026 20:23:07 +0800
-Subject: [PATCH] add machine-oriented teacher pipeline wiring
-
----
- compress_models/__init__.py                   |   2 +-
- losses.py                                     |   8 +-
- main_nvrc.py                                  |   6 +-
- main_utils.py                                 | 132 +++++--
- models/__init__.py                            |   2 +-
- .../configs/data/video/png/tiny_local.yaml    |   5 +
- .../nvrc/compress_models/nvrc_tiny_s1.yaml    |  43 +++
- .../configs/nvrc/models/teacher_tiny_32.yaml  |  26 ++
- scripts/configs/nvrc/overfit/tiny-1e.yaml     |  13 +
- .../tasks/overfit/l1_teacher-bootstrap.yaml   |   9 +
- .../l1_teacher-dinov2-semchange-delta.yaml    |  14 +
- ...teacher-dinov2-shared-semchange-delta.yaml |  15 +
- .../l1_teacher-resnet18-blueprint.yaml        |  11 +
- .../l1_teacher-resnet18-bootstrap.yaml        |   9 +
- .../l1_teacher-resnet18-delta-w05.yaml        |  11 +
- .../overfit/l1_teacher-resnet18-delta.yaml    |  11 +
- .../overfit/l1_teacher-resnet18-readout.yaml  |  15 +
- .../overfit/l1_teacher-resnet18-relation.yaml |  12 +
- .../l1_teacher-resnet18-semchange-delta.yaml  |  14 +
- .../l1_teacher-resnet18-semchange-gamma2.yaml |  12 +
- .../l1_teacher-resnet18-semchange.yaml        |  12 +
- ...acher-resnet18-shared-semchange-delta.yaml |  15 +
- tasks.py                                      | 187 +++++++++-
- teacher_utils.py                              | 327 ++++++++++++++++++
- utils.py                                      |  41 ++-
- 25 files changed, 904 insertions(+), 48 deletions(-)
- create mode 100644 scripts/configs/data/video/png/tiny_local.yaml
- create mode 100644 scripts/configs/nvrc/compress_models/nvrc_tiny_s1.yaml
- create mode 100644 scripts/configs/nvrc/models/teacher_tiny_32.yaml
- create mode 100644 scripts/configs/nvrc/overfit/tiny-1e.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-bootstrap.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-dinov2-semchange-delta.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-dinov2-shared-semchange-delta.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-bootstrap.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-delta-w05.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-delta.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-readout.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-relation.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-delta.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-gamma2.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange.yaml
- create mode 100644 scripts/configs/tasks/overfit/l1_teacher-resnet18-shared-semchange-delta.yaml
- create mode 100644 teacher_utils.py
-
-diff --git a/compress_models/__init__.py b/compress_models/__init__.py
-index def1dc0..a616429 100644
---- a/compress_models/__init__.py
-+++ b/compress_models/__init__.py
-@@ -5,4 +5,4 @@ def create_compress_model(logger, model, cfgs):
+diff -ruN -x .git -x __pycache__ upstream/.gitignore ours/.gitignore
+--- upstream/.gitignore	2026-10-21 09:23:27
++++ ours/.gitignore	1970-01-01 01:00:00
+@@ -1,160 +0,0 @@
+-# Byte-compiled / optimized / DLL files
+-__pycache__/
+-*.py[cod]
+-*$py.class
+-
+-# C extensions
+-*.so
+-
+-# Distribution / packaging
+-.Python
+-build/
+-develop-eggs/
+-dist/
+-downloads/
+-eggs/
+-.eggs/
+-lib/
+-lib64/
+-parts/
+-sdist/
+-var/
+-wheels/
+-share/python-wheels/
+-*.egg-info/
+-.installed.cfg
+-*.egg
+-MANIFEST
+-
+-# PyInstaller
+-#  Usually these files are written by a python script from a template
+-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+-*.manifest
+-*.spec
+-
+-# Installer logs
+-pip-log.txt
+-pip-delete-this-directory.txt
+-
+-# Unit test / coverage reports
+-htmlcov/
+-.tox/
+-.nox/
+-.coverage
+-.coverage.*
+-.cache
+-nosetests.xml
+-coverage.xml
+-*.cover
+-*.py,cover
+-.hypothesis/
+-.pytest_cache/
+-cover/
+-
+-# Translations
+-*.mo
+-*.pot
+-
+-# Django stuff:
+-*.log
+-local_settings.py
+-db.sqlite3
+-db.sqlite3-journal
+-
+-# Flask stuff:
+-instance/
+-.webassets-cache
+-
+-# Scrapy stuff:
+-.scrapy
+-
+-# Sphinx documentation
+-docs/_build/
+-
+-# PyBuilder
+-.pybuilder/
+-target/
+-
+-# Jupyter Notebook
+-.ipynb_checkpoints
+-
+-# IPython
+-profile_default/
+-ipython_config.py
+-
+-# pyenv
+-#   For a library or package, you might want to ignore these files since the code is
+-#   intended to run in multiple environments; otherwise, check them in:
+-# .python-version
+-
+-# pipenv
+-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+-#   install all needed dependencies.
+-#Pipfile.lock
+-
+-# poetry
+-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+-#   This is especially recommended for binary packages to ensure reproducibility, and is more
+-#   commonly ignored for libraries.
+-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+-#poetry.lock
+-
+-# pdm
+-#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+-#pdm.lock
+-#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
+-#   in version control.
+-#   https://pdm.fming.dev/#use-with-ide
+-.pdm.toml
+-
+-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+-__pypackages__/
+-
+-# Celery stuff
+-celerybeat-schedule
+-celerybeat.pid
+-
+-# SageMath parsed files
+-*.sage.py
+-
+-# Environments
+-.env
+-.venv
+-env/
+-venv/
+-ENV/
+-env.bak/
+-venv.bak/
+-
+-# Spyder project settings
+-.spyderproject
+-.spyproject
+-
+-# Rope project settings
+-.ropeproject
+-
+-# mkdocs documentation
+-/site
+-
+-# mypy
+-.mypy_cache/
+-.dmypy.json
+-dmypy.json
+-
+-# Pyre type checker
+-.pyre/
+-
+-# pytype static type analyzer
+-.pytype/
+-
+-# Cython debug symbols
+-cython_debug/
+-
+-# PyCharm
+-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+-#.idea/
+\ No newline at end of file
+diff -ruN -x .git -x __pycache__ upstream/codec_to_vit_adapter.py ours/codec_to_vit_adapter.py
+--- upstream/codec_to_vit_adapter.py	1970-01-01 01:00:00
++++ ours/codec_to_vit_adapter.py	2026-10-21 09:23:39
+@@ -0,0 +1,185 @@
++"""Pathway B-mid: codec feature -> InternViT patch embeddings.
++
++The CodecAdapter maps HiNeRV's internal pre-RGB feature [N, T, H, W, C_in]
++into something shaped exactly like InternViT's patch-embedding output
++[N*T, num_patches, hidden]. That tensor is then routed through the *first
++``num_layers`` blocks* of a frozen InternViT encoder, so the codec is
++explicitly trained to produce a representation that the VLM can read at
++depth.
++
++A parallel oracle path runs the same patch (as a real RGB frame) through the
++same frozen InternViT and exposes its layer-N hidden state. The training
++loss aligns the two hidden states with smooth-L1 + (1 - cosine).
++"""
++
++from __future__ import annotations
++
++import torch
++import torch.nn as nn
++import torch.nn.functional as F
++
++
++class CodecAdapter(nn.Module):
++    """Project INR pre-RGB feature [N, T, H, W, C_in] to ViT-shaped patch
++    embeddings [N*T, num_patches, hidden_dim].
++
++    The output is in the exact shape and meaning of InternViT's
++    ``embeddings.patch_embedding`` output (pre CLS / pos-embed), so a frozen
++    InternViT encoder can read it directly.
++    """
++
++    def __init__(self, in_channels: int, num_patches: int, hidden_dim: int,
++                 mid_channels: int = 256):
++        super().__init__()
++        grid = int(round(num_patches ** 0.5))
++        assert grid * grid == num_patches, \
++            f'num_patches must be a perfect square (got {num_patches})'
++        self.in_channels = int(in_channels)
++        self.num_patches = int(num_patches)
++        self.hidden_dim = int(hidden_dim)
++        self.grid = grid
++        self.mid_channels = int(mid_channels)
++
++        self.proj = nn.Sequential(
++            nn.Conv2d(self.in_channels, self.mid_channels, kernel_size=3, padding=1),
++            nn.GELU(),
++            nn.Conv2d(self.mid_channels, self.mid_channels, kernel_size=3, padding=1),
++            nn.GELU(),
++        )
++        self.to_hidden = nn.Conv2d(self.mid_channels, self.hidden_dim, kernel_size=1)
++        self.out_norm = nn.LayerNorm(self.hidden_dim)
++
++    def forward(self, feature: torch.Tensor) -> torch.Tensor:
++        assert feature.ndim == 5, \
++            f'expected [N, T, H, W, C], got {tuple(feature.shape)}'
++        n, t, h, w, c = feature.shape
++        assert c == self.in_channels, \
++            f'feature channels {c} != configured in_channels {self.in_channels}'
++        x = feature.permute(0, 1, 4, 2, 3).reshape(n * t, c, h, w).contiguous()
++        x = self.proj(x)
++        x = F.adaptive_avg_pool2d(x, (self.grid, self.grid))
++        x = self.to_hidden(x)
++        x = x.flatten(2).transpose(1, 2).contiguous()
++        return self.out_norm(x)
++
++
++class DeltaAdapter(nn.Module):
++    """Frozen CodecAdapter base + a tiny per-video trainable delta (E-01, 2026-10-04).
++
++    mode: 'film' | 'loraR' | 'film+loraR'. Only the delta parameters train; the base is
++    shared across videos (receiver-side) and the delta is what the bitstream must carry.
++    Forward reproduces CodecAdapter.forward with the delta inserted at the 1x1 projection.
++    """
++
++    def __init__(self, base: 'CodecAdapter', mode: str):
++        super().__init__()
++        self.base = base
++        for p in self.base.parameters():
++            p.requires_grad = False
++        self.mode = mode
++        parts = set(mode.split('+'))
++        self.use_film = 'film' in parts
++        rank = [int(p[4:]) for p in parts if p.startswith('lora')]
++        self.rank = rank[0] if rank else 0
++        hid, mid = base.hidden_dim, base.mid_channels
++        if self.use_film:
++            self.film_scale = nn.Parameter(torch.ones(1, hid, 1, 1))
++            self.film_shift = nn.Parameter(torch.zeros(1, hid, 1, 1))
++        if self.rank:
++            self.lora_a = nn.Conv2d(mid, self.rank, kernel_size=1, bias=False)
++            self.lora_b = nn.Conv2d(self.rank, hid, kernel_size=1, bias=False)
++            nn.init.kaiming_uniform_(self.lora_a.weight, a=5 ** 0.5)
++            nn.init.zeros_(self.lora_b.weight)          # delta starts at exactly zero
++
++    # --- what the bitstream has to carry
++    def delta_state_dict(self):
++        return {k: v for k, v in self.state_dict().items() if not k.startswith('base.')}
++
++    def delta_num_params(self):
++        return sum(v.numel() for v in self.delta_state_dict().values())
++
++    def delta_int8_bytes(self):
++        """Conservative accounting: every delta scalar as one int8 byte, no entropy coding."""
++        return self.delta_num_params()
++
++    def forward(self, feature: torch.Tensor) -> torch.Tensor:
++        b = self.base
++        n, t, h, w, c = feature.shape
++        x = feature.permute(0, 1, 4, 2, 3).reshape(n * t, c, h, w).contiguous()
++        x = b.proj(x)
++        x = F.adaptive_avg_pool2d(x, (b.grid, b.grid))
++        y = b.to_hidden(x)
++        if self.rank:
++            y = y + self.lora_b(self.lora_a(x))
++        if self.use_film:
++            y = y * self.film_scale + self.film_shift
++        y = y.flatten(2).transpose(1, 2).contiguous()
++        return b.out_norm(y)
++
++
++def add_cls_and_pos(vit_embeddings, patch_embeds: torch.Tensor,
++                    grid: int) -> torch.Tensor:
++    """Prepend CLS and add InternViT's position embedding to patch_embeds.
++
++    Mirrors ``InternVisionEmbeddings.forward`` but starts from already-projected
++    patch embeddings (so the codec branch can skip patch_embedding conv).
++    """
++    target_dtype = patch_embeds.dtype
++    batch = patch_embeds.shape[0]
++    cls = vit_embeddings.class_embedding.expand(batch, 1, -1).to(target_dtype)
++    x = torch.cat([cls, patch_embeds], dim=1)
++    pos = vit_embeddings.position_embedding
++    if pos.shape[1] == x.shape[1]:
++        pos_eff = pos
++    else:
++        pos_eff = torch.cat([
++            pos[:, :1, :],
++            vit_embeddings._get_pos_embed(pos[:, 1:, :], grid, grid),
++        ], dim=1)
++    return x + pos_eff.to(target_dtype)
++
++
++def run_first_n_layers(vit_encoder, hidden_states: torch.Tensor,
++                       num_layers: int) -> torch.Tensor:
++    """Forward through the first ``num_layers`` of InternViT encoder.
++
++    The encoder's parameters stay frozen, but gradients still flow to inputs.
++    """
++    out = hidden_states
++    for layer in vit_encoder.layers[:num_layers]:
++        out = layer(out)
++        if isinstance(out, tuple):
++            out = out[0]
++    return out
++
++
++@torch.no_grad()
++def forward_oracle_first_n_layers(vision_model, pixel_values: torch.Tensor,
++                                  num_layers: int) -> torch.Tensor:
++    """Run real RGB frames through InternViT.embeddings + first N encoder
++    layers. Returns layer-N hidden state shaped [B, 1 + num_patches, hidden].
++
++    Always under ``no_grad`` — this is the oracle target.
++    """
++    target_dtype = vision_model.embeddings.patch_embedding.weight.dtype
++    pixel_values = pixel_values.to(target_dtype)
++    h = vision_model.embeddings(pixel_values=pixel_values)
++    return run_first_n_layers(vision_model.encoder, h, num_layers)
++
++
++def detect_vit_dims(vision_model) -> dict:
++    """Return {num_patches, hidden_dim, num_layers, image_size, patch_size}."""
++    emb = vision_model.embeddings
++    num_patches = int(emb.num_patches)
++    hidden_dim = int(emb.embed_dim)
++    image_size = int(emb.image_size)
++    patch_size = int(emb.patch_size)
++    num_layers = len(vision_model.encoder.layers)
++    return {
++        'num_patches': num_patches,
++        'hidden_dim': hidden_dim,
++        'num_layers': int(num_layers),
++        'image_size': image_size,
++        'patch_size': patch_size,
++        'grid': image_size // patch_size,
++    }
+diff -ruN -x .git -x __pycache__ upstream/compress_models/__init__.py ours/compress_models/__init__.py
+--- upstream/compress_models/__init__.py	2026-10-21 09:23:27
++++ ours/compress_models/__init__.py	2026-04-23 16:02:18
+@@ -5,4 +5,4 @@
      if cfgs['type'] == 'NVRC':
          return nvrc.build_compress_model(logger, model, cfgs['config'])
      else:
 -        raise ValueError(f'Unknown compress model type: {cfgs['type']}')
 \ No newline at end of file
 +        raise ValueError(f"Unknown compress model type: {cfgs['type']}")
-diff --git a/losses.py b/losses.py
-index f9cefdf..eea197f 100644
---- a/losses.py
-+++ b/losses.py
-@@ -3,6 +3,7 @@ Losses
+diff -ruN -x .git -x __pycache__ upstream/losses.py ours/losses.py
+--- upstream/losses.py	2026-10-21 09:23:27
++++ ours/losses.py	2026-04-23 16:02:18
+@@ -3,6 +3,7 @@
  """
  from utils import *
  import pytorch_msssim
@@ -72,7 +373,7 @@ index f9cefdf..eea197f 100644
  
  
  def check_shape(x, y):
-@@ -208,7 +209,7 @@ def compute_loss(name, x, y):
+@@ -208,7 +209,7 @@
      return loss
  
  
@@ -81,7 +382,7 @@ index f9cefdf..eea197f 100644
      assert x.ndim == 5 and y.ndim == 5, 'inputs are expected to have 5D ([N, C, T, H, W])'
      x, y = x.float(), y.float()
  
-@@ -236,7 +237,10 @@ def compute_metric(name, x, y):
+@@ -236,7 +237,10 @@
          metric = ms_ssim_y(x, y)
      elif name == 'ms-ssim-y-5x5':
          metric = ms_ssim_y(x, y, win_size=5)
@@ -94,11 +395,10 @@ index f9cefdf..eea197f 100644
 -    return metric
 \ No newline at end of file
 +    return metric
-diff --git a/main_nvrc.py b/main_nvrc.py
-index effffd3..4fa1717 100644
---- a/main_nvrc.py
-+++ b/main_nvrc.py
-@@ -145,7 +145,7 @@ def main():
+diff -ruN -x .git -x __pycache__ upstream/main_nvrc.py ours/main_nvrc.py
+--- upstream/main_nvrc.py	2026-10-21 09:23:27
++++ ours/main_nvrc.py	2026-05-21 15:38:50
+@@ -145,7 +145,7 @@
  
          intra_bs = model.compress(intra_bs)
          intra_bs_len = len(intra_bs)
@@ -107,7 +407,7 @@ index effffd3..4fa1717 100644
          write_bitstream(output_dir, f'bitstream', bs)
          write_bitstream(output_dir, f'{intra_idx:04d}', intra_bs)
  
-@@ -160,7 +160,7 @@ def main():
+@@ -160,7 +160,7 @@
          # Decompress bitstream and evaluate
          logger.info(f'Decoding model weights from bitstream.')
          start_dec_time = time.time()
@@ -116,20 +416,46 @@ index effffd3..4fa1717 100644
          intra_bs = read_bitstream(output_dir, f'{intra_idx:04d}')
          intra_bs = model.decompress(intra_bs)
  
-@@ -225,4 +225,4 @@ def main():
+@@ -178,6 +178,22 @@
+                                 accelerator, model, eval_loader, eval_task, True)
+         eval_time = time.time() - start_eval_time
+         logger.info(f'Evaluation completed in: {eval_time:.2f}s')
++
++        # Pathway B: map the decoded codec's internal feature through the
++        # trained token head and save VLM tokens (no pixel reconstruction).
++        capture_codec_tokens(output_dir, f'{intra_idx:04d}/decoded', logger,
++                             model, eval_loader, eval_task, train_task.token_head)
++        # Pathway B-mid: capture one (codec, oracle) hidden-state sample so
++        # the demo can render a side-by-side heatmap.
++        eval_task.codec_adapter = train_task.codec_adapter
++        eval_task.adapter_optimizer = train_task.adapter_optimizer
++        eval_task._vit_dims_cache = train_task._vit_dims_cache
++        capture_codec_hidden_sample(output_dir, f'{intra_idx:04d}/decoded', logger,
++                                    model, eval_loader, eval_task)
++        # Pathway B-mid: codec -> adapter -> full InternViT -> mlp1 -> save
++        # InternVL-shaped tokens, so downstream VQA can run with zero pixels.
++        capture_codec_adapter_tokens(output_dir, f'{intra_idx:04d}/decoded', logger,
++                                     model, eval_loader, eval_task)
+ 
+         # Concatenate outputs
+         concate_outputs(os.path.join(output_dir, 'outputs', f'{intra_idx:04d}/decoded'),
+@@ -225,4 +241,4 @@
  
  
  if __name__ == '__main__':
 -    main()
 \ No newline at end of file
 +    main()
-diff --git a/main_utils.py b/main_utils.py
-index facf716..0a8dff5 100644
---- a/main_utils.py
-+++ b/main_utils.py
-@@ -20,7 +20,8 @@ dynamo.config.verbose = True
+diff -ruN -x .git -x __pycache__ upstream/main_utils.py ours/main_utils.py
+--- upstream/main_utils.py	2026-10-21 09:23:27
++++ ours/main_utils.py	2026-10-21 09:23:50
+@@ -18,9 +18,11 @@
+ 
+ dynamo.config.verbose = True
  dynamo.config.cache_size_limit = 24
- dynamo.config.compiled_autograd = True
+-dynamo.config.compiled_autograd = True
++if hasattr(dynamo.config, 'compiled_autograd'):  # absent in older torch (cloned llava eval env)
++    dynamo.config.compiled_autograd = True
  
 -deepspeed.utils.logger.setLevel('WARNING')
 +if deepspeed is not None:
@@ -137,7 +463,7 @@ index facf716..0a8dff5 100644
  
  
  @dataclass
-@@ -128,6 +129,28 @@ class OverfitTaskConfig:
+@@ -128,6 +130,34 @@
      color_space: str = 'RGB'
      lamb: float = 1.0
      enable_log: bool = False
@@ -163,10 +489,16 @@ index facf716..0a8dff5 100644
 +    teacher_function_readout_out_dim: int = 16
 +    teacher_function_readout_seed: int = 0
 +    teacher_function_readout_seeds: str = ''
++    teacher_token_consistency: bool = False
++    teacher_token_consistency_weight: float = 1.0
++    teacher_hidden_consistency: bool = False
++    teacher_hidden_consistency_weight: float = 1.0
++    teacher_hidden_layer_index: int = 12
++    teacher_hidden_cos_weight: float = 0.5
  
  
  def parse_args():
-@@ -140,7 +163,7 @@ def parse_args():
+@@ -140,7 +170,7 @@
      group.add_argument('--eval-data-config', type=str, default=None,
                         help='path to evaluation data config')
      group.add_argument('--train-task-config', type=str, default='scripts/configs/tasks/overfit/l1_ms-ssim.yaml',
@@ -175,7 +507,7 @@ index facf716..0a8dff5 100644
      group.add_argument('--eval-task-config', type=str, default=None,
                         help='path to evaluation task config')
      group.add_argument('--compress-model-config', type=str, default='scripts/configs/nvrc/compress_models/nvrc.yaml',
-@@ -169,6 +192,47 @@ def parse_args():
+@@ -169,6 +199,51 @@
      group.add_argument('--eval-enable-log', type=str_to_bool, default=None, help='Enable logging for evaluation')
      group.add_argument('--color-space', type=str, default=None, help='Color space for training')
      group.add_argument('--lamb', type=float, nargs='+', default=None, help='Lambda for training')
@@ -220,10 +552,14 @@ index facf716..0a8dff5 100644
 +                       help='Seed used to build the frozen function-readout bank')
 +    group.add_argument('--teacher-function-readout-seeds', type=str, default=None,
 +                       help='Comma-separated fixed seed list for multi-seed function-readout banks')
++    group.add_argument('--teacher-token-consistency', type=str_to_bool, default=None,
++                       help='Enable Pathway B token-consistency loss (codec tokens vs InternViT tokens)')
++    group.add_argument('--teacher-token-consistency-weight', type=float, default=None,
++                       help='Weight of the Pathway B token-consistency loss')
  
      group.add_argument('--use-epochs', type=str_to_bool, default=None, help='Epoch or iteration for training')
      group.add_argument('--epochs', type=int, default=None, help='Number of epochs for training')
-@@ -269,6 +333,20 @@ def parse_args():
+@@ -269,6 +344,23 @@
              assert hasattr(args.train_task, k), f'The {k} should be in the task config'
              setattr(args.train_task, k, getattr(args_raw, k))
              setattr(args.eval_task, k, getattr(args_raw, k))
@@ -236,15 +572,18 @@ index facf716..0a8dff5 100644
 +             'teacher_semantic_change_gamma', 'teacher_function_readout_consistency',
 +              'teacher_function_readout_weight', 'teacher_function_readout_bank_size',
 +              'teacher_function_readout_hidden_dim', 'teacher_function_readout_out_dim',
-+              'teacher_function_readout_seed', 'teacher_function_readout_seeds']:
-+        if getattr(args_raw, k) is not None:
++              'teacher_function_readout_seed', 'teacher_function_readout_seeds',
++              'teacher_token_consistency', 'teacher_token_consistency_weight',
++              'teacher_hidden_consistency', 'teacher_hidden_consistency_weight',
++              'teacher_hidden_layer_index', 'teacher_hidden_cos_weight']:
++        if getattr(args_raw, k, None) is not None:
 +            assert hasattr(args.train_task, k), f'The {k} should be in the task config'
 +            setattr(args.train_task, k, getattr(args_raw, k))
 +            setattr(args.eval_task, k, getattr(args_raw, k))
  
      # Train config
      for k in ['use_epochs', 'epochs', 'warmup_epochs',
-@@ -316,7 +394,7 @@ def profile_model(logger, model, loader, task, get_macs=True):
+@@ -316,7 +408,7 @@
  
      with torch.no_grad():
          inputs, _ = task.parse_batch(next(iter(loader)))
@@ -253,7 +592,7 @@ index facf716..0a8dff5 100644
          # Compute number of parameters
          num_params = sum(v.numel() for v in model.model.parameters()) + sum(v.numel() for v in model.param_model.parameters())
          num_params_codec = sum(v.numel() for v in model.parameters())
-@@ -333,19 +411,25 @@ def profile_model(logger, model, loader, task, get_macs=True):
+@@ -333,19 +425,25 @@
              # Compute MACs
              _profile_model = _ProfilingModel(model)
              _profile_model.eval()
@@ -292,7 +631,30 @@ index facf716..0a8dff5 100644
          else:
              num_macs, num_macs_rate = np.nan, np.nan
          return num_params, num_params_codec, num_macs, num_macs_rate
-@@ -455,7 +539,7 @@ def train_epoch(output_dir, name, epoch, args, logger, accelerator, model, loade
+@@ -402,6 +500,22 @@
+     def _opt_step():
+         optimizer.step()
+         optimizer.zero_grad()
++        # Pathway B: the token head trains on its own optimizer, built lazily
++        # by the task on the first d_step.
++        token_optimizer = getattr(task, 'token_optimizer', None)
++        if token_optimizer is not None:
++            token_optimizer.step()
++            token_optimizer.zero_grad()
++        # Pathway B-mid: the codec adapter trains on its own optimizer.
++        adapter_optimizer = getattr(task, 'adapter_optimizer', None)
++        if adapter_optimizer is not None:
++            adapter_optimizer.step()
++            adapter_optimizer.zero_grad()
++        # Pathway B-mid: the codec adapter trains on its own optimizer.
++        adapter_optimizer = getattr(task, 'adapter_optimizer', None)
++        if adapter_optimizer is not None:
++            adapter_optimizer.step()
++            adapter_optimizer.zero_grad()
+ 
+     if accelerator.state.dynamo_plugin.backend != accelerate.utils.DynamoBackend.NO:
+         _d_forward_step = torch.compile(_d_forward_step, **accelerator.state.dynamo_plugin.to_kwargs())
+@@ -455,7 +569,7 @@
                             ((i + 1) // (args.grad_accum * rate_steps))
              # Logging loss & metrics
              log_msg = f'Train' +  f' - Epoch {epoch} [{i + 1}/{len(loader)}]'
@@ -301,7 +663,37 @@ index facf716..0a8dff5 100644
              log_msg = log_msg + f'    img/s: {samples / (time.time() - start_time):.2f}'
              log_msg = log_msg + f'    loss: {reduced_loss + reduced_rate_loss:.4f}'
              log_msg = log_msg + f'    r_loss: {reduced_rate_loss:.4f}'
-@@ -522,7 +606,7 @@ def eval_epoch(output_dir, name, epoch_or_str, args, logger, accelerator, model,
+@@ -472,6 +586,29 @@
+     if log_output:
+         task.flush(dir=os.path.join(output_dir, 'outputs', name, f'{epoch}'))
+ 
++    # Pathway B-mid: append per-epoch metrics to CSV (for the demo renderer).
++    # This is additive — it only writes if hidden metrics are present and only
++    # on the main process to avoid races.
++    hidden_metrics = getattr(task, '_last_hidden_metrics', None)
++    if hidden_metrics is not None and accelerator.is_main_process:
++        csv_dir = os.path.join(output_dir, 'outputs', name)
++        os.makedirs(csv_dir, exist_ok=True)
++        csv_path = os.path.join(csv_dir, 'training_metrics.csv')
++        header_needed = not os.path.exists(csv_path)
++        with open(csv_path, 'a') as f:
++            if header_needed:
++                f.write('epoch,total_loss,bpp,psnr,hidden_smooth_l1,hidden_cos,hidden_loss\n')
++            psnr_val = float(reduced_metrics.get('psnr', float('nan'))) if reduced_metrics else float('nan')
++            total = (reduced_loss or 0.0) + (reduced_rate_loss or 0.0)
++            f.write(
++                f'{epoch},{total:.6f},'
++                f'{(reduced_rate or 0.0):.6f},'
++                f'{psnr_val:.4f},'
++                f'{hidden_metrics["smooth_l1"]:.6f},'
++                f'{hidden_metrics["cos"]:.6f},'
++                f'{hidden_metrics["hidden_loss"]:.6f}\n'
++            )
++
+     return reduced_loss + reduced_rate_loss, {'bpp': reduced_rate, **reduced_metrics}
+ 
+ 
+@@ -522,7 +659,7 @@
          # Accumulate loss and metrics
          accum_loss = mean_loss.detach() if accum_loss is None else accum_loss + mean_loss.detach()
          accum_metrices = {k: mean_metrics[k].mean() \
@@ -310,7 +702,7 @@ index facf716..0a8dff5 100644
                            for k in mean_metrics}
          if (i + 1) % rate_steps == 0:
              accum_rate_loss = rate_loss.detach() if accum_rate_loss is None else accum_rate_loss + rate_loss.detach()
-@@ -560,7 +644,7 @@ def eval_epoch(output_dir, name, epoch_or_str, args, logger, accelerator, model,
+@@ -560,7 +697,7 @@
      return reduced_loss + reduced_rate_loss, {'bpp': reduced_rate, **reduced_metrics}
  
  
@@ -319,7 +711,7 @@ index facf716..0a8dff5 100644
      return (epoch + 1) % args.eval_epochs == 0 or (epoch + 1) == num_epochs
  
  
-@@ -637,7 +721,7 @@ def create_encoding_decoding_videos(output_dir, args, logger, training=True, inp
+@@ -637,7 +774,7 @@
          video_out.set_padding(padding)
          video_out.set_patch_size(patch_size)
  
@@ -328,7 +720,7 @@ index facf716..0a8dff5 100644
      logger.info(f'     Video size: {video_in.get_video_size()}    Patch size: {video_in.get_patch_size()}')
      logger.info(f'     Padding: {padding}')
  
-@@ -663,7 +747,7 @@ def create_overfit_loader(args, logger,  accelerator, dataset, start_frame=-1, n
+@@ -663,7 +800,7 @@
      else:
          subset = dataset
  
@@ -337,7 +729,7 @@ index facf716..0a8dff5 100644
  
      # Create loader
      loader_kwargs = {
-@@ -687,11 +771,11 @@ def create_overfit_task(*args,**kwargs):
+@@ -687,11 +824,11 @@
  
  def create_codec(output_dir, name, args, logger, accelerator, loader, task):
      # INR Model
@@ -351,40 +743,234 @@ index facf716..0a8dff5 100644
      compress_model = compress_models.create_compress_model(logger, model, cfgs=args.compress_model)
      return compress_model
  
-@@ -835,4 +919,4 @@ def write_results_eval(output_dir, name, epoch_or_iter, args, logger, accelerato
+@@ -787,6 +924,161 @@
+     path = os.path.join(output_dir, 'outputs', name, f'{epoch_or_str}')
+     os.makedirs(path, exist_ok=True)
+     torch.save(model.state_dict(), os.path.join(path, 'pytorch_model.bin'))
++
++
++def capture_codec_adapter_tokens(output_dir, name, logger, model, loader, task):
++    """Pathway B-mid: codec -> CodecAdapter -> ALL InternViT layers ->
++    pixel_shuffle -> mlp1 -> save [M, 256, 4096] LLM-shaped tokens.
++
++    The contract matches Phase 2 ``codec_tokens.pt`` so ``internvl_backend.py
++    --qa-tokens <path>`` can ingest the file unchanged. Output payload:
++        {'idx': LongTensor[M, 3], 'tokens': FP16Tensor[M, 256, 4096]}
++    """
++    adapter = getattr(task, 'codec_adapter', None)
++    teacher = getattr(task, 'teacher_adapter', None)
++    if adapter is None or teacher is None or getattr(teacher, 'vlm', None) is None:
++        return
++    vlm = teacher.vlm
++    model.eval(); adapter.eval()
++    all_idx, all_tokens = [], []
++    with torch.no_grad():
++        for batch in loader:
++            inputs, _ = task.parse_batch(batch)
++            _ = model(inputs, compute_outputs=True, compute_rates=False)
++            feature = task._get_decoder_feature(model)
++            if feature is None:
++                continue
++            patch_embeds = adapter(feature.to(next(adapter.parameters()).dtype))
++            # codec -> full vision tower + projector -> LLM-space tokens
++            # (InternVL: [B,256,4096]; InstructBLIP: [B,32,4096])
++            tokens = vlm.codec_to_llm_tokens(patch_embeds)
++            n_b, t_b = feature.shape[0], feature.shape[1]
++            idx = inputs['idx'].detach().cpu()
++            for s in range(n_b):
++                for sub in range(t_b):
++                    all_idx.append(idx[s].tolist())
++                    all_tokens.append(
++                        tokens[s * t_b + sub].detach().to(torch.float16).cpu()
++                    )
++    if not all_tokens:
++        logger.info('     [adapter-token-capture] no feature; skipped.')
++        return
++    payload = {'idx': torch.tensor(all_idx), 'tokens': torch.stack(all_tokens)}
++    path = os.path.join(output_dir, 'outputs', name, 'codec_tokens.pt')
++    os.makedirs(os.path.dirname(path), exist_ok=True)
++    torch.save(payload, path)
++    logger.info(
++        f'     [adapter-token-capture] saved {tuple(payload["tokens"].shape)} -> {path}'
++    )
++    # Persist the adapter weights once per run (donor artifact for the
++    # shared-adapter pilot; idempotent overwrite, a few MB).
++    try:
++        apath = os.path.join(output_dir, 'codec_adapter.pt')
++        torch.save(adapter.state_dict(), apath)
++        logger.info(f'     [adapter-token-capture] adapter weights -> {apath}')
++        if hasattr(adapter, 'delta_state_dict'):   # E-01: per-video delta on a frozen base
++            import json as _json
++            dpath = os.path.join(output_dir, 'codec_adapter_delta.pt')
++            torch.save(adapter.delta_state_dict(), dpath)
++            _json.dump({'mode': adapter.mode, 'params': int(adapter.delta_num_params()),
++                        'int8_bytes': int(adapter.delta_int8_bytes())},
++                       open(os.path.join(output_dir, 'adapter_delta.json'), 'w'))
++            logger.info(f'     [adapter-token-capture] delta ({adapter.mode}, '
++                        f'{adapter.delta_int8_bytes()} B int8) -> {dpath}')
++    except Exception as e:
++        logger.info(f'     [adapter-token-capture] adapter save skipped: {e}')
++
++
++def capture_codec_hidden_sample(output_dir, name, logger, model, loader, task):
++    """Pathway B-mid: capture a single (codec, oracle) layer-N hidden-state
++    pair for the demo's token_heatmap.png visualization. Saves at most one
++    batch's worth so the file stays tiny.
++    """
++    adapter = getattr(task, 'codec_adapter', None)
++    if adapter is None:
++        return
++    teacher = getattr(task, 'teacher_adapter', None)
++    if teacher is None or getattr(teacher, 'vlm', None) is None:
++        return
++    vlm = teacher.vlm
++    model.eval()
++    adapter.eval()
++    layer_idx = task.teacher_hidden_layer_index
++    if isinstance(layer_idx, (list, tuple)):   # multi-layer alignment: visualise the deepest tap
++        layer_idx = max(int(i) for i in layer_idx)
++    grid = task._vit_dims_cache['grid']
++    saved = None
++    with torch.no_grad():
++        for batch in loader:
++            inputs, target = task.parse_batch(batch)
++            _ = model(inputs, compute_outputs=True, compute_rates=False)
++            feature = task._get_decoder_feature(model)
++            if feature is None:
++                continue
++            patch_embeds = adapter(feature.to(next(adapter.parameters()).dtype))
++            h_codec = vlm.codec_hidden(patch_embeds, layer_idx)
++            h_oracle = vlm.oracle_hidden(target, layer_idx)
++            h_oracle = h_oracle.reshape(h_codec.shape)
++            saved = {
++                'codec_hidden': h_codec.detach().to(torch.float16).cpu(),
++                'oracle_hidden': h_oracle.detach().to(torch.float16).cpu(),
++                'layer_idx': layer_idx,
++                'grid': grid,
++            }
++            break
++    if saved is None:
++        logger.info('     [hidden-capture] no feature available; skipped.')
++        return
++    path = os.path.join(output_dir, 'outputs', name, 'hidden_sample.pt')
++    os.makedirs(os.path.dirname(path), exist_ok=True)
++    torch.save(saved, path)
++    logger.info(
++        f'     [hidden-capture] saved {tuple(saved["codec_hidden"].shape)} '
++        f'(codec & oracle) -> {path}'
++    )
++
++
++def capture_codec_tokens(output_dir, name, logger, model, loader, task, token_head):
++    """Pathway B: run the decoded codec, map its internal feature layer through
++    the trained token head, and save the resulting VLM tokens.
++
++    The saved file lets the downstream VLM be evaluated directly on codec
++    tokens, with no pixel reconstruction in the machine path. Output is a dict
++    ``{'idx': LongTensor[M, 3], 'tokens': FloatTensor[M, 256, 4096]}`` where M
++    is the number of decoded patches and ``idx[:, 0]`` is the frame index.
++    """
++    if token_head is None:
++        return
++    model.eval()
++    token_head.eval()
++    all_idx = []
++    all_tokens = []
++    with torch.no_grad():
++        for batch in loader:
++            inputs, _ = task.parse_batch(batch)
++            _ = model(inputs, compute_outputs=True, compute_rates=False)
++            feature = task._get_decoder_feature(model)
++            if feature is None:
++                continue
++            head_dtype = next(token_head.parameters()).dtype
++            tokens = token_head(feature.to(head_dtype))  # [N*T, 256, 4096]
++            n, t = feature.shape[0], feature.shape[1]
++            idx = inputs['idx'].detach().cpu()
++            for sample in range(n):
++                for sub in range(t):
++                    all_idx.append(idx[sample].tolist())
++                    # Store fp16 to keep the saved file small.
++                    all_tokens.append(
++                        tokens[sample * t + sub].detach().to(torch.float16).cpu()
++                    )
++    if not all_tokens:
++        logger.info('     [token-capture] no decoder feature captured; skipped.')
++        return
++    payload = {'idx': torch.tensor(all_idx), 'tokens': torch.stack(all_tokens)}
++    path = os.path.join(output_dir, 'outputs', name, 'codec_tokens.pt')
++    os.makedirs(os.path.dirname(path), exist_ok=True)
++    torch.save(payload, path)
++    logger.info(f'     [token-capture] saved tokens {tuple(payload["tokens"].shape)} -> {path}')
+ 
+ 
+ def write_bitstream(output_dir, name, bitstream):
+@@ -835,4 +1127,4 @@
              with open(os.path.join(output_dir, 'results', f'{name}.txt'), 'w') as f:
                  f.write(','.join(keys) + '\n')
                  for i in range(len(values)):
 -                    f.write(','.join([str(metrics[i][k]) for k in metrics[0].keys()]) + '\n')
 \ No newline at end of file
 +                    f.write(','.join([str(metrics[i][k]) for k in metrics[0].keys()]) + '\n')
-diff --git a/models/__init__.py b/models/__init__.py
-index 36e0542..95079d6 100644
---- a/models/__init__.py
-+++ b/models/__init__.py
-@@ -5,4 +5,4 @@ def create_model(args, logger, input):
+diff -ruN -x .git -x __pycache__ upstream/models/__init__.py ours/models/__init__.py
+--- upstream/models/__init__.py	2026-10-21 09:23:27
++++ ours/models/__init__.py	2026-04-23 16:02:18
+@@ -5,4 +5,4 @@
      if args['type'] == 'HiNeRV':
          return hinerv.build_model(args['config'], logger, input)
      else:
 -        raise ValueError(f'Unknown model type: {args['type']}')
 \ No newline at end of file
 +        raise ValueError(f"Unknown model type: {args['type']}")
-diff --git a/scripts/configs/data/video/png/tiny_local.yaml b/scripts/configs/data/video/png/tiny_local.yaml
-new file mode 100644
-index 0000000..1c854d4
---- /dev/null
-+++ b/scripts/configs/data/video/png/tiny_local.yaml
+diff -ruN -x .git -x __pycache__ upstream/models/hinerv.py ours/models/hinerv.py
+--- upstream/models/hinerv.py	2026-10-21 09:23:27
++++ ours/models/hinerv.py	2026-05-18 17:53:43
+@@ -281,6 +281,11 @@
+         self.num_heads = num_heads
+         self.keep_paddings = keep_paddings
+ 
++        # Pathway B: holds the final stage's pre-head feature after each
++        # forward, so a token head can read the INR's internal representation
++        # layer without re-deriving it from reconstructed pixels.
++        self._decoder_feature = None
++
+         logger.info(f'Decoder:')
+ 
+         self.upsamplers = nn.ModuleList()
+@@ -387,6 +392,11 @@
+ 
+             # Output
+             if i >= len(self.scales) - self.num_heads:
++                if i == len(self.scales) - 1:
++                    # Pathway B: stash the final pre-head feature (the INR's
++                    # internal representation layer) before the RGB head.
++                    self._decoder_feature = crop_tensor_nthwc(
++                        x, p_size_padded if self.keep_paddings else p_size)
+                 y = self.heads[i](x, params, px_mask_3d) if self.heads[i] is not None else x
+                 y = crop_tensor_nthwc(y, p_size_padded if self.keep_paddings else p_size)
+                 assert_shape(y, (idx.shape[0],) + (p_size_padded if self.keep_paddings else p_size) + (y.shape[-1],))
+@@ -440,6 +450,9 @@
+         # Compute output
+         x = self.base_encoding(params, idx, idx_max, patch_mode=patch_mode)
+         output = self.decoder(x, params, idx, idx_max, patch_mode=patch_mode)
++
++        # Pathway B: expose the decoder's final pre-head feature, [N, T, H, W, C].
++        self.last_decoder_feature = self.decoder._decoder_feature
+ 
+         # Reshape output
+         if not self.training and self.eval_patch_size is not None :
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/data/video/png/tiny_local.yaml ours/scripts/configs/data/video/png/tiny_local.yaml
+--- upstream/scripts/configs/data/video/png/tiny_local.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/data/video/png/tiny_local.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,5 @@
 +dataset_dir: tmp/teacher-tiny-run-v1/data
 +dataset: tiny_video
 +video_size: [4, 32, 32]
 +patch_size: [1, 32, 32]
 +fmt: png
-diff --git a/scripts/configs/nvrc/compress_models/nvrc_tiny_s1.yaml b/scripts/configs/nvrc/compress_models/nvrc_tiny_s1.yaml
-new file mode 100644
-index 0000000..88f5176
---- /dev/null
-+++ b/scripts/configs/nvrc/compress_models/nvrc_tiny_s1.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/compress_models/nvrc_tiny_s1.yaml ours/scripts/configs/nvrc/compress_models/nvrc_tiny_s1.yaml
+--- upstream/scripts/configs/nvrc/compress_models/nvrc_tiny_s1.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/compress_models/nvrc_tiny_s1.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,43 @@
 +type: NVRC
 +config:
@@ -429,11 +1015,477 @@ index 0000000..88f5176
 +    optimize_rate: true
 +    soft_round_temp: [0.5, 0.3]
 +    kum_noise: [2., 1.]
-diff --git a/scripts/configs/nvrc/models/teacher_tiny_32.yaml b/scripts/configs/nvrc/models/teacher_tiny_32.yaml
-new file mode 100644
-index 0000000..d11840c
---- /dev/null
-+++ b/scripts/configs/nvrc/models/teacher_tiny_32.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_g_lo.yaml ours/scripts/configs/nvrc/models/teacher_cap_g_lo.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_g_lo.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_g_lo.yaml	2026-06-02 14:54:29
+@@ -0,0 +1,27 @@
++# Rate ladder LO: base grid L1, grid-ch 1, decoder [8,4]. Target ~0.15 bpp.
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 1]
++    base_grid_level: 1
++    base_grid_level_scale: [1., 1., 1., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [8, 4]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_g_mlo.yaml ours/scripts/configs/nvrc/models/teacher_cap_g_mlo.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_g_mlo.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_g_mlo.yaml	2026-06-02 14:54:29
+@@ -0,0 +1,27 @@
++# Rate ladder MLO: base grid L2, grid-ch 1, decoder [8,4]. Target ~0.45 bpp.
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 1]
++    base_grid_level: 2
++    base_grid_level_scale: [1., 1., 1., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [8, 4]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_g_xlo.yaml ours/scripts/configs/nvrc/models/teacher_cap_g_xlo.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_g_xlo.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_g_xlo.yaml	2026-06-02 14:54:29
+@@ -0,0 +1,27 @@
++# Rate ladder XLO: base grid L1, grid-ch 1, decoder [4,2]. Target ~0.08 bpp.
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 1]
++    base_grid_level: 1
++    base_grid_level_scale: [1., 1., 1., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [4, 2]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_l.yaml ours/scripts/configs/nvrc/models/teacher_cap_l.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_l.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_l.yaml	2026-05-22 10:43:56
+@@ -0,0 +1,27 @@
++# Pathway B-mid capacity sweep -- L.
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 2]
++    base_grid_level: 2
++    base_grid_level_scale: [1., 1., 1., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [64, 32]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_m.yaml ours/scripts/configs/nvrc/models/teacher_cap_m.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_m.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_m.yaml	2026-05-22 10:43:53
+@@ -0,0 +1,27 @@
++# Pathway B-mid capacity sweep -- M.
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 2]
++    base_grid_level: 2
++    base_grid_level_scale: [1., 1., 1., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [32, 16]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_probe_hi.yaml ours/scripts/configs/nvrc/models/teacher_cap_probe_hi.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_probe_hi.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_probe_hi.yaml	2026-05-22 12:08:53
+@@ -0,0 +1,28 @@
++# Capacity probe HI: deeper grid (level 3) + wider grid channels (4) + large
++# decoder channels -> highest bpp.
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 4]
++    base_grid_level: 3
++    base_grid_level_scale: [2., 2., 2., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [128, 64]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_probe_lo.yaml ours/scripts/configs/nvrc/models/teacher_cap_probe_lo.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_probe_lo.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_probe_lo.yaml	2026-05-22 12:08:49
+@@ -0,0 +1,27 @@
++# Capacity probe LO: minimal grid (level 1) + smallest channels -> lowest bpp.
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 2]
++    base_grid_level: 1
++    base_grid_level_scale: [1., 1., 1., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [8, 4]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_r1.yaml ours/scripts/configs/nvrc/models/teacher_cap_r1.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_r1.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_r1.yaml	2026-05-22 12:17:23
+@@ -0,0 +1,27 @@
++# Capacity ladder R1 (lowest bpp ~0.6). grid level 1, grid-ch 2, dec [8,4].
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 2]
++    base_grid_level: 1
++    base_grid_level_scale: [1., 1., 1., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [8, 4]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_r2.yaml ours/scripts/configs/nvrc/models/teacher_cap_r2.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_r2.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_r2.yaml	2026-05-22 12:17:29
+@@ -0,0 +1,27 @@
++# Capacity ladder R2 (~0.77 bpp). grid level 2, grid-ch 2, dec [16,8].
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 2]
++    base_grid_level: 2
++    base_grid_level_scale: [1., 1., 1., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [16, 8]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_r3.yaml ours/scripts/configs/nvrc/models/teacher_cap_r3.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_r3.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_r3.yaml	2026-05-22 13:31:43
+@@ -0,0 +1,28 @@
++# Capacity ladder R3 (~1.2 bpp, fills the gap between R4 and R5).
++# grid level 3, grid-ch 3, dec [112,56].
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 3]
++    base_grid_level: 3
++    base_grid_level_scale: [2., 2., 2., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [112, 56]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_r4.yaml ours/scripts/configs/nvrc/models/teacher_cap_r4.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_r4.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_r4.yaml	2026-05-22 12:17:39
+@@ -0,0 +1,27 @@
++# Capacity ladder R4 (~2.0 bpp). grid level 3, grid-ch 2, dec [96,48].
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 2]
++    base_grid_level: 3
++    base_grid_level_scale: [2., 2., 2., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [96, 48]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_r5.yaml ours/scripts/configs/nvrc/models/teacher_cap_r5.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_r5.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_r5.yaml	2026-05-22 12:17:40
+@@ -0,0 +1,27 @@
++# Capacity ladder R5 (highest bpp ~2.9). grid level 3, grid-ch 4, dec [128,64].
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 4]
++    base_grid_level: 3
++    base_grid_level_scale: [2., 2., 2., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [128, 64]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_s.yaml ours/scripts/configs/nvrc/models/teacher_cap_s.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_s.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_s.yaml	2026-05-22 10:43:50
+@@ -0,0 +1,27 @@
++# Pathway B-mid capacity sweep -- S (= the original tiny config).
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 2]
++    base_grid_level: 2
++    base_grid_level_scale: [1., 1., 1., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [16, 8]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_xl.yaml ours/scripts/configs/nvrc/models/teacher_cap_xl.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_xl.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_xl.yaml	2026-05-22 10:44:00
+@@ -0,0 +1,27 @@
++# Pathway B-mid capacity sweep -- XL (largest INR, highest bpp).
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 2]
++    base_grid_level: 2
++    base_grid_level_scale: [1., 1., 1., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [128, 64]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_cap_xs.yaml ours/scripts/configs/nvrc/models/teacher_cap_xs.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_cap_xs.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_cap_xs.yaml	2026-05-22 10:43:48
+@@ -0,0 +1,28 @@
++# Pathway B-mid capacity sweep -- XS (smallest INR, lowest bpp).
++# Rate knob = decoder.channels. Base grid auto-derives from video size.
++type: HiNeRV
++config:
++  base_encoding:
++    base_grid_type: v2
++    base_grid_size: [-1, -1, -1, 2]
++    base_grid_level: 2
++    base_grid_level_scale: [1., 1., 1., 0.5]
++    base_kernel: [1, 3, 3]
++  decoder:
++    channels: [8, 4]
++    depths: [1, 1]
++    exps: [2., 2.]
++    kernels: [3, 3]
++    scales_t: [1, 1]
++    scales_hw: [2, 2]
++    paddings: [-1, -1, -1]
++    block_type: [convnext, convnext]
++    block_norm: [layernorm-no-affine, layernorm-no-affine]
++    block_act: [gelu, gelu]
++    upsample_type: [trilinear, trilinear]
++    upsample_config: [matmul-th-w, matmul-th-w]
++    upsample_norm: [layernorm-no-affine, layernorm-no-affine]
++    upsample_act: [none, none]
++    use_hi_encoding: [true, true]
++    local_grid_size: [-1, 2]
++    local_grid_level: 1
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/models/teacher_tiny_32.yaml ours/scripts/configs/nvrc/models/teacher_tiny_32.yaml
+--- upstream/scripts/configs/nvrc/models/teacher_tiny_32.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/models/teacher_tiny_32.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,26 @@
 +type: HiNeRV
 +config:
@@ -461,11 +1513,9 @@ index 0000000..d11840c
 +    use_hi_encoding: [true, true]
 +    local_grid_size: [-1, 2]
 +    local_grid_level: 1
-diff --git a/scripts/configs/nvrc/overfit/tiny-1e.yaml b/scripts/configs/nvrc/overfit/tiny-1e.yaml
-new file mode 100644
-index 0000000..a9b69bb
---- /dev/null
-+++ b/scripts/configs/nvrc/overfit/tiny-1e.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/nvrc/overfit/tiny-1e.yaml ours/scripts/configs/nvrc/overfit/tiny-1e.yaml
+--- upstream/scripts/configs/nvrc/overfit/tiny-1e.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/nvrc/overfit/tiny-1e.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,13 @@
 +epochs: 1
 +eval_epochs: 1
@@ -480,11 +1530,19 @@ index 0000000..a9b69bb
 +weight_decay: 1e-6
 +weight_decay_scaling: false
 +auto_lr_scaling: false
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-bootstrap.yaml b/scripts/configs/tasks/overfit/l1_teacher-bootstrap.yaml
-new file mode 100644
-index 0000000..fb49d9d
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-bootstrap.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_no_teacher.yaml ours/scripts/configs/tasks/overfit/l1_no_teacher.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_no_teacher.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_no_teacher.yaml	2026-05-09 11:36:48
+@@ -0,0 +1,6 @@
++loss: [1.0, l1]
++metric: [psnr]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: false
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-bootstrap.yaml ours/scripts/configs/tasks/overfit/l1_teacher-bootstrap.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-bootstrap.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-bootstrap.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,9 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -495,11 +1553,9 @@ index 0000000..fb49d9d
 +teacher_type: mean_pool
 +teacher_loss_weight: 0.2
 +teacher_detach_target: true
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-dinov2-semchange-delta.yaml b/scripts/configs/tasks/overfit/l1_teacher-dinov2-semchange-delta.yaml
-new file mode 100644
-index 0000000..8f2f1c2
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-dinov2-semchange-delta.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-dinov2-semchange-delta.yaml ours/scripts/configs/tasks/overfit/l1_teacher-dinov2-semchange-delta.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-dinov2-semchange-delta.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-dinov2-semchange-delta.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,14 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -515,11 +1571,9 @@ index 0000000..8f2f1c2
 +teacher_semantic_change_weighting: true
 +teacher_semantic_change_floor: 0.25
 +teacher_semantic_change_gamma: 1.0
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-dinov2-shared-semchange-delta.yaml b/scripts/configs/tasks/overfit/l1_teacher-dinov2-shared-semchange-delta.yaml
-new file mode 100644
-index 0000000..972e911
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-dinov2-shared-semchange-delta.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-dinov2-shared-semchange-delta.yaml ours/scripts/configs/tasks/overfit/l1_teacher-dinov2-shared-semchange-delta.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-dinov2-shared-semchange-delta.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-dinov2-shared-semchange-delta.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,15 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -536,11 +1590,1151 @@ index 0000000..972e911
 +teacher_semantic_change_weighting: true
 +teacher_semantic_change_floor: 0.25
 +teacher_semantic_change_gamma: 1.0
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint.yaml
-new file mode 100644
-index 0000000..5b561d0
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-internvit.yaml ours/scripts/configs/tasks/overfit/l1_teacher-internvit.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-internvit.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-internvit.yaml	2026-05-18 13:31:52
+@@ -0,0 +1,9 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.2
++teacher_detach_target: true
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N1224.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N1224.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N1224.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N1224.yaml	2026-10-21 09:23:57
+@@ -0,0 +1,25 @@
++# Joint layer-12/24 alignment variant of l1_teacher-pathway-b-mid.yaml (E-11 main configuration, 2026-10).
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: [12, 24]
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N18.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N18.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N18.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N18.yaml	2026-06-21 16:47:13
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=18 (layer sweep).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 18
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N24.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N24.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N24.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N24.yaml	2026-07-09 14:29:05
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 24
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N6.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N6.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N6.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-N6.yaml	2026-06-21 16:47:13
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=6 (layer sweep).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 6
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-Nmulti.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-Nmulti.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-Nmulti.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-Nmulti.yaml	2026-10-21 09:23:39
+@@ -0,0 +1,25 @@
++# CVPR-27 ablation C2: joint alignment at layers 6, 12 and 18 (equal-weight mean).
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: [6, 12, 18]
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-eta0.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-eta0.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-eta0.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-eta0.yaml	2026-06-22 09:36:26
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-eta005.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-eta005.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-eta005.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-eta005.yaml	2026-07-09 14:29:05
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.005, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-eta02.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-eta02.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-eta02.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-eta02.yaml	2026-07-09 14:29:05
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.02, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-lamb025.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-lamb025.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-lamb025.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-lamb025.yaml	2026-10-21 09:23:39
+@@ -0,0 +1,19 @@
++# CVPR-27 ablation C1: final-layer (Latent-INR-style) alignment at lamb=0.25.
++# FINAL-EMBEDDING baseline (Latent-INR-style) -- mid rate point.
++# Identical to l1_teacher-pathway-b-mid-rate-mid.yaml EXCEPT teacher_hidden_layer_index=24
++# (last InternViT layer = final embedding) instead of 12 (mid). See the vlo variant.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 0.25
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 24
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-hi.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-hi.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-hi.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-hi.yaml	2026-06-02 11:03:47
+@@ -0,0 +1,18 @@
++# FINAL-EMBEDDING baseline (Latent-INR-style) -- high rate point.
++# Identical to l1_teacher-pathway-b-mid-rate-hi.yaml EXCEPT teacher_hidden_layer_index=24
++# (last InternViT layer = final embedding) instead of 12 (mid). See the vlo variant.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 4.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 24
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-lo.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-lo.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-lo.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-lo.yaml	2026-06-02 11:03:45
+@@ -0,0 +1,18 @@
++# FINAL-EMBEDDING baseline (Latent-INR-style) -- low rate point.
++# Identical to l1_teacher-pathway-b-mid-rate-lo.yaml EXCEPT teacher_hidden_layer_index=24
++# (last InternViT layer = final embedding) instead of 12 (mid). See the vlo variant.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 0.25
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 24
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-mid.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-mid.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-mid.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-mid.yaml	2026-06-02 11:03:46
+@@ -0,0 +1,18 @@
++# FINAL-EMBEDDING baseline (Latent-INR-style) -- mid rate point.
++# Identical to l1_teacher-pathway-b-mid-rate-mid.yaml EXCEPT teacher_hidden_layer_index=24
++# (last InternViT layer = final embedding) instead of 12 (mid). See the vlo variant.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 24
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-vhi.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-vhi.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-vhi.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-vhi.yaml	2026-06-02 11:03:48
+@@ -0,0 +1,18 @@
++# FINAL-EMBEDDING baseline (Latent-INR-style) -- very-high rate point.
++# Identical to l1_teacher-pathway-b-mid-rate-vhi.yaml EXCEPT teacher_hidden_layer_index=24
++# (last InternViT layer = final embedding) instead of 12 (mid). See the vlo variant.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 16.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 24
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-vlo.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-vlo.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-vlo.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-final-rate-vlo.yaml	2026-06-02 11:03:44
+@@ -0,0 +1,20 @@
++# FINAL-EMBEDDING baseline (Latent-INR-style) -- very-low rate point.
++# Identical to l1_teacher-pathway-b-mid-rate-vlo.yaml EXCEPT the alignment depth:
++# teacher_hidden_layer_index=24 (the LAST InternViT layer = final embedding)
++# instead of 12 (mid). This isolates the "mid-layer vs final-layer" claim (PQ1/PQ2):
++# same codec, same rate, same loss -- only WHERE we match the frozen encoder differs.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 0.0625
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 24
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-instructblip.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-instructblip.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-instructblip.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-instructblip.yaml	2026-05-25 18:40:05
+@@ -0,0 +1,18 @@
++# Pathway B-mid aligned to InstructBLIP (EVA-CLIP ViT-g, 39 layers).
++# Same recipe as the InternVL pathway-b-mid config; only the teacher backbone
++# and alignment layer differ. Rate is set by the --model-config (capacity).
++loss: [0.01, l1]
++metric: [psnr]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: instructblip
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 20    # of 39 EVA-CLIP layers (mid, ~12/24 of InternVL)
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb003.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb003.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb003.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb003.yaml	2026-07-14 12:24:44
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 0.003
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb006-N1224.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb006-N1224.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb006-N1224.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb006-N1224.yaml	2026-10-21 09:23:57
+@@ -0,0 +1,25 @@
++# Joint layer-12/24 alignment variant of l1_teacher-pathway-b-mid-lamb006.yaml (E-11 main configuration, 2026-10).
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 0.0625
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: [12, 24]
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb006.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb006.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb006.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb006.yaml	2026-07-13 08:25:41
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 0.0625
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb012.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb012.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb012.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb012.yaml	2026-07-14 12:24:44
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 0.012
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb025-N1224.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb025-N1224.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb025-N1224.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb025-N1224.yaml	2026-10-21 09:23:57
+@@ -0,0 +1,25 @@
++# Joint layer-12/24 alignment variant of l1_teacher-pathway-b-mid-lamb025.yaml (E-11 main configuration, 2026-10).
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 0.25
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: [12, 24]
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb025.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb025.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb025.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb025.yaml	2026-07-13 08:25:41
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 0.25
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb050-N1224.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb050-N1224.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb050-N1224.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb050-N1224.yaml	2026-10-21 09:23:57
+@@ -0,0 +1,25 @@
++# Joint layer-12/24 alignment variant of l1_teacher-pathway-b-mid-lamb050.yaml (E-11 main configuration, 2026-10).
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 0.5
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: [12, 24]
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb050.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb050.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb050.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb050.yaml	2026-07-17 19:53:41
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 0.5
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb150-N1224.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb150-N1224.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb150-N1224.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb150-N1224.yaml	2026-10-21 09:23:57
+@@ -0,0 +1,25 @@
++# Joint layer-12/24 alignment variant of l1_teacher-pathway-b-mid-lamb150.yaml (E-11 main configuration, 2026-10).
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.5
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: [12, 24]
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb150.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb150.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb150.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb150.yaml	2026-07-17 19:53:41
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.5
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb16.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb16.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb16.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb16.yaml	2026-07-13 07:19:44
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 16.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb4.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb4.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb4.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-lamb4.yaml	2026-07-13 07:19:44
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 4.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-llavavideo-N18.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-llavavideo-N18.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-llavavideo-N18.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-llavavideo-N18.yaml	2026-07-07 09:07:20
+@@ -0,0 +1,22 @@
++# Pathway B-mid aligned to LLaVA-Video-7B-Qwen2 (SigLIP so400m, 27 layers).
++# Same recipe as the InternVL / InstructBLIP pathway-b-mid configs; only the
++# teacher backbone and alignment layer differ. Rate is set by --model-config.
++# SigLIP has 27 encoder layers; the LLM consumes hidden_states[-2] == output
++# after the first 26 layers (mm_vision_select_layer=-2), so align at N=26.
++loss: [0.01, l1]
++metric: [psnr]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: llava_video
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 18    # LLaVA layer sweep (user 2026-07-07): find SigLIP sweet spot between mid-13 and near-final-26.
++# Was 26 (near-final) — NOT a controlled replicate of pathway_b_mid. Fixed 2026-07-06 (user):
++# align at mid; eval still routes codec through all 26 -> projector (adapter SELECT_N=26).
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-llavavideo-N20.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-llavavideo-N20.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-llavavideo-N20.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-llavavideo-N20.yaml	2026-07-07 09:07:21
+@@ -0,0 +1,22 @@
++# Pathway B-mid aligned to LLaVA-Video-7B-Qwen2 (SigLIP so400m, 27 layers).
++# Same recipe as the InternVL / InstructBLIP pathway-b-mid configs; only the
++# teacher backbone and alignment layer differ. Rate is set by --model-config.
++# SigLIP has 27 encoder layers; the LLM consumes hidden_states[-2] == output
++# after the first 26 layers (mm_vision_select_layer=-2), so align at N=26.
++loss: [0.01, l1]
++metric: [psnr]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: llava_video
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 20    # LLaVA layer sweep (user 2026-07-07): find SigLIP sweet spot between mid-13 and near-final-26.
++# Was 26 (near-final) — NOT a controlled replicate of pathway_b_mid. Fixed 2026-07-06 (user):
++# align at mid; eval still routes codec through all 26 -> projector (adapter SELECT_N=26).
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-llavavideo.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-llavavideo.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-llavavideo.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-llavavideo.yaml	2026-07-06 09:45:24
+@@ -0,0 +1,22 @@
++# Pathway B-mid aligned to LLaVA-Video-7B-Qwen2 (SigLIP so400m, 27 layers).
++# Same recipe as the InternVL / InstructBLIP pathway-b-mid configs; only the
++# teacher backbone and alignment layer differ. Rate is set by --model-config.
++# SigLIP has 27 encoder layers; the LLM consumes hidden_states[-2] == output
++# after the first 26 layers (mm_vision_select_layer=-2), so align at N=26.
++loss: [0.01, l1]
++metric: [psnr]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: llava_video
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 13    # MID of the 26 used SigLIP layers (mirror InternVL 12/24).
++# Was 26 (near-final) — NOT a controlled replicate of pathway_b_mid. Fixed 2026-07-06 (user):
++# align at mid; eval still routes codec through all 26 -> projector (adapter SELECT_N=26).
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-qwen25vl.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-qwen25vl.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-qwen25vl.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-qwen25vl.yaml	2026-07-04 23:44:57
+@@ -0,0 +1,22 @@
++# Pathway B-mid aligned to Qwen2.5-VL-7B-Instruct (native-res windowed ViT, 32 blocks,
++# hidden 1280, spatial_merge 2 -> LLM dim 3584). Same recipe as the InternVL / LLaVA
++# pathway-b-mid configs; only the teacher backbone and alignment layer differ. Rate is
++# set by --model-config. We align at the MID vision block N=16 of 32 (analog to InternVL
++# N=12/24); the codec is routed 1..16 through the frozen windowed blocks and aligned to
++# the oracle's block-16 hidden state, then 1..32 + PatchMerger at eval to the 3584-dim
++# tokens the Qwen2.5 LLM consumes.
++loss: [0.01, l1]
++metric: [psnr]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: qwen25vl
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 16    # of 32 Qwen2.5-VL vision blocks (mid)
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-hi.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-hi.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-hi.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-hi.yaml	2026-05-21 15:04:59
+@@ -0,0 +1,18 @@
++# Pathway B-mid -- high rate point. lamb=4.0 pushes the optimizer to spend
++# more bits on reducing distortion, giving the highest-bpp / lowest-distortion
++# of the three rate points.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 4.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-lo.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-lo.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-lo.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-lo.yaml	2026-05-21 15:04:51
+@@ -0,0 +1,17 @@
++# Pathway B-mid -- low rate point. lamb=0.25 lets the entropy term dominate,
++# producing the lowest-bpp / highest-distortion of the three rate points.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 0.25
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-mid.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-mid.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-mid.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-mid.yaml	2026-05-21 15:04:54
+@@ -0,0 +1,16 @@
++# Pathway B-mid -- mid rate point. Same as the base config (lamb=1.0).
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-vhi.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-vhi.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-vhi.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-vhi.yaml	2026-05-22 09:39:22
+@@ -0,0 +1,18 @@
++# Pathway B-mid -- very-high rate point. lamb=16.0 (one factor-4 step above hi)
++# pushes the optimizer hardest toward distortion, extending the R-D curve
++# toward the highest-bpp end.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 16.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-vlo.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-vlo.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-vlo.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-vlo.yaml	2026-05-22 09:39:20
+@@ -0,0 +1,18 @@
++# Pathway B-mid -- very-low rate point. lamb=0.0625 (one factor-4 step below
++# lo) lets the entropy term dominate even more, extending the R-D curve toward
++# the lowest-bpp end.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 0.0625
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-xlo.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-xlo.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-xlo.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-xlo.yaml	2026-06-02 11:31:10
+@@ -0,0 +1,16 @@
++# Pathway B-mid -- extra-low rate (lamb=vlo/4=0.015625). Probes the bpp floor below vlo.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 0.015625
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-xxlo.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-xxlo.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-xxlo.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-rate-xxlo.yaml	2026-06-02 11:31:10
+@@ -0,0 +1,16 @@
++# Pathway B-mid -- extra-extra-low rate (lamb=vlo/16=0.00390625). Floor probe.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 0.00390625
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w0.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w0.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w0.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w0.yaml	2026-06-22 09:36:26
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.0
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w025.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w025.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w025.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w025.yaml	2026-07-09 14:29:05
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.25
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w075.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w075.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w075.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w075.yaml	2026-07-09 14:29:05
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.75
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w1.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w1.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w1.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid-w1.yaml	2026-06-22 09:36:26
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 1.0
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b-mid.yaml	2026-05-21 15:04:28
+@@ -0,0 +1,24 @@
++# Pathway B-mid: machine-only codec with InternViT layer-N hidden-state
++# alignment. Pixel L1 is kept at a tiny weight (loss=[0.01, l1] -- the 0.01
++# is the loss-side weight) as an anti-collapse anchor. Override `lamb` to
++# sweep the rate-distortion curve.
++loss: [0.01, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++# Default rate point; rate-sweep variants live in
++# l1_teacher-pathway-b-mid-rate{lo,mid,hi}.yaml.
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++# Disable both pixel-domain teacher feature loss and the old token-consistency
++# loss; the new hidden-state alignment supersedes both.
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: false
++teacher_token_consistency_weight: 0.0
++# New: hidden-state consistency at InternViT layer N=12 (mid of 24).
++teacher_hidden_consistency: true
++teacher_hidden_consistency_weight: 1.0
++teacher_hidden_layer_index: 12
++teacher_hidden_cos_weight: 0.5
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b.yaml ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-pathway-b.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-pathway-b.yaml	2026-05-18 20:07:23
+@@ -0,0 +1,11 @@
++loss: [1.0, l1]
++metric: [psnr, teacher-mse]
++color_space: RGB
++lamb: 1.0
++enable_log: false
++teacher_enable: true
++teacher_type: internvit
++teacher_loss_weight: 0.0
++teacher_detach_target: true
++teacher_token_consistency: true
++teacher_token_consistency_weight: 1.0
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint.yaml ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-blueprint.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,11 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -553,11 +2747,9 @@ index 0000000..5b561d0
 +teacher_detach_target: true
 +teacher_semantic_blueprint: true
 +teacher_semantic_blueprint_rank: 16
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-bootstrap.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-bootstrap.yaml
-new file mode 100644
-index 0000000..21fd504
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-bootstrap.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-bootstrap.yaml ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-bootstrap.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-bootstrap.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-bootstrap.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,9 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -568,11 +2760,9 @@ index 0000000..21fd504
 +teacher_type: resnet18_imagenet
 +teacher_loss_weight: 0.2
 +teacher_detach_target: true
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta-w05.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta-w05.yaml
-new file mode 100644
-index 0000000..2830a42
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta-w05.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta-w05.yaml ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta-w05.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta-w05.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta-w05.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,11 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -585,11 +2775,9 @@ index 0000000..2830a42
 +teacher_detach_target: true
 +teacher_temporal_delta_consistency: true
 +teacher_temporal_delta_weight: 0.5
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta.yaml
-new file mode 100644
-index 0000000..eff6a2f
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta.yaml ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-delta.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,11 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -602,11 +2790,9 @@ index 0000000..eff6a2f
 +teacher_detach_target: true
 +teacher_temporal_delta_consistency: true
 +teacher_temporal_delta_weight: 1.0
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-readout.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-readout.yaml
-new file mode 100644
-index 0000000..6e90664
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-readout.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-readout.yaml ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-readout.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-readout.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-readout.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,15 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -623,11 +2809,9 @@ index 0000000..6e90664
 +teacher_function_readout_hidden_dim: 64
 +teacher_function_readout_out_dim: 16
 +teacher_function_readout_seed: 0
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation.yaml
-new file mode 100644
-index 0000000..5a5f1cd
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation.yaml ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-relation.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,12 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -641,11 +2825,9 @@ index 0000000..5a5f1cd
 +teacher_relation_consistency: true
 +teacher_relation_mode: cosine
 +teacher_relation_weight: 1.0
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-delta.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-delta.yaml
-new file mode 100644
-index 0000000..99fe1be
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-delta.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-delta.yaml ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-delta.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-delta.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-delta.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,14 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -661,11 +2843,9 @@ index 0000000..99fe1be
 +teacher_semantic_change_weighting: true
 +teacher_semantic_change_floor: 0.25
 +teacher_semantic_change_gamma: 1.0
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-gamma2.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-gamma2.yaml
-new file mode 100644
-index 0000000..89fe189
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-gamma2.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-gamma2.yaml ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-gamma2.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-gamma2.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange-gamma2.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,12 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -679,11 +2859,9 @@ index 0000000..89fe189
 +teacher_semantic_change_weighting: true
 +teacher_semantic_change_floor: 0.25
 +teacher_semantic_change_gamma: 2.0
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange.yaml
-new file mode 100644
-index 0000000..15a2f1a
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange.yaml ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-semchange.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,12 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -697,11 +2875,9 @@ index 0000000..15a2f1a
 +teacher_semantic_change_weighting: true
 +teacher_semantic_change_floor: 0.25
 +teacher_semantic_change_gamma: 1.0
-diff --git a/scripts/configs/tasks/overfit/l1_teacher-resnet18-shared-semchange-delta.yaml b/scripts/configs/tasks/overfit/l1_teacher-resnet18-shared-semchange-delta.yaml
-new file mode 100644
-index 0000000..59da007
---- /dev/null
-+++ b/scripts/configs/tasks/overfit/l1_teacher-resnet18-shared-semchange-delta.yaml
+diff -ruN -x .git -x __pycache__ upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-shared-semchange-delta.yaml ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-shared-semchange-delta.yaml
+--- upstream/scripts/configs/tasks/overfit/l1_teacher-resnet18-shared-semchange-delta.yaml	1970-01-01 01:00:00
++++ ours/scripts/configs/tasks/overfit/l1_teacher-resnet18-shared-semchange-delta.yaml	2026-04-23 16:02:18
 @@ -0,0 +1,15 @@
 +loss: [1.0, l1]
 +metric: [psnr, teacher-mse]
@@ -718,16 +2894,28 @@ index 0000000..59da007
 +teacher_semantic_change_weighting: true
 +teacher_semantic_change_floor: 0.25
 +teacher_semantic_change_gamma: 1.0
-diff --git a/tasks.py b/tasks.py
-index 98b1b8f..1031d50 100644
---- a/tasks.py
-+++ b/tasks.py
-@@ -1,12 +1,44 @@
+diff -ruN -x .git -x __pycache__ upstream/tasks.py ours/tasks.py
+--- upstream/tasks.py	2026-10-21 09:23:27
++++ ours/tasks.py	2026-10-21 09:23:50
+@@ -1,12 +1,63 @@
  from utils import *
  from io_utils import *
  from losses import *
 +from teacher_utils import build_teacher_adapter
-+
++from token_head import TokenHead
++from codec_to_vit_adapter import (
++    CodecAdapter,
++    add_cls_and_pos,
++    detect_vit_dims,
++    run_first_n_layers,
++)
+ 
++# Pathway B: learning rate for the token head's own optimizer. The token head
++# is a plain trainable module outside NVRC's quantized-parameter machinery.
++_TOKEN_HEAD_LR = 1e-3
++# Pathway B-mid: same convention for the CodecAdapter optimizer.
++_CODEC_ADAPTER_LR = float(__import__("os").environ.get("NVRC_ADAPTER_LR", "1e-3"))  # chain rounds lower it
+ 
 +
 +def _parse_int_list(value):
 +    if value is None:
@@ -738,8 +2926,8 @@ index 98b1b8f..1031d50 100644
 +    if isinstance(value, (list, tuple)):
 +        return tuple(int(item) for item in value)
 +    return (int(value),)
- 
- 
++
++
  class OverfitTask:
      def __init__(self, logger, video, loss_cfg, metric_cfg, lamb,
                   channel_scale=None, channel_shift=None,
@@ -764,17 +2952,20 @@ index 98b1b8f..1031d50 100644
 +                 teacher_function_readout_hidden_dim=64,
 +                 teacher_function_readout_out_dim=16,
 +                 teacher_function_readout_seed=0,
-+                 teacher_function_readout_seeds=''):
++                 teacher_function_readout_seeds='',
++                 teacher_token_consistency=False,
++                 teacher_token_consistency_weight=1.0,
++                 teacher_hidden_consistency=False,
++                 teacher_hidden_consistency_weight=1.0,
++                 teacher_hidden_layer_index=12,
++                 teacher_hidden_cos_weight=0.5):
          self.logger = logger
          self.video = video
          self.channels = self.video.get_num_channels()
-@@ -23,9 +55,43 @@ class OverfitTask:
+@@ -23,17 +74,198 @@
          self.training = training
          self.device = device
          self.metrics_buffer = {}
--
--        assert isinstance(lamb, (list, tuple)) and len(lamb) == 1, 'lamb should be a list/tuple with a single value'
--        self.lamb = torch.tensor(sorted(lamb), dtype=torch.float32, device=self.device)
 +        self.teacher_enable = teacher_enable
 +        self.teacher_type = teacher_type
 +        self.teacher_loss_weight = float(teacher_loss_weight)
@@ -797,6 +2988,32 @@ index 98b1b8f..1031d50 100644
 +        self.teacher_function_readout_out_dim = int(teacher_function_readout_out_dim)
 +        self.teacher_function_readout_seed = int(teacher_function_readout_seed)
 +        self.teacher_function_readout_seeds = _parse_int_list(teacher_function_readout_seeds)
+ 
+-        assert isinstance(lamb, (list, tuple)) and len(lamb) == 1, 'lamb should be a list/tuple with a single value'
+-        self.lamb = torch.tensor(sorted(lamb), dtype=torch.float32, device=self.device)
++        # Pathway B: token-consistency loss (codec tokens vs InternViT tokens).
++        self.teacher_token_consistency = bool(teacher_token_consistency)
++        self.teacher_token_consistency_weight = float(teacher_token_consistency_weight)
++        self.token_head = None       # lazily built once the feature dim is known
++        self.token_optimizer = None  # the token head's own optimizer
++        self._last_token_loss = None
+ 
++        # Pathway B-mid: hidden-state consistency vs InternViT layer-N hidden.
++        # The CodecAdapter projects the INR's pre-RGB feature into ViT-shaped
++        # patch embeddings, which are routed through the first N frozen
++        # InternViT encoder layers; the loss aligns the resulting hidden state
++        # to the oracle (real RGB through the same N layers).
++        self.teacher_hidden_consistency = bool(teacher_hidden_consistency)
++        self.teacher_hidden_consistency_weight = float(teacher_hidden_consistency_weight)
++        _li = teacher_hidden_layer_index
++        self.teacher_hidden_layer_index = ([int(v) for v in _li] if isinstance(_li, (list, tuple))
++                                           else int(_li))  # list -> multi-layer alignment
++        self.teacher_hidden_cos_weight = float(teacher_hidden_cos_weight)
++        self.codec_adapter = None
++        self.adapter_optimizer = None
++        self._last_hidden_metrics = None
++        self._vit_dims_cache = None
++
 +        self.teacher_adapter = build_teacher_adapter(
 +            enable=self.teacher_enable,
 +            teacher_type=self.teacher_type,
@@ -812,10 +3029,10 @@ index 98b1b8f..1031d50 100644
 +                'lamb should be a scalar or a list/tuple with a single value'
 +            lamb_values = [float(v) for v in lamb]
 +        self.lamb = torch.tensor(sorted(lamb_values), dtype=torch.float32, device=self.device)
- 
++
          logger.info(f'OverfitTask:')
          logger.info(f'     Root: {self.video.get_path()}')
-@@ -33,6 +99,29 @@ class OverfitTask:
+         logger.info(f'     Training: {self.training}')
          logger.info(f'     Losses: {self.loss_cfg}    Metrics: {self.metric_cfg}')
          logger.info(f'     Lamb: {self.lamb.tolist()}')
          logger.info(f'     Enable log: {self.enable_log}')
@@ -842,10 +3059,118 @@ index 98b1b8f..1031d50 100644
 +                f'function_readout_seed={self.teacher_function_readout_seed} '
 +                f'function_readout_seeds={list(self.teacher_function_readout_seeds) if self.teacher_function_readout_seeds else []}'
 +            )
++        if self.teacher_token_consistency:
++            logger.info(
++                f'     Token consistency: enabled '
++                f'weight={self.teacher_token_consistency_weight:.4f} lr={_TOKEN_HEAD_LR:.1e}'
++            )
++        if self.teacher_hidden_consistency:
++            logger.info(
++                f'     Hidden consistency: enabled '
++                f'weight={self.teacher_hidden_consistency_weight:.4f} '
++                f'layer_idx={self.teacher_hidden_layer_index} '
++                f'cos_weight={self.teacher_hidden_cos_weight:.2f} '
++                f'lr={_CODEC_ADAPTER_LR:.1e}'
++            )
  
++    def _ensure_token_head(self, feature):
++        """Lazily build the token head once the INR feature dim is known."""
++        if self.token_head is None:
++            in_channels = feature.shape[-1]
++            self.token_head = TokenHead(in_channels=in_channels).to(
++                device=feature.device, dtype=feature.dtype
++            )
++            self.token_optimizer = torch.optim.Adam(
++                self.token_head.parameters(), lr=_TOKEN_HEAD_LR
++            )
++        return self.token_head
++
++    def _ensure_codec_adapter(self, feature):
++        """Lazily build the codec adapter once the INR feature dim and ViT
++        dims are both known."""
++        if self.codec_adapter is None:
++            assert self.teacher_adapter is not None and self.teacher_adapter.vlm is not None, \
++                'hidden consistency requires a VLM teacher (internvit/instructblip)'
++            self._vit_dims_cache = self.teacher_adapter.vlm.vit_dims()
++            in_channels = feature.shape[-1]
++            self.codec_adapter = CodecAdapter(
++                in_channels=in_channels,
++                num_patches=self._vit_dims_cache['num_patches'],
++                hidden_dim=self._vit_dims_cache['hidden_dim'],
++            ).to(device=feature.device, dtype=feature.dtype)
++            # Shared-adapter pilot: NVRC_FROZEN_ADAPTER=<path to codec_adapter.pt>
++            # loads a donor adapter and freezes it, so only the codec (+entropy
++            # model) trains. Tests whether the adapter is video-agnostic, i.e.
++            # receiver-side state that need not be counted in the bitstream.
++            import os as _os
++            _frozen = _os.environ.get('NVRC_FROZEN_ADAPTER', '')
++            _warm = _os.environ.get('NVRC_INIT_ADAPTER', '')
++            if _frozen:
++                _sd = torch.load(_frozen, map_location='cpu')
++                self.codec_adapter.load_state_dict(_sd)
++                for _p in self.codec_adapter.parameters():
++                    _p.requires_grad = False
++                self.logger.info(
++                    f'     [hidden] FROZEN shared adapter loaded from {_frozen}; '
++                    f'adapter will NOT be trained'
++                )
++            elif _warm:
++                # Round-2 chain training: warm-start the adapter from a donor
++                # and keep it trainable, so it accumulates exposure to several
++                # videos before being frozen for reuse.
++                _sd = torch.load(_warm, map_location='cpu')
++                self.codec_adapter.load_state_dict(_sd)
++                self.logger.info(
++                    f'     [hidden] WARM-START adapter from {_warm}; '
++                    f'adapter stays trainable'
++                )
++            _delta = _os.environ.get('NVRC_ADAPTER_DELTA', '')
++            if _delta:
++                assert _frozen, 'NVRC_ADAPTER_DELTA needs NVRC_FROZEN_ADAPTER (a shared base)'
++                from codec_to_vit_adapter import DeltaAdapter
++                self.codec_adapter = DeltaAdapter(self.codec_adapter, _delta).to(
++                    device=feature.device, dtype=feature.dtype)
++                self.logger.info(
++                    f'     [hidden] per-video adapter DELTA mode={_delta}: '
++                    f'{self.codec_adapter.delta_num_params()} trainable params '
++                    f'(~{self.codec_adapter.delta_int8_bytes()} B at int8); base frozen'
++                )
++            _trainable = [p for p in self.codec_adapter.parameters() if p.requires_grad]
++            self.adapter_optimizer = torch.optim.Adam(
++                _trainable if _trainable else [torch.zeros(1, requires_grad=True)],
++                lr=_CODEC_ADAPTER_LR
++            )
++            self.logger.info(
++                f'     [hidden] built CodecAdapter '
++                f'in_channels={in_channels} '
++                f'num_patches={self._vit_dims_cache["num_patches"]} '
++                f'hidden_dim={self._vit_dims_cache["hidden_dim"]} '
++                f'(vit has {self._vit_dims_cache["num_layers"]} layers)'
++            )
++        return self.codec_adapter
++
++    def _get_decoder_feature(self, model):
++        """Descend through wrappers to fetch HiNeRV's stashed pre-head feature."""
++        m = model
++        for _ in range(8):
++            if m is None:
++                break
++            if getattr(m, 'last_decoder_feature', None) is not None:
++                return m.last_decoder_feature
++            m = getattr(m, 'module', None) or getattr(m, 'model', None)
++        return None
++
      def get_metrics(self):
          return self.metric_cfg
-@@ -95,6 +184,67 @@ class OverfitTask:
+ 
+@@ -89,12 +321,149 @@
+         """
+         return output.contiguous()
+ 
+-    def compute_d_loss(self, x, y, lamb):
++    def compute_d_loss(self, x, y, lamb, decoder_feature=None):
+         loss = 0.
+         for i in range(len(self.loss_cfg) // 2):
              weight = float(self.loss_cfg[i * 2])
              loss_type = self.loss_cfg[i * 2 + 1]
              loss += weight * lamb * compute_loss(loss_type, x, y).mean()
@@ -910,10 +3235,86 @@ index 98b1b8f..1031d50 100644
 +                ):
 +                    temporal_delta_consistency = temporal_delta_consistency * teacher_weights
 +                loss += self.teacher_loss_weight * self.teacher_temporal_delta_weight * lamb * temporal_delta_consistency.mean()
++
++        # Pathway B-mid: hidden-state consistency loss. The CodecAdapter
++        # projects the INR's pre-RGB feature into ViT-shaped patch embeddings;
++        # these are routed through the first N frozen InternViT encoder
++        # layers; the loss aligns the resulting hidden state to the oracle
++        # (real RGB through the same N layers) via 0.5*smooth_L1 + 0.5*(1-cos).
++        if self.teacher_hidden_consistency and self.training and decoder_feature is not None:
++            assert self.teacher_adapter is not None and self.teacher_adapter.vlm is not None, \
++                'hidden consistency requires a VLM teacher (internvit/instructblip)'
++            adapter = self._ensure_codec_adapter(decoder_feature)
++            patch_embeds = adapter(decoder_feature)  # [B*T, num_patches, hidden]
++            vlm = self.teacher_adapter.vlm
++            _layers = self.teacher_hidden_layer_index
++            w_cos = self.teacher_hidden_cos_weight
++            w_l1 = 1.0 - w_cos
++            if isinstance(_layers, list):
++                # multi-layer alignment (CVPR-27 C2): one pass to max(N), equal-weight mean of
++                # the per-layer (smooth-L1 + cosine) terms; logged metrics are layer means.
++                hc = vlm.codec_hidden(patch_embeds, _layers)
++                with torch.no_grad():
++                    ho = vlm.oracle_hidden(y, _layers)
++                terms, sl1s, coss = [], [], []
++                for _n in _layers:
++                    _o = ho[_n].reshape(hc[_n].shape).to(hc[_n].dtype)
++                    _s = F.smooth_l1_loss(hc[_n], _o)
++                    _c = F.cosine_similarity(hc[_n], _o, dim=-1).mean()
++                    terms.append(w_l1 * _s + w_cos * (1.0 - _c)); sl1s.append(_s); coss.append(_c)
++                hidden_loss = sum(terms) / len(terms)
++                smooth_l1 = sum(sl1s) / len(sl1s)
++                cos = sum(coss) / len(coss)
++                cos_loss = 1.0 - cos
++            else:
++                h_codec = vlm.codec_hidden(patch_embeds, _layers)
++                with torch.no_grad():
++                    h_oracle = vlm.oracle_hidden(y, _layers)
++                h_oracle = h_oracle.reshape(h_codec.shape).to(h_codec.dtype)
++                smooth_l1 = F.smooth_l1_loss(h_codec, h_oracle)
++                cos = F.cosine_similarity(h_codec, h_oracle, dim=-1).mean()
++                cos_loss = 1.0 - cos
++                hidden_loss = w_l1 * smooth_l1 + w_cos * cos_loss
++            self._last_hidden_metrics = {
++                'smooth_l1': float(smooth_l1.detach()),
++                'cos': float(cos.detach()),
++                'cos_loss': float(cos_loss.detach()),
++                'hidden_loss': float(hidden_loss.detach()),
++            }
++            self._hidden_step = getattr(self, '_hidden_step', 0) + 1
++            if self._hidden_step == 1 or self._hidden_step % 150 == 0:
++                self.logger.info(
++                    f'     [hidden] step={self._hidden_step} '
++                    f'smooth_l1={float(smooth_l1):.6f} '
++                    f'cos={float(cos):.4f}'
++                )
++            loss = loss + self.teacher_hidden_consistency_weight * lamb * hidden_loss
++
++        # Pathway B: token-consistency loss. The token head maps the INR's
++        # internal feature layer to VLM tokens; they are matched against the
++        # frozen InternViT tokens of the original frames. Gradient flows back
++        # into both the token head and the INR.
++        if self.teacher_token_consistency and self.training and decoder_feature is not None:
++            assert self.teacher_adapter is not None and self.teacher_type == 'internvit', \
++                'token consistency requires an enabled teacher with teacher_type="internvit"'
++            token_head = self._ensure_token_head(decoder_feature)
++            pred_tokens = token_head(decoder_feature)
++            with torch.no_grad():
++                target_tokens = self.teacher_adapter.extract_internvit_tokens(y)
++            target_tokens = target_tokens.reshape(pred_tokens.shape).to(pred_tokens.dtype)
++            token_loss = F.mse_loss(pred_tokens, target_tokens)
++            self._last_token_loss = token_loss.detach()
++            self._token_step = getattr(self, '_token_step', 0) + 1
++            if self._token_step == 1 or self._token_step % 150 == 0:
++                self.logger.info(
++                    f'     [token] step={self._token_step} '
++                    f'token_loss={float(token_loss):.6f}'
++                )
++            loss = loss + self.teacher_token_consistency_weight * lamb * token_loss
          return loss
  
      def compute_r_loss(self, r):
-@@ -104,10 +254,10 @@ class OverfitTask:
+@@ -104,14 +473,17 @@
          metrics = {}
          with torch.no_grad():
              for metric_type in self.metric_cfg:
@@ -926,7 +3327,15 @@ index 98b1b8f..1031d50 100644
          inputs, target = self.parse_batch(batch)
          output = model(inputs, compute_outputs=True, compute_rates=False)
          output = self.parse_output(output)
-@@ -180,5 +330,26 @@ def create_overfit_task(args, logger, video, channel_scale=None, channel_shift=N
+-        loss = self.compute_d_loss(output, target, inputs['lamb'])
++        decoder_feature = self._get_decoder_feature(model) \
++            if (self.teacher_token_consistency or self.teacher_hidden_consistency) else None
++        loss = self.compute_d_loss(output, target, inputs['lamb'],
++                                   decoder_feature=decoder_feature)
+         metrics = self.compute_metrics(output, target)
+         return inputs, target, output, loss, metrics
+ 
+@@ -180,5 +552,32 @@
  
      task = OverfitTask(logger, video, loss_cfg=config.loss, metric_cfg=config.metric,
                         lamb=config.lamb, channel_scale=channel_scale, channel_shift=channel_shift,
@@ -954,19 +3363,38 @@ index 98b1b8f..1031d50 100644
 +                       teacher_function_readout_hidden_dim=config.teacher_function_readout_hidden_dim,
 +                       teacher_function_readout_out_dim=config.teacher_function_readout_out_dim,
 +                       teacher_function_readout_seed=config.teacher_function_readout_seed,
-+                       teacher_function_readout_seeds=config.teacher_function_readout_seeds)
++                       teacher_function_readout_seeds=config.teacher_function_readout_seeds,
++                       teacher_token_consistency=config.teacher_token_consistency,
++                       teacher_token_consistency_weight=config.teacher_token_consistency_weight,
++                       teacher_hidden_consistency=getattr(config, 'teacher_hidden_consistency', False),
++                       teacher_hidden_consistency_weight=getattr(config, 'teacher_hidden_consistency_weight', 1.0),
++                       teacher_hidden_layer_index=getattr(config, 'teacher_hidden_layer_index', 12),
++                       teacher_hidden_cos_weight=getattr(config, 'teacher_hidden_cos_weight', 0.5))
 +    return task
-diff --git a/teacher_utils.py b/teacher_utils.py
-new file mode 100644
-index 0000000..bd89eff
---- /dev/null
-+++ b/teacher_utils.py
-@@ -0,0 +1,327 @@
+diff -ruN -x .git -x __pycache__ upstream/teacher_utils.py ours/teacher_utils.py
+--- upstream/teacher_utils.py	1970-01-01 01:00:00
++++ ours/teacher_utils.py	2026-07-04 23:44:38
+@@ -0,0 +1,456 @@
++import os
++import sys
 +from pathlib import Path
 +
 +import torch
 +import torch.nn as nn
 +import torch.nn.functional as F
++
++# Make the repo's src/ importable from inside the NVRC subprocess so the
++# pluggable VLM backbones (machine_codec_pipeline.vlm) can be shared by both
++# the training-align side (here) and the eval-side root runners.
++_SRC_ROOT = Path(__file__).resolve().parents[2] / "src"
++if _SRC_ROOT.exists() and str(_SRC_ROOT) not in sys.path:
++    sys.path.insert(0, str(_SRC_ROOT))
++
++
++def _build_align_backbone(name):
++    """Construct a VLM backbone in align mode (vision + projector, no LLM)."""
++    from machine_codec_pipeline.vlm import build_backbone
++    return build_backbone(name).load_align()
 +
 +
 +_DINOV2_REPO = Path.home() / ".cache" / "torch" / "hub" / "facebookresearch_dinov2_main"
@@ -975,6 +3403,46 @@ index 0000000..bd89eff
 +    "dinov2_vits14_reg": "dinov2_vits14_reg4_pretrain.pth",
 +    "dinov2_vitb14_reg": "dinov2_vitb14_reg4_pretrain.pth",
 +}
++
++# Pathway B: the teacher is the downstream VLM's own vision encoder, so the
++# codec is trained directly against the features the VLM will actually read.
++_INTERNVL_MODEL_PATH = os.environ.get(
++    "INTERNVL_MODEL_PATH", "/mnt/nas/xinyizheng/InternVL2_5-8B"
++)
++_INTERNVIT_INPUT_SIZE = 448
++
++
++def _load_internvl_model(model_path=_INTERNVL_MODEL_PATH):
++    """Load InternVL2.5, keep the vision tower + mlp1 projector, drop the LLM.
++
++    The full chat model is loaded in bf16 to bound transient memory; the 7B
++    language model is dropped (it is needed neither for the Phase 1 pooled
++    feature nor for the Phase 2 token extraction) and the kept ~300M-param
++    vision stack is converted to fp32 to match codec training. The returned
++    object still exposes ``vision_model``, ``mlp1`` and ``extract_feature``.
++    """
++    import contextlib
++    import sys
++
++    from transformers import AutoModel
++
++    # InternVL's remote modeling code prints flash-attn notices straight to
++    # stdout at construction time. The codec's smoke step requires stdout to be
++    # pure JSON, so redirect those prints to stderr while loading.
++    with contextlib.redirect_stdout(sys.stderr):
++        model = AutoModel.from_pretrained(
++            model_path,
++            torch_dtype=torch.bfloat16,
++            trust_remote_code=True,
++            low_cpu_mem_usage=True,
++        )
++    if hasattr(model, 'language_model'):
++        del model.language_model  # not used for feature / token extraction
++    model = model.float()
++    model.eval()
++    for param in model.parameters():
++        param.requires_grad = False
++    return model
 +
 +
 +def _load_local_dinov2_backbone(model_name):
@@ -1004,6 +3472,7 @@ index 0000000..bd89eff
 +        self.teacher_type = teacher_type
 +        self.detach_target = detach_target
 +        self._function_readout_cache = {}
++        self.vlm = None  # set for VLM teacher types (pluggable backbone)
 +
 +        if self.teacher_type == 'mean_pool':
 +            self.backbone = None
@@ -1020,6 +3489,22 @@ index 0000000..bd89eff
 +            self._register_imagenet_norm_buffers()
 +        elif self.teacher_type in _DINOV2_CHECKPOINTS:
 +            self.backbone = _load_local_dinov2_backbone(self.teacher_type)
++            self._register_imagenet_norm_buffers()
++        elif self.teacher_type in ('internvit', 'internvl'):
++            self.vlm = _build_align_backbone('internvl')
++            self.backbone = self.vlm.model
++            self._register_imagenet_norm_buffers()
++        elif self.teacher_type in ('instructblip', 'eva_clip'):
++            self.vlm = _build_align_backbone('instructblip')
++            self.backbone = self.vlm.model
++            self._register_imagenet_norm_buffers()
++        elif self.teacher_type in ('llava_video', 'llava'):
++            self.vlm = _build_align_backbone('llava_video')
++            self.backbone = self.vlm.model
++            self._register_imagenet_norm_buffers()
++        elif self.teacher_type in ('qwen25vl', 'qwen2vl', 'qwen'):
++            self.vlm = _build_align_backbone('qwen25vl')
++            self.backbone = self.vlm.model
 +            self._register_imagenet_norm_buffers()
 +        else:
 +            raise ValueError(f'Unknown teacher_type: {self.teacher_type}')
@@ -1042,6 +3527,8 @@ index 0000000..bd89eff
 +            return self._extract_resnet18_features(x)
 +        if self.teacher_type in _DINOV2_CHECKPOINTS:
 +            return self._extract_dinov2_features(x)
++        if self.teacher_type == 'internvit':
++            return self._extract_internvit_features(x)
 +        raise ValueError(f'Unknown teacher_type: {self.teacher_type}')
 +
 +    def target_features(self, target):
@@ -1231,12 +3718,12 @@ index 0000000..bd89eff
 +            )
 +        return pred_readout, target_readout
 +
-+    def _prepare_imagenet_frames(self, x, teacher_label):
++    def _prepare_imagenet_frames(self, x, teacher_label, size=224):
 +        assert x.shape[1] == 3, f'{teacher_label} expects RGB inputs'
 +        n, c, t, h, w = x.shape
 +        frames = x.float().permute(0, 2, 1, 3, 4).reshape(n * t, c, h, w)
 +        frames = frames.clamp(0.0, 1.0)
-+        frames = F.interpolate(frames, size=(224, 224), mode='bilinear', align_corners=False)
++        frames = F.interpolate(frames, size=(size, size), mode='bilinear', align_corners=False)
 +
 +        self.backbone.to(frames.device)
 +        self.backbone.eval()
@@ -1255,6 +3742,61 @@ index 0000000..bd89eff
 +        n, t, frames = self._prepare_imagenet_frames(x, self.teacher_type)
 +        features = self.backbone(frames)
 +        return features.view(n, t, -1).contiguous()
++
++    def _extract_internvit_features(self, x):
++        n, t, frames = self._prepare_imagenet_frames(
++            x, 'internvit', size=_INTERNVIT_INPUT_SIZE
++        )
++        output = self.backbone.vision_model(pixel_values=frames)
++        # Drop the CLS token and mean-pool the patch tokens into one semantic
++        # vector per frame, mirroring the global-pooled ResNet18 teacher.
++        features = output.last_hidden_state[:, 1:, :].mean(dim=1)
++        return features.view(n, t, -1).contiguous()
++
++    def extract_internvit_tokens(self, x):
++        """Pathway B: per-frame InternVL visual tokens for token consistency.
++
++        Runs the full InternVL visual path (InternViT + pixel-shuffle + mlp1),
++        producing tokens in the language model's embedding space. Returns
++        ``[N, T, num_image_token, llm_hidden]`` (256 x 4096 for InternVL2.5).
++        """
++        assert self.teacher_type == 'internvit', \
++            'extract_internvit_tokens requires teacher_type="internvit"'
++        n, t, frames = self._prepare_imagenet_frames(
++            x, 'internvit', size=_INTERNVIT_INPUT_SIZE
++        )
++        tokens = self.backbone.extract_feature(frames)
++        return tokens.view(n, t, tokens.shape[-2], tokens.shape[-1]).contiguous()
++
++    def get_internvit_vision_model(self):
++        """Return the frozen InternViT vision_model (for partial-layer forward)."""
++        assert self.teacher_type == 'internvit', \
++            'get_internvit_vision_model requires teacher_type="internvit"'
++        return self.backbone.vision_model
++
++    def prepare_internvit_frames(self, x):
++        """Normalize+resize patches to InternViT's 448 input; returns (n, t, frames)."""
++        return self._prepare_imagenet_frames(
++            x, 'internvit', size=_INTERNVIT_INPUT_SIZE
++        )
++
++    def extract_internvit_hidden(self, x, layer_idx):
++        """Pathway B-mid: per-frame InternViT layer-N hidden state.
++
++        Runs the real RGB patches through ``vision_model.embeddings`` and the
++        first ``layer_idx`` encoder layers under ``no_grad``. Returns
++        ``[n, t, 1 + num_patches, hidden_dim]``.
++        """
++        from codec_to_vit_adapter import forward_oracle_first_n_layers
++        assert self.teacher_type == 'internvit', \
++            'extract_internvit_hidden requires teacher_type="internvit"'
++        n, t, frames = self._prepare_imagenet_frames(
++            x, 'internvit', size=_INTERNVIT_INPUT_SIZE
++        )
++        h = forward_oracle_first_n_layers(
++            self.backbone.vision_model, frames, int(layer_idx)
++        )
++        return h.view(n, t, h.shape[-2], h.shape[-1]).contiguous()
 +
 +    def consistency_map(self, pred, target, pred_feat=None, target_feat=None):
 +        if pred_feat is None or target_feat is None:
@@ -1289,24 +3831,117 @@ index 0000000..bd89eff
 +    if not enable:
 +        return None
 +    return FrozenTeacherAdapter(teacher_type=teacher_type, detach_target=detach_target)
-diff --git a/utils.py b/utils.py
-index 03df9a2..85080de 100644
---- a/utils.py
-+++ b/utils.py
-@@ -25,11 +25,21 @@ import torch._dynamo as dynamo
+diff -ruN -x .git -x __pycache__ upstream/token_head.py ours/token_head.py
+--- upstream/token_head.py	1970-01-01 01:00:00
++++ ours/token_head.py	2026-05-18 19:15:13
+@@ -0,0 +1,91 @@
++"""Pathway B token head.
++
++A small trainable module that turns the INR's internal pre-RGB feature layer
++(HiNeRV's ``last_decoder_feature``) into VLM token embeddings, so the codec can
++feed a downstream vision-language model directly without ever reconstructing
++pixels.
++
++The output token grid and width are chosen to match InternVL2.5-8B's visual
++token contract: 256 tokens per frame, each a 4096-d vector in the language
++model's embedding space.
++"""
++
++import torch
++import torch.nn as nn
++import torch.nn.functional as F
++
++# InternVL2.5-8B: num_image_token = 256 per tile, llm hidden = 4096.
++INTERNVL_TOKENS_PER_FRAME = 256
++INTERNVL_LLM_HIDDEN = 4096
++
++
++class TokenHead(nn.Module):
++    """Map a per-frame INR feature map to VLM token embeddings.
++
++    Input  : ``[N, T, H, W, C]`` — HiNeRV's pre-RGB feature (NTHWC layout).
++    Output : ``[N * T, tokens_per_frame, llm_hidden]`` — one token sequence
++             per frame, ready to be injected at the VLM's ``<IMG_CONTEXT>``
++             positions.
++    """
++
++    def __init__(
++        self,
++        in_channels,
++        hidden_channels=256,
++        tokens_per_frame=INTERNVL_TOKENS_PER_FRAME,
++        llm_hidden=INTERNVL_LLM_HIDDEN,
++    ):
++        super().__init__()
++        token_grid = int(round(tokens_per_frame ** 0.5))
++        assert token_grid * token_grid == tokens_per_frame, \
++            'tokens_per_frame must be a perfect square'
++        self.in_channels = int(in_channels)
++        self.hidden_channels = int(hidden_channels)
++        self.tokens_per_frame = int(tokens_per_frame)
++        self.llm_hidden = int(llm_hidden)
++        self.token_grid = token_grid
++
++        self.proj = nn.Sequential(
++            nn.Conv2d(self.in_channels, self.hidden_channels, kernel_size=3, padding=1),
++            nn.GELU(),
++            nn.Conv2d(self.hidden_channels, self.hidden_channels, kernel_size=3, padding=1),
++            nn.GELU(),
++        )
++        # 1x1 conv projects each spatial cell to the LLM embedding width.
++        self.to_tokens = nn.Conv2d(self.hidden_channels, self.llm_hidden, kernel_size=1)
++
++    def forward(self, feature):
++        assert feature.ndim == 5, \
++            f'expected [N, T, H, W, C], got {tuple(feature.shape)}'
++        n, t, h, w, c = feature.shape
++        assert c == self.in_channels, \
++            f'feature channels {c} != configured in_channels {self.in_channels}'
++
++        # NTHWC -> (N*T, C, H, W)
++        x = feature.permute(0, 1, 4, 2, 3).reshape(n * t, c, h, w).contiguous()
++        x = self.proj(x)
++        # Pool to the fixed token grid regardless of patch spatial size.
++        x = F.adaptive_avg_pool2d(x, (self.token_grid, self.token_grid))
++        x = self.to_tokens(x)  # [N*T, llm_hidden, grid, grid]
++        # [N*T, llm_hidden, grid, grid] -> [N*T, tokens_per_frame, llm_hidden]
++        x = x.flatten(2).transpose(1, 2).contiguous()
++        return x
++
++
++def _smoke_test():
++    """Shape check: a fake INR feature must produce InternVL-shaped tokens."""
++
++    n, t, h, w, c = 2, 4, 12, 12, 35
++    head = TokenHead(in_channels=c)
++    feature = torch.randn(n, t, h, w, c)
++    tokens = head(feature)
++    expected = (n * t, INTERNVL_TOKENS_PER_FRAME, INTERNVL_LLM_HIDDEN)
++    assert tuple(tokens.shape) == expected, (tuple(tokens.shape), expected)
++    n_params = sum(p.numel() for p in head.parameters())
++    print(f'[token_head smoke] input {(n, t, h, w, c)} -> tokens {tuple(tokens.shape)}')
++    print(f'[token_head smoke] params = {n_params:,}')
++    print('[token_head smoke] PASS')
++
++
++if __name__ == '__main__':
++    _smoke_test()
+diff -ruN -x .git -x __pycache__ upstream/utils.py ours/utils.py
+--- upstream/utils.py	2026-10-21 09:23:27
++++ ours/utils.py	2026-04-23 16:02:18
+@@ -25,11 +25,21 @@
  
  import torchvision
  import compressai
 -import deepspeed
--
--import timm
--from timm.optim import create_optimizer_v2, optimizer_kwargs
--from timm.scheduler import create_scheduler_v2, scheduler_kwargs
 +try:
 +    import deepspeed
 +except ImportError:
 +    deepspeed = None
-+
+ 
+-import timm
+-from timm.optim import create_optimizer_v2, optimizer_kwargs
+-from timm.scheduler import create_scheduler_v2, scheduler_kwargs
 +try:
 +    import timm
 +    from timm.optim import create_optimizer_v2, optimizer_kwargs
@@ -1320,7 +3955,7 @@ index 03df9a2..85080de 100644
  
  import accelerate
  
-@@ -78,6 +88,14 @@ def extract_parameters(*model_dicts):
+@@ -78,6 +88,14 @@
      return params
  
  
@@ -1335,7 +3970,7 @@ index 03df9a2..85080de 100644
  """
  Accerlator & logger
  """
-@@ -134,7 +152,7 @@ def get_optimizer_scheduler(args, logger, accelerator, model_or_params, loader,
+@@ -134,7 +152,7 @@
      args = copy.deepcopy(args)
  
      # This is to match the accelerator option 'step_scheduler_with_optimizer=True'
@@ -1344,7 +3979,7 @@ index 03df9a2..85080de 100644
      updates_per_epoch = len(loader)
  
      # Convert to number of epochs
-@@ -191,9 +209,14 @@ def get_optimizer_scheduler(args, logger, accelerator, model_or_params, loader,
+@@ -191,9 +209,14 @@
          gp_v_no_wd = groups[gp_k + '_no_wd']
          groups_list.append(gp_v)
          groups_list.append(gp_v_no_wd)
@@ -1361,13 +3996,10 @@ index 03df9a2..85080de 100644
      optimizer = create_optimizer_v2(groups_list, **optimizer_kwargs(args))
      scheduler, _ = create_scheduler_v2(optimizer, **scheduler_kwargs(args), updates_per_epoch=updates_per_epoch)
      return optimizer, scheduler
-@@ -256,4 +279,4 @@ def concate_outputs(src, dst, dataset_name, keep_path=False):
+@@ -256,4 +279,4 @@
              os.system(f'cat {video_src} >> {video_dst}')
          # Remove the source
          if not keep_path:
 -            os.system(f'rm -r {video_src}')
 \ No newline at end of file
 +            os.system(f'rm -r {video_src}')
--- 
-2.34.1
-

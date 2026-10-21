@@ -25,7 +25,7 @@ from .paths import (
 )
 from .profiles import Profile, task_config_path
 from .results import parse_results_file
-from .video_data import infer_chunk_video_settings, load_chunk_index
+from .data.video_data import infer_chunk_video_settings, load_chunk_index
 
 
 def quoted(command: list[str]) -> str:
