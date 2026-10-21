@@ -1,27 +1,33 @@
-.clawy/
+# Run artifacts and data (live on the cluster / NAS, never in git)
+outputs/
+logs/
+queue/
+runs/
+checkpoints/
 Datasets/
-DeepScientist/
-Outputs/
+STOP_QUEUE
+
+# Model weights and large media
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.mp4
+*.y4m
+*.266
+
+# Third-party baseline builds (VVC/VCM-RS/DCVC ...), set up separately
+third_party/baselines/
+
+# Secrets / local environment
 .env
 .venv/
-runs/
-outputs/runs/
-outputs/video_windows/
-outputs/examples/**/bitstreams/
-outputs/examples/**/checkpoints/
-outputs/examples/**/outputs/
-outputs/examples/**/rank_0/
-outputs/examples/**/results/
-outputs/examples/**/tmp/
 
-# Common local noise
-.DS_Store
+# Python / OS / editor noise
 __pycache__/
-*.pyc
-*.pyo
-.ds/*.pid
-.ds/*.sock
-.ds/*.tmp
-.ds/worktrees/
-tmp/
+*.py[cod]
 .pytest_cache/
+.ruff_cache/
+.DS_Store
+.idea/
+.vscode/

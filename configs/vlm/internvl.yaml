@@ -1,0 +1,7 @@
+# InternVL2.5-8B backbone config.
+backbone: internvl
+model_path: /mnt/nas/xinyizheng/InternVL2_5-8B
+device: cuda
+input_size: 448          # InternViT input
+align_layer: 12          # of 24 InternViT layers (mid)
+smoke_image: /mnt/nas/xinyizheng/InternVL2_5-8B/examples/image1.jpg

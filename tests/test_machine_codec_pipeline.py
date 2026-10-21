@@ -14,8 +14,8 @@ from machine_codec_pipeline.commands import run_chunked_profile
 from machine_codec_pipeline.demo import run_demo
 from machine_codec_pipeline.profiles import PROFILES, ensure_profile
 from machine_codec_pipeline.results import compare_results, parse_results_file
-from machine_codec_pipeline.video_data import prepare_video_window, split_png_video_chunks
-from machine_codec_pipeline.video_qa import (
+from machine_codec_pipeline.data.video_data import prepare_video_window, split_png_video_chunks
+from machine_codec_pipeline.evaluation.video_qa import (
     _read_key_from_dotenv,
     _sample_positions,
     generate_openai_chunked_video_qa_report,
@@ -231,10 +231,10 @@ class MachineCodecPipelineTests(unittest.TestCase):
                 return {"output_text": text}
 
             with patch(
-                "machine_codec_pipeline.video_qa._extract_source_frames",
+                "machine_codec_pipeline.evaluation.video_qa._extract_source_frames",
                 side_effect=fake_extract_source_frames,
             ), patch(
-                "machine_codec_pipeline.video_qa._call_openai_responses",
+                "machine_codec_pipeline.evaluation.video_qa._call_openai_responses",
                 side_effect=fake_openai_call,
             ):
                 summary = generate_openai_video_qa_report(
@@ -382,7 +382,7 @@ class MachineCodecPipelineTests(unittest.TestCase):
                 return {"output_text": text}
 
             with patch(
-                "machine_codec_pipeline.video_qa._call_openai_responses",
+                "machine_codec_pipeline.evaluation.video_qa._call_openai_responses",
                 side_effect=fake_openai_call,
             ):
                 summary = generate_openai_chunked_video_qa_report(
@@ -449,10 +449,10 @@ class MachineCodecPipelineTests(unittest.TestCase):
                 return paths
 
             with patch(
-                "machine_codec_pipeline.video_data.read_probe",
+                "machine_codec_pipeline.data.video_data.read_probe",
                 side_effect=fake_read_probe,
             ), patch(
-                "machine_codec_pipeline.video_data._extract_frames",
+                "machine_codec_pipeline.data.video_data._extract_frames",
                 side_effect=fake_extract_frames,
             ):
                 summary = prepare_video_window(

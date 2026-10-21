@@ -23,8 +23,8 @@ from .io import write_json
 from .paths import find_repo_root
 from .profiles import PROFILES, ensure_profile
 from .results import compare_results
-from .video_data import prepare_video_window, split_png_video_chunks
-from .video_qa import (
+from .data.video_data import prepare_video_window, split_png_video_chunks
+from .evaluation.video_qa import (
     generate_openai_chunked_video_qa_report,
     generate_openai_video_qa_report,
 )
@@ -82,6 +82,7 @@ def command_prepare_video(args: argparse.Namespace) -> int:
         chunk_size=args.chunk_size,
         chunk_output_root=Path(args.chunk_output_root) if args.chunk_output_root else None,
         chunk_prefix=args.chunk_prefix,
+        sampling=args.sampling,
     )
     if args.summary_json:
         write_json(Path(args.summary_json).expanduser().resolve(), summary)
@@ -129,6 +130,9 @@ def command_video_qa_chunked_report(args: argparse.Namespace) -> int:
         model=args.model,
         sample_count=args.sample_count,
         output_dir=Path(args.output_dir).expanduser().resolve() if args.output_dir else None,
+        use_embedding_mode=args.use_embedding_mode,
+        n_trials=args.n_trials,
+        temperature=args.temperature,
     )
     print(json.dumps(comparison, indent=2, sort_keys=True))
     return 0
@@ -179,6 +183,9 @@ def build_parser() -> argparse.ArgumentParser:
     prepare_parser.add_argument("--num-frames", type=int, required=True)
     prepare_parser.add_argument("--width", type=int, default=32)
     prepare_parser.add_argument("--height", type=int, default=32)
+    prepare_parser.add_argument("--sampling", type=str, default="contiguous",
+                                choices=["contiguous", "uniform"],
+                                help="contiguous = first N frames; uniform = N frames evenly spaced across the whole clip")
     prepare_parser.add_argument("--chunk-size", type=int, default=None)
     prepare_parser.add_argument("--chunk-output-root", type=str, default=None)
     prepare_parser.add_argument("--chunk-prefix", type=str, default=None)
@@ -453,6 +460,24 @@ def build_parser() -> argparse.ArgumentParser:
         type=str,
         default=None,
         help="Optional destination for the generated contact sheets and report files.",
+    )
+    video_qa_chunked_parser.add_argument(
+        "--use-embedding-mode",
+        action="store_true",
+        default=False,
+        help="Use ResNet18 embedding visualization instead of pixel contact sheets for VLM input.",
+    )
+    video_qa_chunked_parser.add_argument(
+        "--n-trials",
+        type=int,
+        default=1,
+        help="Number of independent VLM trials per view. >1 enables majority-vote and disagreement reporting.",
+    )
+    video_qa_chunked_parser.add_argument(
+        "--temperature",
+        type=float,
+        default=None,
+        help="OpenAI 'temperature' (0 = greedy / deterministic). Omit to use API default.",
     )
     video_qa_chunked_parser.set_defaults(func=command_video_qa_chunked_report)
 

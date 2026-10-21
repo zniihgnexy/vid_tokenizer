@@ -12,7 +12,8 @@ authors = [
   { name = "vid_tokenizer contributors" }
 ]
 dependencies = [
-  "pillow"
+  "pillow",
+  "pyyaml"
 ]
 
 [project.optional-dependencies]
